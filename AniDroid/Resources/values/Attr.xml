@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <!-- Styles -->
+  <attr name="Toolbar_Style" format="reference" />
+  <attr name="Toolbar_Theme" format="reference" />
+  <attr name="Toolbar_PopupTheme" format="reference" />
+  <attr name="Checkbox_Theme" format="reference" />
+  <attr name="Switch_Theme" format="reference" />
+  <attr name="Radio_Theme" format="reference" />
+  <attr name="Dialog_Theme" format="reference" />
+  <attr name="FabSmall_Style" format="reference" />
+  <attr name="FabSmallAlternate_Style" format="reference" />
+  <attr name="FabLarge_Style" format="reference" />
+  <attr name="TextInput_Theme" format="reference" />
+  <attr name="Spinner_Theme" format="reference" />
+  <attr name="TabLayout_Style" format="reference" />
+  <attr name="AppBarLayout_Style" format="reference" />
+
+    <!-- Colors -->
+  <attr name="ListItem_Divider" format="reference|color" />
+
+  <attr name="Primary" format="reference|color" />
+  <attr name="Primary_Text" format="reference|color" />
+  <attr name="Primary_Dark" format="reference|color" />
+  <attr name="Primary_Dark_Text" format="reference|color" />
+  <attr name="Secondary" format="reference|color" />
+  <attr name="Secondary_Text" format="reference|color" />
+  <attr name="Secondary_Dark" format="reference|color" />
+  <attr name="Secondary_Dark_Text" format="reference|color" />
+  <attr name="Tertiary" format="reference|color" />
+  <attr name="Tertiary_Text" format="reference|color" />
+  <attr name="Tertiary_Dark" format="reference|color" />
+  <attr name="Tertiary_Dark_Text" format="reference|color" />
+  <attr name="Background" format="reference|color" />
+  <attr name="Background_Alternate" format="reference|color" />
+  <attr name="Background_Special" format="reference|color" />
+  <attr name="Background_Special_Dark" format="reference|color" />
+  <attr name="Background_Text" format="reference|color" />
+  <attr name="Background_Text_Alternate" format="reference|color" />
+  <attr name="Background_Text_Special" format="reference|color" />
+  <attr name="Background_TrustedTorrent" format="reference|color" />
+  <attr name="Background_RemakeTorrent" format="reference|color" />
+
+
+</resources>

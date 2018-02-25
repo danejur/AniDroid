@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <item type="id" name="Object_Id" />
+  <item type="id" name="Object_Name" />
+  <item type="id" name="Object_Type" />
+  <item type="id" name="Object_Value" />
+  <item type="id" name="Object_Position" />
+</resources>

@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Android.App;
+using Android.Content;
+using Android.OS;
+using Android.Runtime;
+using Android.Views;
+using Android.Widget;
+using AniDroid.Base;
+using AniDroid.Login;
+using AniDroid.Main;
+
+namespace AniDroid.Start
+{
+    [Activity(Label = "StartActivity", MainLauncher = true)]
+    public class StartActivity : BaseAniDroidActivity
+    {
+        public override Task OnCreateExtended(Bundle savedInstanceState)
+        {
+            // TODO: add checks for data store integrity and other start-up tasks
+
+            MainActivity.StartActivity(this);
+            return Task.CompletedTask;
+        }
+    }
+}
