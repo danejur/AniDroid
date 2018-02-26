@@ -17,7 +17,11 @@ namespace AniDroid.SearchResults
 {
     public interface ISearchResultsView : IAniDroidView
     {
-        void ShowAnimeSearchResults(IAsyncEnumerable<IPagedData<Media>> animeEnumerable);
+        void ShowMediaSearchResults(IAsyncEnumerable<IPagedData<Media>> mediaEnumerable);
         void ShowCharacterSearchResults(IAsyncEnumerable<IPagedData<Character>> characterEnumerable);
+        void ShowStaffSearchResults(IAsyncEnumerable<IPagedData<Staff>> staffEnumerable);
+        void ShowUserSearchResults(IAsyncEnumerable<IPagedData<User>> userEnumerable);
+        void ShowForumThreadSearchResults(IAsyncEnumerable<IPagedData<ForumThread>> forumThreadEnumerable);
+        void ShowStudioSearchResults(IAsyncEnumerable<IPagedData<Studio>> studioEnumerable);
     }
 }

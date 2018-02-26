@@ -56,7 +56,7 @@ namespace AniDroid.Main
 
             await CreatePresenter(savedInstanceState);
 
-            SearchResultsActivity.StartAniListSearchResultsActivity(this, SearchResultsActivity.AniListSearchTypes.Characters, "test");
+            SearchResultsActivity.StartAniListSearchResultsActivity(this, SearchResultsActivity.AniListSearchTypes.Anime, "test");
         }
     }
 }

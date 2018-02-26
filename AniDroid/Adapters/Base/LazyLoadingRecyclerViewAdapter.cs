@@ -16,6 +16,7 @@ using Android.Support.V4.Content;
 using Android.Util;
 using System.Threading.Tasks;
 using Android.Support.Annotation;
+using Android.Views.Animations;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
@@ -96,6 +97,8 @@ namespace AniDroid.Adapters.Base
 
         public void AddItems(IEnumerable<T> itemsToAdd, bool hasNextPage)
         {
+            var initialAdd = Items.Count == 1 && Items[0] == null;
+
             if (hasNextPage)
             {
                 itemsToAdd = itemsToAdd.Append(null);
@@ -104,6 +107,13 @@ namespace AniDroid.Adapters.Base
             Items.AddRange(itemsToAdd);
 
             NotifyDataSetChanged();
+
+            if (initialAdd)
+            {
+                var controller = AnimationUtils.LoadLayoutAnimation(Context, Resource.Animation.Layout_Animation_Falldown);
+                RecyclerView.LayoutAnimation = controller;
+                RecyclerView.ScheduleLayoutAnimation();
+            }
         }
 
         public sealed override int GetItemViewType(int position)
@@ -113,11 +123,8 @@ namespace AniDroid.Adapters.Base
 
         private class ProgressBarViewHolder : RecyclerView.ViewHolder
         {
-            public View Container { get; }
-
             public ProgressBarViewHolder(View itemView) : base(itemView)
             {
-                Container = itemView.FindViewById(Resource.Id.IndeterminateProgressIndicator_Container);
             }
         }
 

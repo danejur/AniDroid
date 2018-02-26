@@ -1,15 +1,16 @@
 ﻿using System;
 using Android.Views;
 using AniDroid.Adapters.Base;
+using AniDroid.AniList;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
 
 namespace AniDroid.Adapters.SearchAdapters
 {
-    public class CharacterSearchRecyclerAdapter : LazyLoadingRecyclerViewAdapter<Character>
+    public class MediaSearchRecyclerAdapter : LazyLoadingRecyclerViewAdapter<Media>
     {
-        public CharacterSearchRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<IPagedData<Character>> enumerable, CardType cardType) : base(context, enumerable, cardType)
+        public MediaSearchRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<IPagedData<Media>> enumerable, CardType cardType) : base(context, enumerable, cardType)
         {
         }
 
@@ -17,20 +18,11 @@ namespace AniDroid.Adapters.SearchAdapters
         {
             var item = Items[position];
 
-            holder.Name.Text = $"{item.Name.First} {item.Name.Last}";
-
-            if (!string.IsNullOrWhiteSpace(item.Name?.Native))
-            {
-                holder.DetailPrimary.Visibility = ViewStates.Visible;
-                holder.DetailPrimary.Text = item.Name.Native;
-            }
-            else
-            {
-                holder.DetailPrimary.Visibility = ViewStates.Gone;
-            }
-
+            holder.Name.Text = item.Title.UserPreferred;
+            holder.DetailPrimary.Text = $"{AniListEnum.GetDisplayValue<Media.MediaFormat>(item.Format)}{(item.IsAdult ? " (Hentai)" : "")}";
+            holder.DetailSecondary.Text = $"{(item.AverageScore != 0 ? $"Average Rating: {item.AverageScore}": "No Rating Data")}      Popularity: {item.Popularity}";
             holder.Button.Visibility = item.IsFavourite ? ViewStates.Visible : ViewStates.Gone;
-            Context.LoadImage(holder.Image, item.Image?.Large);
+            Context.LoadImage(holder.Image, item.CoverImage.Large);
 
             holder.ContainerCard.SetTag(Resource.Id.Object_Position, position);
             holder.ContainerCard.Click -= RowClick;
@@ -50,7 +42,7 @@ namespace AniDroid.Adapters.SearchAdapters
 
         private static void RowClick(object sender, EventArgs e)
         {
-            // TODO: start character activity here
+            // TODO: start media activity here
         }
     }
 }

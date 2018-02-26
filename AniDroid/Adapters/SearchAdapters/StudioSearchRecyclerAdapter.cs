@@ -1,15 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Android.App;
+using Android.Content;
+using Android.OS;
+using Android.Runtime;
+using Android.Support.V7.Widget;
 using Android.Views;
+using Android.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
 
-namespace AniDroid.Adapters.SearchAdapters
+namespace AniDroid.Adapters.Search
 {
-    public class CharacterSearchRecyclerAdapter : LazyLoadingRecyclerViewAdapter<Character>
+    public class StudioSearchRecyclerAdapter : LazyLoadingRecyclerViewAdapter<Studio>
     {
-        public CharacterSearchRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<IPagedData<Character>> enumerable, CardType cardType) : base(context, enumerable, cardType)
+        public StudioSearchRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<IPagedData<Studio>> enumerable) : base(context, enumerable, CardType.Horizontal)
         {
         }
 
@@ -17,20 +27,8 @@ namespace AniDroid.Adapters.SearchAdapters
         {
             var item = Items[position];
 
-            holder.Name.Text = $"{item.Name.First} {item.Name.Last}";
-
-            if (!string.IsNullOrWhiteSpace(item.Name?.Native))
-            {
-                holder.DetailPrimary.Visibility = ViewStates.Visible;
-                holder.DetailPrimary.Text = item.Name.Native;
-            }
-            else
-            {
-                holder.DetailPrimary.Visibility = ViewStates.Gone;
-            }
-
+            holder.Name.Text = item.Name;
             holder.Button.Visibility = item.IsFavourite ? ViewStates.Visible : ViewStates.Gone;
-            Context.LoadImage(holder.Image, item.Image?.Large);
 
             holder.ContainerCard.SetTag(Resource.Id.Object_Position, position);
             holder.ContainerCard.Click -= RowClick;
@@ -43,14 +41,14 @@ namespace AniDroid.Adapters.SearchAdapters
             item.ButtonIcon.SetImageResource(Resource.Drawable.ic_favorite_white_24dp);
             item.ButtonIcon.ImageTintList = FavoriteIconColor;
 
-            item.DetailSecondary.Visibility = ViewStates.Gone;
+            item.Image.Visibility = item.DetailPrimary.Visibility = item.DetailSecondary.Visibility = ViewStates.Gone;
 
             return item;
         }
 
         private static void RowClick(object sender, EventArgs e)
         {
-            // TODO: start character activity here
+            // TODO: start studio activity here
         }
     }
 }

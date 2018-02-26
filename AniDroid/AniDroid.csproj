@@ -140,6 +140,11 @@
   <ItemGroup>
     <Compile Include="Adapters\Base\LazyLoadingRecyclerViewAdapter.cs" />
     <Compile Include="Adapters\SearchAdapters\CharacterSearchRecyclerAdapter.cs" />
+    <Compile Include="Adapters\SearchAdapters\ForumThreadSearchRecyclerAdapter.cs" />
+    <Compile Include="Adapters\SearchAdapters\MediaSearchRecyclerAdapter.cs" />
+    <Compile Include="Adapters\SearchAdapters\StaffSearchRecyclerAdapter.cs" />
+    <Compile Include="Adapters\SearchAdapters\StudioSearchRecyclerAdapter.cs" />
+    <Compile Include="Adapters\SearchAdapters\UserSearchRecyclerAdapter.cs" />
     <Compile Include="Base\BaseAniDroidFragment.cs" />
     <Compile Include="Base\BaseAniDroidFragmentPresenter.cs" />
     <Compile Include="Browse\BrowseFragment.cs" />

@@ -29,50 +29,30 @@ namespace AniDroid.SearchResults
         {
             switch (searchType)
             {
-                //case SearchResultsActivity.AniListSearchTypes.Anime:
-                //    View.ShowAnimeSearchResults(AniListService.SearchMedia(searchTerm, Media.MediaType.Anime,
-                //        PageSize));
-                //    break;
-                //case SearchResultsActivity.AniListSearchTypes.Manga:
-                //    resultRecycler.SetAdapter(new MediaSearchRecyclerAdapter(this,
-                //        AniListService.SearchMedia(searchTerm, Media.MediaType.Manga, PageSize), cardType));
-                //    break;
+                case SearchResultsActivity.AniListSearchTypes.Anime:
+                    View.ShowMediaSearchResults(AniListService.SearchMedia(searchTerm, Media.MediaType.Anime,
+                        PageSize));
+                    break;
+                case SearchResultsActivity.AniListSearchTypes.Manga:
+                    View.ShowMediaSearchResults(AniListService.SearchMedia(searchTerm, Media.MediaType.Manga,
+                        PageSize));
+                    break;
                 case SearchResultsActivity.AniListSearchTypes.Characters:
                     View.ShowCharacterSearchResults(AniListService.SearchCharacters(searchTerm, PageSize));
                     break;
-                    //case SearchResultsActivity.AniListSearchTypes.Staff:
-                    //    resultRecycler.SetAdapter(new StaffSearchRecyclerAdapter(this,
-                    //        AniListService.SearchStaff(searchTerm, PageSize), cardType));
-                    //    break;
-                    //case SearchResultsActivity.AniListSearchTypes.Studios:
-                    //    resultRecycler.SetAdapter(new StudioSearchRecyclerAdapter(this,
-                    //        AniListService.SearchStudios(searchTerm, PageSize)));
-                    //    break;
-                    //case SearchResultsActivity.AniListSearchTypes.Users:
-                    //    resultRecycler.SetAdapter(new UserSearchRecyclerAdapter(this,
-                    //        AniListService.SearchUsers(searchTerm, PageSize), cardType));
-                    //    break;
-                    //case SearchResultsActivity.AniListSearchTypes.Forum:
-                    //    resultRecycler.SetAdapter(new ForumThreadSearchRecyclerAdapter(this,
-                    //        AniListService.SearchForumThreads(searchTerm, PageSize)));
-                    //    break;
+                case SearchResultsActivity.AniListSearchTypes.Staff:
+                    View.ShowStaffSearchResults(AniListService.SearchStaff(searchTerm, PageSize));
+                    break;
+                case SearchResultsActivity.AniListSearchTypes.Studios:
+                    View.ShowStudioSearchResults(AniListService.SearchStudios(searchTerm, PageSize));
+                    break;
+                case SearchResultsActivity.AniListSearchTypes.Users:
+                    View.ShowUserSearchResults(AniListService.SearchUsers(searchTerm, PageSize));
+                    break;
+                case SearchResultsActivity.AniListSearchTypes.Forum:
+                    View.ShowForumThreadSearchResults(AniListService.SearchForumThreads(searchTerm, PageSize));
+                    break;
             }
-
-        }
-
-        public async Task<Character> ToggleCharacterFavorite(Character character)
-        {
-            var favResp = await AniListService.ToggleFavorite(character.Id, User.FavoriteType.Character, default(CancellationToken));
-            favResp.Switch(userFavs =>
-            {
-                character.IsFavourite = userFavs.Characters.Nodes.Any(x => x.Id == character.Id);
-                View.DisplaySnackbarMessage("Favorite toggled successfully", Snackbar.LengthShort);
-            }).Switch(error =>
-            {
-                View.DisplaySnackbarMessage("Error occurred while toggling favorite", Snackbar.LengthShort);
-            });
-
-            return character;
         }
 
         public override Task Init()

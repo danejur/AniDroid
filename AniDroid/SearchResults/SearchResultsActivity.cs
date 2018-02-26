@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Support.V7.Widget;
-using Android.Views;
-using Android.Widget;
 using AniDroid.Adapters.Base;
+using AniDroid.Adapters.Search;
 using AniDroid.Adapters.SearchAdapters;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
@@ -42,16 +37,44 @@ namespace AniDroid.SearchResults
             throw new NotImplementedException();
         }
 
-        public void ShowAnimeSearchResults(IAsyncEnumerable<IPagedData<Media>> animeEnumerable)
+        public void ShowMediaSearchResults(IAsyncEnumerable<IPagedData<Media>> mediaEnumerable)
         {
-            throw new NotImplementedException();
+            // TODO: CardType should be fetched from settings
+            _recyclerView.SetAdapter(new MediaSearchRecyclerAdapter(this, mediaEnumerable,
+                BaseRecyclerAdapter.CardType.Vertical));
         }
 
         public void ShowCharacterSearchResults(IAsyncEnumerable<IPagedData<Character>> characterEnumerable)
         {
             // TODO: CardType should be fetched from settings
             _recyclerView.SetAdapter(new CharacterSearchRecyclerAdapter(this, characterEnumerable,
-                BaseRecyclerAdapter.CardType.Vertical, Presenter));
+                BaseRecyclerAdapter.CardType.Vertical));
+        }
+
+        public void ShowStaffSearchResults(IAsyncEnumerable<IPagedData<Staff>> staffEnumerable)
+        {
+            // TODO: CardType should be fetched from settings
+            _recyclerView.SetAdapter(new StaffSearchRecyclerAdapter(this, staffEnumerable,
+                BaseRecyclerAdapter.CardType.Vertical));
+        }
+
+        public void ShowUserSearchResults(IAsyncEnumerable<IPagedData<User>> userEnumerable)
+        {
+            // TODO: CardType should be fetched from settings
+            _recyclerView.SetAdapter(new UserSearchRecyclerAdapter(this, userEnumerable,
+                BaseRecyclerAdapter.CardType.Vertical));
+        }
+
+        public void ShowForumThreadSearchResults(IAsyncEnumerable<IPagedData<ForumThread>> forumThreadEnumerable)
+        {
+            // TODO: CardType should be fetched from settings
+            _recyclerView.SetAdapter(new ForumThreadSearchRecyclerAdapter(this, forumThreadEnumerable));
+        }
+
+        public void ShowStudioSearchResults(IAsyncEnumerable<IPagedData<Studio>> studioEnumerable)
+        {
+            // TODO: CardType should be fetched from settings
+            _recyclerView.SetAdapter(new StudioSearchRecyclerAdapter(this, studioEnumerable));
         }
 
         public override void DisplaySnackbarMessage(string message, int length)
