@@ -15,6 +15,5 @@ namespace AniDroid.Login
 {
     public interface ILoginView : IAniDroidView
     {
-        void LoginButtonClick();
     }
 }

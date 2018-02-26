@@ -15,5 +15,6 @@ namespace AniDroid.Base
     public interface IAniDroidView
     {
         void OnNetworkError();
+        void DisplaySnackbarMessage(string message, int length);
     }
 }

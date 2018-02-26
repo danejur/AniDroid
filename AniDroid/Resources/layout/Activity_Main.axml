@@ -27,6 +27,7 @@
         android:layout_height="match_parent" />
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/Main_SearchFab"
+        android:src="@drawable/ic_search_white_24dp"
         style="?FabLarge_Style"
         app:layout_behavior="AniDroid.Utils.Behaviors.FloatingActionButtonScrollBehavior"
         android:elevation="10dp"
@@ -41,6 +42,7 @@
       android:layout_height="match_parent"
       android:layout_gravity="start"
       android:id="@+id/Main_NavigationView"
+      android:theme="?NavDrawer_Theme"
       app:headerLayout="@layout/view_mainnavigationheader"
       app:menu="@menu/main_navigation" />
 </android.support.v4.widget.DrawerLayout>

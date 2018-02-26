@@ -15,6 +15,7 @@
   <attr name="Spinner_Theme" format="reference" />
   <attr name="TabLayout_Style" format="reference" />
   <attr name="AppBarLayout_Style" format="reference" />
+  <attr name="NavDrawer_Theme" format="reference" />
 
     <!-- Colors -->
   <attr name="ListItem_Divider" format="reference|color" />

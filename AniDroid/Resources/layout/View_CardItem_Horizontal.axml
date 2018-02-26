@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:resAuto="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:minWidth="25px"
+    android:minHeight="40dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?Background"
+    android:id="@+id/CardItem_Container">
+  <android.support.v7.widget.CardView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:foreground="?android:attr/selectableItemBackground"
+      android:clickable="true"
+      resAuto:cardElevation="3dp"
+      resAuto:cardUseCompatPadding="true"
+      android:id="@+id/CardItem_Card">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?Background_Alternate"
+        android:padding="4dp">
+      <ImageView
+          android:layout_width="wrap_content"
+          android:layout_height="80dp"
+          android:id="@+id/CardItem_Image"
+          android:layout_alignParentLeft="true"
+          android:layout_marginRight="16dp"
+          android:layout_centerVertical="true"
+          android:scaleType="fitCenter"
+          android:adjustViewBounds="true"
+          android:src="@android:drawable/ic_menu_gallery" />
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="?Background_Text"
+          android:id="@+id/CardItem_Name"
+          android:layout_toRightOf="@+id/CardItem_Image"
+          android:layout_alignParentTop="true"
+          android:layout_toStartOf="@+id/CardItem_Button"
+          android:textSize="18dp"
+          android:ellipsize="end"
+          android:singleLine="true"
+          android:text="Name"
+          android:layout_margin="1dp" />
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="?Background_Text_Alternate"
+          android:id="@+id/CardItem_DetailPrimary"
+          android:layout_below="@+id/CardItem_Name"
+          android:textSize="14dp"
+          android:layout_toRightOf="@+id/CardItem_Image"
+          android:text="Detail Primary"
+          android:layout_margin="1dp" />
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:textColor="?Background_Text_Alternate"
+          android:id="@+id/CardItem_DetailSecondary"
+          android:layout_toRightOf="@+id/CardItem_Image"
+          android:layout_below="@+id/CardItem_DetailPrimary"
+          android:textSize="14dp"
+          android:text="Detail Secondary"
+          android:layout_margin="1dp" />
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:visibility="gone"
+          android:orientation="horizontal"
+          android:id="@+id/CardItem_Button"
+          android:foreground="?android:attr/selectableItemBackground"
+          android:clickable="true"
+          android:layout_margin="5dp"
+          android:layout_alignParentEnd="true"
+          android:layout_alignParentTop="true">
+        <ImageView
+            android:src="@drawable/ic_favorite_white_24dp"
+            android:id="@+id/CardItem_ButtonIcon"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:tint="?Secondary_Dark"
+            android:padding="5dp" />
+      </LinearLayout>
+    </RelativeLayout>
+  </android.support.v7.widget.CardView>
+</LinearLayout>

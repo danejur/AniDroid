@@ -9,16 +9,19 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using AniDroid.AniList.Interfaces;
 
 namespace AniDroid.Base
 {
     public abstract class BaseAniDroidPresenter
     {
         public IAniDroidView View { get; set; }
+        protected IAniListService AniListService;
 
-        protected BaseAniDroidPresenter(IAniDroidView view)
+        protected BaseAniDroidPresenter(IAniDroidView view, IAniListService service)
         {
             View = view;
+            AniListService = service;
         }
 
         //Any initial calls to the view or api calls should go here
@@ -32,7 +35,7 @@ namespace AniDroid.Base
 
     public abstract class BaseAniDroidPresenter<T> : BaseAniDroidPresenter where T : IAniDroidView
     {
-        protected BaseAniDroidPresenter(T view) : base(view)
+        protected BaseAniDroidPresenter(T view, IAniListService service) : base(view, service)
         {
         }
 

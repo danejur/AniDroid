@@ -55,6 +55,12 @@
   <color name="AniList_ListItemDivider">#20000000</color>
   <color name="Anilist_TrustedTorrent">#C3F4CF</color>
   <color name="Anilist_RemakeTorrent">#FFE4D1</color>
+  
+  <!-- Nav Drawer -->
+  <color name="AniList_NavBackground">#1f2631</color>
+  <color name="AniList_NavText">#859cc3</color>
+  <color name="AniList_NavIconTint">#FFFFFF</color>
+  <color name="AniList_NavSelected">#01a8fe</color>
 
   <!-- General -->
   <color name="AniList_Background">#F5F5F5</color>
@@ -122,5 +128,8 @@
   <color name="VerticalCard_ImageTextBackground">#BE000000</color>
   <color name="VerticalCard_NameText">#F4FFFFFF</color>
   <color name="VerticalCard_DetailText">#E6FFFFFF</color>
+  
+  <!-- Favorites -->
+  <color name="Favorite_Red">#ef3051</color>
 
 </resources>

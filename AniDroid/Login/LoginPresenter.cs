@@ -10,22 +10,21 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
 
 namespace AniDroid.Login
 {
     public class LoginPresenter : BaseAniDroidPresenter<ILoginView>
     {
-        public LoginPresenter(ILoginView view) : base(view)
+        public LoginPresenter(ILoginView view, IAniListService service) : base(view, service)
         {
         }
 
-        public override async Task Init()
+        public override Task Init()
         {
-            await Task.Run(() => Thread.Sleep(1000));
-            View.LoginButtonClick();
-
             // TODO: do something here
+            return Task.CompletedTask;
         }
 
         public override Task RestoreState(IList<string> savedState)

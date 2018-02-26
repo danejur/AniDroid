@@ -9,15 +9,11 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Ninject.Modules;
+using AniDroid.Base;
 
-namespace AniDroid
+namespace AniDroid.Browse
 {
-    public class ApplicationModule : NinjectModule
+    public interface IBrowseView : IAniDroidView
     {
-        public override void Load()
-        {
-            // TODO: add contract binding here
-        }
     }
 }

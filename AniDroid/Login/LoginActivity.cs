@@ -18,10 +18,7 @@ namespace AniDroid.Login
     [Activity(Label = "Login")]
     public class LoginActivity : BaseAniDroidActivity<LoginPresenter>, ILoginView
     {
-        [InjectView(Resource.Id.Login_LoginButton)]
-        private Button _loginButton;
-
-        protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule(), new LoginModule(this));
+        protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<ILoginView, LoginActivity>(this));
 
         public override async Task OnCreateExtended(Bundle savedInstanceState)
         {
@@ -34,9 +31,9 @@ namespace AniDroid.Login
             throw new NotImplementedException();
         }
 
-        public void LoginButtonClick()
+        public override void DisplaySnackbarMessage(string message, int length)
         {
-            _loginButton.Text = "Clicked!";
+            // TODO: Implement
         }
 
         public static void StartActivity(Context context)

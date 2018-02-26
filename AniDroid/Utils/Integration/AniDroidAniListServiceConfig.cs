@@ -9,15 +9,12 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Ninject.Modules;
+using AniDroid.AniList.Interfaces;
 
-namespace AniDroid.Main
+namespace AniDroid.Utils.Integration
 {
-    public class MainModule : NinjectModule
+    internal class AniDroidAniListServiceConfig : IAniListServiceConfig
     {
-        public override void Load()
-        {
-            Bind<IMainView>().To<MainActivity>();
-        }
+        public string BaseUrl => "https://graphql.anilist.co";
     }
 }
