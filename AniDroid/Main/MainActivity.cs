@@ -12,6 +12,7 @@ using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Base;
+using AniDroid.Dialogs;
 using AniDroid.SearchResults;
 using AniDroid.Utils;
 using Ninject;
@@ -23,6 +24,8 @@ namespace AniDroid.Main
     {
         [InjectView(Resource.Id.Main_NavigationView)]
         private NavigationView _navigationView;
+        [InjectView(Resource.Id.Main_SearchFab)]
+        private FloatingActionButton _searchButton;
 
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IMainView, MainActivity>(this));
 
@@ -37,6 +40,18 @@ namespace AniDroid.Main
             _navigationView?.Menu?.FindItem(Resource.Id.Menu_Navigation_Anime)?.SetVisible(isAuthenticated);
             _navigationView?.Menu?.FindItem(Resource.Id.Menu_Navigation_Manga)?.SetVisible(isAuthenticated);
             _navigationView?.Menu?.FindItem(Resource.Id.Menu_Navigation_Home)?.SetVisible(isAuthenticated);
+        }
+
+        public void OnMainViewSetup()
+        {
+            _searchButton.Clickable = true;
+            _searchButton.Click -= SearchButtonOnClick;
+            _searchButton.Click += SearchButtonOnClick;
+        }
+
+        private void SearchButtonOnClick(object sender, EventArgs eventArgs)
+        {
+            SearchDialog.Create(this, (type, term) => SearchResultsActivity.StartActivity(this, type, term));
         }
 
         public static void StartActivity(Context context)
@@ -55,8 +70,6 @@ namespace AniDroid.Main
             SetContentView(Resource.Layout.Activity_Main);
 
             await CreatePresenter(savedInstanceState);
-
-            SearchResultsActivity.StartAniListSearchResultsActivity(this, SearchResultsActivity.AniListSearchTypes.Anime, "test");
         }
     }
 }

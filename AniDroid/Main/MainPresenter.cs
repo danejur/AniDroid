@@ -26,6 +26,7 @@ namespace AniDroid.Main
             // TODO: do something here
 
             View.SetAuthenticatedNavigationVisibility(false);
+            View.OnMainViewSetup();
         }
 
         public override Task RestoreState(IList<string> savedState)

@@ -29,7 +29,7 @@ namespace AniDroid.Adapters.Base
         private IAsyncEnumerator<IPagedData<T>> _asyncEnumerator;
         private bool _isLazyLoading;
 
-        protected LazyLoadingRecyclerViewAdapter(BaseAniDroidActivity context, IAsyncEnumerable<IPagedData<T>> enumerable, CardType cardType, int verticalCardColumns = 2) : base(context, new List<T> { null }, cardType, verticalCardColumns)
+        protected LazyLoadingRecyclerViewAdapter(BaseAniDroidActivity context, IAsyncEnumerable<IPagedData<T>> enumerable, CardType cardType, int verticalCardColumns = 3) : base(context, new List<T> { null }, cardType, verticalCardColumns)
         {
             _asyncEnumerable = enumerable;
             _asyncEnumerator = enumerable.GetEnumerator();

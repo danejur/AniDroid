@@ -5,21 +5,25 @@ using Android.Content;
 using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V7.Widget;
+using Android.Views;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.Search;
 using AniDroid.Adapters.SearchAdapters;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
+using AniDroid.Dialogs;
 using AniDroid.Utils;
 using Ninject;
-using Toolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace AniDroid.SearchResults
 {
     [Activity(Label = "Search Results")]
     public class SearchResultsActivity : BaseAniDroidActivity<SearchResultsPresenter>, ISearchResultsView
     {
+        private string _searchType;
+        private string _searchTerm;
+
         [InjectView(Resource.Id.SearchResults_CoordLayout)]
         private CoordinatorLayout _coordLayout;
         [InjectView(Resource.Id.SearchResults_RecyclerView)]
@@ -86,20 +90,58 @@ namespace AniDroid.SearchResults
         {
             SetContentView(Resource.Layout.Activity_SearchResults);
 
-            var searchType = Intent.GetStringExtra(IntentKeys.SearchType);
-            var searchTerm = Intent.GetStringExtra(IntentKeys.SearchTerm);
+            _searchType = Intent.GetStringExtra(IntentKeys.SearchType);
+            _searchTerm = Intent.GetStringExtra(IntentKeys.SearchTerm);
 
             await CreatePresenter(savedInstanceState);
-            Presenter.SearchAniList(searchType, searchTerm);
+            Presenter.SearchAniList(_searchType, _searchTerm);
+
+            _searchButton.Clickable = true;
+            _searchButton.Click -= SearchButtonOnClick;
+            _searchButton.Click += SearchButtonOnClick;
+
+            SetupToolbar();
         }
 
-        public static void StartAniListSearchResultsActivity(Context context, string type, string term)
+        private void SearchButtonOnClick(object sender, EventArgs eventArgs)
+        {
+            SearchDialog.Create(this, (type, term) =>
+            {
+                _searchType = type;
+                _searchTerm = term;
+                Presenter.SearchAniList(type, term);
+            }, _searchType, _searchTerm);
+        }
+
+        public static void StartActivity(Context context, string type, string term)
         {
             var searchIntent = new Intent(context, typeof(SearchResultsActivity));
             searchIntent.PutExtra(IntentKeys.SearchTerm, term);
             searchIntent.PutExtra(IntentKeys.SearchType, type);
             context.StartActivity(searchIntent);
         }
+
+        #region Toolbar
+
+        private void SetupToolbar()
+        {
+            SetSupportActionBar(_toolbar);
+            SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_arrow_back_white_24dp);
+            SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+        }
+
+        public override bool MenuItemSelected(IMenuItem item)
+        {
+            if (item.ItemId == Android.Resource.Id.Home)
+            {
+                Finish();
+                return true;
+            }
+
+            return false;
+        }
+
+        #endregion
 
         #region Constants
 

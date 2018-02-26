@@ -64,8 +64,10 @@ namespace AniDroid.Base
 
     public abstract class BaseAniDroidActivity : AppCompatActivity
     {
-        protected abstract IReadOnlyKernel Kernel { get; }
+        protected bool HasError { get; set; }
         public sealed override LayoutInflater LayoutInflater => ThemedInflater;
+
+        #region Overrides
 
         protected sealed override async void OnCreate(Bundle savedInstanceState)
         {
@@ -76,28 +78,35 @@ namespace AniDroid.Base
             await OnCreateExtended(savedInstanceState);
         }
 
-        public int GetTheme()
-        {
-            // TODO: GetTheme needs to return currently configured theme
-            return Resource.Style.AniList;
-        }
-
-        public int GetThemeColor(int attrId)
-        {
-            var typedVal = new TypedValue();
-            Theme.ResolveAttribute(attrId, typedVal, true);
-            return new Color(ContextCompat.GetColor(this, typedVal.ResourceId));
-        }
-
         public sealed override void SetContentView(int layoutResId)
         {
             base.SetContentView(layoutResId);
             Cheeseknife.Inject(this);
         }
 
-        public abstract void OnNetworkError();
+        #endregion
 
-        public abstract Task OnCreateExtended(Bundle savedInstanceState);
+        #region Theme
+
+        public int GetTheme()
+        {
+            // TODO: GetTheme needs to return currently configured theme
+            return Resource.Style.Dark;
+        }
+
+        public int GetThemedResourceId(int attrId)
+        {
+            var typedVal = new TypedValue();
+            Theme.ResolveAttribute(attrId, typedVal, true);
+            return typedVal.ResourceId;
+        }
+
+        public int GetThemedColor(int attrId)
+        {
+            var typedVal = new TypedValue();
+            Theme.ResolveAttribute(attrId, typedVal, true);
+            return new Color(ContextCompat.GetColor(this, typedVal.ResourceId));
+        }
 
         private LayoutInflater ThemedInflater
         {
@@ -110,7 +119,12 @@ namespace AniDroid.Base
             }
         }
 
+        #endregion
+
+        #region Picasso
+
         private static Picasso PicassoInstance { get; set; }
+
         public void LoadImage(ImageView imageView, string url, bool showLoading = true)
         {
             var obj = new object();
@@ -119,20 +133,50 @@ namespace AniDroid.Base
                 PicassoInstance = PicassoInstance ?? Picasso.With(ApplicationContext);
             }
 
-            try
+            var req = PicassoInstance.Load(url);
+            if (showLoading)
             {
-                var req = PicassoInstance.Load(url);
-                if (showLoading)
-                {
-                    req = req.Placeholder(Android.Resource.Drawable.IcMenuGallery);
-                }
-                req.Into(imageView);
+                req = req.Placeholder(Android.Resource.Drawable.IcMenuGallery);
             }
-            catch (Exception e)
-            {
-                //Globals.LogError(e, $"Error loading image and uncaught exception: {url}");
-            }
+
+            req.Into(imageView);
         }
+
+        #endregion
+
+        #region Abstract
+
+        protected abstract IReadOnlyKernel Kernel { get; }
+
+        public abstract void OnNetworkError();
+
+        public abstract Task OnCreateExtended(Bundle savedInstanceState);
+
+        #endregion
+
+        #region Toolbar
+
+        public sealed override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            if (HasError)
+            {
+                // TODO: add error activity recreation
+                //if (item.ItemId == Resource.Id.MenuAction_Error_Refresh)
+                //{
+                //    Recreate();
+                //    return true;
+                //}
+            }
+
+            return MenuItemSelected(item);
+        }
+
+        public virtual bool MenuItemSelected(IMenuItem item)
+        {
+            return base.OnOptionsItemSelected(item);
+        }
+
+        #endregion
     }
 
     public class CustomNonConfigurationWrapper<T> : Java.Lang.Object

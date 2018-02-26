@@ -16,5 +16,6 @@ namespace AniDroid.Main
     public interface IMainView : IAniDroidView
     {
         void SetAuthenticatedNavigationVisibility(bool isAuthenticated);
+        void OnMainViewSetup();
     }
 }
