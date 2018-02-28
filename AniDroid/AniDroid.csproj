@@ -154,6 +154,11 @@
     <Compile Include="SearchResults\ISearchResultsView.cs" />
     <Compile Include="SearchResults\SearchResultsActivity.cs" />
     <Compile Include="SearchResults\SearchResultsPresenter.cs" />
+    <Compile Include="Settings\SettingsPresenter.cs" />
+    <Compile Include="Settings\ISettingsView.cs" />
+    <Compile Include="Settings\SettingsActivity.cs" />
+    <Compile Include="Utils\AniDroidSettings.cs" />
+    <Compile Include="Utils\Storage\AniDroidStorage.cs" />
     <Compile Include="Utils\ApplicationModule.cs" />
     <Compile Include="Base\BaseAniDroidActivity.cs" />
     <Compile Include="Base\BaseAniDroidPresenter.cs" />
@@ -172,6 +177,8 @@
     <Compile Include="Utils\Cheeseknife.cs" />
     <Compile Include="Utils\Integration\AniDroidAniListServiceConfig.cs" />
     <Compile Include="Utils\Integration\AniDroidAuthCodeResolver.cs" />
+    <Compile Include="Utils\Interfaces\IAniDroidSettings.cs" />
+    <Compile Include="Utils\Storage\SettingsStorage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -208,6 +215,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\View_SpinnerDropDownItem.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Activity_Settings.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

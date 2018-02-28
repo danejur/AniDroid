@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?Background">
+  <android.support.design.widget.CoordinatorLayout
+    android:id="@+id/Settings_CoordLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.design.widget.AppBarLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content">
+      <android.support.v7.widget.Toolbar
+        app:popupTheme="?Toolbar_PopupTheme"
+        app:theme="?Toolbar_Theme"
+        style="?Toolbar_Style"
+        android:id="@+id/Settings_Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        app:layout_scrollFlags="scroll|enterAlways" />
+    </android.support.design.widget.AppBarLayout>
+    <android.support.v4.widget.NestedScrollView
+      android:minWidth="25px"
+      android:minHeight="25px"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior">
+      <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/Settings_Container" />
+    </android.support.v4.widget.NestedScrollView>
+  </android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

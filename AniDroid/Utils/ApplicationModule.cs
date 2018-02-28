@@ -1,6 +1,9 @@
-﻿using AniDroid.AniList.Interfaces;
+﻿using Android.App;
+using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Service;
 using AniDroid.Utils.Integration;
+using AniDroid.Utils.Interfaces;
+using AniDroid.Utils.Storage;
 using Ninject.Modules;
 
 namespace AniDroid.Utils
@@ -10,8 +13,9 @@ namespace AniDroid.Utils
         public override void Load()
         {
             Bind<IAniListServiceConfig>().To<AniDroidAniListServiceConfig>().InSingletonScope();
-            Bind<IAuthCodeResolver>().ToMethod(AniDroidAuthCodeResolver.CreateAuthCodeResolver);
+            Bind<IAuthCodeResolver>().ToMethod(syntax => AniDroidAuthCodeResolver.CreateAuthCodeResolver());
             Bind<IAniListService>().To<AniListService>().InSingletonScope();
+            Bind<IAniDroidSettings>().ToConstructor(syntax => new AniDroidSettings(new SettingsStorage(Application.Context))).InSingletonScope();
         }
     }
 

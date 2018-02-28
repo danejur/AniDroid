@@ -17,7 +17,7 @@ using Ninject;
 
 namespace AniDroid.Start
 {
-    [Activity(Label = "StartActivity", MainLauncher = true)]
+    [Activity(Label = "AniDroidNew", MainLauncher = true)]
     public class StartActivity : BaseAniDroidActivity
     {
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule());

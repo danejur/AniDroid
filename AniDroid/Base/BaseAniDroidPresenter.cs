@@ -29,8 +29,15 @@ namespace AniDroid.Base
         public abstract Task Init();
 
         //These methods are to allow the presenter to be restored properly on Android when the View is killed by the system
-        public abstract Task RestoreState(IList<string> savedState);
-        public abstract IList<string> SaveState();
+        public virtual Task RestoreState(IList<string> savedState)
+        {
+            return Task.CompletedTask;
+        }
+
+        public virtual IList<string> SaveState()
+        {
+            return new List<string>();
+        }
     }
 
     public abstract class BaseAniDroidPresenter<T> : BaseAniDroidPresenter where T : IAniDroidView
