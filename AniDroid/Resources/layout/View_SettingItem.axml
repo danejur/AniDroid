@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:minWidth="25px"
+    android:minHeight="40dp"
+    android:layout_width="match_parent"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:id="@+id/SettingItem_Container"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:padding="12dp">
+    <TextView
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:id="@+id/SettingItem_Name"
+        android:textSize="18dp"
+        android:text="Setting Name"
+        android:marqueeRepeatLimit="2"
+        android:layout_height="wrap_content"
+        android:textColor="?Background_Text" />
+    <TextView
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/SettingItem_Details"
+        android:textSize="14dp"
+        android:marqueeRepeatLimit="2"
+        android:textColor="?Background_Text_Alternate" />
+</LinearLayout>

@@ -2954,20 +2954,20 @@ namespace AniDroid
 			// aapt resource value: 0x7f070095
 			public const int Main_Toolbar = 2131165333;
 			
-			// aapt resource value: 0x7f0700d5
-			public const int Menu_Navigation_Anime = 2131165397;
+			// aapt resource value: 0x7f0700da
+			public const int Menu_Navigation_Anime = 2131165402;
 			
-			// aapt resource value: 0x7f0700d7
-			public const int Menu_Navigation_Browse = 2131165399;
+			// aapt resource value: 0x7f0700dc
+			public const int Menu_Navigation_Browse = 2131165404;
 			
-			// aapt resource value: 0x7f0700d4
-			public const int Menu_Navigation_Home = 2131165396;
+			// aapt resource value: 0x7f0700d9
+			public const int Menu_Navigation_Home = 2131165401;
 			
-			// aapt resource value: 0x7f0700d6
-			public const int Menu_Navigation_Manga = 2131165398;
+			// aapt resource value: 0x7f0700db
+			public const int Menu_Navigation_Manga = 2131165403;
 			
-			// aapt resource value: 0x7f0700d8
-			public const int Menu_Navigation_TorrentSearch = 2131165400;
+			// aapt resource value: 0x7f0700dd
+			public const int Menu_Navigation_TorrentSearch = 2131165405;
 			
 			// aapt resource value: 0x7f0700cd
 			public const int Navigation_Container = 2131165389;
@@ -3022,6 +3022,18 @@ namespace AniDroid
 			
 			// aapt resource value: 0x7f0700ae
 			public const int Search_Type = 2131165358;
+			
+			// aapt resource value: 0x7f0700d2
+			public const int SettingItem_Container = 2131165394;
+			
+			// aapt resource value: 0x7f0700d4
+			public const int SettingItem_Details = 2131165396;
+			
+			// aapt resource value: 0x7f0700d3
+			public const int SettingItem_Name = 2131165395;
+			
+			// aapt resource value: 0x7f0700d6
+			public const int SettingItem_Switch = 2131165398;
 			
 			// aapt resource value: 0x7f07009f
 			public const int Settings_Container = 2131165343;
@@ -3269,14 +3281,17 @@ namespace AniDroid
 			// aapt resource value: 0x7f070018
 			public const int line3 = 2131165208;
 			
+			// aapt resource value: 0x7f0700d5
+			public const int linearLayout1 = 2131165397;
+			
 			// aapt resource value: 0x7f070021
 			public const int listMode = 2131165217;
 			
 			// aapt resource value: 0x7f070065
 			public const int list_item = 2131165285;
 			
-			// aapt resource value: 0x7f0700d3
-			public const int masked = 2131165395;
+			// aapt resource value: 0x7f0700d8
+			public const int masked = 2131165400;
 			
 			// aapt resource value: 0x7f0700b6
 			public const int media_actions = 2131165366;
@@ -3533,8 +3548,8 @@ namespace AniDroid
 			// aapt resource value: 0x7f070016
 			public const int view_offset_helper = 2131165206;
 			
-			// aapt resource value: 0x7f0700d2
-			public const int visible = 2131165394;
+			// aapt resource value: 0x7f0700d7
+			public const int visible = 2131165399;
 			
 			// aapt resource value: 0x7f070040
 			public const int withText = 2131165248;
@@ -3815,7 +3830,13 @@ namespace AniDroid
 			public const int View_MainNavigationHeader = 2130903111;
 			
 			// aapt resource value: 0x7f030048
-			public const int View_SpinnerDropDownItem = 2130903112;
+			public const int View_SettingItem = 2130903112;
+			
+			// aapt resource value: 0x7f030049
+			public const int View_SettingItem_Switch = 2130903113;
+			
+			// aapt resource value: 0x7f03004a
+			public const int View_SpinnerDropDownItem = 2130903114;
 			
 			static Layout()
 			{

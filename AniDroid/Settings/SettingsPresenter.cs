@@ -26,7 +26,7 @@ namespace AniDroid.Settings
 
         public override async Task Init()
         {
-            var test = await _settings.GetCardTypeAsync();
+            View.CreateCardTypeSettingItem(await _settings.GetCardTypeAsync());
         }
     }
 }

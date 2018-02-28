@@ -24,6 +24,7 @@
     <android.support.v4.widget.NestedScrollView
       android:minWidth="25px"
       android:minHeight="25px"
+      android:background="?Background"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       app:layout_behavior="@string/appbar_scrolling_view_behavior">
