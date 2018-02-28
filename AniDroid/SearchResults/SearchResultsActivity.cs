@@ -7,7 +7,6 @@ using Android.Support.Design.Widget;
 using Android.Support.V7.Widget;
 using Android.Views;
 using AniDroid.Adapters.Base;
-using AniDroid.Adapters.Search;
 using AniDroid.Adapters.SearchAdapters;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;

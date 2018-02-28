@@ -15,6 +15,7 @@
       android:clickable="true"
       resAuto:cardElevation="3dp"
       resAuto:cardUseCompatPadding="true"
+      resAuto:cardPreventCornerOverlap="false"
       android:id="@+id/CardItem_Card">
     <ImageView
         android:layout_width="match_parent"

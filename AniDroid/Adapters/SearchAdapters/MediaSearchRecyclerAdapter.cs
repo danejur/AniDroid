@@ -1,4 +1,6 @@
 ﻿using System;
+using Android.Support.V4.Graphics.Drawable;
+using Android.Support.V4.Widget;
 using Android.Views;
 using AniDroid.Adapters.Base;
 using AniDroid.AniList;
@@ -33,7 +35,7 @@ namespace AniDroid.Adapters.SearchAdapters
         {
             item.Button.Clickable = false;
             item.ButtonIcon.SetImageResource(Resource.Drawable.ic_favorite_white_24dp);
-            item.ButtonIcon.ImageTintList = FavoriteIconColor;
+            ImageViewCompat.SetImageTintList(item.ButtonIcon, FavoriteIconColor);
 
             item.DetailSecondary.Visibility = ViewStates.Gone;
 

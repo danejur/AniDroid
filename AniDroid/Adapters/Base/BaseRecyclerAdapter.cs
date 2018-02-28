@@ -30,7 +30,7 @@ namespace AniDroid.Adapters.Base
             _cardType = cardType;
             _cardColumns = Math.Abs(verticalCardColumns); // no funny business
             DefaultIconColor = ColorStateList.ValueOf(new Color(context.GetThemedColor(Resource.Attribute.Secondary_Dark)));
-            FavoriteIconColor = ColorStateList.ValueOf(new Color(context.GetColor(Resource.Color.Favorite_Red)));
+            FavoriteIconColor = ColorStateList.ValueOf(new Color(ContextCompat.GetColor(context, Resource.Color.Favorite_Red)));
         }
 
         public void AddItems(params T[] items)
