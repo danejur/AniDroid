@@ -17,5 +17,6 @@ namespace AniDroid.Settings
     public interface ISettingsView : IAniDroidView
     {
         void CreateCardTypeSettingItem(BaseRecyclerAdapter.CardType cardType);
+        void CreateAniDroidThemeSettingItem(BaseAniDroidActivity.AniDroidTheme theme);
     }
 }

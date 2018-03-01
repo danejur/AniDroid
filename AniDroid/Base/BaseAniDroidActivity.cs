@@ -14,6 +14,7 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Utils;
+using AniDroid.Utils.Interfaces;
 using Ninject;
 using Square.Picasso;
 
@@ -64,6 +65,7 @@ namespace AniDroid.Base
 
     public abstract class BaseAniDroidActivity : AppCompatActivity
     {
+        private AniDroidTheme _theme;
         protected bool HasError { get; set; }
         public sealed override LayoutInflater LayoutInflater => ThemedInflater;
 
@@ -72,6 +74,9 @@ namespace AniDroid.Base
         protected sealed override async void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+            var settings = Kernel.Get<IAniDroidSettings>();
+            _theme = await settings.GetThemeAsync();
 
             SetTheme(GetTheme());
 
@@ -90,8 +95,16 @@ namespace AniDroid.Base
 
         public int GetTheme()
         {
-            // TODO: GetTheme needs to return currently configured theme
-            return Resource.Style.Dark;
+            var theme = Resource.Style.AniList;
+
+            switch (_theme)
+            {
+                case AniDroidTheme.Dark:
+                    theme = Resource.Style.Dark;
+                    break;
+            }
+
+            return theme;
         }
 
         public int GetThemedResourceId(int attrId)
@@ -117,6 +130,12 @@ namespace AniDroid.Base
                     return base.LayoutInflater.CloneInContext(contextThemeWrapper);
                 }
             }
+        }
+
+        public enum AniDroidTheme
+        {
+            AniList = 0,
+            Dark = 1
         }
 
         #endregion

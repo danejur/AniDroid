@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.Base;
+using AniDroid.Base;
 
 namespace AniDroid.Utils.Interfaces
 {
@@ -17,5 +18,7 @@ namespace AniDroid.Utils.Interfaces
     {
         void SetCardType(BaseRecyclerAdapter.CardType cardType);
         Task<BaseRecyclerAdapter.CardType> GetCardTypeAsync();
+        void SetTheme(BaseAniDroidActivity.AniDroidTheme theme);
+        Task<BaseAniDroidActivity.AniDroidTheme> GetThemeAsync();
     }
 }

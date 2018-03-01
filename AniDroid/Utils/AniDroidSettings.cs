@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.Base;
+using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
 using AniDroid.Utils.Storage;
 
@@ -34,11 +35,22 @@ namespace AniDroid.Utils
             return await _settingStorage.Get(StorageKeys.CardTypeKey, BaseRecyclerAdapter.CardType.Vertical);
         }
 
+        public void SetTheme(BaseAniDroidActivity.AniDroidTheme theme)
+        {
+            _settingStorage.Put(StorageKeys.ThemeKey, theme);
+        }
+
+        public async Task<BaseAniDroidActivity.AniDroidTheme> GetThemeAsync()
+        {
+            return await _settingStorage.Get(StorageKeys.ThemeKey, BaseAniDroidActivity.AniDroidTheme.AniList);
+        }
+
         #region Constants
 
         private static class StorageKeys
         {
             public const string CardTypeKey = "CARD_TYPE";
+            public const string ThemeKey = "THEME";
         }
 
         #endregion

@@ -13,6 +13,7 @@ using AniDroid.AniList.Models;
 using AniDroid.Base;
 using AniDroid.Dialogs;
 using AniDroid.Utils;
+using AniDroid.Utils.Interfaces;
 using Ninject;
 
 namespace AniDroid.SearchResults
@@ -22,6 +23,7 @@ namespace AniDroid.SearchResults
     {
         private string _searchType;
         private string _searchTerm;
+        private BaseRecyclerAdapter.CardType _cardType;
 
         [InjectView(Resource.Id.SearchResults_CoordLayout)]
         private CoordinatorLayout _coordLayout;
@@ -42,41 +44,31 @@ namespace AniDroid.SearchResults
 
         public void ShowMediaSearchResults(IAsyncEnumerable<IPagedData<Media>> mediaEnumerable)
         {
-            // TODO: CardType should be fetched from settings
-            _recyclerView.SetAdapter(new MediaSearchRecyclerAdapter(this, mediaEnumerable,
-                BaseRecyclerAdapter.CardType.Vertical));
+            _recyclerView.SetAdapter(new MediaSearchRecyclerAdapter(this, mediaEnumerable, _cardType));
         }
 
         public void ShowCharacterSearchResults(IAsyncEnumerable<IPagedData<Character>> characterEnumerable)
         {
-            // TODO: CardType should be fetched from settings
-            _recyclerView.SetAdapter(new CharacterSearchRecyclerAdapter(this, characterEnumerable,
-                BaseRecyclerAdapter.CardType.Vertical));
+            _recyclerView.SetAdapter(new CharacterSearchRecyclerAdapter(this, characterEnumerable, _cardType));
         }
 
         public void ShowStaffSearchResults(IAsyncEnumerable<IPagedData<Staff>> staffEnumerable)
         {
-            // TODO: CardType should be fetched from settings
-            _recyclerView.SetAdapter(new StaffSearchRecyclerAdapter(this, staffEnumerable,
-                BaseRecyclerAdapter.CardType.Vertical));
+            _recyclerView.SetAdapter(new StaffSearchRecyclerAdapter(this, staffEnumerable, _cardType));
         }
 
         public void ShowUserSearchResults(IAsyncEnumerable<IPagedData<User>> userEnumerable)
         {
-            // TODO: CardType should be fetched from settings
-            _recyclerView.SetAdapter(new UserSearchRecyclerAdapter(this, userEnumerable,
-                BaseRecyclerAdapter.CardType.Vertical));
+            _recyclerView.SetAdapter(new UserSearchRecyclerAdapter(this, userEnumerable, _cardType));
         }
 
         public void ShowForumThreadSearchResults(IAsyncEnumerable<IPagedData<ForumThread>> forumThreadEnumerable)
         {
-            // TODO: CardType should be fetched from settings
             _recyclerView.SetAdapter(new ForumThreadSearchRecyclerAdapter(this, forumThreadEnumerable));
         }
 
         public void ShowStudioSearchResults(IAsyncEnumerable<IPagedData<Studio>> studioEnumerable)
         {
-            // TODO: CardType should be fetched from settings
             _recyclerView.SetAdapter(new StudioSearchRecyclerAdapter(this, studioEnumerable));
         }
 
@@ -88,6 +80,9 @@ namespace AniDroid.SearchResults
         public override async Task OnCreateExtended(Bundle savedInstanceState)
         {
             SetContentView(Resource.Layout.Activity_SearchResults);
+
+            var settings = Kernel.Get<IAniDroidSettings>();
+            _cardType = await settings.GetCardTypeAsync();
 
             _searchType = Intent.GetStringExtra(IntentKeys.SearchType);
             _searchTerm = Intent.GetStringExtra(IntentKeys.SearchTerm);
