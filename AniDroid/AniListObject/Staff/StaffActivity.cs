@@ -94,12 +94,12 @@ namespace AniDroid.AniListObject.Staff
 
             if (staff.Anime?.PageInfo?.Total > 0)
             {
-                adapter.AddView(CreateStaffMediaView(staff.Id, Media.MediaType.Anime), "Anime");
+                adapter.AddView(CreateStaffMediaView(staff.Id, AniList.Models.Media.MediaType.Anime), "Anime");
             }
 
             if (staff.Manga?.PageInfo?.Total > 0)
             {
-                adapter.AddView(CreateStaffMediaView(staff.Id, Media.MediaType.Manga), "Manga");
+                adapter.AddView(CreateStaffMediaView(staff.Id, AniList.Models.Media.MediaType.Manga), "Manga");
             }
 
             ViewPager.OffscreenPageLimit = adapter.Count - 1;
@@ -135,7 +135,7 @@ namespace AniDroid.AniListObject.Staff
             return retView;
         }
 
-        private View CreateStaffMediaView(int staffId, Media.MediaType mediaType)
+        private View CreateStaffMediaView(int staffId, AniList.Models.Media.MediaType mediaType)
         {
             var staffMediaEnumerable = Presenter.GetStaffMediaEnumerable(staffId, mediaType, PageLength);
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);

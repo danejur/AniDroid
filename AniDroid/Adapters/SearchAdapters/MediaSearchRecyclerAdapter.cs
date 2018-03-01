@@ -6,6 +6,7 @@ using AniDroid.Adapters.Base;
 using AniDroid.AniList;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 
 namespace AniDroid.Adapters.SearchAdapters
@@ -42,9 +43,13 @@ namespace AniDroid.Adapters.SearchAdapters
             return item;
         }
 
-        private static void RowClick(object sender, EventArgs e)
+        private void RowClick(object sender, EventArgs e)
         {
-            // TODO: start media activity here
+            var senderView = sender as View;
+            var mediaPos = (int)senderView.GetTag(Resource.Id.Object_Position);
+            var media = Items[mediaPos];
+
+            MediaActivity.StartActivity(Context, media.Id);
         }
     }
 }

@@ -1,7 +1,11 @@
-﻿using AniDroid.Adapters.Base;
+﻿using System;
+using Android.Views;
+using AniDroid.Adapters.Base;
 using AniDroid.AniList;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniListObject.Character;
+using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 
 namespace AniDroid.Adapters.StaffAdapters
@@ -22,8 +26,17 @@ namespace AniDroid.Adapters.StaffAdapters
             Context.LoadImage(holder.Image, item.Node?.CoverImage?.Large ?? "");
 
             holder.ContainerCard.SetTag(Resource.Id.Object_Position, position);
+            holder.ContainerCard.Click -= RowClick;
+            holder.ContainerCard.Click += RowClick;
+        }
 
-            // TODO: implement start media activity click
+        private void RowClick(object sender, EventArgs e)
+        {
+            var senderView = sender as View;
+            var mediaPos = (int)senderView.GetTag(Resource.Id.Object_Position);
+            var mediaEdge = Items[mediaPos];
+
+            MediaActivity.StartActivity(Context, mediaEdge.Node.Id, BaseAniDroidActivity.ObjectBrowseRequestCode);
         }
     }
 }

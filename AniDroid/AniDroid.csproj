@@ -141,6 +141,7 @@
     <Compile Include="Adapters\Base\LazyLoadingRecyclerViewAdapter.cs" />
     <Compile Include="Adapters\CharacterAdapters\CharacterMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\FragmentlessViewPagerAdapter.cs" />
+    <Compile Include="Adapters\MediaAdapters\MediaCharactersRecyclerAdapter.cs" />
     <Compile Include="Adapters\SearchAdapters\CharacterSearchRecyclerAdapter.cs" />
     <Compile Include="Adapters\SearchAdapters\ForumThreadSearchRecyclerAdapter.cs" />
     <Compile Include="Adapters\SearchAdapters\MediaSearchRecyclerAdapter.cs" />
@@ -150,6 +151,9 @@
     <Compile Include="Adapters\StaffAdapters\StaffCharactersRecyclerAdapter.cs" />
     <Compile Include="Adapters\StaffAdapters\StaffMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\StaffAdapters\StaffRecyclerAdapter.cs" />
+    <Compile Include="AniListObject\Media\IMediaView.cs" />
+    <Compile Include="AniListObject\Media\MediaActivity.cs" />
+    <Compile Include="AniListObject\Media\MediaPresenter.cs" />
     <Compile Include="AniListObject\Staff\IStaffView.cs" />
     <Compile Include="AniListObject\Staff\StaffActivity.cs" />
     <Compile Include="AniListObject\Staff\StaffPresenter.cs" />

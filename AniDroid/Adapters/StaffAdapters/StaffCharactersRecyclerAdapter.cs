@@ -11,7 +11,7 @@ namespace AniDroid.Adapters.StaffAdapters
 {
     public class StaffCharactersRecyclerAdapter : LazyLoadingRecyclerViewAdapter<Character.Edge>
     {
-        public StaffCharactersRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<IPagedData<Character.Edge>> enumerable, CardType cardType) : base(context, enumerable, cardType, 3)
+        public StaffCharactersRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<IPagedData<Character.Edge>> enumerable, CardType cardType, int verticalCardColumns = 3) : base(context, enumerable, cardType, verticalCardColumns)
         {
         }
 
@@ -24,8 +24,8 @@ namespace AniDroid.Adapters.StaffAdapters
             Context.LoadImage(holder.Image, item.Node?.Image?.Large ?? "");
 
             holder.ContainerCard.SetTag(Resource.Id.Object_Position, position);
-            holder.ContainerCard.Click -= CharacterClick;
-            holder.ContainerCard.Click += CharacterClick;
+            holder.ContainerCard.Click -= RowClick;
+            holder.ContainerCard.Click += RowClick;
         }
 
         public override CardItem SetupCardItemViewHolder(CardItem item)
@@ -34,7 +34,7 @@ namespace AniDroid.Adapters.StaffAdapters
             return item;
         }
 
-        private void CharacterClick(object sender, EventArgs e)
+        private void RowClick(object sender, EventArgs e)
         {
             var senderView = sender as View;
             var characterPos = (int)senderView.GetTag(Resource.Id.Object_Position);
@@ -42,6 +42,5 @@ namespace AniDroid.Adapters.StaffAdapters
 
             CharacterActivity.StartActivity(Context, characterEdge.Node.Id, BaseAniDroidActivity.ObjectBrowseRequestCode);
         }
-
     }
 }
