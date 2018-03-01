@@ -67,10 +67,16 @@ namespace AniDroid.Main
             SearchDialog.Create(this, (type, term) => SearchResultsActivity.StartActivity(this, type, term));
         }
 
-        public static void StartActivity(Context context)
+        public static void StartActivity(Activity context)
         {
             var intent = new Intent(context, typeof(MainActivity));
             context.StartActivity(intent);
+        }
+
+        public static void StartActivityForResult(Activity context, int requestCode)
+        {
+            var intent = new Intent(context, typeof(MainActivity));
+            context.StartActivityForResult(intent, requestCode);
         }
 
         public override void DisplaySnackbarMessage(string message, int length)

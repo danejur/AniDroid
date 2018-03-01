@@ -10,9 +10,11 @@ using Android.OS;
 using Android.Runtime;
 using Android.Support.V4.Content;
 using Android.Support.V7.App;
+using Android.Text;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using AniDroid.Adapters.Base;
 using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
 using Ninject;
@@ -68,6 +70,7 @@ namespace AniDroid.Base
         private AniDroidTheme _theme;
         protected bool HasError { get; set; }
         public sealed override LayoutInflater LayoutInflater => ThemedInflater;
+        public BaseRecyclerAdapter.CardType CardType { get; private set; }
 
         #region Overrides
 
@@ -77,6 +80,7 @@ namespace AniDroid.Base
 
             var settings = Kernel.Get<IAniDroidSettings>();
             _theme = await settings.GetThemeAsync();
+            CardType = await settings.GetCardTypeAsync();
 
             SetTheme(GetTheme());
 
@@ -140,7 +144,7 @@ namespace AniDroid.Base
 
         #endregion
 
-        #region Picasso
+        #region Context Utils
 
         private static Picasso PicassoInstance { get; set; }
 
@@ -161,6 +165,13 @@ namespace AniDroid.Base
             req.Into(imageView);
         }
 
+        public static ISpanned FromHtml(string source)
+        {
+#pragma warning disable CS0618 // Type or member is obsolete
+            return Build.VERSION.SdkInt >= BuildVersionCodes.N ? Html.FromHtml(source, FromHtmlOptions.ModeLegacy) : Html.FromHtml(source);
+#pragma warning restore CS0618 // Type or member is obsolete
+        }
+
         #endregion
 
         #region Abstract
@@ -174,6 +185,19 @@ namespace AniDroid.Base
         #endregion
 
         #region Toolbar
+
+        public override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            if (HasError)
+            {
+                // TODO: implement error screen and menu
+                //MenuInflater.Inflate(Resource.Menu.Error_ActionBar, menu);
+                return true;
+            }
+
+            SetupMenu(menu);
+            return base.OnCreateOptionsMenu(menu);
+        }
 
         public sealed override bool OnOptionsItemSelected(IMenuItem item)
         {
@@ -195,7 +219,22 @@ namespace AniDroid.Base
             return base.OnOptionsItemSelected(item);
         }
 
+        public virtual bool SetupMenu(IMenu menu)
+        {
+            return true;
+        }
+
         #endregion
+
+        #region Constants
+
+        public static class RequestCodes
+        {
+            public const int ObjectBrowseRequestCode = 9;
+        }
+
+        #endregion
+
     }
 
     public class CustomNonConfigurationWrapper<T> : Java.Lang.Object

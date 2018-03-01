@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:orientation="vertical"
+  app:layout_behavior="@string/appbar_scrolling_view_behavior"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+  <LinearLayout
+      android:orientation="vertical"
+      android:paddingLeft="10dp"
+      android:paddingRight="10dp"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+      <ImageView
+          android:layout_width="match_parent"
+          android:layout_height="200dp"
+          android:id="@+id/Staff_Image"
+          android:layout_marginTop="20dp"
+          android:layout_marginBottom="20dp"
+          android:layout_weight="1" />
+      <LinearLayout
+          android:orientation="vertical"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_weight="1"
+          android:layout_gravity="center">
+        <TextView
+            android:text="Name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Staff_Name"
+            android:gravity="center"
+            android:textColor="?Secondary"
+            android:layout_weight="1" />
+        <TextView
+            android:text="Language"
+            android:id="@+id/Staff_Language"
+            android:gravity="center"
+            android:textColor="?Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp" />
+      </LinearLayout>
+    </LinearLayout>
+    <TextView
+        android:text="Description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/Staff_Description"
+        android:layout_marginTop="10dp"
+        android:textColor="?Background_Text"
+        android:gravity="center_horizontal" />
+  </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

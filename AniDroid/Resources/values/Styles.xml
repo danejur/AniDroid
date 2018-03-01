@@ -26,7 +26,6 @@
     <item name="Spinner_Theme">@style/Dark_Spinner</item>
     <item name="TabLayout_Style">@style/Dark_TabLayout</item>
     <item name="AppBarLayout_Style">@style/Dark_AppBarLayout</item>
-    <item name="colorPrimaryDark">@color/Dark_Background_Special_Dark</item>
     <item name="android:windowBackground">@color/Dark_Background</item>
     <item name="android:buttonStyle">@style/Dark_Button</item>
     <item name="android:checkboxStyle">@style/Dark_Checkbox</item>
@@ -177,10 +176,9 @@
     <item name="TextInput_Theme">@style/AniList_TextInput</item>
     <item name="Spinner_Theme">@style/AniList_Spinner</item>
     <item name="TabLayout_Style">@style/AniList_TabLayout</item>
-    <item name="AppBarLayout_Style">@style/AniList_AppBarLayout</item>
-    <item name="NavDrawer_Theme">@style/AniList_AppBarLayout</item>
+    <item name="AppBarLayout_Style">@style/AniList_AppBarLayout_Theme</item>
+    <item name="NavDrawer_Theme">@style/AniList_NavBar_Theme</item>
 
-    <item name="colorPrimaryDark">@color/AniList_ToolbarStatusBar</item>
     <item name="android:windowBackground">@color/AniList_Background</item>
     <item name="android:buttonStyle">@style/AniList_Button</item>
     <item name="android:checkboxStyle">@style/AniList_Checkbox</item>
@@ -208,21 +206,9 @@
     <item name="Background_RemakeTorrent">@color/Anilist_RemakeTorrent</item>
   </style>
 
-  <style name="AniList_Toolbar_Style" parent="Theme.AniDroid">
-    <item name="android:background">@color/AniList_Toolbar</item>
-    <item name="contentScrim">@color/AniList_Toolbar</item>
-  </style>
-
-  <style name="AniList_Toolbar_Theme"
-         parent="Theme.AniDroid">
-    <item name="android:textColorPrimary">@color/AniList_ToolbarText</item>
-    <item name="colorControlNormal">@color/AniList_ToolbarIcon</item>
-    <item name="colorControlHighlight">@color/AniList_ToolbarIcon</item>
-  </style>
-
   <style name="AniList_Popup_Theme" parent="ThemeOverlay.AppCompat.Dark">
-    <item name="android:background">@color/AniList_ToolbarPopup</item>
-    <item name="android:textColor">@color/AniList_ToolbarPopupText</item>
+    <item name="android:background">@color/AniList_Background_Special</item>
+    <item name="android:textColor">@color/AniList_Background_Text</item>
   </style>
 
   <style name="AniList_Checkbox" parent="Theme.AppCompat.Light">
@@ -292,23 +278,44 @@
     <item name="android:textColor">@color/AniList_TextInput</item>
     <item name="android:textSize">16dp</item>
   </style>
+  
+  <!-- NavDrawer -->
 
-  <style name="AniList_TabLayout">
-    <item name="tabIndicatorColor">@color/AniList_TabIndicatorColor</item>
-    <item name="tabBackground">@color/AniList_TabBackground</item>
-    <item name="tabSelectedTextColor">@color/AniList_TabSelectedTextColor</item>
-    <item name="tabTextColor">@color/AniList_TabTextColor</item>
-  </style>
-
-    <style name="AniList_AppBarLayout">
-        <item name="android:background">@color/AniList_TabBackground</item>
-    </style>
-
-  <style name="AniList_AppBarLayout">
+  <style name="AniList_NavBar_Theme" parent="Theme.AniDroid">
     <item name="android:background">@color/AniList_NavBackground</item>
     <item name="android:windowBackground">@color/AniList_NavBackground</item>
     <item name="itemTextColor">@color/AniList_NavText</item>
     <item name="itemIconTint">@color/AniList_NavIconTint</item>
-    <item name="colorControlHighlight">@color/AniList_NavSelected</item>
+    <item name="colorControlHighlight">@color/AniList_Primary_Dark</item>
+  </style>
+  
+  <!-- Toolbar -->
+
+  <style name="AniList_Toolbar_Style" parent="Theme.AniDroid">
+    <item name="android:background">@color/AniList_Primary</item>
+    <item name="contentScrim">@color/AniList_Primary</item>
+  </style>
+
+  <style name="AniList_Toolbar_Theme" parent="Theme.AniDroid">
+    <item name="android:textColorPrimary">@color/AniList_Primary_Text</item>
+    <item name="colorControlNormal">@color/AniList_Primary_Text</item>
+    <item name="colorControlHighlight">@color/AniList_Primary_Text</item>
+  </style>
+
+  <style name="AniList_AppBarLayout_Theme" parent="Theme.AniDroid">
+    <item name="android:background">@color/AniList_Primary</item>
+    <item name="android:windowBackground">@color/AniList_Primary</item>
+    <item name="itemTextColor">@color/AniList_Primary_Text</item>
+    <item name="itemIconTint">@color/AniList_Primary_Text</item>
+    <item name="colorControlHighlight">@color/AniList_Tertiary</item>
+  </style>
+  
+  <!-- Tab Layout -->
+
+  <style name="AniList_TabLayout" parent="Theme.AniDroid">
+    <item name="tabIndicatorColor">@color/AniList_Tertiary</item>
+    <item name="tabBackground">@color/AniList_Primary</item>
+    <item name="tabSelectedTextColor">@color/AniList_Tertiary</item>
+    <item name="tabTextColor">@color/AniList_Primary_Text</item>
   </style>
 </resources>

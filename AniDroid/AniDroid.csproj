@@ -139,17 +139,29 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adapters\Base\LazyLoadingRecyclerViewAdapter.cs" />
+    <Compile Include="Adapters\FragmentlessViewPagerAdapter.cs" />
     <Compile Include="Adapters\SearchAdapters\CharacterSearchRecyclerAdapter.cs" />
     <Compile Include="Adapters\SearchAdapters\ForumThreadSearchRecyclerAdapter.cs" />
     <Compile Include="Adapters\SearchAdapters\MediaSearchRecyclerAdapter.cs" />
     <Compile Include="Adapters\SearchAdapters\StaffSearchRecyclerAdapter.cs" />
     <Compile Include="Adapters\SearchAdapters\StudioSearchRecyclerAdapter.cs" />
     <Compile Include="Adapters\SearchAdapters\UserSearchRecyclerAdapter.cs" />
+    <Compile Include="Adapters\StaffAdapters\StaffCharactersRecyclerAdapter.cs" />
+    <Compile Include="Adapters\StaffAdapters\StaffMediaRecyclerAdapter.cs" />
+    <Compile Include="Adapters\StaffAdapters\StaffRecyclerAdapter.cs" />
+    <Compile Include="AniListObject\Staff\IStaffView.cs" />
+    <Compile Include="AniListObject\Staff\StaffActivity.cs" />
+    <Compile Include="AniListObject\Staff\StaffPresenter.cs" />
     <Compile Include="Base\BaseAniDroidFragment.cs" />
     <Compile Include="Base\BaseAniDroidFragmentPresenter.cs" />
+    <Compile Include="Base\BaseAniListObjectActivity.cs" />
+    <Compile Include="Base\IAniListObjectView.cs" />
     <Compile Include="Browse\BrowseFragment.cs" />
     <Compile Include="Browse\BrowsePresenter.cs" />
     <Compile Include="Browse\IBrowseView.cs" />
+    <Compile Include="AniListObject\Character\CharacterActivity.cs" />
+    <Compile Include="AniListObject\Character\CharacterPresenter.cs" />
+    <Compile Include="AniListObject\Character\ICharacterView.cs" />
     <Compile Include="Dialogs\SearchDialog.cs" />
     <Compile Include="SearchResults\ISearchResultsView.cs" />
     <Compile Include="SearchResults\SearchResultsActivity.cs" />
@@ -227,6 +239,18 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\View_SettingItem_Spinner.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Activity_AniListObject.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Activity_Loading.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\View_List.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\View_StaffDetails.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -816,6 +840,9 @@
       <Project>{6e34b7af-7e77-4f94-b56a-fdf1462edc34}</Project>
       <Name>AniDroid.Torrent</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\AniListObject_ActionBar.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Annotations.26.1.0.1\build\MonoAndroid80\Xamarin.Android.Support.Annotations.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Annotations.26.1.0.1\build\MonoAndroid80\Xamarin.Android.Support.Annotations.targets')" />

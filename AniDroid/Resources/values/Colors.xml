@@ -6,16 +6,6 @@
   **
   -->
 
-  <!-- Toolbar -->
-  <color name="AniList_Toolbar">#0198ff</color>
-  <color name="AniList_ToolbarStatusBar">#007BBB</color>
-  <color name="AniList_ToolbarText">#fff</color>
-  <color name="AniList_ToolbarIcon">#fff</color>
-  <color name="AniList_ToolbarPopup">#01579B</color>
-  <color name="AniList_ToolbarPopupText">#FFCBCBCB</color>
-
-
-
   <!-- Switch -->
   <color name="AniList_SwitchActive">#01579B</color>
   <color name="AniList_SwitchInactiveThumb">#FF9E9E9E</color>
@@ -45,12 +35,6 @@
   <color name="AniList_TextInputLabel">#0198ff</color>
   <color name="AniList_TextInput">#D0000000</color>
 
-  <!-- Tab Layout -->
-  <color name="AniList_TabBackground">#F5F5F5</color>
-  <color name="AniList_TabTextColor">#D0000000</color>
-  <color name="AniList_TabSelectedTextColor">#01579B</color>
-  <color name="AniList_TabIndicatorColor">#0198ff</color>
-
   <!-- List Items -->
   <color name="AniList_ListItemDivider">#20000000</color>
   <color name="Anilist_TrustedTorrent">#C3F4CF</color>
@@ -60,7 +44,6 @@
   <color name="AniList_NavBackground">#1f2631</color>
   <color name="AniList_NavText">#859cc3</color>
   <color name="AniList_NavIconTint">#FFFFFF</color>
-  <color name="AniList_NavSelected">#01a8fe</color>
 
   <!-- General -->
   <color name="AniList_Background">#F5F5F5</color>
@@ -71,16 +54,16 @@
   <color name="AniList_Background_Text_Alternate">#90000000</color>
 
   <color name="AniList_Primary">#0198ff</color>
-  <color name="AniList_Primary_Text">#A3FFFFFF</color>
+  <color name="AniList_Primary_Text">#fff</color>
   <color name="AniList_Primary_Dark">#005C99</color>
-  <color name="AniList_Primary_Dark_Text">#A3FFFFFF</color>
+  <color name="AniList_Primary_Dark_Text">#fff</color>
   <color name="AniList_Secondary">#304C9B</color>
   <color name="AniList_Secondary_Text">#E4FFFFFF</color>
   <color name="AniList_Secondary_Dark">#01227F</color>
   <color name="AniList_Secondary_Dark_Text">#E4FFFFFF</color>
-  <color name="AniList_Tertiary">#D56905</color>
-  <color name="AniList_Tertiary_Text">#E4FFFFFF</color>
-  <color name="AniList_Tertiary_Dark">#8E4501</color>
+  <color name="AniList_Tertiary">#00FF8B</color>
+  <color name="AniList_Tertiary_Text">#7E000000</color>
+  <color name="AniList_Tertiary_Dark">#009551</color>
   <color name="AniList_Tertiary_Dark_Text">#E4E9E9E9</color>
   <color name="AniList_Inactive">#FF9E9E9E</color>
 

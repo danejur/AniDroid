@@ -32,7 +32,8 @@ namespace AniDroid.Start
         {
             // TODO: add checks for data store integrity and other start-up tasks
 
-            MainActivity.StartActivity(this);
+            MainActivity.StartActivityForResult(this, 0);
+            Finish();
             return Task.CompletedTask;
         }
     }
