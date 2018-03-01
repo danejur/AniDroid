@@ -139,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Adapters\Base\LazyLoadingRecyclerViewAdapter.cs" />
+    <Compile Include="Adapters\CharacterAdapters\CharacterMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\FragmentlessViewPagerAdapter.cs" />
     <Compile Include="Adapters\SearchAdapters\CharacterSearchRecyclerAdapter.cs" />
     <Compile Include="Adapters\SearchAdapters\ForumThreadSearchRecyclerAdapter.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="AniListObject\Character\CharacterPresenter.cs" />
     <Compile Include="AniListObject\Character\ICharacterView.cs" />
     <Compile Include="Dialogs\SearchDialog.cs" />
+    <Compile Include="Dialogs\StaffListDialog.cs" />
     <Compile Include="SearchResults\ISearchResultsView.cs" />
     <Compile Include="SearchResults\SearchResultsActivity.cs" />
     <Compile Include="SearchResults\SearchResultsPresenter.cs" />
@@ -251,6 +253,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\View_StaffDetails.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\View_CharacterDetails.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

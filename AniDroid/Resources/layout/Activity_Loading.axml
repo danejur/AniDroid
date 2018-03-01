@@ -3,11 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/Loading_CoordLayout"
+    android:background="?Background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
   <android.support.design.widget.AppBarLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    style="?AppBarLayout_Style">
     <android.support.v7.widget.Toolbar
       android:id="@+id/Loading_Toolbar"
       android:layout_width="match_parent"
@@ -21,6 +23,5 @@
     android:indeterminateTint="?Primary"
     android:layout_width="60dp"
     android:layout_height="60dp"
-    android:layout_gravity="center"
-    android:layout_marginTop="170dp" />
+    android:layout_gravity="center" />
 </android.support.design.widget.CoordinatorLayout>

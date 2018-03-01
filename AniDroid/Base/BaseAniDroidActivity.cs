@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
+using Android.Content.Res;
 using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
@@ -67,7 +68,9 @@ namespace AniDroid.Base
 
     public abstract class BaseAniDroidActivity : AppCompatActivity
     {
-        private AniDroidTheme _theme;
+        public const int ObjectBrowseRequestCode = 9;
+
+        private static AniDroidTheme _theme;
         protected bool HasError { get; set; }
         public sealed override LayoutInflater LayoutInflater => ThemedInflater;
         public BaseRecyclerAdapter.CardType CardType { get; private set; }
@@ -79,10 +82,9 @@ namespace AniDroid.Base
             base.OnCreate(savedInstanceState);
 
             var settings = Kernel.Get<IAniDroidSettings>();
-            _theme = await settings.GetThemeAsync();
-            CardType = await settings.GetCardTypeAsync();
-
-            SetTheme(GetTheme());
+            _theme = settings.GetTheme();
+            CardType = settings.GetCardType();
+            SetTheme(GetThemeResource());
 
             await OnCreateExtended(savedInstanceState);
         }
@@ -97,7 +99,25 @@ namespace AniDroid.Base
 
         #region Theme
 
-        public int GetTheme()
+        public override Resources.Theme Theme {
+            get {
+                var theme = Resource.Style.AniList;
+
+                switch (_theme)
+                {
+                    case AniDroidTheme.Dark:
+                        theme = Resource.Style.Dark;
+                        break;
+                }
+
+                var baseTheme = base.Theme;
+                baseTheme.ApplyStyle(theme, true);
+
+                return baseTheme;
+            }
+        }
+
+        public int GetThemeResource()
         {
             var theme = Resource.Style.AniList;
 
@@ -129,7 +149,7 @@ namespace AniDroid.Base
         {
             get
             {
-                using (var contextThemeWrapper = new ContextThemeWrapper(this, GetTheme()))
+                using (var contextThemeWrapper = new ContextThemeWrapper(this, GetThemeResource()))
                 {
                     return base.LayoutInflater.CloneInContext(contextThemeWrapper);
                 }
@@ -222,15 +242,6 @@ namespace AniDroid.Base
         public virtual bool SetupMenu(IMenu menu)
         {
             return true;
-        }
-
-        #endregion
-
-        #region Constants
-
-        public static class RequestCodes
-        {
-            public const int ObjectBrowseRequestCode = 9;
         }
 
         #endregion

@@ -21,7 +21,7 @@ namespace AniDroid.Adapters.StaffAdapters
             holder.DetailSecondary.Text = item.StaffRole;
             Context.LoadImage(holder.Image, item.Node?.CoverImage?.Large ?? "");
 
-            holder.ItemView.SetTag(Resource.Id.Object_Position, position);
+            holder.ContainerCard.SetTag(Resource.Id.Object_Position, position);
 
             // TODO: implement start media activity click
         }

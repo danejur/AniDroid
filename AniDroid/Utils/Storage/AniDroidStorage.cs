@@ -33,9 +33,19 @@ namespace AniDroid.Utils.Storage
         /// </summary>
         /// <param name="key">The key to retrieve data for.</param>
         /// <param name="defaultValue">The default value of the key-value pair, used if the supplied key isn't found.</param>
-        public async Task<string> Get(string key, string defaultValue = null)
+        public string Get(string key, string defaultValue = null)
         {
-            return await Task.Run(() => _prefs.GetString(key, defaultValue)).ConfigureAwait(false);
+            return _prefs.GetString(key, defaultValue);
+        }
+
+        /// <summary>
+        /// Asynchronously retrives a value with given key. If key can not be found, defaultValue is returned.
+        /// </summary>
+        /// <param name="key">The key to retrieve data for.</param>
+        /// <param name="defaultValue">The default value of the key-value pair, used if the supplied key isn't found.</param>
+        public async Task<string> GetAsync(string key, string defaultValue = null)
+        {
+            return await Task.Run(() => Get(key, defaultValue)).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -64,9 +74,9 @@ namespace AniDroid.Utils.Storage
         /// <param name="key">The key to retrieve data for.</param>
         /// <param name="defaultValue">The default value of the key-value pair, used if the supplied key isn't found.</param>
         /// <returns>Deserialzed complex value.</returns>
-        public async Task<T> Get<T>(string key, T defaultValue = default(T))
+        public T Get<T>(string key, T defaultValue = default(T))
         {
-            var data = await Get(key);
+            var data = Get(key);
             if (data == null)
             {
                 return defaultValue;
@@ -81,6 +91,17 @@ namespace AniDroid.Utils.Storage
                 Trace.TraceError($"Error occurred while deserializing object with key {key} from SharedPreferences.");
                 return defaultValue;
             }
+        }
+
+        /// <summary>
+        /// Asynchronously retrives a value with given key. If key can not be found, defaultValue is returned.
+        /// </summary>
+        /// <param name="key">The key to retrieve data for.</param>
+        /// <param name="defaultValue">The default value of the key-value pair, used if the supplied key isn't found.</param>
+        /// <returns>Deserialzed complex value.</returns>
+        public async Task<T> GetAsync<T>(string key, T defaultValue = default(T))
+        {
+            return await Task.Run(() => Get(key, defaultValue)).ConfigureAwait(false);
         }
 
         /// <summary>

@@ -25,10 +25,11 @@ namespace AniDroid.Settings
             _settings = settings;
         }
 
-        public override async Task Init()
+        public override Task Init()
         {
-            View.CreateCardTypeSettingItem(await _settings.GetCardTypeAsync());
-            View.CreateAniDroidThemeSettingItem(await _settings.GetThemeAsync());
+            View.CreateCardTypeSettingItem(_settings.GetCardType());
+            View.CreateAniDroidThemeSettingItem(_settings.GetTheme());
+            return Task.CompletedTask;
         }
 
         public override async Task RestoreState(IList<string> savedState)

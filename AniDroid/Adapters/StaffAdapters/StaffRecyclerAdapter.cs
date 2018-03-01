@@ -50,7 +50,7 @@ namespace AniDroid.Adapters.StaffAdapters
             var staffPos = (int)senderView.GetTag(Resource.Id.Object_Position);
             var staff = Items[staffPos];
 
-            StaffActivity.StartActivity(Context, staff.Id);
+            StaffActivity.StartActivity(Context, staff.Id, BaseAniDroidActivity.ObjectBrowseRequestCode);
         }
     }
 }

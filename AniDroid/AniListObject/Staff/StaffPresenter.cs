@@ -24,7 +24,6 @@ namespace AniDroid.AniListObject.Staff
 
         public override async Task Init()
         {
-            // TODO: implement
             var staffId = View.GetStaffId();
             var staffResp = await AniListService.GetStaffById(staffId, default(CancellationToken));
 

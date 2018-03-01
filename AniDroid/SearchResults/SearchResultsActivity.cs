@@ -82,7 +82,7 @@ namespace AniDroid.SearchResults
             SetContentView(Resource.Layout.Activity_SearchResults);
 
             var settings = Kernel.Get<IAniDroidSettings>();
-            _cardType = await settings.GetCardTypeAsync();
+            _cardType = settings.GetCardType();
 
             _searchType = Intent.GetStringExtra(IntentKeys.SearchType);
             _searchTerm = Intent.GetStringExtra(IntentKeys.SearchTerm);

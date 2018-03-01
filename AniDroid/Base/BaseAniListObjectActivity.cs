@@ -62,6 +62,15 @@ namespace AniDroid.Base
 
         }
 
+        protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
+        {
+            if (requestCode == ObjectBrowseRequestCode && resultCode == Result.Ok)
+            {
+                SetResult(Result.Ok);
+                Finish();
+            }
+        }
+
         #region View Implementation
 
         public void SetLoadingShown()

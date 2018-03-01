@@ -30,9 +30,9 @@ namespace AniDroid.Utils
             _settingStorage.Put(StorageKeys.CardTypeKey, cardType);
         }
 
-        public async Task<BaseRecyclerAdapter.CardType> GetCardTypeAsync()
+        public BaseRecyclerAdapter.CardType GetCardType()
         {
-            return await _settingStorage.Get(StorageKeys.CardTypeKey, BaseRecyclerAdapter.CardType.Vertical);
+            return _settingStorage.Get(StorageKeys.CardTypeKey, BaseRecyclerAdapter.CardType.Vertical);
         }
 
         public void SetTheme(BaseAniDroidActivity.AniDroidTheme theme)
@@ -40,9 +40,9 @@ namespace AniDroid.Utils
             _settingStorage.Put(StorageKeys.ThemeKey, theme);
         }
 
-        public async Task<BaseAniDroidActivity.AniDroidTheme> GetThemeAsync()
+        public BaseAniDroidActivity.AniDroidTheme GetTheme()
         {
-            return await _settingStorage.Get(StorageKeys.ThemeKey, BaseAniDroidActivity.AniDroidTheme.AniList);
+            return _settingStorage.Get(StorageKeys.ThemeKey, BaseAniDroidActivity.AniDroidTheme.AniList);
         }
 
         #region Constants

@@ -23,9 +23,9 @@ namespace AniDroid.Adapters.StaffAdapters
             holder.DetailPrimary.Text = AniListEnum.GetDisplayValue<Character.CharacterRole>(item.Role);
             Context.LoadImage(holder.Image, item.Node?.Image?.Large ?? "");
 
-            holder.ItemView.SetTag(Resource.Id.Object_Position, position);
-            holder.ItemView.Click -= CharacterClick;
-            holder.ItemView.Click += CharacterClick;
+            holder.ContainerCard.SetTag(Resource.Id.Object_Position, position);
+            holder.ContainerCard.Click -= CharacterClick;
+            holder.ContainerCard.Click += CharacterClick;
         }
 
         public override CardItem SetupCardItemViewHolder(CardItem item)
@@ -40,7 +40,7 @@ namespace AniDroid.Adapters.StaffAdapters
             var characterPos = (int)senderView.GetTag(Resource.Id.Object_Position);
             var characterEdge = Items[characterPos];
 
-            CharacterActivity.StartActivity(Context, characterEdge.Node.Id, BaseAniDroidActivity.RequestCodes.ObjectBrowseRequestCode);
+            CharacterActivity.StartActivity(Context, characterEdge.Node.Id, BaseAniDroidActivity.ObjectBrowseRequestCode);
         }
 
     }
