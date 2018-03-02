@@ -152,12 +152,16 @@
     <Compile Include="Adapters\StaffAdapters\StaffCharactersRecyclerAdapter.cs" />
     <Compile Include="Adapters\StaffAdapters\StaffMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\StaffAdapters\StaffRecyclerAdapter.cs" />
+    <Compile Include="Adapters\StudioAdapters\StudioMediaRecyclerAdapter.cs" />
     <Compile Include="AniListObject\Media\IMediaView.cs" />
     <Compile Include="AniListObject\Media\MediaActivity.cs" />
     <Compile Include="AniListObject\Media\MediaPresenter.cs" />
     <Compile Include="AniListObject\Staff\IStaffView.cs" />
     <Compile Include="AniListObject\Staff\StaffActivity.cs" />
     <Compile Include="AniListObject\Staff\StaffPresenter.cs" />
+    <Compile Include="AniListObject\Studio\IStudioView.cs" />
+    <Compile Include="AniListObject\Studio\StudioActivity.cs" />
+    <Compile Include="AniListObject\Studio\StudioPresenter.cs" />
     <Compile Include="AniListObject\User\IUserView.cs" />
     <Compile Include="AniListObject\User\UserActivity.cs" />
     <Compile Include="AniListObject\User\UserPresenter.cs" />
