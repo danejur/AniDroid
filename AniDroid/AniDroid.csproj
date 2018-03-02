@@ -190,6 +190,7 @@
     <Compile Include="Settings\SettingsActivity.cs" />
     <Compile Include="Utils\AniDroidSettings.cs" />
     <Compile Include="Utils\ChartUtils.cs" />
+    <Compile Include="Utils\Formatting\NumberFormatters.cs" />
     <Compile Include="Utils\Storage\AniDroidStorage.cs" />
     <Compile Include="Utils\ApplicationModule.cs" />
     <Compile Include="Base\BaseAniDroidActivity.cs" />
@@ -283,6 +284,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\View_Error.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\View_ChartLegendCell.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

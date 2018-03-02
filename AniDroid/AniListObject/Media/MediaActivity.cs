@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Support.V4.Content;
 using Android.Support.V7.Widget;
@@ -19,6 +20,7 @@ using AniDroid.AniListObject.Staff;
 using AniDroid.Base;
 using AniDroid.SearchResults;
 using AniDroid.Utils;
+using AniDroid.Utils.Formatting;
 using MikePhil.Charting.Charts;
 using MikePhil.Charting.Components;
 using MikePhil.Charting.Data;
@@ -177,6 +179,11 @@ namespace AniDroid.AniListObject.Media
                 containerView.AddView(CreateUserScoreProgressionView(media.Stats.AiringProgression));
             }
 
+            if (media.Stats?.StatusDistribution?.Any() == true)
+            {
+                containerView.AddView(CreateUserListStatusView(media.Stats.StatusDistribution));
+            }
+
             return retView;
         }
 
@@ -234,7 +241,7 @@ namespace AniDroid.AniListObject.Media
         {
             var detailView = LayoutInflater.Inflate(Resource.Layout.View_AniListObjectDetail, null);
             var detailContainer = detailView.FindViewById<LinearLayout>(Resource.Id.AniListObjectDetail_InnerContainer);
-            detailView.FindViewById<TextView>(Resource.Id.AniListObjectDetail_Name).Text = "Airing";
+            detailView.FindViewById<TextView>(Resource.Id.AniListObjectDetail_Name).Text = "Airing Score Progression";
             var orderedStats = scoreProgression.OrderBy(x => x.Episode).ToList();
 
             var chartHeight = Resources.GetDimensionPixelSize(Resource.Dimension.Details_ChartHeight);
@@ -306,6 +313,83 @@ namespace AniDroid.AniListObject.Media
                     scoresChart.AxisRight.TextColor = scoresChart.Legend.TextColor = textColor;
 
             detailContainer.AddView(scoresChart);
+
+            return detailView;
+        }
+
+        private View CreateUserListStatusView(IReadOnlyList<AniList.Models.AniListObject.AniListStatusDistribution> statusDistribution)
+        {
+            var detailView = LayoutInflater.Inflate(Resource.Layout.View_AniListObjectDetail, null);
+            var detailContainer = detailView.FindViewById<LinearLayout>(Resource.Id.AniListObjectDetail_InnerContainer);
+            detailView.FindViewById<TextView>(Resource.Id.AniListObjectDetail_Name).Text = "User Lists";
+            detailContainer.Orientation = Orientation.Horizontal;
+
+            var chartHeight = Resources.GetDimensionPixelSize(Resource.Dimension.Details_ChartHeight);
+            var legendMargin = Resources.GetDimensionPixelSize(Resource.Dimension.Details_MarginSmall);
+
+            var chartContainer = new LinearLayout(this)
+            {
+                LayoutParameters = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, chartHeight, 1)
+            };
+
+            var legendContainer = new LinearLayout(this)
+            {
+                LayoutParameters =
+                    new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, chartHeight, 1)
+                    {
+                        RightMargin = legendMargin,
+                        LeftMargin = legendMargin
+                    },
+                Orientation = Orientation.Vertical
+            };
+
+            var typedColorArray = Resources.ObtainTypedArray(Resource.Array.Chart_Colors);
+            var colorList = new List<int>();
+
+            for (var i = 0; i < typedColorArray.Length(); i++)
+            {
+                colorList.Add(typedColorArray.GetColor(i, 0));
+            }
+
+            var statusChart = new PieChart(this)
+            {
+                LayoutParameters =
+                    new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent)
+            };
+            var slices = statusDistribution.Select(x => new PieEntry(x.Amount, x.Status) { Data = x.Status }).ToList();
+            var dataSet = new PieDataSet(slices, "Status")
+            {
+                SliceSpace = 1,
+            };
+
+            dataSet.SetDrawValues(false);
+            dataSet.SetColors(colorList.ToArray(), 255);
+            var data = new PieData(dataSet);
+
+            statusChart.TransparentCircleRadius = 0;
+            statusChart.HoleRadius = 0;
+            statusChart.Data = data;
+            statusChart.SetDrawEntryLabels(false);
+            statusChart.Description.Enabled = false;
+            statusChart.Legend.Enabled = false;
+            statusChart.RotationEnabled = false;
+            //statusChart.SetOnChartValueSelectedListener(new GenreSliceSelectedListener(legendContainer));
+
+            chartContainer.AddView(statusChart);
+
+            for (var i = 0; i < statusDistribution.Count; i++)
+            {
+                var cell = LayoutInflater.Inflate(Resource.Layout.View_ChartLegendCell, legendContainer, false);
+                var status = statusDistribution[i];
+                cell.SetBackgroundColor(new Color(colorList[i % 10]));
+                cell.FindViewById<TextView>(Resource.Id.ChartLegendCell_Count).Text = status.Amount.ToTruncatedString();
+                cell.FindViewById<TextView>(Resource.Id.ChartLegendCell_Text).Text = AniListEnum.GetDisplayValue<AniList.Models.Media.MediaListStatus>(status.Status);
+                cell.Tag = status.Status;
+                legendContainer.AddView(cell);
+            }
+
+            detailContainer.AddView(chartContainer);
+            detailContainer.AddView(legendContainer);
 
             return detailView;
         }
