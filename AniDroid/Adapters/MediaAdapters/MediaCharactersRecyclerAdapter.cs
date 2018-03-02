@@ -26,8 +26,8 @@ namespace AniDroid.Adapters.MediaAdapters
             Context.LoadImage(holder.Image, item.Node?.Image?.Large ?? "");
 
             holder.ContainerCard.SetTag(Resource.Id.Object_Position, position);
-            holder.ContainerCard.Click -= CharacterClick;
-            holder.ContainerCard.Click += CharacterClick;
+            holder.ContainerCard.Click -= RowClick;
+            holder.ContainerCard.Click += RowClick;
 
             if (item.VoiceActors?.Any() == true)
             {
@@ -49,7 +49,7 @@ namespace AniDroid.Adapters.MediaAdapters
             return item;
         }
 
-        private void CharacterClick(object sender, EventArgs e)
+        private void RowClick(object sender, EventArgs e)
         {
             var senderView = sender as View;
             var characterPos = (int)senderView.GetTag(Resource.Id.Object_Position);

@@ -31,5 +31,10 @@ namespace AniDroid.AniListObject.Media
         {
             return AniListService.GetMediaCharacters(mediaId, perPage);
         }
+
+        public IAsyncEnumerable<IPagedData<AniList.Models.Staff.Edge>> GetMediaStaffEnumerable(int mediaId, int perPage)
+        {
+            return AniListService.GetMediaStaff(mediaId, perPage);
+        }
     }
 }

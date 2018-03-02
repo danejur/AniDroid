@@ -89,6 +89,11 @@ namespace AniDroid.AniListObject.Media
                 adapter.AddView(CreateMediaCharactersView(media.Id), "Characters");
             }
 
+            if (media.Staff?.PageInfo?.Total > 0)
+            {
+                adapter.AddView(CreateMediaStaffView(media.Id), "Staff");
+            }
+
             ViewPager.OffscreenPageLimit = adapter.Count - 1;
             ViewPager.Adapter = adapter;
 
@@ -101,6 +106,17 @@ namespace AniDroid.AniListObject.Media
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
             var dialogRecyclerAdapter = new MediaCharactersRecyclerAdapter(this, mediaCharactersEnumerable, CardType);
+            recycler.SetAdapter(dialogRecyclerAdapter);
+
+            return retView;
+        }
+
+        private View CreateMediaStaffView(int mediaId)
+        {
+            var mediaStaffEnumerable = Presenter.GetMediaStaffEnumerable(mediaId, PageLength);
+            var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
+            var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
+            var dialogRecyclerAdapter = new MediaStaffRecyclerAdapter(this, mediaStaffEnumerable, CardType);
             recycler.SetAdapter(dialogRecyclerAdapter);
 
             return retView;
