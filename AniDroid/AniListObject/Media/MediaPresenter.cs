@@ -14,6 +14,7 @@ namespace AniDroid.AniListObject.Media
 
         public override async Task Init()
         {
+            View.SetLoadingShown();
             var mediaId = View.GetMediaId();
             var mediaResp = await AniListService.GetMediaById(mediaId, default(CancellationToken));
 
@@ -25,7 +26,7 @@ namespace AniDroid.AniListObject.Media
                     View.SetupToolbar(media.Title?.UserPreferred);
                     View.SetupMediaView(media);
                 })
-                .Switch(error => View.OnNetworkError());
+                .Switch(error => View.OnError(error));
         }
 
         public IAsyncEnumerable<IPagedData<AniList.Models.Character.Edge>> GetMediaCharactersEnumerable(int mediaId, int perPage)

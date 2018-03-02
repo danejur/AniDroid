@@ -9,13 +9,14 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
 
 namespace AniDroid.Browse
 {
     public class BrowseFragment : BaseAniDroidFragment, IAniDroidView
     {
-        public void OnNetworkError()
+        public void OnError(IAniListError error)
         {
             throw new NotImplementedException();
         }

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+  <item
+    android:id="@+id/Menu_Error_Refresh"
+    android:title="Refresh"
+    app:showAsAction="ifRoom"
+    android:actionViewClass="android.widget.ImageButton"
+    android:icon="@drawable/ic_refresh_white_24dp"/>
+</menu>

@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <dimen name="Details_NamePadding">15dp</dimen>
+  <dimen name="Details_NameTextSize">18dp</dimen>
+  <dimen name="Details_ChartHeight">200dp</dimen>
+  <dimen name="Details_MarginTop">30dp</dimen>
+  <dimen name="Details_MarginSmall">12dp</dimen>
+</resources>

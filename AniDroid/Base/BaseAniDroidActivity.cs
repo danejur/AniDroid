@@ -16,6 +16,7 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.Base;
+using AniDroid.AniList.Interfaces;
 using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
 using Ninject;
@@ -64,6 +65,32 @@ namespace AniDroid.Base
         }
 
         public abstract void DisplaySnackbarMessage(string message, int length);
+
+        public sealed override bool OnCreateOptionsMenu(IMenu menu)
+        {
+            if (HasError)
+            {
+                MenuInflater.Inflate(Resource.Menu.Error_ActionBar, menu);
+                return true;
+            }
+
+            SetupMenu(menu);
+            return base.OnCreateOptionsMenu(menu);
+        }
+
+        public sealed override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            if (HasError)
+            {
+                if (item.ItemId == Resource.Id.Menu_Error_Refresh)
+                {
+                    Presenter.Init().GetAwaiter().GetResult();
+                    return true;
+                }
+            }
+
+            return MenuItemSelected(item);
+        }
     }
 
     public abstract class BaseAniDroidActivity : AppCompatActivity
@@ -198,41 +225,13 @@ namespace AniDroid.Base
 
         protected abstract IReadOnlyKernel Kernel { get; }
 
-        public abstract void OnNetworkError();
+        public abstract void OnError(IAniListError error);
 
         public abstract Task OnCreateExtended(Bundle savedInstanceState);
 
         #endregion
 
         #region Toolbar
-
-        public override bool OnCreateOptionsMenu(IMenu menu)
-        {
-            if (HasError)
-            {
-                // TODO: implement error screen and menu
-                //MenuInflater.Inflate(Resource.Menu.Error_ActionBar, menu);
-                return true;
-            }
-
-            SetupMenu(menu);
-            return base.OnCreateOptionsMenu(menu);
-        }
-
-        public sealed override bool OnOptionsItemSelected(IMenuItem item)
-        {
-            if (HasError)
-            {
-                // TODO: add error activity recreation
-                //if (item.ItemId == Resource.Id.MenuAction_Error_Refresh)
-                //{
-                //    Recreate();
-                //    return true;
-                //}
-            }
-
-            return MenuItemSelected(item);
-        }
 
         public virtual bool MenuItemSelected(IMenuItem item)
         {

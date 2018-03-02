@@ -24,6 +24,7 @@ namespace AniDroid.AniListObject.User
 
         public override async Task Init()
         {
+            View.SetLoadingShown();
             var userId = View.GetUserId();
             var userName = View.GetUserName();
 
@@ -36,7 +37,7 @@ namespace AniDroid.AniListObject.User
                     View.SetupToolbar(user.Name);
                     View.SetupUserView(user);
                 })
-                .Switch(error => View.OnNetworkError());
+                .Switch(error => View.OnError(error));
         }
     }
 }

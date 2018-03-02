@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
 using AniDroid.Utils;
 using Ninject;
@@ -26,7 +27,7 @@ namespace AniDroid.Login
             await CreatePresenter(savedInstanceState);
         }
 
-        public override void OnNetworkError()
+        public override void OnError(IAniListError error)
         {
             throw new NotImplementedException();
         }

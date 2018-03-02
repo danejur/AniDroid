@@ -30,8 +30,6 @@ namespace AniDroid.AniListObject.Character
 
         public override async Task OnCreateExtended(Bundle savedInstanceState)
         {
-            SetLoadingShown();
-
             if (Intent.Data != null)
             {
                 var dataUrl = Intent.Data.ToString();

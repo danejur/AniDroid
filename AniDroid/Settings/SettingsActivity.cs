@@ -13,6 +13,7 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.Base;
+using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
 using AniDroid.Utils;
 using Ninject;
@@ -32,7 +33,7 @@ namespace AniDroid.Settings
 
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<ISettingsView, SettingsActivity>(this));
 
-        public override void OnNetworkError()
+        public override void OnError(IAniListError error)
         {
             // TODO: should this ever matter?
         }

@@ -25,6 +25,7 @@ namespace AniDroid.AniListObject.Staff
 
         public override async Task Init()
         {
+            View.SetLoadingShown();
             var staffId = View.GetStaffId();
             var staffResp = await AniListService.GetStaffById(staffId, default(CancellationToken));
 
@@ -36,7 +37,7 @@ namespace AniDroid.AniListObject.Staff
                     View.SetupToolbar($"{staff.Name?.First} {staff.Name?.Last}".Trim());
                     View.SetupStaffView(staff);
                 })
-                .Switch(error => View.OnNetworkError());
+                .Switch(error => View.OnError(error));
         }
 
         public IAsyncEnumerable<IPagedData<AniList.Models.Character.Edge>> GetStaffCharactersEnumerable(int staffId, int perPage)

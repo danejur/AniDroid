@@ -114,5 +114,8 @@
   
   <!-- Favorites -->
   <color name="Favorite_Red">#ef3051</color>
+  
+  <!-- Media User Data -->
+  <color name="MediaUserData_ScoreChartBar">#46b2ec</color>
 
 </resources>

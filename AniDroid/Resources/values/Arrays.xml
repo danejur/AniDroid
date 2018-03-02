@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+<array name="Chart_Colors">
+    <item>#6fc1ea</item>
+    <item>#48c76d</item>
+    <item>#f7464a</item>
+    <item>#46bfbd</item>
+    <item>#fba640</item>
+    <item>#615ae8</item>
+    <item>#ec89cb</item>
+    <item>#87837e</item>
+    <item>#8BC34A</item>
+    <item>#46529a</item>
+  </array>
+</resources>

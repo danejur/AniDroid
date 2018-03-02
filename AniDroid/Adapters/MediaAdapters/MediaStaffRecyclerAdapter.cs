@@ -38,12 +38,6 @@ namespace AniDroid.Adapters.MediaAdapters
             holder.ContainerCard.Click += RowClick;
         }
 
-        public override CardItem SetupCardItemViewHolder(CardItem item)
-        {
-            item.Button.Visibility = ViewStates.Gone;
-            return item;
-        }
-
         private void RowClick(object sender, EventArgs e)
         {
             var senderView = sender as View;

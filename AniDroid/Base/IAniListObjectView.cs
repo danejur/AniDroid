@@ -17,6 +17,7 @@ namespace AniDroid.Base
         void Share();
         void SetLoadingShown();
         void SetContentShown();
+        void SetErrorShown(string title, string message);
         void SetIsFavorite(bool isFavorite);
         void SetShareText(string title, string uri);
         void SetupToolbar(string text);

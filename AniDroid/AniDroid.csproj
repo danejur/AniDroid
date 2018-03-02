@@ -53,6 +53,9 @@
     <Reference Include="DiscU, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DiscU.1.0.0.9\lib\netstandard1.3\DiscU.dll</HintPath>
     </Reference>
+    <Reference Include="MPAndroidChart, Version=3.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MPAndroidChart.3.0.2\lib\MonoAndroid\MPAndroidChart.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\netstandard2.0\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -186,6 +189,7 @@
     <Compile Include="Settings\ISettingsView.cs" />
     <Compile Include="Settings\SettingsActivity.cs" />
     <Compile Include="Utils\AniDroidSettings.cs" />
+    <Compile Include="Utils\ChartUtils.cs" />
     <Compile Include="Utils\Storage\AniDroidStorage.cs" />
     <Compile Include="Utils\ApplicationModule.cs" />
     <Compile Include="Base\BaseAniDroidActivity.cs" />
@@ -270,6 +274,15 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\View_CharacterDetails.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\View_AniListObjectDetail.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\View_ScrollLayout.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\View_Error.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -862,6 +875,15 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\menu\AniListObject_ActionBar.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\Arrays.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\Dimensions.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\Error_ActionBar.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Annotations.26.1.0.1\build\MonoAndroid80\Xamarin.Android.Support.Annotations.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Annotations.26.1.0.1\build\MonoAndroid80\Xamarin.Android.Support.Annotations.targets')" />

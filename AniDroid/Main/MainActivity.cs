@@ -13,6 +13,7 @@ using Android.Support.V4.Widget;
 using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
+using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
 using AniDroid.Dialogs;
 using AniDroid.SearchResults;
@@ -42,7 +43,7 @@ namespace AniDroid.Main
 
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IMainView, MainActivity>(this));
 
-        public override void OnNetworkError()
+        public override void OnError(IAniListError error)
         {
             // TODO: Implement
             throw new NotImplementedException();

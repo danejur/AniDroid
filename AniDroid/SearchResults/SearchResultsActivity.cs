@@ -37,7 +37,7 @@ namespace AniDroid.SearchResults
         protected override IReadOnlyKernel Kernel =>
             new StandardKernel(new ApplicationModule<ISearchResultsView, SearchResultsActivity>(this));
 
-        public override void OnNetworkError()
+        public override void OnError(IAniListError error)
         {
             throw new NotImplementedException();
         }

@@ -40,6 +40,7 @@ namespace AniDroid.Adapters.MediaAdapters
             item.Image.Visibility = ViewStates.Gone;
             item.DetailPrimary.Text = "Main Studio";
             item.DetailSecondary.Visibility = ViewStates.Gone;
+            item.ContainerCard.SetContentPadding(0, 20, 0, 20);
             return item;
         }
 

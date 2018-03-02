@@ -13,6 +13,7 @@
       android:layout_height="wrap_content"
       android:foreground="?android:attr/selectableItemBackground"
       android:clickable="true"
+      resAuto:cardBackgroundColor="?Background_Alternate"
       resAuto:cardElevation="3dp"
       resAuto:cardUseCompatPadding="true"
       resAuto:cardPreventCornerOverlap="false"

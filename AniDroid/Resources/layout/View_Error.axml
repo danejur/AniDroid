@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:id="@+id/Error_CoordLayout"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:background="?Background">
+  <android.support.design.widget.AppBarLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/Error_AppBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <android.support.v7.widget.Toolbar
+      android:id="@+id/Error_Toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="56dp"
+      app:popupTheme="?Toolbar_PopupTheme"
+      app:theme="?Toolbar_Theme"
+      style="?Toolbar_Style"
+      app:layout_scrollFlags="enterAlways" />
+  </android.support.design.widget.AppBarLayout>
+  <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:paddingTop="80dp">
+    <ImageView
+      android:src="@drawable/ic_sentiment_very_dissatisfied_white_48dp"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:tint="?Background_Text_Alternate"
+      android:id="@+id/Error_AlertImage"
+      android:padding="20dp" />
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textColor="?Background_Text"
+      android:id="@+id/Error_Title"
+      android:gravity="center"
+      android:padding="10dp" />
+    <TextView
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:textColor="?Background_Text"
+      android:id="@+id/Error_Description"
+      android:gravity="center" />
+  </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>

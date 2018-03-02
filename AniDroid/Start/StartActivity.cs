@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
 using AniDroid.Login;
 using AniDroid.Main;
@@ -22,7 +23,7 @@ namespace AniDroid.Start
     {
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule());
 
-        public override void OnNetworkError()
+        public override void OnError(IAniListError error)
         {
             // TODO: Implement
             throw new NotImplementedException();

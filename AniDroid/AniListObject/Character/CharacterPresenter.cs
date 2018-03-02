@@ -15,6 +15,7 @@ namespace AniDroid.AniListObject.Character
 
         public override async Task Init()
         {
+            View.SetLoadingShown();
             var characterId = View.GetCharacterId();
             var characterResp = await AniListService.GetCharacterById(characterId, default(CancellationToken));
 
@@ -26,7 +27,7 @@ namespace AniDroid.AniListObject.Character
                     View.SetupToolbar($"{character.Name?.First} {character.Name?.Last}".Trim());
                     View.SetupCharacterView(character);
                 })
-                .Switch(error => View.OnNetworkError());
+                .Switch(error => View.OnError(error));
         }
 
         public IAsyncEnumerable<IPagedData<AniList.Models.Media.Edge>> GetCharacterMediaEnumerable(int characterId, AniList.Models.Media.MediaType mediaType, int perPage)

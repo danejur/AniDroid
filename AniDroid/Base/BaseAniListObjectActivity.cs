@@ -11,6 +11,7 @@ using Android.Support.Design.Widget;
 using Android.Support.V4.View;
 using Android.Support.V7.Widget;
 using Android.Views;
+using AniDroid.AniList.Interfaces;
 using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
 using Ninject;
@@ -60,9 +61,9 @@ namespace AniDroid.Base
             Snackbar.Make(CoordLayout, message, length).Show();
         }
 
-        public sealed override void OnNetworkError()
+        public sealed override void OnError(IAniListError error)
         {
-
+            SetErrorShown("Error!", "Error description");
         }
 
         protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
@@ -89,6 +90,21 @@ namespace AniDroid.Base
             SetContentView(Resource.Layout.Activity_AniListObject);
             CoordLayout = FindViewById<CoordinatorLayout>(Resource.Id.AniListObject_CoordLayout);
             Toolbar = FindViewById<Toolbar>(Resource.Id.AniListObject_Toolbar);
+        }
+
+        public void SetErrorShown(string title, string message)
+        {
+            SetContentView(Resource.Layout.View_Error);
+            CoordLayout = FindViewById<CoordinatorLayout>(Resource.Id.Error_CoordLayout);
+
+            var toolbar = FindViewById<Toolbar>(Resource.Id.Error_Toolbar);
+            ((AppBarLayout.LayoutParams)toolbar.LayoutParameters).ScrollFlags = 0;
+            toolbar.Title = "Error";
+            SetSupportActionBar(toolbar);
+            SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_arrow_back_white_24dp);
+            SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+            HasError = true;
+            InvalidateOptionsMenu();
         }
 
         public void SetIsFavorite(bool isFavorite)

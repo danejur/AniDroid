@@ -24,6 +24,7 @@ namespace AniDroid.AniListObject.Studio
 
         public override async Task Init()
         {
+            View.SetLoadingShown();
             var studioId = View.GetStudioId();
             var studioResp = await AniListService.GetStudioById(studioId, default(CancellationToken));
 
@@ -35,7 +36,7 @@ namespace AniDroid.AniListObject.Studio
                     View.SetupToolbar(studio.Name);
                     View.SetupStudioView(studio);
                 })
-                .Switch(error => View.OnNetworkError());
+                .Switch(error => View.OnError(error));
         }
 
         public IAsyncEnumerable<IPagedData<AniList.Models.Media.Edge>> GetStudioMediaEnumerable(int studioId, int perPage)

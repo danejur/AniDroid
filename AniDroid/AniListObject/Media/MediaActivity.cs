@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
+using Android.Support.V4.Content;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
@@ -18,6 +19,9 @@ using AniDroid.AniListObject.Staff;
 using AniDroid.Base;
 using AniDroid.SearchResults;
 using AniDroid.Utils;
+using MikePhil.Charting.Charts;
+using MikePhil.Charting.Components;
+using MikePhil.Charting.Data;
 using Ninject;
 
 namespace AniDroid.AniListObject.Media
@@ -35,8 +39,6 @@ namespace AniDroid.AniListObject.Media
 
         public override async Task OnCreateExtended(Bundle savedInstanceState)
         {
-            SetLoadingShown();
-
             if (Intent.Data != null)
             {
                 var dataUrl = Intent.Data.ToString();
@@ -107,6 +109,11 @@ namespace AniDroid.AniListObject.Media
                 adapter.AddView(CreateMediaStudiosView(media.Studios.Data.ToList()), "Studios");
             }
 
+            if (media.Stats != null)
+            {
+                adapter.AddView(CreateMediaUserDataView(media), "User Data");
+            }
+
             ViewPager.OffscreenPageLimit = adapter.Count - 1;
             ViewPager.Adapter = adapter;
 
@@ -154,5 +161,156 @@ namespace AniDroid.AniListObject.Media
 
             return retView;
         }
+
+        private View CreateMediaUserDataView(AniList.Models.Media media)
+        {
+            var retView = LayoutInflater.Inflate(Resource.Layout.View_ScrollLayout, null);
+            var containerView = retView.FindViewById<LinearLayout>(Resource.Id.Scroll_Container);
+
+            if (media.Stats?.ScoreDistribution?.Any() == true)
+            {
+                containerView.AddView(CreateUserScoresView(media.Stats.ScoreDistribution));
+            }
+
+            if (media.Stats?.AiringProgression?.Any() == true)
+            {
+                containerView.AddView(CreateUserScoreProgressionView(media.Stats.AiringProgression));
+            }
+
+            return retView;
+        }
+
+        #region User Data
+
+        private View CreateUserScoresView(IEnumerable<AniList.Models.AniListObject.AniListScoreDistribution> scores)
+        {
+            var detailView = LayoutInflater.Inflate(Resource.Layout.View_AniListObjectDetail, null);
+            var detailContainer = detailView.FindViewById<LinearLayout>(Resource.Id.AniListObjectDetail_InnerContainer);
+            detailView.FindViewById<TextView>(Resource.Id.AniListObjectDetail_Name).Text = "Scores";
+
+            var chartHeight = Resources.GetDimensionPixelSize(Resource.Dimension.Details_ChartHeight);
+            var barColor = ContextCompat.GetColor(this, Resource.Color.MediaUserData_ScoreChartBar);
+            var textColor = GetThemedColor(Resource.Attribute.Background_Text);
+
+            var scoresChart = new BarChart(this)
+            {
+                LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, chartHeight)
+            };
+            var bars = scores.OrderBy(x => x.Score).Select(x => new BarEntry(x.Score, x.Amount))
+                .ToList();
+            var dataSet = new BarDataSet(bars, "Scores");
+            dataSet.SetColor(barColor, 255);
+
+            var data = new BarData(dataSet)
+            {
+                BarWidth = 9
+            };
+
+            scoresChart.Data = data;
+            scoresChart.SetFitBars(true);
+            scoresChart.SetDrawGridBackground(false);
+            scoresChart.Description.Enabled = false;
+            scoresChart.Legend.Enabled = false;
+            scoresChart.AxisLeft.Enabled = false;
+            scoresChart.AxisRight.Enabled = false;
+            scoresChart.XAxis.SetDrawGridLines(false);
+            scoresChart.XAxis.RemoveAllLimitLines();
+            scoresChart.SetScaleEnabled(false);
+            scoresChart.SetTouchEnabled(false);
+            scoresChart.XAxis.SetLabelCount(10, false);
+            scoresChart.XAxis.Granularity = 10;
+            scoresChart.XAxis.Position = XAxis.XAxisPosition.Bottom;
+            scoresChart.XAxis.SetDrawAxisLine(false);
+            scoresChart.XAxis.ValueFormatter = new ChartUtils.AxisValueCeilingFormatter(10);
+
+            scoresChart.XAxis.TextColor = dataSet.ValueTextColor = textColor;
+
+            detailContainer.AddView(scoresChart);
+            return detailView;
+        }
+
+        private View CreateUserScoreProgressionView(
+            IEnumerable<AniList.Models.Media.MediaAiringProgression> scoreProgression)
+        {
+            var detailView = LayoutInflater.Inflate(Resource.Layout.View_AniListObjectDetail, null);
+            var detailContainer = detailView.FindViewById<LinearLayout>(Resource.Id.AniListObjectDetail_InnerContainer);
+            detailView.FindViewById<TextView>(Resource.Id.AniListObjectDetail_Name).Text = "Airing";
+            var orderedStats = scoreProgression.OrderBy(x => x.Episode).ToList();
+
+            var chartHeight = Resources.GetDimensionPixelSize(Resource.Dimension.Details_ChartHeight);
+            var textColor = GetThemedColor(Resource.Attribute.Background_Text);
+            var legendMargin = Resources.GetDimensionPixelSize(Resource.Dimension.Details_MarginSmall);
+
+
+            detailContainer.SetPadding(legendMargin, 0, legendMargin, 0);
+
+            var typedColorArray = Resources.ObtainTypedArray(Resource.Array.Chart_Colors);
+            var colorList = new List<int>();
+
+            for (var i = 0; i < typedColorArray.Length(); i++)
+            {
+                colorList.Add(typedColorArray.GetColor(i, 0));
+            }
+
+            var scoresChart = new LineChart(this)
+            {
+                LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, chartHeight),
+
+            };
+            var scorePoints = orderedStats.Where(x => x.Score > 0).Select(x => new Entry(x.Episode, x.Score)).ToList();
+            var scoreDataSet = new LineDataSet(scorePoints, "Score")
+            {
+                AxisDependency = scoresChart.AxisLeft.GetAxisDependency(),
+                Color = colorList[0]
+            };
+            scoreDataSet.SetDrawCircleHole(false);
+            scoreDataSet.SetCircleColor(colorList[0]);
+            scoreDataSet.SetMode(LineDataSet.Mode.CubicBezier);
+
+            var watchingPoints = orderedStats.Select(x => new Entry(x.Episode, x.Watching)).ToList();
+            var watchingDataSet = new LineDataSet(watchingPoints, "Watching")
+            {
+                AxisDependency = scoresChart.AxisRight.GetAxisDependency(),
+                Color = colorList[1]
+            };
+            watchingDataSet.SetDrawCircleHole(false);
+            watchingDataSet.SetCircleColor(colorList[1]);
+            watchingDataSet.SetMode(LineDataSet.Mode.CubicBezier);
+
+            var data = new LineData(scoreDataSet, watchingDataSet);
+            data.SetDrawValues(false);
+            scoresChart.Data = data;
+            scoresChart.FitScreen();
+            scoresChart.SetDrawGridBackground(false);
+            scoresChart.SetTouchEnabled(false);
+            scoresChart.Description.Enabled = false;
+
+            //x axis formatting
+            scoresChart.XAxis.SetDrawGridLines(false);
+            scoresChart.XAxis.Position = XAxis.XAxisPosition.Bottom;
+            scoresChart.XAxis.ValueFormatter = new ChartUtils.AxisValueCeilingFormatter(1);
+            scoresChart.XAxis.Granularity = 1;
+            scoresChart.XAxis.LabelCount = Math.Min(orderedStats.Count, 12);
+
+            //score y axis formatting
+            scoresChart.AxisLeft.SetDrawGridLines(false);
+            scoresChart.AxisLeft.Granularity = 1;
+            scoresChart.AxisLeft.LabelCount = 5;
+
+            //count y axis formatting
+            scoresChart.AxisRight.SetDrawGridLines(false);
+            scoresChart.AxisRight.Granularity = 1;
+
+            scoresChart.XAxis.TextColor = scoreDataSet.ValueTextColor = watchingDataSet.ValueTextColor =
+                scoresChart.AxisLeft.TextColor =
+                    scoresChart.AxisRight.TextColor = scoresChart.Legend.TextColor = textColor;
+
+            detailContainer.AddView(scoresChart);
+
+            return detailView;
+        }
+
+        #endregion
+
     }
 }
