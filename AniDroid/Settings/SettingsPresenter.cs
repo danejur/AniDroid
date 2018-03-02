@@ -18,17 +18,14 @@ namespace AniDroid.Settings
 {
     public class SettingsPresenter : BaseAniDroidPresenter<ISettingsView>
     {
-        private readonly IAniDroidSettings _settings;
-
-        public SettingsPresenter(ISettingsView view, IAniListService service, IAniDroidSettings settings) : base(view, service)
+        public SettingsPresenter(ISettingsView view, IAniListService service, IAniDroidSettings settings) : base(view, service, settings)
         {
-            _settings = settings;
         }
 
         public override Task Init()
         {
-            View.CreateCardTypeSettingItem(_settings.GetCardType());
-            View.CreateAniDroidThemeSettingItem(_settings.GetTheme());
+            View.CreateCardTypeSettingItem(AniDroidSettings.CardType);
+            View.CreateAniDroidThemeSettingItem(AniDroidSettings.Theme);
             return Task.CompletedTask;
         }
 
@@ -39,12 +36,12 @@ namespace AniDroid.Settings
 
         public void SetCardType(BaseRecyclerAdapter.CardType cardType)
         {
-            _settings.SetCardType(cardType);
+            AniDroidSettings.CardType = cardType;
         }
 
         public void SetTheme(BaseAniDroidActivity.AniDroidTheme theme)
         {
-            _settings.SetTheme(theme);
+            AniDroidSettings.Theme = theme;
         }
     }
 }

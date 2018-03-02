@@ -16,9 +16,10 @@ namespace AniDroid.Utils.Interfaces
 {
     public interface IAniDroidSettings
     {
-        void SetCardType(BaseRecyclerAdapter.CardType cardType);
-        BaseRecyclerAdapter.CardType GetCardType();
-        void SetTheme(BaseAniDroidActivity.AniDroidTheme theme);
-        BaseAniDroidActivity.AniDroidTheme GetTheme();
+        BaseRecyclerAdapter.CardType CardType { get; set; }
+        BaseAniDroidActivity.AniDroidTheme Theme { get; set; }
+        string UserAccessCode { get; set; }
+        bool IsUserAuthenticated { get; }
+        void ClearUserAuthentication();
     }
 }

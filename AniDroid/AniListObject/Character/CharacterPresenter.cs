@@ -3,12 +3,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
+using AniDroid.Utils.Interfaces;
 
 namespace AniDroid.AniListObject.Character
 {
     public class CharacterPresenter : BaseAniDroidPresenter<ICharacterView>
     {
-        public CharacterPresenter(ICharacterView view, IAniListService service) : base(view, service)
+        public CharacterPresenter(ICharacterView view, IAniListService service, IAniDroidSettings settings) : base(view, service, settings)
         {
         }
 

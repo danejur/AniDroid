@@ -12,6 +12,8 @@ using Android.Support.V4.View;
 using Android.Support.V7.Widget;
 using Android.Views;
 using AniDroid.Utils;
+using AniDroid.Utils.Interfaces;
+using Ninject;
 
 namespace AniDroid.Base
 {
@@ -21,6 +23,7 @@ namespace AniDroid.Base
 
         private bool _isStandAloneActivity;
         private bool _showMenu;
+        private bool _canFavorite;
         private bool _isFavorite;
         private string _shareTitle;
         private string _shareUri;
@@ -90,6 +93,8 @@ namespace AniDroid.Base
 
         public void SetIsFavorite(bool isFavorite)
         {
+            var settings = Kernel.Get<IAniDroidSettings>();
+            _canFavorite = settings.IsUserAuthenticated;
             _isFavorite = isFavorite;
             _menu?.FindItem(Resource.Id.Menu_AniListObject_Favorite)?.SetIcon(_isFavorite
                 ? Resource.Drawable.ic_favorite_white_24dp
@@ -140,8 +145,10 @@ namespace AniDroid.Base
             menu?.Clear();
             MenuInflater.Inflate(Resource.Menu.AniListObject_ActionBar, _menu = menu);
             menu?.FindItem(Resource.Id.Menu_AniListObject_Share)?.SetVisible(_showMenu);
-            menu?.FindItem(Resource.Id.Menu_AniListObject_Favorite)?.SetVisible(_showMenu);
-            SetIsFavorite(_isFavorite);
+            menu?.FindItem(Resource.Id.Menu_AniListObject_Favorite)?.SetVisible(_showMenu && _canFavorite);
+            menu?.FindItem(Resource.Id.Menu_AniListObject_Favorite)?.SetIcon(_isFavorite
+                ? Resource.Drawable.ic_favorite_white_24dp
+                : Resource.Drawable.ic_favorite_border_white_24dp);
             return true;
         }
 

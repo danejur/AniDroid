@@ -12,12 +12,13 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
+using AniDroid.Utils.Interfaces;
 
 namespace AniDroid.Login
 {
     public class LoginPresenter : BaseAniDroidPresenter<ILoginView>
     {
-        public LoginPresenter(ILoginView view, IAniListService service) : base(view, service)
+        public LoginPresenter(ILoginView view, IAniListService service, IAniDroidSettings settings) : base(view, service, settings)
         {
         }
 

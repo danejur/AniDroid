@@ -3,6 +3,7 @@ using Android.Views;
 using AniDroid.Adapters.Base;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniListObject.User;
 using AniDroid.Base;
 
 namespace AniDroid.Adapters.SearchAdapters
@@ -34,9 +35,13 @@ namespace AniDroid.Adapters.SearchAdapters
             return item;
         }
 
-        private static void RowClick(object sender, EventArgs e)
+        private void RowClick(object sender, EventArgs e)
         {
-            // TODO: start user activity here
+            var senderView = sender as View;
+            var position = (int)senderView?.GetTag(Resource.Id.Object_Position);
+            var user = Items[position];
+
+            UserActivity.StartActivity(Context, user.Id);
         }
     }
 }

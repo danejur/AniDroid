@@ -1,30 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using AniDroid.AniList.Interfaces;
+﻿using AniDroid.AniList.Interfaces;
+using AniDroid.Utils.Interfaces;
 
 namespace AniDroid.Utils.Integration
 {
     internal class AniDroidAuthCodeResolver : IAuthCodeResolver
     {
-        public static AniDroidAuthCodeResolver CreateAuthCodeResolver()
+        private readonly IAniDroidSettings _aniDroidSettings;
+
+        public AniDroidAuthCodeResolver(IAniDroidSettings settings)
         {
-            return new AniDroidAuthCodeResolver();
+            _aniDroidSettings = settings;
         }
 
-        public string AuthCode { get; }
-        public bool IsAuthorized => !string.IsNullOrWhiteSpace(AuthCode);
-        public void Invalidate()
-        {
-            throw new NotImplementedException();
-        }
+        public string AuthCode => _aniDroidSettings.UserAccessCode;
+        public bool IsAuthorized => _aniDroidSettings.IsUserAuthenticated;
+        public void Invalidate() => _aniDroidSettings.ClearUserAuthentication();
     }
 }

@@ -12,12 +12,13 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
+using AniDroid.Utils.Interfaces;
 
 namespace AniDroid.Main
 {
     public class MainPresenter : BaseAniDroidPresenter<IMainView>
     {
-        public MainPresenter(IMainView view, IAniListService service) : base(view, service)
+        public MainPresenter(IMainView view, IAniListService service, IAniDroidSettings settings) : base(view, service, settings)
         {
         }
 

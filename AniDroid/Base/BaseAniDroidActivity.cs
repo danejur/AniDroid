@@ -82,8 +82,8 @@ namespace AniDroid.Base
             base.OnCreate(savedInstanceState);
 
             var settings = Kernel.Get<IAniDroidSettings>();
-            _theme = settings.GetTheme();
-            CardType = settings.GetCardType();
+            _theme = settings.Theme;
+            CardType = settings.CardType;
             SetTheme(GetThemeResource());
 
             await OnCreateExtended(savedInstanceState);

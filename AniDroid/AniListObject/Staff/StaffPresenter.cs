@@ -13,12 +13,13 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
+using AniDroid.Utils.Interfaces;
 
 namespace AniDroid.AniListObject.Staff
 {
     public class StaffPresenter : BaseAniDroidPresenter<IStaffView>
     {
-        public StaffPresenter(IStaffView view, IAniListService service) : base(view, service)
+        public StaffPresenter(IStaffView view, IAniListService service, IAniDroidSettings settings) : base(view, service, settings)
         {
         }
 

@@ -13,7 +13,7 @@ namespace AniDroid.Utils
         public override void Load()
         {
             Bind<IAniListServiceConfig>().To<AniDroidAniListServiceConfig>().InSingletonScope();
-            Bind<IAuthCodeResolver>().ToMethod(syntax => AniDroidAuthCodeResolver.CreateAuthCodeResolver());
+            Bind<IAuthCodeResolver>().To<AniDroidAuthCodeResolver>().InSingletonScope();
             Bind<IAniListService>().To<AniListService>().InSingletonScope();
             Bind<IAniDroidSettings>().ToConstructor(syntax => new AniDroidSettings(new SettingsStorage(Application.Context))).InSingletonScope();
         }

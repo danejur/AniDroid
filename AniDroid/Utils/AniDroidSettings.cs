@@ -25,24 +25,29 @@ namespace AniDroid.Utils
             _settingStorage = settingsStorage;
         }
 
-        public void SetCardType(BaseRecyclerAdapter.CardType cardType)
+        public BaseRecyclerAdapter.CardType CardType
         {
-            _settingStorage.Put(StorageKeys.CardTypeKey, cardType);
+            get => _settingStorage.Get(StorageKeys.CardTypeKey, BaseRecyclerAdapter.CardType.Vertical);
+            set => _settingStorage.Put(StorageKeys.CardTypeKey, value);
         }
 
-        public BaseRecyclerAdapter.CardType GetCardType()
+        public BaseAniDroidActivity.AniDroidTheme Theme
         {
-            return _settingStorage.Get(StorageKeys.CardTypeKey, BaseRecyclerAdapter.CardType.Vertical);
+            get => _settingStorage.Get(StorageKeys.ThemeKey, BaseAniDroidActivity.AniDroidTheme.AniList);
+            set => _settingStorage.Put(StorageKeys.ThemeKey, value);
         }
 
-        public void SetTheme(BaseAniDroidActivity.AniDroidTheme theme)
+        public string UserAccessCode
         {
-            _settingStorage.Put(StorageKeys.ThemeKey, theme);
+            get => _settingStorage.Get(StorageKeys.AccessCode);
+            set => _settingStorage.Put(StorageKeys.AccessCode, value);
         }
 
-        public BaseAniDroidActivity.AniDroidTheme GetTheme()
+        public bool IsUserAuthenticated => !string.IsNullOrWhiteSpace(UserAccessCode);
+
+        public void ClearUserAuthentication()
         {
-            return _settingStorage.Get(StorageKeys.ThemeKey, BaseAniDroidActivity.AniDroidTheme.AniList);
+            _settingStorage.Put(StorageKeys.AccessCode, null);
         }
 
         #region Constants
@@ -51,6 +56,8 @@ namespace AniDroid.Utils
         {
             public const string CardTypeKey = "CARD_TYPE";
             public const string ThemeKey = "THEME";
+
+            public const string AccessCode = "ACCESS_CODE";
         }
 
         #endregion

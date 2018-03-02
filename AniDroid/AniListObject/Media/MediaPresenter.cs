@@ -2,12 +2,13 @@
 using System.Threading.Tasks;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
+using AniDroid.Utils.Interfaces;
 
 namespace AniDroid.AniListObject.Media
 {
     public class MediaPresenter : BaseAniDroidPresenter<IMediaView>
     {
-        public MediaPresenter(IMediaView view, IAniListService service) : base(view, service)
+        public MediaPresenter(IMediaView view, IAniListService service, IAniDroidSettings settings) : base(view, service, settings)
         {
         }
 

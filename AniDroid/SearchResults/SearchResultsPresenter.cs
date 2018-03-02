@@ -14,6 +14,7 @@ using Android.Widget;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
+using AniDroid.Utils.Interfaces;
 
 namespace AniDroid.SearchResults
 {
@@ -21,7 +22,7 @@ namespace AniDroid.SearchResults
     {
         private const int PageSize = 20;
 
-        public SearchResultsPresenter(ISearchResultsView view, IAniListService service) : base(view, service)
+        public SearchResultsPresenter(ISearchResultsView view, IAniListService service, IAniDroidSettings settings) : base(view, service, settings)
         {
         }
 

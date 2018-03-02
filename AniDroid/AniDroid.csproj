@@ -158,6 +158,9 @@
     <Compile Include="AniListObject\Staff\IStaffView.cs" />
     <Compile Include="AniListObject\Staff\StaffActivity.cs" />
     <Compile Include="AniListObject\Staff\StaffPresenter.cs" />
+    <Compile Include="AniListObject\User\IUserView.cs" />
+    <Compile Include="AniListObject\User\UserActivity.cs" />
+    <Compile Include="AniListObject\User\UserPresenter.cs" />
     <Compile Include="Base\BaseAniDroidFragment.cs" />
     <Compile Include="Base\BaseAniDroidFragmentPresenter.cs" />
     <Compile Include="Base\BaseAniListObjectActivity.cs" />
