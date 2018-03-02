@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Android.App;
@@ -11,6 +13,7 @@ using AniDroid.Adapters;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Adapters.StaffAdapters;
 using AniDroid.AniList;
+using AniDroid.AniList.Interfaces;
 using AniDroid.AniListObject.Staff;
 using AniDroid.Base;
 using AniDroid.SearchResults;
@@ -94,6 +97,16 @@ namespace AniDroid.AniListObject.Media
                 adapter.AddView(CreateMediaStaffView(media.Id), "Staff");
             }
 
+            if (media.Relations?.Data?.Any() == true)
+            {
+                adapter.AddView(CreateMediaRelationsView(media.Relations.Data.ToList()), "Relations");
+            }
+
+            if (media.Studios?.Data?.Any() == true)
+            {
+                adapter.AddView(CreateMediaStudiosView(media.Studios.Data.ToList()), "Studios");
+            }
+
             ViewPager.OffscreenPageLimit = adapter.Count - 1;
             ViewPager.Adapter = adapter;
 
@@ -117,6 +130,26 @@ namespace AniDroid.AniListObject.Media
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
             var dialogRecyclerAdapter = new MediaStaffRecyclerAdapter(this, mediaStaffEnumerable, CardType);
+            recycler.SetAdapter(dialogRecyclerAdapter);
+
+            return retView;
+        }
+
+        private View CreateMediaRelationsView(List<AniList.Models.Media.Edge> mediaEdgeList)
+        {
+            var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
+            var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
+            var dialogRecyclerAdapter = new MediaRelationsRecyclerAdapter(this, mediaEdgeList, CardType);
+            recycler.SetAdapter(dialogRecyclerAdapter);
+
+            return retView;
+        }
+
+        private View CreateMediaStudiosView(List<AniList.Models.Studio.Edge> studioEdgeList)
+        {
+            var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
+            var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
+            var dialogRecyclerAdapter = new MediaStudiosRecyclerAdapter(this, studioEdgeList);
             recycler.SetAdapter(dialogRecyclerAdapter);
 
             return retView;
