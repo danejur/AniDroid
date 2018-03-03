@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AniDroid", "AniDroid\AniDro
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AniDroid.AniList", "AniDroid.AniList\AniDroid.AniList\AniDroid.AniList.csproj", "{49FB1693-B542-4C68-82F9-19762A6AFB29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AniDroid.Torrent", "AniDroid.Torrent\AniDroid.Torrent.csproj", "{6E34B7AF-7E77-4F94-B56A-FDF1462EDC34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AniDroid.Torrent", "AniDroid.Torrent\AniDroid.Torrent.csproj", "{6E34B7AF-7E77-4F94-B56A-FDF1462EDC34}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

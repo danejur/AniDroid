@@ -5,4 +5,5 @@
   <dimen name="Details_ChartHeight">200dp</dimen>
   <dimen name="Details_MarginTop">30dp</dimen>
   <dimen name="Details_MarginSmall">12dp</dimen>
+  <dimen name="Details_CellPadding">8dp</dimen>
 </resources>

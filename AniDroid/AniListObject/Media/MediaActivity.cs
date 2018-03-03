@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -169,6 +170,11 @@ namespace AniDroid.AniListObject.Media
             var retView = LayoutInflater.Inflate(Resource.Layout.View_ScrollLayout, null);
             var containerView = retView.FindViewById<LinearLayout>(Resource.Id.Scroll_Container);
 
+            if (media.Rankings?.Any() == true)
+            {
+                containerView.AddView(CreateUserRankingView(media.Rankings));
+            }
+
             if (media.Stats?.ScoreDistribution?.Any() == true)
             {
                 containerView.AddView(CreateUserScoresView(media.Stats.ScoreDistribution));
@@ -291,20 +297,14 @@ namespace AniDroid.AniListObject.Media
             scoresChart.SetDrawGridBackground(false);
             scoresChart.SetTouchEnabled(false);
             scoresChart.Description.Enabled = false;
-
-            //x axis formatting
             scoresChart.XAxis.SetDrawGridLines(false);
             scoresChart.XAxis.Position = XAxis.XAxisPosition.Bottom;
             scoresChart.XAxis.ValueFormatter = new ChartUtils.AxisValueCeilingFormatter(1);
             scoresChart.XAxis.Granularity = 1;
             scoresChart.XAxis.LabelCount = Math.Min(orderedStats.Count, 12);
-
-            //score y axis formatting
             scoresChart.AxisLeft.SetDrawGridLines(false);
             scoresChart.AxisLeft.Granularity = 1;
             scoresChart.AxisLeft.LabelCount = 5;
-
-            //count y axis formatting
             scoresChart.AxisRight.SetDrawGridLines(false);
             scoresChart.AxisRight.Granularity = 1;
 
@@ -373,7 +373,6 @@ namespace AniDroid.AniListObject.Media
             statusChart.Description.Enabled = false;
             statusChart.Legend.Enabled = false;
             statusChart.RotationEnabled = false;
-            //statusChart.SetOnChartValueSelectedListener(new GenreSliceSelectedListener(legendContainer));
 
             chartContainer.AddView(statusChart);
 
@@ -390,6 +389,39 @@ namespace AniDroid.AniListObject.Media
 
             detailContainer.AddView(chartContainer);
             detailContainer.AddView(legendContainer);
+
+            return detailView;
+        }
+
+        private View CreateUserRankingView(IEnumerable<AniList.Models.Media.MediaRank> rankings)
+        {
+            var detailView = LayoutInflater.Inflate(Resource.Layout.View_AniListObjectDetail, null);
+            var detailContainer = detailView.FindViewById<LinearLayout>(Resource.Id.AniListObjectDetail_InnerContainer);
+            detailView.FindViewById<TextView>(Resource.Id.AniListObjectDetail_Name).Text = "User Ranking";
+
+            foreach (var ranking in rankings)
+            {
+                var view = LayoutInflater.Inflate(Resource.Layout.View_MediaRank, null);
+                var rankingTextView = view.FindViewById<TextView>(Resource.Id.MediaRank_Text);
+                var rankingIcon = view.FindViewById<ImageView>(Resource.Id.MediaRank_Image);
+
+                rankingTextView.Text = ranking.GetFormattedRankString();
+
+                if (AniList.Models.Media.MediaRankType.Rated.Equals(ranking.Type))
+                {
+                    var icon = ContextCompat.GetDrawable(this, Resource.Drawable.ic_star_white_24dp).Mutate();
+                    icon.SetColorFilter(new Color(ContextCompat.GetColor(this, Resource.Color.Favorite_Yellow)), PorterDuff.Mode.SrcIn);
+                    rankingIcon.SetImageDrawable(icon);
+                }
+                else if (AniList.Models.Media.MediaRankType.Popular.Equals(ranking.Type))
+                {
+                    var icon = ContextCompat.GetDrawable(this, Resource.Drawable.ic_favorite_white_24dp).Mutate();
+                    icon.SetColorFilter(new Color(ContextCompat.GetColor(this, Resource.Color.Favorite_Red)), PorterDuff.Mode.SrcIn);
+                    rankingIcon.SetImageDrawable(icon);
+                }
+
+                detailContainer.AddView(view);
+            }
 
             return detailView;
         }

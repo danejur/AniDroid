@@ -1,32 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:orientation="vertical"
-  android:minWidth="25px"
-  android:minHeight="25px"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content"
-  android:id="@+id/AniListObjectDetail_Container"
-  android:background="?Background"
-  android:layout_marginTop="@dimen/Details_MarginTop">
-  <LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:minWidth="25px"
     android:minHeight="25px"
+    android:paddingBottom="30dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="@dimen/Details_NamePadding">
-    <TextView
-      android:text="Data Name"
-      android:id="@+id/AniListObjectDetail_Name"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:textColor="?Secondary_Dark"
-      android:textSize="@dimen/Details_NameTextSize" />
-  </LinearLayout>
-  <LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/AniListObjectDetail_InnerContainer" />
+    android:id="@+id/AniListObjectDetail_Container"
+    android:background="?Background">
+    <LinearLayout
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/Details_NamePadding">
+        <TextView
+            android:id="@+id/AniListObjectDetail_Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?Secondary_Dark"
+            android:textSize="@dimen/Details_NameTextSize" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/AniListObjectDetail_InnerContainer" />
 </LinearLayout>

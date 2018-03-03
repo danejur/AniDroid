@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_weight="1"
-  android:orientation="horizontal"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
-  <TextView
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
-    android:layout_weight="5"
-    android:gravity="center"
-    android:id="@+id/ChartLegendCell_Count"
-    android:text="000"
-    android:textColor="@android:color/white" />
-  <TextView
-    android:layout_height="match_parent"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_weight="1"
-    android:gravity="center_vertical|left"
-    android:text="Genre"
-    android:paddingLeft="15dp"
-    android:id="@+id/ChartLegendCell_Text"
-    android:background="#25FFFFFF"
-    android:textColor="@android:color/white" />
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_weight="4"
+        android:gravity="center"
+        android:id="@+id/ChartLegendCell_Count"
+        android:text="000"
+        android:textColor="@android:color/white" />
+    <TextView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:gravity="center_vertical|left"
+        android:text="Genre"
+        android:paddingLeft="15dp"
+        android:id="@+id/ChartLegendCell_Text"
+        android:background="#25FFFFFF"
+        android:textColor="@android:color/white" />
 </LinearLayout>

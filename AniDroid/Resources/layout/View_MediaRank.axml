@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/Details_CellPadding"
+    android:gravity="center_vertical">
+    <ImageView
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:id="@+id/MediaRank_Image"
+        android:visibility="visible"
+        android:layout_marginRight="@dimen/Details_CellPadding" />
+    <TextView
+        android:text="Ranking Details"
+        android:textColor="?Background_Text_Alternate"
+        android:id="@+id/MediaRank_Text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal" />
+</LinearLayout>
