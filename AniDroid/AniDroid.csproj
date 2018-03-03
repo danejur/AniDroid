@@ -148,6 +148,7 @@
     <Compile Include="Adapters\MediaAdapters\MediaRelationsRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaStaffRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaStudiosRecyclerAdapter.cs" />
+    <Compile Include="Adapters\MediaAdapters\MediaTagsRecyclerAdapter.cs" />
     <Compile Include="Adapters\SearchAdapters\CharacterSearchRecyclerAdapter.cs" />
     <Compile Include="Adapters\SearchAdapters\ForumThreadSearchRecyclerAdapter.cs" />
     <Compile Include="Adapters\SearchAdapters\MediaSearchRecyclerAdapter.cs" />
@@ -891,6 +892,21 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\menu\Error_ActionBar.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xhdpi\ic_visibility_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxhdpi\ic_visibility_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-xxxhdpi\ic_visibility_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-hdpi\ic_visibility_white_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable-mdpi\ic_visibility_white_24dp.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Android.Support.Annotations.26.1.0.1\build\MonoAndroid80\Xamarin.Android.Support.Annotations.targets" Condition="Exists('..\packages\Xamarin.Android.Support.Annotations.26.1.0.1\build\MonoAndroid80\Xamarin.Android.Support.Annotations.targets')" />

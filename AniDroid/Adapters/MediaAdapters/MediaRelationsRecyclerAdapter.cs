@@ -29,8 +29,8 @@ namespace AniDroid.Adapters.MediaAdapters
             var item = Items[position];
 
             holder.Name.Text = item.Node?.Title?.UserPreferred;
-            holder.DetailPrimary.Text = $"{AniListEnum.GetDisplayValue<Media.MediaFormat>(item.Node?.Format)}{(item.Node?.IsAdult == true ? " (Hentai)" : "")}";
-            holder.DetailSecondary.Text = AniListEnum.GetDisplayValue<Media.MediaRelation>(item.RelationType);
+            holder.DetailPrimary.Text = $"{item.Node?.Format?.DisplayValue}{(item.Node?.IsAdult == true ? " (Hentai)" : "")}";
+            holder.DetailSecondary.Text = item.RelationType?.DisplayValue;
             Context.LoadImage(holder.Image, item.Node?.CoverImage?.Large ?? "");
 
             holder.ContainerCard.SetTag(Resource.Id.Object_Position, position);

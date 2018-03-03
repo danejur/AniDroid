@@ -117,7 +117,7 @@ namespace AniDroid.AniListObject.Staff
             LoadImage(imageView, staff.Image?.Large);
             descriptionView.TextFormatted = FromHtml(staff.Description ?? "(No Description Available)");
             nameView.Text = staff.Name?.GetFormattedName(true);
-            languageView.Text = AniListEnum.GetDisplayValue<AniList.Models.Staff.StaffLanguage>(staff.Language) ?? "(Language Unknown)";
+            languageView.Text = staff.Language?.DisplayValue ?? "(Language Unknown)";
 
             return retView;
         }

@@ -112,6 +112,11 @@ namespace AniDroid.AniListObject.Media
                 adapter.AddView(CreateMediaStudiosView(media.Studios.Data.ToList()), "Studios");
             }
 
+            if (media.Tags?.Any() == true)
+            {
+                adapter.AddView(CreateMediaTagsView(media.Tags), "Tags");
+            }
+
             if (media.Stats != null)
             {
                 adapter.AddView(CreateMediaUserDataView(media), "User Data");
@@ -160,6 +165,16 @@ namespace AniDroid.AniListObject.Media
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
             var dialogRecyclerAdapter = new MediaStudiosRecyclerAdapter(this, studioEdgeList);
+            recycler.SetAdapter(dialogRecyclerAdapter);
+
+            return retView;
+        }
+
+        private View CreateMediaTagsView(List<AniList.Models.Media.MediaTag> tagList)
+        {
+            var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
+            var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
+            var dialogRecyclerAdapter = new MediaTagsRecyclerAdapter(this, tagList);
             recycler.SetAdapter(dialogRecyclerAdapter);
 
             return retView;

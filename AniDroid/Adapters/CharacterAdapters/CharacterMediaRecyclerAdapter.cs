@@ -24,7 +24,7 @@ namespace AniDroid.Adapters.CharacterAdapters
             var item = Items[position];
 
             holder.Name.Text = item.Node?.Title?.UserPreferred;
-            holder.DetailPrimary.Text = $"{AniListEnum.GetDisplayValue<Media.MediaFormat>(item.Node?.Format)}{(item.Node?.IsAdult == true ? " (Hentai)" : "")}";
+            holder.DetailPrimary.Text = $"{item.Node?.Format?.DisplayValue}{(item.Node?.IsAdult == true ? " (Hentai)" : "")}";
             Context.LoadImage(holder.Image, item.Node?.CoverImage?.Large);
 
             if (Media.MediaType.Anime.Equals(item.Node?.Type) && item.VoiceActors?.Any() == true)

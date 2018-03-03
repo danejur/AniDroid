@@ -22,7 +22,7 @@ namespace AniDroid.Adapters.SearchAdapters
             var item = Items[position];
 
             holder.Name.Text = item.Title.UserPreferred;
-            holder.DetailPrimary.Text = $"{AniListEnum.GetDisplayValue<Media.MediaFormat>(item.Format)}{(item.IsAdult ? " (Hentai)" : "")}";
+            holder.DetailPrimary.Text = $"{item.Format?.DisplayValue}{(item.IsAdult ? " (Hentai)" : "")}";
             holder.DetailSecondary.Text = $"{(item.AverageScore != 0 ? $"Average Rating: {item.AverageScore}": "No Rating Data")}      Popularity: {item.Popularity}";
             holder.Button.Visibility = item.IsFavourite ? ViewStates.Visible : ViewStates.Gone;
             Context.LoadImage(holder.Image, item.CoverImage.Large);

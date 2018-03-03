@@ -32,7 +32,7 @@ namespace AniDroid.Adapters.SearchAdapters
                 holder.DetailPrimary.Visibility = ViewStates.Gone;
             }
 
-            holder.DetailSecondary.Text = AniListEnum.GetDisplayValue<Staff.StaffLanguage>(item.Language) ?? "(Language unknown)";
+            holder.DetailSecondary.Text = item.Language?.DisplayValue ?? "(Language unknown)";
             holder.Button.Visibility = item.IsFavourite ? ViewStates.Visible : ViewStates.Gone;
             Context.LoadImage(holder.Image, item.Image?.Large);
 

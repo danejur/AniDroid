@@ -29,7 +29,7 @@ namespace AniDroid.Adapters.StudioAdapters
             var item = Items[position];
 
             holder.Name.Text = item.Node?.Title?.UserPreferred;
-            holder.DetailPrimary.Text = $"{AniListEnum.GetDisplayValue<Media.MediaFormat>(item.Node?.Format)}{(item.Node?.IsAdult == true ? " (Hentai)" : "")}";
+            holder.DetailPrimary.Text = $"{item.Node?.Format?.DisplayValue}{(item.Node?.IsAdult == true ? " (Hentai)" : "")}";
             holder.DetailSecondary.Visibility = item.IsMainStudio ? ViewStates.Visible : ViewStates.Gone;
             Context.LoadImage(holder.Image, item.Node?.CoverImage?.Large ?? "");
 

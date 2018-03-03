@@ -29,7 +29,7 @@ namespace AniDroid.Adapters.StaffAdapters
             var item = Items[position];
 
             holder.Name.Text = item.Name?.GetFormattedName(true);
-            holder.DetailPrimary.Text = AniListEnum.GetDisplayValue<Staff.StaffLanguage>(item.Language) ?? "(Language unknown)";
+            holder.DetailPrimary.Text = item.Language?.DisplayValue ?? "(Language unknown)";
             Context.LoadImage(holder.Image, item.Image?.Large);
 
             holder.ContainerCard.SetTag(Resource.Id.Object_Position, position);

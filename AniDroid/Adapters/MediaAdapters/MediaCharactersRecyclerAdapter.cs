@@ -22,7 +22,7 @@ namespace AniDroid.Adapters.MediaAdapters
             var item = Items[position];
 
             holder.Name.Text = item.Node?.Name?.GetFormattedName(true);
-            holder.DetailPrimary.Text = AniListEnum.GetDisplayValue<Character.CharacterRole>(item.Role);
+            holder.DetailPrimary.Text = item.Role?.DisplayValue;
             Context.LoadImage(holder.Image, item.Node?.Image?.Large ?? "");
 
             holder.ContainerCard.SetTag(Resource.Id.Object_Position, position);

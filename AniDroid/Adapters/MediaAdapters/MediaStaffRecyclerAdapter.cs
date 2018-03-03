@@ -29,7 +29,7 @@ namespace AniDroid.Adapters.MediaAdapters
             var item = Items[position];
 
             holder.Name.Text = item.Node?.Name?.GetFormattedName(true);
-            holder.DetailPrimary.Text = AniListEnum.GetDisplayValue<Staff.StaffLanguage>(item.Node?.Language);
+            holder.DetailPrimary.Text = item.Node?.Language?.DisplayValue;
             holder.DetailSecondary.Text = item.Role;
             Context.LoadImage(holder.Image, item.Node?.Image?.Large ?? "");
 
