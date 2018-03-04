@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:background="@drawable/Background_Category"
+          android:textColor="?Category_Text"
+          android:id="@+id/Category_Text"
+          android:gravity="center"
+          android:orientation="vertical"
+          android:paddingBottom="8dp"
+          android:paddingLeft="16dp"
+          android:paddingRight="16dp"
+          android:paddingTop="8dp"
+          tools:text="Action" />

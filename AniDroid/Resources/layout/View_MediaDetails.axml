@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp">
+        <ImageView
+            android:src="@android:drawable/ic_menu_gallery"
+            android:layout_width="125dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/Media_Image"
+            android:adjustViewBounds="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp" />
+        <TextView
+            android:text="Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/Media_Image"
+            android:id="@+id/Media_Title"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="25dp"
+            android:textColor="?Background_Text"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+        <TextView
+            android:text="Format"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Media_Title"
+            android:id="@+id/Media_Format"
+            android:layout_toRightOf="@id/Media_Image"
+            android:layout_marginTop="5dp"
+            android:textSize="16dp"
+            android:textColor="?Background_Text" />
+        <TextView
+            android:text="Airing Status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Media_Format"
+            android:id="@+id/Media_AiringStatus"
+            android:layout_toRightOf="@id/Media_Image"
+            android:layout_marginTop="5dp"
+            android:textSize="16dp"
+            android:textColor="?Background_Text" />
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/Media_Genres"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:dividerDrawable="@drawable/divider_8dp"
+            app:flexWrap="wrap"
+            app:justifyContent="center"
+            app:showDividerHorizontal="middle"
+            app:showDividerVertical="middle"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_below="@id/Media_Image"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp" />
+        <TextView
+            android:text="Description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Media_Description"
+            android:textColor="?Background_Text"
+            android:textSize="14dp"
+            android:layout_below="@id/Media_Genres"
+            android:ellipsize="end"
+            android:singleLine="false" />
+    </RelativeLayout>
+</ScrollView>

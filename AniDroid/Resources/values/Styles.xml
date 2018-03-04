@@ -53,6 +53,10 @@
     <item name="Background_Text_Special">@color/Dark_Background_Text_Special</item>
     <item name="Background_TrustedTorrent">@color/Dark_TrustedTorrent</item>
     <item name="Background_RemakeTorrent">@color/Dark_RemakeTorrent</item>
+
+    <item name="Category_Background">@color/Dark_Category_Background</item>
+    <item name="Category_Ripple">@color/Dark_Category_Ripple</item>
+    <item name="Category_Text">@color/Dark_Category_Text</item>
   </style>
 
   <style name="Dark_Toolbar_Style" parent="Theme.AniDroid">
@@ -204,6 +208,10 @@
     <item name="Background_Text_Alternate">@color/AniList_Background_Text_Alternate</item>
     <item name="Background_TrustedTorrent">@color/Anilist_TrustedTorrent</item>
     <item name="Background_RemakeTorrent">@color/Anilist_RemakeTorrent</item>
+
+    <item name="Category_Background">@color/AniList_Category_Background</item>
+    <item name="Category_Ripple">@color/AniList_Category_Ripple</item>
+    <item name="Category_Text">@color/AniList_Category_Text</item>
   </style>
 
   <style name="AniList_Popup_Theme" parent="ThemeOverlay.AppCompat.Dark">

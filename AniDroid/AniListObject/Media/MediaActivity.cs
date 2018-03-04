@@ -22,6 +22,7 @@ using AniDroid.Base;
 using AniDroid.SearchResults;
 using AniDroid.Utils;
 using AniDroid.Utils.Formatting;
+using Com.Google.Android.Flexbox;
 using MikePhil.Charting.Charts;
 using MikePhil.Charting.Components;
 using MikePhil.Charting.Data;
@@ -90,7 +91,7 @@ namespace AniDroid.AniListObject.Media
             //ToggleFavorite = () => ToggleFavoriteInternal(staff.Id);
 
             var adapter = new FragmentlessViewPagerAdapter();
-            //adapter.AddView(CreateMediaDetailsView(media), "Details");
+            adapter.AddView(CreateMediaDetailsView(media), "Details");
 
             if (media.Characters?.PageInfo?.Total > 0)
             {
@@ -126,6 +127,28 @@ namespace AniDroid.AniListObject.Media
             ViewPager.Adapter = adapter;
 
             TabLayout.SetupWithViewPager(ViewPager);
+        }
+
+        private View CreateMediaDetailsView(AniList.Models.Media media)
+        {
+            var retView = LayoutInflater.Inflate(Resource.Layout.View_MediaDetails, null);
+            retView.FindViewById<TextView>(Resource.Id.Media_Title).Text = media.Title?.UserPreferred;
+            retView.FindViewById<TextView>(Resource.Id.Media_Format).Text = media.Format?.DisplayValue;
+            retView.FindViewById<TextView>(Resource.Id.Media_AiringStatus).Text = media.Status?.DisplayValue;
+            retView.FindViewById<TextView>(Resource.Id.Media_Description).TextFormatted = FromHtml(media.Description);
+
+            LoadImage(retView.FindViewById<ImageView>(Resource.Id.Media_Image), media.CoverImage.Large);
+            var genreContainer = retView.FindViewById<FlexboxLayout>(Resource.Id.Media_Genres);
+
+            foreach (var genre in media.Genres)
+            {
+                var genreView = LayoutInflater.Inflate(Resource.Layout.Item_Category, null);
+                genreView.FindViewById<TextView>(Resource.Id.Category_Text).Text = genre;
+                genreView.Clickable = true;
+                genreContainer.AddView(genreView);
+            }
+
+            return retView;
         }
 
         private View CreateMediaCharactersView(int mediaId)
