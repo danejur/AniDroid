@@ -46,9 +46,9 @@
   <color name="Anilist_RemakeTorrent">#FFE4D1</color>
 
   <!-- Category Item -->
-  <color name="AniList_Category_Background">#D9D9D9</color>
-  <color name="AniList_Category_Ripple">#D0D0D0</color>
-  <color name="AniList_Category_Text">#D0000000</color>
+  <color name="AniList_Ripple_Background">#D9D9D9</color>
+  <color name="AniList_Ripple_Highlight">#D0D0D0</color>
+  <color name="AniList_Ripple_Text">#D0000000</color>
 
   <!-- General -->
   <color name="AniList_Background">#F5F5F5</color>
@@ -83,10 +83,10 @@
   <color name="Dark_TrustedTorrent">#06260E</color>
   <color name="Dark_RemakeTorrent">#311806</color>
   
-  <!-- Category Item -->
-  <color name="Dark_Category_Background">#181818</color>
-  <color name="Dark_Category_Ripple">#545454</color>
-  <color name="Dark_Category_Text">#D4C0C0C0</color>
+  <!-- Ripple Item -->
+  <color name="Dark_Ripple_Background">#181818</color>
+  <color name="Dark_Ripple_Highlight">#414141</color>
+  <color name="Dark_Ripple_Text">#D4C0C0C0</color>
 
   <!-- General -->
   <color name="Dark_Background">#000</color>

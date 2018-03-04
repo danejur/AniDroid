@@ -4,7 +4,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:background="@drawable/Background_Category"
-          android:textColor="?Category_Text"
+          android:textColor="?Ripple_Text"
           android:id="@+id/Category_Text"
           android:gravity="center"
           android:orientation="vertical"

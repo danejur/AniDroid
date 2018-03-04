@@ -4,10 +4,13 @@ using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Android;
 using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.Graphics;
 using Android.OS;
+using Android.Support.Design.Widget;
 using Android.Support.V4.Content;
 using Android.Support.V7.Widget;
 using Android.Views;
@@ -27,6 +30,7 @@ using MikePhil.Charting.Charts;
 using MikePhil.Charting.Components;
 using MikePhil.Charting.Data;
 using Ninject;
+using Calendar = Android.Icu.Util.Calendar;
 
 namespace AniDroid.AniListObject.Media
 {
@@ -145,7 +149,46 @@ namespace AniDroid.AniListObject.Media
                 var genreView = LayoutInflater.Inflate(Resource.Layout.Item_Category, null);
                 genreView.FindViewById<TextView>(Resource.Id.Category_Text).Text = genre;
                 genreView.Clickable = true;
+                genreView.Click += (sender, eventArgs) => DisplaySnackbarMessage("Not Implemented Yet", Snackbar.LengthShort);
                 genreContainer.AddView(genreView);
+            }
+
+            var dateRangeView = retView.FindViewById<TextView>(Resource.Id.Media_DateRangeText);
+
+            if (AniList.Models.Media.MediaStatus.NotYetReleased.Equals(media.Status))
+            {
+                var startDate = media.StartDate.GetDate();
+                var startDateString = media.StartDate?.GetFuzzyDateString();
+                dateRangeView.Text = startDateString != null ? $"Starts: {startDateString}" : "Unknown start date";
+
+                if (startDate.HasValue && startDate.Value > DateTime.Now.Date)
+                {
+                    var dateRangeButton = retView.FindViewById<ImageView>(Resource.Id.Media_DateRangeIcon);
+                    var dateRangeContainer = retView.FindViewById<LinearLayout>(Resource.Id.Media_DateRangeContainer);
+
+                    dateRangeButton.Visibility = ViewStates.Visible;
+                    dateRangeContainer.Clickable = true;
+                    dateRangeContainer.Click += (sender, eventArgs) =>
+                    {
+                        if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.WriteCalendar) == (int)Permission.Granted)
+                        {
+                            var calIntent = new Intent(Intent.ActionEdit);
+                            calIntent.SetType("vnd.android.cursor.item/event");
+                            calIntent.PutExtra("beginTime", new DateTimeOffset(startDate.Value).ToUnixTimeMilliseconds());
+                            calIntent.PutExtra("allDay", true);
+                            calIntent.PutExtra("title", $"{media.Title?.UserPreferred} starts");
+                            StartActivity(calIntent);
+                        }
+                        else
+                        {
+                            DisplaySnackbarMessage("Calendar permission required to add reminder", Snackbar.LengthShort);
+                        }
+                    };
+                }
+            }
+            else
+            {
+                dateRangeView.Text = $"{media.StartDate?.GetFuzzyDateString() ?? "Unknown Start Date"} to {media.EndDate?.GetFuzzyDateString() ?? "Unknown End Date"}";
             }
 
             return retView;
@@ -213,7 +256,7 @@ namespace AniDroid.AniListObject.Media
                 containerView.AddView(CreateUserRankingView(media.Rankings));
             }
 
-            if (media.Stats?.ScoreDistribution?.Any() == true)
+            if (media.Stats?.ScoreDistribution?.Any() == true && !AniList.Models.Media.MediaStatus.NotYetReleased.Equals(media.Status))
             {
                 containerView.AddView(CreateUserScoresView(media.Stats.ScoreDistribution));
             }
@@ -394,7 +437,7 @@ namespace AniDroid.AniListObject.Media
                 LayoutParameters =
                     new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, ViewGroup.LayoutParams.MatchParent)
             };
-            var slices = statusDistribution.Select(x => new PieEntry(x.Amount, x.Status) { Data = x.Status }).ToList();
+            var slices = statusDistribution.Select(x => new PieEntry(x.Amount, x.Status.DisplayValue) { Data = x.Status.DisplayValue }).ToList();
             var dataSet = new PieDataSet(slices, "Status")
             {
                 SliceSpace = 1,
@@ -420,8 +463,8 @@ namespace AniDroid.AniListObject.Media
                 var status = statusDistribution[i];
                 cell.SetBackgroundColor(new Color(colorList[i % 10]));
                 cell.FindViewById<TextView>(Resource.Id.ChartLegendCell_Count).Text = status.Amount.ToTruncatedString();
-                cell.FindViewById<TextView>(Resource.Id.ChartLegendCell_Text).Text = AniListEnum.GetDisplayValue<AniList.Models.Media.MediaListStatus>(status.Status);
-                cell.Tag = status.Status;
+                cell.FindViewById<TextView>(Resource.Id.ChartLegendCell_Text).Text = status.Status.DisplayValue;
+                cell.Tag = status.Status.DisplayValue;
                 legendContainer.AddView(cell);
             }
 

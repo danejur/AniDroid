@@ -2,20 +2,17 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android" android:enterFadeDuration="@android:integer/config_mediumAnimTime" android:exitFadeDuration="@android:integer/config_mediumAnimTime">
   <item android:state_pressed="true">
     <shape>
-      <corners android:radius="4dp" />
       <solid android:color="?Ripple_Highlight" />
     </shape>
   </item>
   <item android:state_focused="true">
     <shape>
-      <corners android:radius="4dp" />
       <solid android:color="?Ripple_Background" />
       <stroke android:color="?Ripple_Highlight" />
     </shape>
   </item>
   <item>
     <shape>
-      <corners android:radius="4dp" />
       <solid android:color="?Ripple_Background" />
     </shape>
   </item>

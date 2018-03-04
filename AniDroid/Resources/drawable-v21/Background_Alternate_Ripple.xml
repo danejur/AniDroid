@@ -3,13 +3,11 @@
         android:color="?Ripple_Highlight">
   <item android:id="@android:id/mask">
     <shape android:shape="rectangle">
-      <corners android:radius="4dp" />
       <solid android:color="@android:color/white" />
     </shape>
   </item>
   <item>
     <shape>
-      <corners android:radius="4dp" />
       <solid android:color="?Ripple_Background" />
     </shape>
   </item>

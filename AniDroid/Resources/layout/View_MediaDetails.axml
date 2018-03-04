@@ -6,9 +6,7 @@
     android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingRight="10dp"
-        android:paddingLeft="10dp">
+        android:layout_height="wrap_content">
         <ImageView
             android:src="@android:drawable/ic_menu_gallery"
             android:layout_width="125dp"
@@ -17,8 +15,8 @@
             android:adjustViewBounds="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="5dp" />
         <TextView
             android:text="Title"
@@ -28,6 +26,7 @@
             android:id="@+id/Media_Title"
             android:layout_alignParentTop="true"
             android:layout_marginTop="25dp"
+            android:layout_marginRight="20dp"
             android:textColor="?Background_Text"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -39,6 +38,7 @@
             android:id="@+id/Media_Format"
             android:layout_toRightOf="@id/Media_Image"
             android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
             android:textSize="16dp"
             android:textColor="?Background_Text" />
         <TextView
@@ -49,9 +49,48 @@
             android:id="@+id/Media_AiringStatus"
             android:layout_toRightOf="@id/Media_Image"
             android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
             android:textSize="16dp"
             android:textColor="?Background_Text" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/Media_Image"
+            android:id="@+id/Media_DateRangeContainer"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:background="@drawable/Background_Alternate_Ripple"
+            android:layout_marginTop="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+            <ImageView
+                android:src="@drawable/ic_event_white_36dp"
+                android:id="@+id/Media_DateRangeIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:padding="3dp"
+                android:visibility="gone"
+                android:tint="?Background_Text_Alternate" />
+            <TextView
+                android:text="Date Range"
+                android:textColor="?Background_Text_Alternate"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="16dp"
+                android:id="@+id/Media_DateRangeText"
+                android:gravity="center"
+                android:layout_marginLeft="15dp" />
+        </LinearLayout>
         <com.google.android.flexbox.FlexboxLayout
+            android:layout_marginTop="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:layout_below="@id/Media_DateRangeContainer"
             android:id="@+id/Media_Genres"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -59,21 +98,19 @@
             app:flexWrap="wrap"
             app:justifyContent="center"
             app:showDividerHorizontal="middle"
-            app:showDividerVertical="middle"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_below="@id/Media_Image"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp" />
+            app:showDividerVertical="middle" />
         <TextView
             android:text="Description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/Media_Description"
             android:textColor="?Background_Text"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
             android:textSize="14dp"
             android:layout_below="@id/Media_Genres"
             android:ellipsize="end"
-            android:singleLine="false" />
+            android:singleLine="false"
+            android:layout_marginTop="20dp" />
     </RelativeLayout>
 </ScrollView>

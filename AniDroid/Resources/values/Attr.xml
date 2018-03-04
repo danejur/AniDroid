@@ -50,9 +50,9 @@
   <attr name="Background_TrustedTorrent" format="reference|color" />
   <attr name="Background_RemakeTorrent" format="reference|color" />
   
-  <!-- Category Item -->
-  <attr name="Category_Background" format="reference|color" />
-  <attr name="Category_Ripple" format="reference|color" />
-  <attr name="Category_Text" format="reference|color" />
+  <!-- Ripple Item -->
+  <attr name="Ripple_Background" format="reference|color" />
+  <attr name="Ripple_Highlight" format="reference|color" />
+  <attr name="Ripple_Text" format="reference|color" />
 
 </resources>
