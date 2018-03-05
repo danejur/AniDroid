@@ -27,7 +27,7 @@
         android:layout_height="match_parent" />
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/Main_SearchFab"
-        android:src="@drawable/ic_search_white_24dp"
+        app:srcCompat="@drawable/ic_search_white_24px"
         style="?FabLarge_Style"
         app:layout_behavior="AniDroid.Utils.Behaviors.FloatingActionButtonScrollBehavior"
         android:elevation="10dp"

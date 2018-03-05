@@ -45,7 +45,7 @@ namespace AniDroid.Adapters.MediaAdapters
         public override CardItem SetupCardItemViewHolder(CardItem item)
         {
             item.DetailSecondary.Visibility = ViewStates.Gone;
-            item.ButtonIcon.SetImageResource(Resource.Drawable.ic_record_voice_over_white_24dp);
+            item.ButtonIcon.SetImageResource(Resource.Drawable.ic_record_voice_over_white_24px);
             return item;
         }
 

@@ -12,6 +12,7 @@ using Android.Graphics;
 using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V4.Content;
+using Android.Support.V4.Graphics.Drawable;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
@@ -490,15 +491,13 @@ namespace AniDroid.AniListObject.Media
 
                 if (AniList.Models.Media.MediaRankType.Rated.Equals(ranking.Type))
                 {
-                    var icon = ContextCompat.GetDrawable(this, Resource.Drawable.ic_star_white_24dp).Mutate();
-                    icon.SetColorFilter(new Color(ContextCompat.GetColor(this, Resource.Color.Favorite_Yellow)), PorterDuff.Mode.SrcIn);
-                    rankingIcon.SetImageDrawable(icon);
+                    rankingIcon.SetImageResource(Resource.Drawable.ic_star_white_24px);
+                    rankingIcon.SetColorFilter(new Color(ContextCompat.GetColor(this, Resource.Color.Favorite_Yellow)), PorterDuff.Mode.SrcIn);
                 }
                 else if (AniList.Models.Media.MediaRankType.Popular.Equals(ranking.Type))
                 {
-                    var icon = ContextCompat.GetDrawable(this, Resource.Drawable.ic_favorite_white_24dp).Mutate();
-                    icon.SetColorFilter(new Color(ContextCompat.GetColor(this, Resource.Color.Favorite_Red)), PorterDuff.Mode.SrcIn);
-                    rankingIcon.SetImageDrawable(icon);
+                    rankingIcon.SetImageResource(Resource.Drawable.ic_favorite_white_24px);
+                    rankingIcon.SetColorFilter(new Color(ContextCompat.GetColor(this, Resource.Color.Favorite_Red)), PorterDuff.Mode.SrcIn);
                 }
 
                 detailContainer.AddView(view);

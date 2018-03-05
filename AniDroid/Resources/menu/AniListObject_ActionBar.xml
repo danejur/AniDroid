@@ -4,13 +4,13 @@
   <item
     android:id="@+id/Menu_AniListObject_Favorite"
     android:title="Favorite"
-    android:icon="@drawable/ic_favorite_border_white_24dp"
+    android:icon="@drawable/ic_favorite_border_white_24px"
     android:visible="false"
     app:showAsAction="always"/>
   <item
     android:id="@+id/Menu_AniListObject_Share"
     android:title="Share"
-    android:icon="@drawable/ic_share_white_24dp"
+    android:icon="@drawable/ic_share_white_24px"
     android:visible="false"
     app:showAsAction="always"/>
 </menu>

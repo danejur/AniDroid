@@ -6,5 +6,5 @@
     android:title="Refresh"
     app:showAsAction="ifRoom"
     android:actionViewClass="android.widget.ImageButton"
-    android:icon="@drawable/ic_refresh_white_24dp"/>
+    android:icon="@drawable/ic_refresh_white_24px"/>
 </menu>

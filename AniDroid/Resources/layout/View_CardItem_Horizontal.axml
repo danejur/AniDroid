@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:resAuto="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:minWidth="25px"
     android:minHeight="40dp"
@@ -13,10 +13,10 @@
         android:layout_height="wrap_content"
         android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
-        resAuto:cardBackgroundColor="?Background_Alternate"
-        resAuto:cardElevation="3dp"
-        resAuto:cardUseCompatPadding="true"
-        resAuto:cardPreventCornerOverlap="false"
+        app:cardBackgroundColor="?Background_Alternate"
+        app:cardElevation="3dp"
+        app:cardUseCompatPadding="true"
+        app:cardPreventCornerOverlap="false"
         android:id="@+id/CardItem_Card">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -32,7 +32,7 @@
                 android:layout_centerVertical="true"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"
-                android:src="@android:drawable/ic_menu_gallery" />
+                app:srcCompat="@android:drawable/ic_menu_gallery" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true">
                 <ImageView
-                    android:src="@drawable/ic_favorite_white_24dp"
+                    app:srcCompat="@drawable/ic_favorite_white_24px"
                     android:id="@+id/CardItem_ButtonIcon"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

@@ -62,7 +62,7 @@ namespace AniDroid.Adapters.MediaAdapters
             item.Image.Visibility = ViewStates.Gone;
             item.DetailSecondary.Visibility = ViewStates.Gone;
             item.ContainerCard.SetContentPadding(20, 20, 20, 20);
-            item.ButtonIcon.SetImageResource(Resource.Drawable.ic_visibility_white_24dp);
+            item.ButtonIcon.SetImageResource(Resource.Drawable.ic_visibility_white_24px);
             return item;
         }
 

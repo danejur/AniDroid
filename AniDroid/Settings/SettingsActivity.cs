@@ -152,7 +152,7 @@ namespace AniDroid.Settings
         private void SetupToolbar()
         {
             SetSupportActionBar(_toolbar);
-            SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_arrow_back_white_24dp);
+            SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_arrow_back_white_24px);
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
         }
 

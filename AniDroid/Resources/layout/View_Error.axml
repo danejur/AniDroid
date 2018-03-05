@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:id="@+id/Error_CoordLayout"
   android:layout_width="match_parent"
@@ -27,7 +28,7 @@
     android:gravity="center_horizontal"
     android:paddingTop="80dp">
     <ImageView
-      android:src="@drawable/ic_sentiment_very_dissatisfied_white_48dp"
+      app:srcCompat="@drawable/ic_sentiment_very_dissatisfied_white_48px"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:tint="?Background_Text_Alternate"

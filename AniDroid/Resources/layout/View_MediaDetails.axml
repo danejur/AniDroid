@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:src="@android:drawable/ic_menu_gallery"
+            app:srcCompat="@android:drawable/ic_menu_gallery"
             android:layout_width="125dp"
             android:layout_height="wrap_content"
             android:id="@+id/Media_Image"
@@ -67,7 +67,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp">
             <ImageView
-                android:src="@drawable/ic_event_white_36dp"
+                app:srcCompat="@drawable/ic_event_white_36px"
                 android:id="@+id/Media_DateRangeIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

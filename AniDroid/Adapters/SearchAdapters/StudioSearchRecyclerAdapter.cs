@@ -30,7 +30,7 @@ namespace AniDroid.Adapters.SearchAdapters
         public override CardItem SetupCardItemViewHolder(CardItem item)
         {
             item.Button.Clickable = false;
-            item.ButtonIcon.SetImageResource(Resource.Drawable.ic_favorite_white_24dp);
+            item.ButtonIcon.SetImageResource(Resource.Drawable.ic_favorite_white_24px);
             ImageViewCompat.SetImageTintList(item.ButtonIcon, FavoriteIconColor);
             item.ContainerCard.SetContentPadding(0, 20, 0, 20);
             item.Image.Visibility = item.DetailPrimary.Visibility = item.DetailSecondary.Visibility = ViewStates.Gone;

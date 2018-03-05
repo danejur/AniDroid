@@ -101,7 +101,7 @@ namespace AniDroid.Base
             ((AppBarLayout.LayoutParams)toolbar.LayoutParameters).ScrollFlags = 0;
             toolbar.Title = "Error";
             SetSupportActionBar(toolbar);
-            SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_arrow_back_white_24dp);
+            SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_arrow_back_white_24px);
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             HasError = true;
             InvalidateOptionsMenu();
@@ -113,8 +113,8 @@ namespace AniDroid.Base
             _canFavorite = settings.IsUserAuthenticated;
             _isFavorite = isFavorite;
             _menu?.FindItem(Resource.Id.Menu_AniListObject_Favorite)?.SetIcon(_isFavorite
-                ? Resource.Drawable.ic_favorite_white_24dp
-                : Resource.Drawable.ic_favorite_border_white_24dp);
+                ? Resource.Drawable.ic_favorite_white_24px
+                : Resource.Drawable.ic_favorite_border_white_24px);
         }
 
         public void SetShareText(string title, string uri)
@@ -128,7 +128,7 @@ namespace AniDroid.Base
             ((AppBarLayout.LayoutParams)Toolbar.LayoutParameters).ScrollFlags = 0;
             Toolbar.Title = text;
             SetSupportActionBar(Toolbar);
-            SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_arrow_back_white_24dp);
+            SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_arrow_back_white_24px);
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
         }
 
@@ -151,7 +151,7 @@ namespace AniDroid.Base
             ((AppBarLayout.LayoutParams)Toolbar.LayoutParameters).ScrollFlags = 0;
             Toolbar.Title = title;
             SetSupportActionBar(Toolbar);
-            SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_arrow_back_white_24dp);
+            SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_arrow_back_white_24px);
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
         }
         
@@ -163,8 +163,8 @@ namespace AniDroid.Base
             menu?.FindItem(Resource.Id.Menu_AniListObject_Share)?.SetVisible(_showMenu);
             menu?.FindItem(Resource.Id.Menu_AniListObject_Favorite)?.SetVisible(_showMenu && _canFavorite);
             menu?.FindItem(Resource.Id.Menu_AniListObject_Favorite)?.SetIcon(_isFavorite
-                ? Resource.Drawable.ic_favorite_white_24dp
-                : Resource.Drawable.ic_favorite_border_white_24dp);
+                ? Resource.Drawable.ic_favorite_white_24px
+                : Resource.Drawable.ic_favorite_border_white_24px);
             return true;
         }
 
