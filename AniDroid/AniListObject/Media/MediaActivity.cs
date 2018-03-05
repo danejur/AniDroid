@@ -138,9 +138,12 @@ namespace AniDroid.AniListObject.Media
         {
             var retView = LayoutInflater.Inflate(Resource.Layout.View_MediaDetails, null);
             retView.FindViewById<TextView>(Resource.Id.Media_Title).Text = media.Title?.UserPreferred;
-            retView.FindViewById<TextView>(Resource.Id.Media_Format).Text = media.Format?.DisplayValue;
             retView.FindViewById<TextView>(Resource.Id.Media_AiringStatus).Text = media.Status?.DisplayValue;
             retView.FindViewById<TextView>(Resource.Id.Media_Description).TextFormatted = FromHtml(media.Description);
+
+            var formatView = retView.FindViewById<TextView>(Resource.Id.Media_Format);
+            formatView.Text = (media.Format?.DisplayValue ?? "Unknown Format") +
+                (media.Episodes > 1 ? $" ({media.Episodes} episodes)" : "");
 
             LoadImage(retView.FindViewById<ImageView>(Resource.Id.Media_Image), media.CoverImage.Large);
             var genreContainer = retView.FindViewById<FlexboxLayout>(Resource.Id.Media_Genres);
@@ -262,9 +265,9 @@ namespace AniDroid.AniListObject.Media
                 containerView.AddView(CreateUserScoresView(media.Stats.ScoreDistribution));
             }
 
-            if (media.Stats?.AiringProgression?.Any() == true)
+            if (media.Stats?.AiringProgression?.Count > 3)
             {
-                containerView.AddView(CreateUserScoreProgressionView(media.Stats.AiringProgression));
+                containerView.AddView(CreateUserScoreProgressionView(media.Stats.AiringProgression.TakeLast(15)));
             }
 
             if (media.Stats?.StatusDistribution?.Any() == true)
@@ -352,27 +355,41 @@ namespace AniDroid.AniListObject.Media
                 LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, chartHeight),
 
             };
+
+            var data = new LineData();
+
             var scorePoints = orderedStats.Where(x => x.Score > 0).Select(x => new Entry(x.Episode, x.Score)).ToList();
-            var scoreDataSet = new LineDataSet(scorePoints, "Score")
+            if (scorePoints.Any())
             {
-                AxisDependency = scoresChart.AxisLeft.GetAxisDependency(),
-                Color = colorList[0]
-            };
-            scoreDataSet.SetDrawCircleHole(false);
-            scoreDataSet.SetCircleColor(colorList[0]);
-            scoreDataSet.SetMode(LineDataSet.Mode.CubicBezier);
+                var scoreDataSet = new LineDataSet(scorePoints, "Score")
+                {
+                    AxisDependency = scoresChart.AxisLeft.GetAxisDependency(),
+                    Color = colorList[0]
+                };
+                scoreDataSet.SetDrawCircleHole(false);
+                scoreDataSet.SetCircleColor(colorList[0]);
+                scoreDataSet.SetMode(LineDataSet.Mode.CubicBezier);
+                scoreDataSet.ValueTextColor = textColor;
+
+                data.AddDataSet(scoreDataSet);
+            }
 
             var watchingPoints = orderedStats.Select(x => new Entry(x.Episode, x.Watching)).ToList();
-            var watchingDataSet = new LineDataSet(watchingPoints, "Watching")
+            if (watchingPoints.Any())
             {
-                AxisDependency = scoresChart.AxisRight.GetAxisDependency(),
-                Color = colorList[1]
-            };
-            watchingDataSet.SetDrawCircleHole(false);
-            watchingDataSet.SetCircleColor(colorList[1]);
-            watchingDataSet.SetMode(LineDataSet.Mode.CubicBezier);
+                var watchingDataSet = new LineDataSet(watchingPoints, "Watching")
+                {
+                    AxisDependency = scoresChart.AxisRight.GetAxisDependency(),
+                    Color = colorList[1]
+                };
+                watchingDataSet.SetDrawCircleHole(false);
+                watchingDataSet.SetCircleColor(colorList[1]);
+                watchingDataSet.SetMode(LineDataSet.Mode.CubicBezier);
+                watchingDataSet.ValueTextColor = textColor;
 
-            var data = new LineData(scoreDataSet, watchingDataSet);
+                data.AddDataSet(watchingDataSet);
+            }
+
             data.SetDrawValues(false);
             scoresChart.Data = data;
             scoresChart.FitScreen();
@@ -390,8 +407,7 @@ namespace AniDroid.AniListObject.Media
             scoresChart.AxisRight.SetDrawGridLines(false);
             scoresChart.AxisRight.Granularity = 1;
 
-            scoresChart.XAxis.TextColor = scoreDataSet.ValueTextColor = watchingDataSet.ValueTextColor =
-                scoresChart.AxisLeft.TextColor =
+            scoresChart.XAxis.TextColor = scoresChart.AxisLeft.TextColor =
                     scoresChart.AxisRight.TextColor = scoresChart.Legend.TextColor = textColor;
 
             detailContainer.AddView(scoresChart);
