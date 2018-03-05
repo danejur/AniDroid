@@ -4301,56 +4301,56 @@ namespace AniDroid
 			// aapt resource value: 0x7f0800a2
 			public const int AlertDialog_AppCompat_Light = 2131230882;
 			
-			// aapt resource value: 0x7f08019f
-			public const int AniList = 2131231135;
-			
-			// aapt resource value: 0x7f0801ae
-			public const int AniList_AppBarLayout_Theme = 2131231150;
-			
-			// aapt resource value: 0x7f0801a4
-			public const int AniList_Button = 2131231140;
-			
-			// aapt resource value: 0x7f0801a1
-			public const int AniList_Checkbox = 2131231137;
-			
-			// aapt resource value: 0x7f0801a5
-			public const int AniList_Dialog = 2131231141;
-			
-			// aapt resource value: 0x7f0801a8
-			public const int AniList_FabLarge = 2131231144;
-			
-			// aapt resource value: 0x7f0801a6
-			public const int AniList_FabSmall = 2131231142;
-			
-			// aapt resource value: 0x7f0801a7
-			public const int AniList_FabSmallAlternate = 2131231143;
-			
-			// aapt resource value: 0x7f0801ab
-			public const int AniList_NavBar_Theme = 2131231147;
-			
-			// aapt resource value: 0x7f0801a0
-			public const int AniList_Popup_Theme = 2131231136;
-			
-			// aapt resource value: 0x7f0801a3
-			public const int AniList_Radio = 2131231139;
-			
-			// aapt resource value: 0x7f0801aa
-			public const int AniList_Spinner = 2131231146;
-			
-			// aapt resource value: 0x7f0801a2
-			public const int AniList_Switch = 2131231138;
-			
-			// aapt resource value: 0x7f0801af
-			public const int AniList_TabLayout = 2131231151;
-			
-			// aapt resource value: 0x7f0801a9
-			public const int AniList_TextInput = 2131231145;
-			
-			// aapt resource value: 0x7f0801ac
-			public const int AniList_Toolbar_Style = 2131231148;
+			// aapt resource value: 0x7f08019e
+			public const int AniList = 2131231134;
 			
 			// aapt resource value: 0x7f0801ad
-			public const int AniList_Toolbar_Theme = 2131231149;
+			public const int AniList_AppBarLayout_Theme = 2131231149;
+			
+			// aapt resource value: 0x7f0801a3
+			public const int AniList_Button = 2131231139;
+			
+			// aapt resource value: 0x7f0801a0
+			public const int AniList_Checkbox = 2131231136;
+			
+			// aapt resource value: 0x7f0801a4
+			public const int AniList_Dialog = 2131231140;
+			
+			// aapt resource value: 0x7f0801a7
+			public const int AniList_FabLarge = 2131231143;
+			
+			// aapt resource value: 0x7f0801a5
+			public const int AniList_FabSmall = 2131231141;
+			
+			// aapt resource value: 0x7f0801a6
+			public const int AniList_FabSmallAlternate = 2131231142;
+			
+			// aapt resource value: 0x7f0801aa
+			public const int AniList_NavBar_Theme = 2131231146;
+			
+			// aapt resource value: 0x7f08019f
+			public const int AniList_Popup_Theme = 2131231135;
+			
+			// aapt resource value: 0x7f0801a2
+			public const int AniList_Radio = 2131231138;
+			
+			// aapt resource value: 0x7f0801a9
+			public const int AniList_Spinner = 2131231145;
+			
+			// aapt resource value: 0x7f0801a1
+			public const int AniList_Switch = 2131231137;
+			
+			// aapt resource value: 0x7f0801ae
+			public const int AniList_TabLayout = 2131231150;
+			
+			// aapt resource value: 0x7f0801a8
+			public const int AniList_TextInput = 2131231144;
+			
+			// aapt resource value: 0x7f0801ab
+			public const int AniList_Toolbar_Style = 2131231147;
+			
+			// aapt resource value: 0x7f0801ac
+			public const int AniList_Toolbar_Theme = 2131231148;
 			
 			// aapt resource value: 0x7f0800a3
 			public const int Animation_AppCompat_Dialog = 2131230883;
@@ -4865,53 +4865,53 @@ namespace AniDroid
 			// aapt resource value: 0x7f080003
 			public const int CardView_Light = 2131230723;
 			
-			// aapt resource value: 0x7f08018f
-			public const int Dark = 2131231119;
-			
-			// aapt resource value: 0x7f08019e
-			public const int Dark_AppBarLayout = 2131231134;
-			
-			// aapt resource value: 0x7f080196
-			public const int Dark_Button = 2131231126;
-			
-			// aapt resource value: 0x7f080193
-			public const int Dark_Checkbox = 2131231123;
-			
-			// aapt resource value: 0x7f080197
-			public const int Dark_Dialog = 2131231127;
-			
-			// aapt resource value: 0x7f08019a
-			public const int Dark_FabLarge = 2131231130;
-			
-			// aapt resource value: 0x7f080198
-			public const int Dark_FabSmall = 2131231128;
-			
-			// aapt resource value: 0x7f080199
-			public const int Dark_FabSmallAlternate = 2131231129;
-			
-			// aapt resource value: 0x7f080192
-			public const int Dark_Popup_Theme = 2131231122;
-			
-			// aapt resource value: 0x7f080195
-			public const int Dark_Radio = 2131231125;
-			
-			// aapt resource value: 0x7f08019c
-			public const int Dark_Spinner = 2131231132;
-			
-			// aapt resource value: 0x7f080194
-			public const int Dark_Switch = 2131231124;
+			// aapt resource value: 0x7f08018e
+			public const int Dark = 2131231118;
 			
 			// aapt resource value: 0x7f08019d
-			public const int Dark_TabLayout = 2131231133;
+			public const int Dark_AppBarLayout = 2131231133;
 			
-			// aapt resource value: 0x7f08019b
-			public const int Dark_TextInput = 2131231131;
+			// aapt resource value: 0x7f080195
+			public const int Dark_Button = 2131231125;
 			
-			// aapt resource value: 0x7f080190
-			public const int Dark_Toolbar_Style = 2131231120;
+			// aapt resource value: 0x7f080192
+			public const int Dark_Checkbox = 2131231122;
+			
+			// aapt resource value: 0x7f080196
+			public const int Dark_Dialog = 2131231126;
+			
+			// aapt resource value: 0x7f080199
+			public const int Dark_FabLarge = 2131231129;
+			
+			// aapt resource value: 0x7f080197
+			public const int Dark_FabSmall = 2131231127;
+			
+			// aapt resource value: 0x7f080198
+			public const int Dark_FabSmallAlternate = 2131231128;
 			
 			// aapt resource value: 0x7f080191
-			public const int Dark_Toolbar_Theme = 2131231121;
+			public const int Dark_Popup_Theme = 2131231121;
+			
+			// aapt resource value: 0x7f080194
+			public const int Dark_Radio = 2131231124;
+			
+			// aapt resource value: 0x7f08019b
+			public const int Dark_Spinner = 2131231131;
+			
+			// aapt resource value: 0x7f080193
+			public const int Dark_Switch = 2131231123;
+			
+			// aapt resource value: 0x7f08019c
+			public const int Dark_TabLayout = 2131231132;
+			
+			// aapt resource value: 0x7f08019a
+			public const int Dark_TextInput = 2131231130;
+			
+			// aapt resource value: 0x7f08018f
+			public const int Dark_Toolbar_Style = 2131231119;
+			
+			// aapt resource value: 0x7f080190
+			public const int Dark_Toolbar_Theme = 2131231120;
 			
 			// aapt resource value: 0x7f080022
 			public const int Platform_AppCompat = 2131230754;
@@ -5230,9 +5230,6 @@ namespace AniDroid
 			
 			// aapt resource value: 0x7f080106
 			public const int TextAppearance_Widget_AppCompat_Toolbar_Title = 2131230982;
-			
-			// aapt resource value: 0x7f08018e
-			public const int Theme_AniDroid = 2131231118;
 			
 			// aapt resource value: 0x7f080107
 			public const int Theme_AppCompat = 2131230983;

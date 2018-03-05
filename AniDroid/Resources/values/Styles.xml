@@ -1,17 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <resources>
-  <style name="Theme.AniDroid"
-         parent="Theme.AppCompat.Light.NoActionBar">
-    <item name="windowNoTitle">true</item>
-    <item name="windowActionBar">false</item>
-  </style>
-  
   <!--
   
     DARK THEME 
   
   -->
-  <style name="Dark" parent="Theme.AniDroid">
+  <style name="Dark" parent="Theme.AppCompat.NoActionBar">
+    <item name="windowNoTitle">true</item>
+    <item name="windowActionBar">false</item>
     <item name="Toolbar_Style">@style/Dark_Toolbar_Style</item>
     <item name="Toolbar_Theme">@style/Dark_Toolbar_Theme</item>
     <item name="Toolbar_PopupTheme">@style/Dark_Popup_Theme</item>
@@ -59,12 +55,12 @@
     <item name="Ripple_Text">@color/Dark_Ripple_Text</item>
   </style>
 
-  <style name="Dark_Toolbar_Style" parent="Theme.AniDroid">
+  <style name="Dark_Toolbar_Style" parent="Theme.AppCompat.NoActionBar">
     <item name="android:background">@color/Dark_Background_Special</item>
     <item name="contentScrim">@color/Dark_Background_Special</item>
   </style>
 
-  <style name="Dark_Toolbar_Theme" parent="Theme.AniDroid">
+  <style name="Dark_Toolbar_Theme" parent="Theme.AppCompat.NoActionBar">
     <item name="android:textColorPrimary">@color/Dark_Background_Text_Special</item>
     <item name="colorControlNormal">@color/Dark_Background_Text_Special</item>
     <item name="colorControlHighlight">@color/Dark_Background_Text_Special</item>
@@ -75,20 +71,20 @@
     <item name="android:textColor">@color/Dark_Background_Text_Alternate</item>
   </style>
 
-  <style name="Dark_Checkbox" parent="Theme.AppCompat.Light">
+  <style name="Dark_Checkbox" parent="Theme.AppCompat">
     <item name="colorControlNormal">@color/Dark_Inactive</item>
     <item name="colorControlActivated">@color/Dark_Primary</item>
     <item name="android:textColor">@color/Dark_Background_Text</item>
     <item name="android:textSize">14dp</item>
   </style>
 
-  <style name="Dark_Switch" parent="Theme.AppCompat.Light">
+  <style name="Dark_Switch" parent="Theme.AppCompat">
     <item name="colorControlActivated">@color/Dark_Primary</item>
     <item name="colorSwitchThumbNormal">@color/Dark_Inactive</item>
     <item name="android:colorForeground">@color/Dark_Inactive</item>
   </style>
 
-  <style name="Dark_Radio" parent="Theme.AppCompat.Light">
+  <style name="Dark_Radio" parent="Theme.AppCompat">
     <item name="colorControlNormal">@color/Dark_Inactive</item>
     <item name="colorControlActivated">@color/Dark_Primary</item>
     <item name="android:textColor">@color/Dark_Background_Text</item>
@@ -102,7 +98,7 @@
     <item name="colorAccent">@color/Dark_Primary</item>
   </style>
 
-  <style name="Dark_Dialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+  <style name="Dark_Dialog" parent="Theme.AppCompat.Dialog.Alert">
     <item name="android:buttonStyle">@style/Dark_Button</item>
     <item name="android:background">@color/Dark_Background_Alternate</item>
     <item name="android:textColor">@color/Dark_Background_Text</item>
@@ -125,7 +121,7 @@
     <item name="rippleColor">@color/Dark_Tertiary_Dark</item>
   </style>
 
-  <style name="Dark_TextInput" parent="Theme.AppCompat.Light">
+  <style name="Dark_TextInput" parent="Theme.AppCompat">
     <item name="colorControlActivated">@color/Dark_Primary</item>
     <item name="colorControlActivated">@color/Dark_Primary</item>
     <item name="colorControlNormal">@color/Dark_Inactive</item>
@@ -166,7 +162,7 @@
     ANILIST THEME 
     
   -->
-  <style name="AniList" parent="Theme.AniDroid">
+  <style name="AniList" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="Toolbar_Style">@style/AniList_Toolbar_Style</item>
     <item name="Toolbar_Theme">@style/AniList_Toolbar_Theme</item>
     <item name="Toolbar_PopupTheme">@style/AniList_Popup_Theme</item>
@@ -214,7 +210,7 @@
     <item name="Ripple_Text">@color/AniList_Ripple_Text</item>
   </style>
 
-  <style name="AniList_Popup_Theme" parent="ThemeOverlay.AppCompat.Dark">
+  <style name="AniList_Popup_Theme" parent="ThemeOverlay.AppCompat.Light">
     <item name="android:background">@color/AniList_Background_Special</item>
     <item name="android:textColor">@color/AniList_Background_Text</item>
   </style>
@@ -289,7 +285,7 @@
   
   <!-- NavDrawer -->
 
-  <style name="AniList_NavBar_Theme" parent="Theme.AniDroid">
+  <style name="AniList_NavBar_Theme" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="android:background">@color/AniList_NavBackground</item>
     <item name="android:windowBackground">@color/AniList_NavBackground</item>
     <item name="itemTextColor">@color/AniList_NavText</item>
@@ -299,18 +295,18 @@
   
   <!-- Toolbar -->
 
-  <style name="AniList_Toolbar_Style" parent="Theme.AniDroid">
+  <style name="AniList_Toolbar_Style" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="android:background">@color/AniList_Primary</item>
     <item name="contentScrim">@color/AniList_Primary</item>
   </style>
 
-  <style name="AniList_Toolbar_Theme" parent="Theme.AniDroid">
+  <style name="AniList_Toolbar_Theme" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="android:textColorPrimary">@color/AniList_Primary_Text</item>
     <item name="colorControlNormal">@color/AniList_Primary_Text</item>
     <item name="colorControlHighlight">@color/AniList_Primary_Text</item>
   </style>
 
-  <style name="AniList_AppBarLayout_Theme" parent="Theme.AniDroid">
+  <style name="AniList_AppBarLayout_Theme" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="android:background">@color/AniList_Primary</item>
     <item name="android:windowBackground">@color/AniList_Primary</item>
     <item name="itemTextColor">@color/AniList_Primary_Text</item>
@@ -320,7 +316,7 @@
   
   <!-- Tab Layout -->
 
-  <style name="AniList_TabLayout" parent="Theme.AniDroid">
+  <style name="AniList_TabLayout" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="tabIndicatorColor">@color/AniList_Tertiary</item>
     <item name="tabBackground">@color/AniList_Primary</item>
     <item name="tabSelectedTextColor">@color/AniList_Tertiary</item>
