@@ -26,6 +26,7 @@ using AniDroid.Base;
 using AniDroid.SearchResults;
 using AniDroid.Utils;
 using AniDroid.Utils.Formatting;
+using AniDroid.Widgets;
 using Com.Google.Android.Flexbox;
 using MikePhil.Charting.Charts;
 using MikePhil.Charting.Components;
@@ -157,22 +158,17 @@ namespace AniDroid.AniListObject.Media
                 genreContainer.AddView(genreView);
             }
 
-            var dateRangeView = retView.FindViewById<TextView>(Resource.Id.Media_DateRangeText);
+            var dateRangeView = retView.FindViewById<AniDroidDataRow>(Resource.Id.Media_DateRange);
+            dateRangeView.TextOne = media.GetFormattedDateRangeString();
 
             if (AniList.Models.Media.MediaStatus.NotYetReleased.Equals(media.Status))
             {
                 var startDate = media.StartDate.GetDate();
-                var startDateString = media.StartDate?.GetFuzzyDateString();
-                dateRangeView.Text = startDateString != null ? $"Starts: {startDateString}" : "Unknown start date";
 
                 if (startDate.HasValue && startDate.Value > DateTime.Now.Date)
                 {
-                    var dateRangeButton = retView.FindViewById<ImageView>(Resource.Id.Media_DateRangeIcon);
-                    var dateRangeContainer = retView.FindViewById<LinearLayout>(Resource.Id.Media_DateRangeContainer);
-
-                    dateRangeButton.Visibility = ViewStates.Visible;
-                    dateRangeContainer.Clickable = true;
-                    dateRangeContainer.Click += (sender, eventArgs) =>
+                    dateRangeView.Clickable = true;
+                    dateRangeView.Click += (sender, eventArgs) =>
                     {
                         if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.WriteCalendar) == (int)Permission.Granted)
                         {
@@ -190,9 +186,10 @@ namespace AniDroid.AniListObject.Media
                     };
                 }
             }
-            else
+
+            if (media.Season != null)
             {
-                dateRangeView.Text = $"{media.StartDate?.GetFuzzyDateString() ?? "Unknown Start Date"} to {media.EndDate?.GetFuzzyDateString() ?? "Unknown End Date"}";
+                dateRangeView.TextTwo = media.Season.DisplayValue + (media.StartDate?.Year > 0 ? $" {media.StartDate.Year}" : "");
             }
 
             return retView;

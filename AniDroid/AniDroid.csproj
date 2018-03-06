@@ -208,6 +208,7 @@
     <Compile Include="Utils\Integration\AniDroidAuthCodeResolver.cs" />
     <Compile Include="Utils\Interfaces\IAniDroidSettings.cs" />
     <Compile Include="Utils\Storage\SettingsStorage.cs" />
+    <Compile Include="Widgets\AniDroidDataRow.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -292,6 +293,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\Item_Category.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Widget_AniDroidDataRow.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

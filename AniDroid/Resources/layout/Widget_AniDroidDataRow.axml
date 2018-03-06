@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/AniDroidDataRow_Icon"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        app:srcCompat="@drawable/ic_star_white_24px"
+        android:layout_gravity="center_vertical"
+        android:layout_alignParentLeft="true" />
+    <TextView
+        android:id="@+id/AniDroidDataRow_TextOne"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="Text One"
+        android:layout_marginLeft="15dp"
+        android:textSize="14dp"
+        android:layout_toRightOf="@id/AniDroidDataRow_Icon" />
+    <TextView
+        android:id="@+id/AniDroidDataRow_TextTwo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="Text Two"
+        android:layout_marginLeft="15dp"
+        android:textSize="14dp"
+        android:layout_below="@id/AniDroidDataRow_TextOne"
+        android:layout_toRightOf="@id/AniDroidDataRow_Icon" />
+</merge>

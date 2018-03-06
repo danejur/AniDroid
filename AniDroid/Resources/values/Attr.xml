@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <declare-styleable name="AniDroidDataRow">
+    <attr name="dataRowTextOne" format="string" />
+    <attr name="dataRowTextOneColor" format="reference|color" />
+    <attr name="dataRowTextTwo" format="string" />
+    <attr name="dataRowTextTwoColor" format="reference|color" />
+    <attr name="dataRowIcon" format="reference" />
+  </declare-styleable>
+
   <!-- 
   **
   Styles
