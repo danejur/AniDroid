@@ -140,7 +140,7 @@ namespace AniDroid.AniListObject.Media
             var retView = LayoutInflater.Inflate(Resource.Layout.View_MediaDetails, null);
             retView.FindViewById<TextView>(Resource.Id.Media_Title).Text = media.Title?.UserPreferred;
             retView.FindViewById<TextView>(Resource.Id.Media_AiringStatus).Text = media.Status?.DisplayValue;
-            retView.FindViewById<TextView>(Resource.Id.Media_Description).TextFormatted = FromHtml(media.Description);
+            retView.FindViewById<TextView>(Resource.Id.Media_Description).TextFormatted = FromHtml(media.Description ?? "No Description");
 
             var formatView = retView.FindViewById<TextView>(Resource.Id.Media_Format);
             formatView.Text = (media.Format?.DisplayValue ?? "Unknown Format") +

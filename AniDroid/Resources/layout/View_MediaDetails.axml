@@ -56,7 +56,6 @@
         <AniDroid.Widgets.AniDroidDataRow
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:padding="15dp"
           android:id="@+id/Media_DateRange"
           android:background="@drawable/Background_Alternate_Ripple"
           app:dataRowIcon="@drawable/ic_event_white_36px"
