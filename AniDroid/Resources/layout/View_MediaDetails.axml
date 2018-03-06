@@ -52,7 +52,23 @@
             android:layout_marginRight="20dp"
             android:textSize="16dp"
             android:textColor="?Background_Text" />
-        <LinearLayout
+
+        <AniDroid.Widgets.AniDroidDataRow
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:padding="15dp"
+          android:id="@+id/Media_DateRange"
+          android:background="@drawable/Background_Alternate_Ripple"
+          app:dataRowIcon="@drawable/ic_event_white_36px"
+          app:dataRowTextOneColor="?Background_Text"
+          app:dataRowTextTwoColor="?Primary"
+          android:layout_marginTop="20dp"
+          android:layout_alignParentLeft="true"
+          android:layout_below="@id/Media_Image"
+          android:gravity="center_vertical|left">
+        </AniDroid.Widgets.AniDroidDataRow>
+
+        <!--<LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,14 +99,14 @@
                 android:id="@+id/Media_DateRangeText"
                 android:gravity="center"
                 android:layout_marginLeft="15dp" />
-        </LinearLayout>
+        </LinearLayout>-->
         <com.google.android.flexbox.FlexboxLayout
             android:layout_marginTop="20dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
-            android:layout_below="@id/Media_DateRangeContainer"
+            android:layout_below="@id/Media_DateRange"
             android:id="@+id/Media_Genres"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
