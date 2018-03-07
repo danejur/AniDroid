@@ -47,7 +47,8 @@ namespace AniDroid.Settings
         {
             var options = new List<string> {"Vertical", "Horizontal", "Flat Horizontal"};
             _settingsContainer.AddView(
-                CreateSpinnerSettingRow("Card Display Type", "Choose how you would like to display lists in AniDroid", options, (int) cardType, (sender, args) => Presenter.SetCardType((BaseRecyclerAdapter.CardType)args.Position)));
+                CreateSpinnerSettingRow("Card Display Type", "Choose how you would like to display lists in AniDroid", options, (int) cardType, (sender, args) => 
+                    Presenter.SetCardType((BaseRecyclerAdapter.CardType)args.Position)));
             _settingsContainer.AddView(CreateDivider());
         }
 
@@ -122,8 +123,10 @@ namespace AniDroid.Settings
             view.FindViewById<TextView>(Resource.Id.SettingItem_Name).Text = name;
 
             var spinner = view.FindViewById<Spinner>(Resource.Id.SettingItem_Spinner);
+            spinner.Id = (int)DateTime.Now.Ticks;
             spinner.Adapter = new ArrayAdapter<string>(this, Resource.Layout.View_SpinnerDropDownItem, items);
             spinner.SetSelection(selectedPosition);
+            spinner.ItemSelected -= selectedEvent;
             spinner.ItemSelected += selectedEvent;
 
             var textTwoView = view.FindViewById<TextView>(Resource.Id.SettingItem_Details);
