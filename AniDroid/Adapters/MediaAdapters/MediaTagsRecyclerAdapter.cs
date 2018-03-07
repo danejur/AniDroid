@@ -68,9 +68,7 @@ namespace AniDroid.Adapters.MediaAdapters
 
         private void RowClick(object sender, EventArgs e)
         {
-            //var senderView = sender as View;
-            //var studioPos = (int)senderView.GetTag(Resource.Id.Object_Position);
-            //var studioEdge = Items[studioPos];
+            Context.DisplayNotYetImplemented();
         }
     }
 }

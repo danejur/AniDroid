@@ -17,5 +17,6 @@ namespace AniDroid.Base
     {
         void OnError(IAniListError error);
         void DisplaySnackbarMessage(string message, int length);
+        void DisplayNotYetImplemented();
     }
 }

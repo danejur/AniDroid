@@ -16,7 +16,7 @@ namespace AniDroid.Browse
 {
     public class BrowseFragment : BaseAniDroidFragment, IAniDroidView
     {
-        public void OnError(IAniListError error)
+        public override void OnError(IAniListError error)
         {
             throw new NotImplementedException();
         }

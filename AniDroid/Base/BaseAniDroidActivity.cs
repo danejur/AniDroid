@@ -9,6 +9,7 @@ using Android.Content.Res;
 using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.Design.Widget;
 using Android.Support.V4.Content;
 using Android.Support.V7.App;
 using Android.Text;
@@ -64,7 +65,12 @@ namespace AniDroid.Base
             outState.PutStringArrayList(PresenterStateKey, Presenter.SaveState());
         }
 
-        public abstract void DisplaySnackbarMessage(string message, int length);
+        public abstract override void DisplaySnackbarMessage(string message, int length);
+
+        public sealed override void DisplayNotYetImplemented()
+        {
+            DisplaySnackbarMessage("Not Yet Implemented", Snackbar.LengthShort);
+        }
 
         public sealed override bool OnCreateOptionsMenu(IMenu menu)
         {
@@ -228,6 +234,10 @@ namespace AniDroid.Base
         public abstract void OnError(IAniListError error);
 
         public abstract Task OnCreateExtended(Bundle savedInstanceState);
+
+        public abstract void DisplaySnackbarMessage(string message, int length);
+
+        public abstract void DisplayNotYetImplemented();
 
         #endregion
 

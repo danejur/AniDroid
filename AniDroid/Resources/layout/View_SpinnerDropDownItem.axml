@@ -4,7 +4,6 @@
                  android:singleLine="true"
                  android:padding="3dp"
                  android:layout_width="match_parent"
-                 android:background="?Background_Alternate"
                  android:textColor="?Background_Text"
                  android:layout_height="?attr/dropdownListPreferredItemHeight"
                  android:ellipsize="marquee"

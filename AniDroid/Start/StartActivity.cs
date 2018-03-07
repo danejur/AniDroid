@@ -39,5 +39,17 @@ namespace AniDroid.Start
             Finish();
             return Task.CompletedTask;
         }
+
+        public override void DisplaySnackbarMessage(string message, int length)
+        {
+            // will never be invoked as of now
+            throw new NotImplementedException();
+        }
+
+        public override void DisplayNotYetImplemented()
+        {
+            // will never be invoked as of now
+            throw new NotImplementedException();
+        }
     }
 }
