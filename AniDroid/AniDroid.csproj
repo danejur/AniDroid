@@ -304,6 +304,9 @@
     <AndroidResource Include="Resources\layout\Widget_ExpandableText.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\Activity_AniListObject_Banner.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />

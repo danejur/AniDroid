@@ -23,7 +23,7 @@ namespace AniDroid.AniListObject.Character
                 {
                     View.SetIsFavorite(character.IsFavourite);
                     View.SetShareText(character.Name?.GetFormattedName(), character.SiteUrl);
-                    View.SetContentShown();
+                    View.SetContentShown(false);
                     View.SetupToolbar($"{character.Name?.First} {character.Name?.Last}".Trim());
                     View.SetupCharacterView(character);
                 })

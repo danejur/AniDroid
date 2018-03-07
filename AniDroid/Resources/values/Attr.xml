@@ -26,6 +26,7 @@
   -->
   <attr name="Toolbar_Style" format="reference" />
   <attr name="Toolbar_Theme" format="reference" />
+  <attr name="ExpandedToolbar_Theme" format="reference" />
   <attr name="Toolbar_PopupTheme" format="reference" />
   <attr name="Checkbox_Theme" format="reference" />
   <attr name="Switch_Theme" format="reference" />

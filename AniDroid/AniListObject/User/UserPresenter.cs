@@ -33,7 +33,7 @@ namespace AniDroid.AniListObject.User
             userResp.Switch(user =>
                 {
                     View.SetShareText(user.Name, user.SiteUrl);
-                    View.SetContentShown();
+                    View.SetContentShown(false); // TODO: change this to switch based on banner presence
                     View.SetupToolbar(user.Name);
                     View.SetupUserView(user);
                 })

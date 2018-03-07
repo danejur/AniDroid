@@ -32,7 +32,7 @@ namespace AniDroid.AniListObject.Studio
                 {
                     View.SetIsFavorite(studio.IsFavourite);
                     View.SetShareText(studio.Name, studio.SiteUrl);
-                    View.SetContentShown();
+                    View.SetContentShown(false);
                     View.SetupToolbar(studio.Name);
                     View.SetupStudioView(studio);
                 })

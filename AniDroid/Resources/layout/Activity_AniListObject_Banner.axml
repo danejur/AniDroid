@@ -10,14 +10,30 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     style="?AppBarLayout_Style">
-    <android.support.v7.widget.Toolbar
-      android:id="@+id/AniListObject_Toolbar"
+    <android.support.design.widget.CollapsingToolbarLayout
       android:layout_width="match_parent"
-      android:layout_height="56dp"
-      app:popupTheme="?Toolbar_PopupTheme"
-      app:theme="?Toolbar_Theme"
+      android:layout_height="match_parent"
+      app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+      app:collapsedTitleTextAppearance="?Toolbar_Theme"
+      app:expandedTitleTextAppearance="?ExpandedToolbar_Theme"
       style="?Toolbar_Style"
-      app:layout_scrollFlags="scroll|enterAlways" />
+      android:fitsSystemWindows="true">
+      <ImageView
+        style="?Toolbar_Style"
+        android:id="@+id/AniListObject_BannerImage"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:fitsSystemWindows="true"
+        app:layout_collapseMode="parallax" />
+      <android.support.v7.widget.Toolbar
+        android:id="@+id/AniListObject_Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        app:layout_collapseMode="pin"
+        app:popupTheme="?Toolbar_PopupTheme"
+        app:layout_scrollFlags="scroll|enterAlways"/>
+    </android.support.design.widget.CollapsingToolbarLayout>
     <android.support.design.widget.TabLayout
       app:tabMode="scrollable"
       android:id="@+id/AniListObject_Tabs"

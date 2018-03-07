@@ -33,7 +33,7 @@ namespace AniDroid.AniListObject.Staff
                 {
                     View.SetIsFavorite(staff.IsFavourite);
                     View.SetShareText(staff.Name?.GetFormattedName(), staff.SiteUrl);
-                    View.SetContentShown();
+                    View.SetContentShown(false);
                     View.SetupToolbar($"{staff.Name?.First} {staff.Name?.Last}".Trim());
                     View.SetupStaffView(staff);
                 })

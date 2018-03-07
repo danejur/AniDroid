@@ -10,6 +10,7 @@
     <item name="windowActionBar">false</item>
     <item name="Toolbar_Style">@style/Dark_Toolbar_Style</item>
     <item name="Toolbar_Theme">@style/Dark_Toolbar_Theme</item>
+    <item name="ExpandedToolbar_Theme">@style/Dark_ExpandedToolbar_Theme</item>
     <item name="Toolbar_PopupTheme">@style/Dark_Popup_Theme</item>
     <item name="ListItem_Divider">@color/Dark_ListItemDivider</item>
     <item name="Checkbox_Theme">@style/Dark_Checkbox</item>
@@ -56,14 +57,22 @@
   </style>
 
   <style name="Dark_Toolbar_Style" parent="Theme.AppCompat.NoActionBar">
+    <item name="android:textColorPrimary">@android:color/white</item>
     <item name="android:background">@color/Dark_Background_Special</item>
     <item name="contentScrim">@color/Dark_Background_Special</item>
   </style>
 
   <style name="Dark_Toolbar_Theme" parent="Theme.AppCompat.NoActionBar">
-    <item name="android:textColorPrimary">@color/Dark_Background_Text_Special</item>
-    <item name="colorControlNormal">@color/Dark_Background_Text_Special</item>
-    <item name="colorControlHighlight">@color/Dark_Background_Text_Special</item>
+    <item name="android:textColorPrimary">@android:color/white</item>
+    <item name="colorControlNormal">@android:color/white</item>
+    <item name="colorControlHighlight">@android:color/white</item>
+  </style>
+
+  <style name="Dark_ExpandedToolbar_Theme" parent="Theme.AppCompat.NoActionBar">
+    <item name="android:textColor">@android:color/transparent</item>
+    <item name="colorControlNormal">@android:color/white</item>
+    <item name="colorControlHighlight">@android:color/white</item>
+    <item name="android:textSize">24dp</item>
   </style>
 
   <style name="Dark_Popup_Theme" parent="ThemeOverlay.AppCompat.Dark">
@@ -165,6 +174,7 @@
   <style name="AniList" parent="Theme.AppCompat.Light.NoActionBar">
     <item name="Toolbar_Style">@style/AniList_Toolbar_Style</item>
     <item name="Toolbar_Theme">@style/AniList_Toolbar_Theme</item>
+    <item name="ExpandedToolbar_Theme">@style/AniList_ExpandedToolbar_Theme</item>
     <item name="Toolbar_PopupTheme">@style/AniList_Popup_Theme</item>
     <item name="ListItem_Divider">@color/AniList_ListItemDivider</item>
     <item name="Checkbox_Theme">@style/AniList_Checkbox</item>
@@ -296,14 +306,23 @@
   <!-- Toolbar -->
 
   <style name="AniList_Toolbar_Style" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:textColor">@android:color/white</item>
+    <item name="android:textColorPrimary">@android:color/white</item>
     <item name="android:background">@color/AniList_Primary</item>
     <item name="contentScrim">@color/AniList_Primary</item>
   </style>
 
   <style name="AniList_Toolbar_Theme" parent="Theme.AppCompat.Light.NoActionBar">
-    <item name="android:textColorPrimary">@color/AniList_Primary_Text</item>
-    <item name="colorControlNormal">@color/AniList_Primary_Text</item>
-    <item name="colorControlHighlight">@color/AniList_Primary_Text</item>
+    <item name="android:textColor">@android:color/white</item>
+    <item name="android:textColorPrimary">@android:color/white</item>
+    <item name="colorControlNormal">@android:color/white</item>
+    <item name="colorControlHighlight">@android:color/white</item>
+  </style>
+
+  <style name="AniList_ExpandedToolbar_Theme" parent="Theme.AppCompat.Light.NoActionBar">
+    <item name="android:textColor">@android:color/transparent</item>
+    <item name="colorControlNormal">@android:color/white</item>
+    <item name="colorControlHighlight">@android:color/white</item>
   </style>
 
   <style name="AniList_AppBarLayout_Theme" parent="Theme.AppCompat.Light.NoActionBar">

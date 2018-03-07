@@ -22,8 +22,8 @@ namespace AniDroid.AniListObject.Media
                 {
                     View.SetIsFavorite(media.IsFavourite);
                     View.SetShareText(media.Title?.UserPreferred, media.SiteUrl);
-                    View.SetContentShown();
-                    View.SetupToolbar(media.Title?.UserPreferred);
+                    View.SetContentShown(!string.IsNullOrWhiteSpace(media.BannerImage));
+                    View.SetupToolbar(media.Title?.UserPreferred, media.BannerImage);
                     View.SetupMediaView(media);
                 })
                 .Switch(error => View.OnError(error));

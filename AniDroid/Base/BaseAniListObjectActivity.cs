@@ -5,16 +5,18 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Support.V4.View;
-using Android.Support.V7.Widget;
 using Android.Views;
+using Android.Widget;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
 using Ninject;
+using Toolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace AniDroid.Base
 {
@@ -26,6 +28,7 @@ namespace AniDroid.Base
         private bool _showMenu;
         private bool _canFavorite;
         private bool _isFavorite;
+        private bool _hasBanner;
         private string _shareTitle;
         private string _shareUri;
         private IMenu _menu;
@@ -37,6 +40,7 @@ namespace AniDroid.Base
 
         protected CoordinatorLayout CoordLayout;
         protected Toolbar Toolbar;
+        protected AppBarLayout AppBar;
 
         protected virtual Action ToggleFavorite { get; set; }
 
@@ -84,12 +88,16 @@ namespace AniDroid.Base
             Toolbar = FindViewById<Toolbar>(Resource.Id.Loading_Toolbar);
         }
 
-        public void SetContentShown()
+        public void SetContentShown(bool hasBanner = false)
         {
+            // TODO: add option for disabling banners app-wide
+
+            _hasBanner = hasBanner;
             ShowMenu();
-            SetContentView(Resource.Layout.Activity_AniListObject);
+            SetContentView(_hasBanner ? Resource.Layout.Activity_AniListObject_Banner : Resource.Layout.Activity_AniListObject);
             CoordLayout = FindViewById<CoordinatorLayout>(Resource.Id.AniListObject_CoordLayout);
             Toolbar = FindViewById<Toolbar>(Resource.Id.AniListObject_Toolbar);
+            AppBar = FindViewById<AppBarLayout>(Resource.Id.AniListObject_AppBar);
         }
 
         public void SetErrorShown(string title, string message)
@@ -123,13 +131,23 @@ namespace AniDroid.Base
             _shareUri = uri;
         }
 
-        public void SetupToolbar(string text)
+        public void SetupToolbar(string text, string bannerUri = null)
         {
-            ((AppBarLayout.LayoutParams)Toolbar.LayoutParameters).ScrollFlags = 0;
             Toolbar.Title = text;
             SetSupportActionBar(Toolbar);
             SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_arrow_back_white_24px);
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+
+            if (!_hasBanner)
+            {
+                ((AppBarLayout.LayoutParams)Toolbar.LayoutParameters).ScrollFlags = 0;
+            }
+            else if (!string.IsNullOrWhiteSpace(bannerUri))
+            {
+                var bannerView = FindViewById<ImageView>(Resource.Id.AniListObject_BannerImage);
+                LoadImage(bannerView, bannerUri, false);
+                bannerView.SetColorFilter(Color.Argb(102, 0, 0, 0));
+            }
         }
 
         public void SetStandaloneActivity()
