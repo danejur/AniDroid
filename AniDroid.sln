@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AniDroid", "AniDroid\AniDroid.csproj", "{A25395EE-107E-4EEF-88F2-AA17E94CDB44}"
+	ProjectSection(ProjectDependencies) = postProject
+		{49FB1693-B542-4C68-82F9-19762A6AFB29} = {49FB1693-B542-4C68-82F9-19762A6AFB29}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AniDroid.AniList", "AniDroid.AniList\AniDroid.AniList\AniDroid.AniList.csproj", "{49FB1693-B542-4C68-82F9-19762A6AFB29}"
 EndProject

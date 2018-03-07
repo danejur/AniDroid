@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Interfaces;
+using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 using AniDroid.Login;
 using AniDroid.Main;
@@ -33,6 +34,7 @@ namespace AniDroid.Start
         {
             // TODO: add checks for data store integrity and other start-up tasks
 
+            //MediaActivity.StartActivity(this, 87486);
             MainActivity.StartActivityForResult(this, 0);
             Finish();
             return Task.CompletedTask;

@@ -1,11 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <declare-styleable name="AniDroidDataRow">
-    <attr name="dataRowTextOne" format="string" />
-    <attr name="dataRowTextOneColor" format="reference|color" />
-    <attr name="dataRowTextTwo" format="string" />
-    <attr name="dataRowTextTwoColor" format="reference|color" />
-    <attr name="dataRowIcon" format="reference" />
+  <declare-styleable name="DataRow">
+    <attr name="TextOne" format="string" />
+    <attr name="TextOneColor" format="reference|color" />
+    <attr name="TextTwo" format="string" />
+    <attr name="TextTwoColor" format="reference|color" />
+    <attr name="Icon" format="reference" />
+    <attr name="ButtonColor" format="reference|color" />
+    <attr name="ButtonIcon" format="reference" />
+    <attr name="ButtonVisible" format="boolean" />
+    <attr name="ButtonClickable" format="boolean" />
+  </declare-styleable>
+
+  <declare-styleable name="ExpandableText">
+    <attr name="Text" format="string" />
+    <attr name="TextColor" format="reference|color" />
+    <attr name="ButtonColor" format="reference|color" />
+    <attr name="TextSize" format="dimension" />
   </declare-styleable>
 
   <!-- 

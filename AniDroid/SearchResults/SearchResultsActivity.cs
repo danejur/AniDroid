@@ -155,7 +155,7 @@ namespace AniDroid.SearchResults
             public const string Users = "Users";
             public const string Forum = "Forum";
 
-            public static string[] AllTypes => new[] { Anime, Characters, Staff, Manga, Studios, Users, Forum };
+            public static string[] AllTypes => new[] { Anime, Manga, Characters, Staff, Studios, Users, Forum };
         }
 
         #endregion

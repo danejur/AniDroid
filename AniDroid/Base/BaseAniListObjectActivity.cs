@@ -61,6 +61,11 @@ namespace AniDroid.Base
             Snackbar.Make(CoordLayout, message, length).Show();
         }
 
+        public void DisplayNotYetImplemented()
+        {
+            DisplaySnackbarMessage("Not Yet Implemented", Snackbar.LengthShort);
+        }
+
         public sealed override void OnError(IAniListError error)
         {
             SetErrorShown("Error!", "Error description");

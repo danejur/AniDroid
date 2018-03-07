@@ -142,6 +142,7 @@
     <Compile Include="Adapters\MediaAdapters\MediaCharactersRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaRelationsRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaStaffRecyclerAdapter.cs" />
+    <Compile Include="Adapters\MediaAdapters\MediaStreamingEpisodesRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaStudiosRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaTagsRecyclerAdapter.cs" />
     <Compile Include="Adapters\SearchAdapters\CharacterSearchRecyclerAdapter.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="AniListObject\Character\CharacterActivity.cs" />
     <Compile Include="AniListObject\Character\CharacterPresenter.cs" />
     <Compile Include="AniListObject\Character\ICharacterView.cs" />
+    <Compile Include="Dialogs\MediaStreamingEpisodeListDialog.cs" />
     <Compile Include="Dialogs\SearchDialog.cs" />
     <Compile Include="Dialogs\StaffListDialog.cs" />
     <Compile Include="SearchResults\ISearchResultsView.cs" />
@@ -208,7 +210,8 @@
     <Compile Include="Utils\Integration\AniDroidAuthCodeResolver.cs" />
     <Compile Include="Utils\Interfaces\IAniDroidSettings.cs" />
     <Compile Include="Utils\Storage\SettingsStorage.cs" />
-    <Compile Include="Widgets\AniDroidDataRow.cs" />
+    <Compile Include="Widgets\DataRow.cs" />
+    <Compile Include="Widgets\ExpandableText.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -295,7 +298,10 @@
     <AndroidResource Include="Resources\layout\Item_Category.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\Widget_AniDroidDataRow.axml">
+    <AndroidResource Include="Resources\layout\Widget_DataRow.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Widget_ExpandableText.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -488,6 +494,18 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_star_white_24px.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_alarm_white_24px.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_book_white_24px.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_movie_white_24px.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_chevron_right_white_24px.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

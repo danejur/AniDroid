@@ -23,6 +23,7 @@ using AniDroid.AniList;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniListObject.Staff;
 using AniDroid.Base;
+using AniDroid.Dialogs;
 using AniDroid.SearchResults;
 using AniDroid.Utils;
 using AniDroid.Utils.Formatting;
@@ -140,7 +141,7 @@ namespace AniDroid.AniListObject.Media
             var retView = LayoutInflater.Inflate(Resource.Layout.View_MediaDetails, null);
             retView.FindViewById<TextView>(Resource.Id.Media_Title).Text = media.Title?.UserPreferred;
             retView.FindViewById<TextView>(Resource.Id.Media_AiringStatus).Text = media.Status?.DisplayValue;
-            retView.FindViewById<TextView>(Resource.Id.Media_Description).TextFormatted = FromHtml(media.Description ?? "No Description");
+            retView.FindViewById<ExpandableText>(Resource.Id.Media_Description).TextFormatted = FromHtml(media.Description ?? "No Description");
 
             var formatView = retView.FindViewById<TextView>(Resource.Id.Media_Format);
             formatView.Text = (media.Format?.DisplayValue ?? "Unknown Format") +
@@ -154,42 +155,75 @@ namespace AniDroid.AniListObject.Media
                 var genreView = LayoutInflater.Inflate(Resource.Layout.Item_Category, null);
                 genreView.FindViewById<TextView>(Resource.Id.Category_Text).Text = genre;
                 genreView.Clickable = true;
-                genreView.Click += (sender, eventArgs) => DisplaySnackbarMessage("Not Implemented Yet", Snackbar.LengthShort);
+                genreView.Click += (sender, eventArgs) => DisplayNotYetImplemented();
                 genreContainer.AddView(genreView);
             }
 
-            var dateRangeView = retView.FindViewById<AniDroidDataRow>(Resource.Id.Media_DateRange);
+            var dateRangeView = retView.FindViewById<DataRow>(Resource.Id.Media_DateRange);
             dateRangeView.TextOne = media.GetFormattedDateRangeString();
 
-            if (AniList.Models.Media.MediaStatus.NotYetReleased.Equals(media.Status))
-            {
-                var startDate = media.StartDate.GetDate();
+            var startDate = media.StartDate?.GetDate();
 
-                if (startDate.HasValue && startDate.Value > DateTime.Now.Date)
+            if (AniList.Models.Media.MediaStatus.NotYetReleased.Equals(media.Status) && startDate.HasValue &&
+                startDate.Value > DateTime.Now.Date)
+            {
+                dateRangeView.ButtonVisible = true;
+                dateRangeView.ButtonClickable = true;
+                dateRangeView.ButtonClick += (sender, eventArgs) =>
                 {
-                    dateRangeView.Clickable = true;
-                    dateRangeView.Click += (sender, eventArgs) =>
+                    if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.WriteCalendar) ==
+                        (int) Permission.Granted)
                     {
-                        if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.WriteCalendar) == (int)Permission.Granted)
-                        {
-                            var calIntent = new Intent(Intent.ActionEdit);
-                            calIntent.SetType("vnd.android.cursor.item/event");
-                            calIntent.PutExtra("beginTime", new DateTimeOffset(startDate.Value).ToUnixTimeMilliseconds());
-                            calIntent.PutExtra("allDay", true);
-                            calIntent.PutExtra("title", $"{media.Title?.UserPreferred} starts");
-                            StartActivity(calIntent);
-                        }
-                        else
-                        {
-                            DisplaySnackbarMessage("Calendar permission required to add reminder", Snackbar.LengthShort);
-                        }
-                    };
-                }
+                        var calIntent = new Intent(Intent.ActionEdit);
+                        calIntent.SetType("vnd.android.cursor.item/event");
+                        calIntent.PutExtra("beginTime", new DateTimeOffset(startDate.Value).ToUnixTimeMilliseconds());
+                        calIntent.PutExtra("allDay", true);
+                        calIntent.PutExtra("title", $"{media.Title?.UserPreferred} starts");
+                        StartActivity(calIntent);
+                    }
+                    else
+                    {
+                        DisplaySnackbarMessage("Calendar permission required to add reminder", Snackbar.LengthShort);
+                    }
+                };
             }
 
             if (media.Season != null)
             {
                 dateRangeView.TextTwo = media.Season.DisplayValue + (media.StartDate?.Year > 0 ? $" {media.StartDate.Year}" : "");
+                dateRangeView.Clickable = true;
+                dateRangeView.Click += (sender, args) => DisplayNotYetImplemented();
+            }
+
+            var episodesView = retView.FindViewById<DataRow>(Resource.Id.Media_Episodes);
+            if (AniList.Models.Media.MediaType.Anime.Equals(media.Type))
+            {
+                episodesView.TextOne = media.Episodes > 0 ? (media.Episodes > 1 ? $"{media.Episodes} episodes" : "Single episode") : "";
+                episodesView.TextTwo = media.Duration > 0 ? $"{media.Duration} minutes" : "";
+
+                if (media.Episodes == 0 && media.Duration == 0)
+                {
+                    episodesView.Visibility = ViewStates.Gone;
+                }
+
+                if (media.StreamingEpisodes?.Any() == true)
+                {
+                    episodesView.ButtonVisible = true;
+                    episodesView.ButtonClickable = false;
+                    episodesView.Clickable = true;
+                    episodesView.Click += (sender, args) =>
+                        MediaStreamingEpisodeListDialog.Create(this, media.StreamingEpisodes);
+                }
+            }
+            else if (AniList.Models.Media.MediaType.Manga.Equals(media.Type))
+            {
+                episodesView.TextOne = media.Volumes > 0 ? $"{media.Volumes} Volumes" : "";
+                episodesView.TextTwo = media.Chapters > 0 ? $"{media.Chapters} Chapters" : "";
+
+                if (media.Volumes == 0 && media.Chapters == 0)
+                {
+                    episodesView.Visibility = ViewStates.Gone;
+                }
             }
 
             return retView;
