@@ -18,5 +18,6 @@ namespace AniDroid.Settings
     {
         void CreateCardTypeSettingItem(BaseRecyclerAdapter.CardType cardType);
         void CreateAniDroidThemeSettingItem(BaseAniDroidActivity.AniDroidTheme theme);
+        void CreateDisplayBannersSettingItem(bool displayBanners);
     }
 }

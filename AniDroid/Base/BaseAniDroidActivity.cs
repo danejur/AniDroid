@@ -104,6 +104,7 @@ namespace AniDroid.Base
         public const int ObjectBrowseRequestCode = 9;
 
         private static AniDroidTheme _theme;
+        protected IAniDroidSettings Settings { get; private set; }
         protected bool HasError { get; set; }
         public sealed override LayoutInflater LayoutInflater => ThemedInflater;
         public BaseRecyclerAdapter.CardType CardType { get; private set; }
@@ -114,9 +115,9 @@ namespace AniDroid.Base
         {
             base.OnCreate(savedInstanceState);
 
-            var settings = Kernel.Get<IAniDroidSettings>();
-            _theme = settings.Theme;
-            CardType = settings.CardType;
+            Settings = Kernel.Get<IAniDroidSettings>();
+            _theme = Settings.Theme;
+            CardType = Settings.CardType;
             SetTheme(GetThemeResource());
 
             await OnCreateExtended(savedInstanceState);

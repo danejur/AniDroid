@@ -26,6 +26,7 @@ namespace AniDroid.Settings
         {
             View.CreateCardTypeSettingItem(AniDroidSettings.CardType);
             View.CreateAniDroidThemeSettingItem(AniDroidSettings.Theme);
+            View.CreateDisplayBannersSettingItem(AniDroidSettings.DisplayBanners);
             return Task.CompletedTask;
         }
 
@@ -42,6 +43,11 @@ namespace AniDroid.Settings
         public void SetTheme(BaseAniDroidActivity.AniDroidTheme theme)
         {
             AniDroidSettings.Theme = theme;
+        }
+
+        public void SetDisplayBanners(bool displayBanners)
+        {
+            AniDroidSettings.DisplayBanners = displayBanners;
         }
     }
 }

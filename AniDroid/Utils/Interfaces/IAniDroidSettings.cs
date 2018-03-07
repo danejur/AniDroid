@@ -18,6 +18,7 @@ namespace AniDroid.Utils.Interfaces
     {
         BaseRecyclerAdapter.CardType CardType { get; set; }
         BaseAniDroidActivity.AniDroidTheme Theme { get; set; }
+        bool DisplayBanners { get; set; }
         string UserAccessCode { get; set; }
         bool IsUserAuthenticated { get; }
         void ClearUserAuthentication();

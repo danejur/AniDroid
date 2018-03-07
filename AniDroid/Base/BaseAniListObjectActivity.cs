@@ -90,9 +90,7 @@ namespace AniDroid.Base
 
         public void SetContentShown(bool hasBanner = false)
         {
-            // TODO: add option for disabling banners app-wide
-
-            _hasBanner = hasBanner;
+            _hasBanner = hasBanner && Settings.DisplayBanners;
             ShowMenu();
             SetContentView(_hasBanner ? Resource.Layout.Activity_AniListObject_Banner : Resource.Layout.Activity_AniListObject);
             CoordLayout = FindViewById<CoordinatorLayout>(Resource.Id.AniListObject_CoordLayout);

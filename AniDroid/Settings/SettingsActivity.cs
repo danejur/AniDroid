@@ -47,8 +47,8 @@ namespace AniDroid.Settings
         {
             var options = new List<string> {"Vertical", "Horizontal", "Flat Horizontal"};
             _settingsContainer.AddView(
-                CreateSpinnerSettingRow("Card Display Type", "Choose how you would like to display lists in AniDroid", options, (int) cardType, (sender, args) => 
-                    Presenter.SetCardType((BaseRecyclerAdapter.CardType)args.Position)));
+                CreateSpinnerSettingRow("Card Display Type", "Choose how you would like to display lists in AniDroid", options, (int) cardType, (sender, args) =>
+                    Presenter.SetCardType((BaseRecyclerAdapter.CardType) args.Position)));
             _settingsContainer.AddView(CreateDivider());
         }
 
@@ -64,6 +64,14 @@ namespace AniDroid.Settings
                         Recreate();
                     }
                 }));
+            _settingsContainer.AddView(CreateDivider());
+        }
+
+        public void CreateDisplayBannersSettingItem(bool displayBanners)
+        {
+            _settingsContainer.AddView(
+                CreateSwitchSettingRow("Display Banners", "Choose whether you'd like to display banner images for Media and Users", displayBanners, (sender, args) =>
+                    Presenter.SetDisplayBanners(args.IsChecked)));
             _settingsContainer.AddView(CreateDivider());
         }
 

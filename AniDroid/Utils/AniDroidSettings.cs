@@ -37,6 +37,12 @@ namespace AniDroid.Utils
             set => _settingStorage.Put(StorageKeys.ThemeKey, value);
         }
 
+        public bool DisplayBanners
+        {
+            get => _settingStorage.Get(StorageKeys.DisplayBannersKey, true);
+            set => _settingStorage.Put(StorageKeys.DisplayBannersKey, value);
+        }
+
         public string UserAccessCode
         {
             get => _settingStorage.Get(StorageKeys.AccessCode);
@@ -56,6 +62,7 @@ namespace AniDroid.Utils
         {
             public const string CardTypeKey = "CARD_TYPE";
             public const string ThemeKey = "THEME";
+            public const string DisplayBannersKey = "DISPLAY_BANNERS";
 
             public const string AccessCode = "ACCESS_CODE";
         }
