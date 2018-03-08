@@ -20,9 +20,11 @@ using AniDroid.Adapters;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Adapters.StaffAdapters;
 using AniDroid.AniList;
+using AniDroid.AniList.Dto;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniListObject.Staff;
 using AniDroid.Base;
+using AniDroid.Browse;
 using AniDroid.Dialogs;
 using AniDroid.SearchResults;
 using AniDroid.Utils;
@@ -122,7 +124,7 @@ namespace AniDroid.AniListObject.Media
 
             if (media.Tags?.Any() == true)
             {
-                adapter.AddView(CreateMediaTagsView(media.Tags), "Tags");
+                adapter.AddView(CreateMediaTagsView(media.Tags, media.Type), "Tags");
             }
 
             if (media.Stats != null)
@@ -155,7 +157,7 @@ namespace AniDroid.AniListObject.Media
                 var genreView = LayoutInflater.Inflate(Resource.Layout.Item_Category, null);
                 genreView.FindViewById<TextView>(Resource.Id.Category_Text).Text = genre;
                 genreView.Clickable = true;
-                genreView.Click += (sender, eventArgs) => DisplayNotYetImplemented();
+                genreView.Click += (sender, eventArgs) => BrowseActivity.StartActivity(this, new BrowseMediaDto { Type = media.Type, IncludedGenres = new List<string> { genre }}, ObjectBrowseRequestCode);
                 genreContainer.AddView(genreView);
             }
 
@@ -192,7 +194,8 @@ namespace AniDroid.AniListObject.Media
             {
                 dateRangeView.TextTwo = media.Season.DisplayValue + (media.StartDate?.Year > 0 ? $" {media.StartDate.Year}" : "");
                 dateRangeView.Clickable = true;
-                dateRangeView.Click += (sender, args) => DisplayNotYetImplemented();
+                dateRangeView.Click += (sender, args) => BrowseActivity.StartActivity(this,
+                    new BrowseMediaDto {Season = media.Season, SeasonYear = media.StartDate?.Year, Type = media.Type}, ObjectBrowseRequestCode);
             }
 
             var episodesView = retView.FindViewById<DataRow>(Resource.Id.Media_Episodes);
@@ -271,11 +274,11 @@ namespace AniDroid.AniListObject.Media
             return retView;
         }
 
-        private View CreateMediaTagsView(List<AniList.Models.Media.MediaTag> tagList)
+        private View CreateMediaTagsView(List<AniList.Models.Media.MediaTag> tagList, AniList.Models.Media.MediaType type)
         {
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
-            var dialogRecyclerAdapter = new MediaTagsRecyclerAdapter(this, tagList);
+            var dialogRecyclerAdapter = new MediaTagsRecyclerAdapter(this, tagList, type);
             recycler.SetAdapter(dialogRecyclerAdapter);
 
             return retView;
@@ -283,7 +286,7 @@ namespace AniDroid.AniListObject.Media
 
         private View CreateMediaUserDataView(AniList.Models.Media media)
         {
-            var retView = LayoutInflater.Inflate(Resource.Layout.View_ScrollLayout, null);
+            var retView = LayoutInflater.Inflate(Resource.Layout.View_NestedScrollLayout, null);
             var containerView = retView.FindViewById<LinearLayout>(Resource.Id.Scroll_Container);
 
             if (media.Rankings?.Any() == true)
@@ -535,17 +538,32 @@ namespace AniDroid.AniListObject.Media
                 var rankingIcon = view.FindViewById<ImageView>(Resource.Id.MediaRank_Image);
 
                 rankingTextView.Text = ranking.GetFormattedRankString();
+                var sortType = AniList.Models.Media.MediaSort.Id;
 
                 if (AniList.Models.Media.MediaRankType.Rated.Equals(ranking.Type))
                 {
+                    sortType = AniList.Models.Media.MediaSort.ScoreDesc;
                     rankingIcon.SetImageResource(Resource.Drawable.ic_star_white_24px);
                     rankingIcon.SetColorFilter(new Color(ContextCompat.GetColor(this, Resource.Color.Favorite_Yellow)), PorterDuff.Mode.SrcIn);
                 }
                 else if (AniList.Models.Media.MediaRankType.Popular.Equals(ranking.Type))
                 {
+                    sortType = AniList.Models.Media.MediaSort.PopularityDesc;
                     rankingIcon.SetImageResource(Resource.Drawable.ic_favorite_white_24px);
                     rankingIcon.SetColorFilter(new Color(ContextCompat.GetColor(this, Resource.Color.Favorite_Red)), PorterDuff.Mode.SrcIn);
                 }
+
+                view.Click += (sender, eventArgs) =>
+                    BrowseActivity.StartActivity(this,
+                        new BrowseMediaDto
+                        {
+                            Year = ranking.Year,
+                            Season = ranking.Season,
+                            Sort = new List<AniList.Models.Media.MediaSort> {sortType},
+                            Format = ranking.Format
+                        },
+                        ObjectBrowseRequestCode);
+                
 
                 detailContainer.AddView(view);
             }

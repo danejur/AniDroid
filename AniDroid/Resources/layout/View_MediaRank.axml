@@ -3,6 +3,10 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/Background_Alternate_Ripple"
+    android:clickable="true"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="2dp"
     android:padding="@dimen/Details_CellPadding"
     android:gravity="center_vertical">
     <ImageView

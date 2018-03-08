@@ -32,9 +32,13 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
+    <AndroidUseSharedRuntime>true</AndroidUseSharedRuntime>
     <AndroidLinkMode>None</AndroidLinkMode>
-    <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
+    <EmbedAssembliesIntoApk>false</EmbedAssembliesIntoApk>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>
+    <BundleAssemblies>false</BundleAssemblies>
+    <AndroidSupportedAbis />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
@@ -48,6 +52,10 @@
     <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
     <AndroidLinkMode>SdkOnly</AndroidLinkMode>
     <EmbedAssembliesIntoApk>True</EmbedAssembliesIntoApk>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>
+    <BundleAssemblies>false</BundleAssemblies>
+    <AndroidSupportedAbis />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DiscU, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
@@ -139,6 +147,7 @@
     <Compile Include="Adapters\Base\LazyLoadingRecyclerViewAdapter.cs" />
     <Compile Include="Adapters\CharacterAdapters\CharacterMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\FragmentlessViewPagerAdapter.cs" />
+    <Compile Include="Adapters\MediaAdapters\BrowseMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaCharactersRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaRelationsRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaStaffRecyclerAdapter.cs" />
@@ -167,11 +176,9 @@
     <Compile Include="AniListObject\User\IUserView.cs" />
     <Compile Include="AniListObject\User\UserActivity.cs" />
     <Compile Include="AniListObject\User\UserPresenter.cs" />
-    <Compile Include="Base\BaseAniDroidFragment.cs" />
-    <Compile Include="Base\BaseAniDroidFragmentPresenter.cs" />
     <Compile Include="Base\BaseAniListObjectActivity.cs" />
     <Compile Include="Base\IAniListObjectView.cs" />
-    <Compile Include="Browse\BrowseFragment.cs" />
+    <Compile Include="Browse\BrowseActivity.cs" />
     <Compile Include="Browse\BrowsePresenter.cs" />
     <Compile Include="Browse\IBrowseView.cs" />
     <Compile Include="AniListObject\Character\CharacterActivity.cs" />
@@ -224,9 +231,6 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\View_MainNavigationHeader.axml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
-    <AndroidResource Include="Resources\layout\Fragment_Browse.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\Activity_SearchResults.axml">
@@ -305,6 +309,12 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\Activity_AniListObject_Banner.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Activity_Browse.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\View_NestedScrollLayout.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

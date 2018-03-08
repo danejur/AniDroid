@@ -10,18 +10,22 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.Base;
+using AniDroid.AniList.Dto;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
+using AniDroid.Browse;
 
 namespace AniDroid.Adapters.MediaAdapters
 {
     public class MediaTagsRecyclerAdapter : BaseRecyclerAdapter<Media.MediaTag>
     {
         private readonly List<bool> _spoilerTags;
+        private readonly Media.MediaType _mediaType;
 
-        public MediaTagsRecyclerAdapter(BaseAniDroidActivity context, List<Media.MediaTag> items) : base(context, items, CardType.Horizontal, 0)
+        public MediaTagsRecyclerAdapter(BaseAniDroidActivity context, List<Media.MediaTag> items, Media.MediaType mediaType) : base(context, items, CardType.Horizontal, 0)
         {
             _spoilerTags = items.Select(x => x.IsGeneralSpoiler || x.IsMediaSpoiler).ToList();
+            _mediaType = mediaType;
         }
 
         public override void BindCardViewHolder(CardItem holder, int position)
@@ -68,7 +72,11 @@ namespace AniDroid.Adapters.MediaAdapters
 
         private void RowClick(object sender, EventArgs e)
         {
-            Context.DisplayNotYetImplemented();
+            var senderView = sender as View;
+            var itemPos = (int) senderView?.GetTag(Resource.Id.Object_Position);
+            var item = Items[itemPos];
+
+            BrowseActivity.StartActivity(Context, new BrowseMediaDto {Type = _mediaType, IncludedTags = new List<string> {item.Name}}, BaseAniDroidActivity.ObjectBrowseRequestCode);
         }
     }
 }

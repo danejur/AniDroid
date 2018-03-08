@@ -7,6 +7,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Speech;
 using Android.Support.Design.Widget;
 using Android.Support.V7.Widget;
 using Android.Util;
@@ -24,12 +25,16 @@ namespace AniDroid.Settings
     [Activity(Label = "Settings")]
     public class SettingsActivity : BaseAniDroidActivity<SettingsPresenter>, ISettingsView
     {
+        public const string RecreateActivityIntentKey = "RECREATE_ACTIVITY";
+
         [InjectView(Resource.Id.Settings_CoordLayout)]
         private CoordinatorLayout _coordLayout;
         [InjectView(Resource.Id.Settings_Toolbar)]
         private Toolbar _toolbar;
         [InjectView(Resource.Id.Settings_Container)]
         private LinearLayout _settingsContainer;
+
+        private bool _recreateActivity;
 
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<ISettingsView, SettingsActivity>(this));
 
@@ -45,7 +50,7 @@ namespace AniDroid.Settings
 
         public void CreateCardTypeSettingItem(BaseRecyclerAdapter.CardType cardType)
         {
-            var options = new List<string> {"Vertical", "Horizontal", "Flat Horizontal"};
+            var options = new List<string> {"Vertical", "Vertical (Staggered)", "Horizontal", "Flat Horizontal"};
             _settingsContainer.AddView(
                 CreateSpinnerSettingRow("Card Display Type", "Choose how you would like to display lists in AniDroid", options, (int) cardType, (sender, args) =>
                     Presenter.SetCardType((BaseRecyclerAdapter.CardType) args.Position)));
@@ -62,6 +67,7 @@ namespace AniDroid.Settings
                     if (theme != (AniDroidTheme) args.Position)
                     {
                         Recreate();
+                        Intent.PutExtra(RecreateActivityIntentKey, true);
                     }
                 }));
             _settingsContainer.AddView(CreateDivider());
@@ -75,19 +81,36 @@ namespace AniDroid.Settings
             _settingsContainer.AddView(CreateDivider());
         }
 
-        public static void StartActivity(Context context)
+        public static void StartActivity(Activity context)
         {
             var intent = new Intent(context, typeof(SettingsActivity));
-            context.StartActivity(intent);
+            context.StartActivityForResult(intent, 1);
         }
 
         public override async Task OnCreateExtended(Bundle savedInstanceState)
         {
+            _recreateActivity = Intent.GetBooleanExtra(RecreateActivityIntentKey, false);
+
             SetContentView(Resource.Layout.Activity_Settings);
 
             SetupToolbar();
 
             await CreatePresenter(savedInstanceState);
+        }
+
+        public override void OnBackPressed()
+        {
+            if (_recreateActivity)
+            {
+                var resultIntent = new Intent();
+                resultIntent.PutExtra(RecreateActivityIntentKey, true);
+                SetResult(Result.Canceled, resultIntent);
+                Finish();
+            }
+            else
+            {
+                base.OnBackPressed();
+            }
         }
 
         #region Settings Views

@@ -15,8 +15,8 @@ namespace AniDroid.Adapters.Base
 {
     public abstract class BaseRecyclerAdapter<T> : BaseRecyclerAdapter
     {
-        private readonly CardType _cardType;
-        private readonly int _cardColumns = 2;
+        private CardType _cardType;
+        private int _cardColumns = 2;
         private RecyclerView.ItemDecoration _decoration;
         protected readonly ColorStateList DefaultIconColor;
         protected readonly ColorStateList FavoriteIconColor;
@@ -31,6 +31,16 @@ namespace AniDroid.Adapters.Base
             _cardColumns = Math.Abs(verticalCardColumns); // no funny business
             DefaultIconColor = ColorStateList.ValueOf(new Color(context.GetThemedColor(Resource.Attribute.Secondary_Dark)));
             FavoriteIconColor = ColorStateList.ValueOf(new Color(ContextCompat.GetColor(context, Resource.Color.Favorite_Red)));
+        }
+
+        protected void SetCardType(CardType type)
+        {
+            _cardType = type;
+        }
+
+        protected void SetCardColumns(int columns)
+        {
+            _cardColumns = Math.Abs(columns); // no funny business again
         }
 
         public void AddItems(params T[] items)
@@ -93,6 +103,7 @@ namespace AniDroid.Adapters.Base
                     layoutResource = Resource.Layout.View_CardItem_FlatHorizontal;
                     break;
                 case CardType.Vertical:
+                case CardType.VerticalStaggered:
                     layoutResource = Resource.Layout.View_CardItem_Vertical;
                     break;
             }
@@ -120,6 +131,9 @@ namespace AniDroid.Adapters.Base
                     recyclerView.SetLayoutManager(new LinearLayoutManager(Context, LinearLayoutManager.Vertical, false));
                     break;
                 case CardType.Vertical:
+                    recyclerView.SetLayoutManager(new GridLayoutManager(Context, _cardColumns, LinearLayoutManager.Vertical, false));
+                    break;
+                case CardType.VerticalStaggered:
                     recyclerView.SetLayoutManager(new StaggeredGridLayoutManager(_cardColumns, LinearLayoutManager.Vertical));
                     break;
             }
@@ -161,8 +175,9 @@ namespace AniDroid.Adapters.Base
         public enum CardType
         {
             Vertical = 0,
-            Horizontal = 1,
-            FlatHorizontal = 2
+            VerticalStaggered = 1,
+            Horizontal = 2,
+            FlatHorizontal = 3
         }
 
         public class CardItem : RecyclerView.ViewHolder

@@ -22,12 +22,14 @@ namespace AniDroid.Main
         {
         }
 
-        public override async Task Init()
+        public override Task Init()
         {
             // TODO: do something here
 
             View.SetAuthenticatedNavigationVisibility(false);
             View.OnMainViewSetup();
+
+            return Task.CompletedTask;
         }
 
         public override Task RestoreState(IList<string> savedState)

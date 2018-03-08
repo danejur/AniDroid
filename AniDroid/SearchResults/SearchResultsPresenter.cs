@@ -61,15 +61,5 @@ namespace AniDroid.SearchResults
             // TODO: determine if these are needed for this presenter
             return Task.CompletedTask;
         }
-
-        public override Task RestoreState(IList<string> savedState)
-        {
-            return Task.CompletedTask;
-        }
-
-        public override IList<string> SaveState()
-        {
-            return new List<string>();
-        }
     }
 }

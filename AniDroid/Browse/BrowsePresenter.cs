@@ -9,20 +9,28 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using AniDroid.AniList.Dto;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
+using AniDroid.Utils.Interfaces;
 
 namespace AniDroid.Browse
 {
-    public class BrowsePresenter : BaseAniDroidFragmentPresenter<BrowseFragment>
+    public class BrowsePresenter : BaseAniDroidPresenter<IBrowseView>
     {
-        public BrowsePresenter(BrowseFragment view, IAniListService service) : base(view, service)
+        public BrowsePresenter(IBrowseView view, IAniListService service, IAniDroidSettings settings) : base(view, service, settings)
         {
+        }
+
+        public void BrowseAniListMedia(BrowseMediaDto browseDto)
+        {
+            View.ShowMediaSearchResults(AniListService.BrowseMedia(browseDto, 20));
         }
 
         public override Task Init()
         {
-            throw new NotImplementedException();
+            // TODO: does this need anything?
+            return Task.CompletedTask;
         }
     }
 }

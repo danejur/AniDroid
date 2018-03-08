@@ -42,14 +42,7 @@ namespace AniDroid.Base
             else
             {
                 Presenter = Kernel.Get<T>();
-                if (savedInstanceState != null)
-                {
-                    await Presenter.RestoreState(savedInstanceState.GetStringArrayList(PresenterStateKey));
-                }
-                else
-                {
-                    await Presenter.Init().ConfigureAwait(false);
-                }
+                await Presenter.Init().ConfigureAwait(false);
             }
         }
 
@@ -62,7 +55,7 @@ namespace AniDroid.Base
         protected override void OnSaveInstanceState(Bundle outState)
         {
             base.OnSaveInstanceState(outState);
-            outState.PutStringArrayList(PresenterStateKey, Presenter.SaveState());
+            outState.PutStringArrayList(PresenterStateKey, Presenter?.SaveState());
         }
 
         public abstract override void DisplaySnackbarMessage(string message, int length);
@@ -96,6 +89,12 @@ namespace AniDroid.Base
             }
 
             return MenuItemSelected(item);
+        }
+
+        public sealed override void Recreate()
+        {
+            Presenter = null;
+            base.Recreate();
         }
     }
 
