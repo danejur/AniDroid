@@ -173,20 +173,12 @@ namespace AniDroid.AniListObject.Media
                 dateRangeView.ButtonClickable = true;
                 dateRangeView.ButtonClick += (sender, eventArgs) =>
                 {
-                    if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.WriteCalendar) ==
-                        (int) Permission.Granted)
-                    {
-                        var calIntent = new Intent(Intent.ActionEdit);
-                        calIntent.SetType("vnd.android.cursor.item/event");
-                        calIntent.PutExtra("beginTime", new DateTimeOffset(startDate.Value).ToUnixTimeMilliseconds());
-                        calIntent.PutExtra("allDay", true);
-                        calIntent.PutExtra("title", $"{media.Title?.UserPreferred} starts");
-                        StartActivity(calIntent);
-                    }
-                    else
-                    {
-                        DisplaySnackbarMessage("Calendar permission required to add reminder", Snackbar.LengthShort);
-                    }
+                    var calIntent = new Intent(Intent.ActionEdit);
+                    calIntent.SetType("vnd.android.cursor.item/event");
+                    calIntent.PutExtra("beginTime", new DateTimeOffset(startDate.Value).ToUnixTimeMilliseconds());
+                    calIntent.PutExtra("allDay", true);
+                    calIntent.PutExtra("title", $"{media.Title?.UserPreferred} starts");
+                    StartActivity(calIntent);
                 };
             }
 
