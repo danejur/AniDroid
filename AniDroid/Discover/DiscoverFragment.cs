@@ -48,7 +48,6 @@ namespace AniDroid.Discover
         {
             var recycler = _view.FindViewById<RecyclerView>(Resource.Id.Discover_TrendingRecyclerView);
             var adapter = new DiscoverMediaRecyclerAdapter(Activity, mediaEnumerable);
-            adapter.DataLoaded += (sender, b) => DisplaySnackbarMessage("Trending loaded", Snackbar.LengthShort);
             recycler.SetAdapter(adapter);
         }
 

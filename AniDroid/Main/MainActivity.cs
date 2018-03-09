@@ -64,6 +64,7 @@ namespace AniDroid.Main
             _searchButton.Clickable = true;
             _searchButton.Click -= SearchButtonOnClick;
             _searchButton.Click += SearchButtonOnClick;
+            SelectDefaultFragment();
         }
 
         private void SearchButtonOnClick(object sender, EventArgs eventArgs)
@@ -212,6 +213,18 @@ namespace AniDroid.Main
                     .CommitAllowingStateLoss();
 
             _fragmentBeingReplaced = false;
+        }
+
+        private void SelectDefaultFragment()
+        {
+            if (_currentFragment != null)
+            {
+                return;
+            }
+
+            _currentFragment = new DiscoverFragment();
+            ReplaceFragment();
+            _navigationView.SetCheckedItem(Resource.Id.Menu_Navigation_Discover);
         }
 
         #endregion
