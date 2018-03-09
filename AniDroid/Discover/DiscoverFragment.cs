@@ -28,15 +28,16 @@ namespace AniDroid.Discover
 
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IDiscoverView, DiscoverFragment>(this));
 
-        private View _view;
-
         public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
         {
-            _view = LayoutInflater.Inflate(Resource.Layout.Fragment_Discover, container, false);
-
             CreatePresenter(savedInstanceState).GetAwaiter().GetResult();
 
-            return _view;
+            return LayoutInflater.Inflate(Resource.Layout.Fragment_Discover, container, false);
+        }
+
+        public override void OnViewCreated(View view, Bundle savedInstanceState)
+        {
+            Presenter.GetDiscoverLists();
         }
 
         public override void OnError(IAniListError error)
@@ -46,19 +47,19 @@ namespace AniDroid.Discover
 
         public void ShowTrendingResults(IAsyncEnumerable<IPagedData<Media>> mediaEnumerable)
         {
-            var recycler = _view.FindViewById<RecyclerView>(Resource.Id.Discover_TrendingRecyclerView);
+            var recycler = View.FindViewById<RecyclerView>(Resource.Id.Discover_TrendingRecyclerView);
             recycler.SetAdapter(new DiscoverMediaRecyclerAdapter(Activity, mediaEnumerable));
         }
 
         public void ShowNewAnimeResults(IAsyncEnumerable<IPagedData<Media>> mediaEnumerable)
         {
-            var recycler = _view.FindViewById<RecyclerView>(Resource.Id.Discover_NewAnimeRecyclerView);
+            var recycler = View.FindViewById<RecyclerView>(Resource.Id.Discover_NewAnimeRecyclerView);
             recycler.SetAdapter(new DiscoverMediaRecyclerAdapter(Activity, mediaEnumerable));
         }
 
         public void ShowNewMangaResults(IAsyncEnumerable<IPagedData<Media>> mediaEnumerable)
         {
-            var recycler = _view.FindViewById<RecyclerView>(Resource.Id.Discover_NewMangaRecyclerView);
+            var recycler = View.FindViewById<RecyclerView>(Resource.Id.Discover_NewMangaRecyclerView);
             recycler.SetAdapter(new DiscoverMediaRecyclerAdapter(Activity, mediaEnumerable));
         }
     }

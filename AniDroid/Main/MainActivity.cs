@@ -15,10 +15,12 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
+using AniDroid.Browse;
 using AniDroid.Dialogs;
 using AniDroid.Discover;
 using AniDroid.SearchResults;
 using AniDroid.Settings;
+using AniDroid.TorrentSearch;
 using AniDroid.Utils;
 using Ninject;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
@@ -181,30 +183,36 @@ namespace AniDroid.Main
 
         private void NavigationItemSelected(object sender, NavigationView.NavigationItemSelectedEventArgs e)
         {
-            BaseAniDroidFragment newFragment = null;
-
             switch (e.MenuItem.ItemId)
             {
                 case Resource.Id.Menu_Navigation_Discover:
-                    newFragment = new DiscoverFragment();
+                    ChangeFragment(new DiscoverFragment());
+                    break;
+                case Resource.Id.Menu_Navigation_TorrentSearch:
+                    ChangeFragment(new TorrentSearchFragment());
+                    break;
+                case Resource.Id.Menu_Navigation_Browse:
+                    ChangeFragment(new BrowseFragment());
                     break;
             }
+        }
 
+        private void ChangeFragment(BaseAniDroidFragment fragment)
+        {
             var drawer = FindViewById<DrawerLayout>(Resource.Id.Main_DrawerLayout);
             drawer.CloseDrawer(GravityCompat.Start);
 
-            if (newFragment != null && newFragment.FragmentName != _currentFragment?.FragmentName)
+            if (fragment.FragmentName == _currentFragment?.FragmentName)
             {
-                _currentFragment = newFragment;
-                _fragmentBeingReplaced = true;
+                return;
             }
+
+            _currentFragment = fragment;
+            _fragmentBeingReplaced = true;
         }
 
         private void ReplaceFragment()
         {
-            //if (_currentFragment == null)
-            //    _currentFragment = new ErrorFragment();
-
             if (SupportFragmentManager.FindFragmentById(Resource.Id.Main_FragmentContainer) == null)
                 SupportFragmentManager.BeginTransaction()
                     .Add(Resource.Id.Main_FragmentContainer, _currentFragment)

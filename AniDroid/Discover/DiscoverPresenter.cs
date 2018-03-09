@@ -26,6 +26,11 @@ namespace AniDroid.Discover
 
         public override Task Init()
         {
+            return Task.CompletedTask;
+        }
+
+        public void GetDiscoverLists()
+        {
             View.ShowTrendingResults(AniListService.BrowseMedia(new BrowseMediaDto(), 5));
             View.ShowNewAnimeResults(AniListService.BrowseMedia(
                 new BrowseMediaDto
@@ -39,7 +44,6 @@ namespace AniDroid.Discover
                     Type = Media.MediaType.Manga,
                     Sort = new List<Media.MediaSort> { Media.MediaSort.IdDesc }
                 }, 5));
-            return Task.CompletedTask;
         }
     }
 }

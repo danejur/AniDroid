@@ -181,6 +181,7 @@
     <Compile Include="Base\BaseAniListObjectActivity.cs" />
     <Compile Include="Base\IAniListObjectView.cs" />
     <Compile Include="Browse\BrowseActivity.cs" />
+    <Compile Include="Browse\BrowseFragment.cs" />
     <Compile Include="Browse\BrowsePresenter.cs" />
     <Compile Include="Browse\IBrowseView.cs" />
     <Compile Include="AniListObject\Character\CharacterActivity.cs" />
@@ -198,6 +199,9 @@
     <Compile Include="Settings\SettingsPresenter.cs" />
     <Compile Include="Settings\ISettingsView.cs" />
     <Compile Include="Settings\SettingsActivity.cs" />
+    <Compile Include="TorrentSearch\ITorrentSearchView.cs" />
+    <Compile Include="TorrentSearch\TorrentSearchFragment.cs" />
+    <Compile Include="TorrentSearch\TorrentSearchPresenter.cs" />
     <Compile Include="Utils\AniDroidSettings.cs" />
     <Compile Include="Utils\ChartUtils.cs" />
     <Compile Include="Utils\Formatting\NumberFormatters.cs" />
