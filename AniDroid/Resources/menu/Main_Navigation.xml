@@ -6,6 +6,10 @@
       android:title="Home"
       android:icon="@drawable/ic_home_white_24px"/>
     <item
+      android:id="@+id/Menu_Navigation_Discover"
+      android:title="Discover"
+      android:icon="@drawable/ic_public_white_24px"/>
+    <item
       android:id="@+id/Menu_Navigation_Anime"
       android:title="Anime"
       android:icon="@drawable/ic_view_list_white_24px"/>

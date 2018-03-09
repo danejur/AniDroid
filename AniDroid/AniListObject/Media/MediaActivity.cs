@@ -35,7 +35,6 @@ using MikePhil.Charting.Charts;
 using MikePhil.Charting.Components;
 using MikePhil.Charting.Data;
 using Ninject;
-using Calendar = Android.Icu.Util.Calendar;
 
 namespace AniDroid.AniListObject.Media
 {
@@ -148,6 +147,13 @@ namespace AniDroid.AniListObject.Media
             var formatView = retView.FindViewById<TextView>(Resource.Id.Media_Format);
             formatView.Text = (media.Format?.DisplayValue ?? "Unknown Format") +
                 (media.Episodes > 1 ? $" ({media.Episodes} episodes)" : "");
+
+            var nextAiringView = retView.FindViewById<TextView>(Resource.Id.Media_NextEpisode);
+            if (media.NextAiringEpisode?.AiringAt > 0)
+            {
+                nextAiringView.Visibility = ViewStates.Visible;
+                nextAiringView.Text = $"Next Episode:  {DateTimeOffset.FromUnixTimeSeconds(media.NextAiringEpisode.AiringAt).DateTime.ToShortDateString()}";
+            }
 
             LoadImage(retView.FindViewById<ImageView>(Resource.Id.Media_Image), media.CoverImage.Large);
             var genreContainer = retView.FindViewById<FlexboxLayout>(Resource.Id.Media_Genres);

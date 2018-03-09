@@ -19,19 +19,19 @@ namespace AniDroid.Utils
         }
     }
 
-    public class ApplicationModule<TView, TActivity> : ApplicationModule where TActivity : TView
+    public class ApplicationModule<TView, TViewImpl> : ApplicationModule where TViewImpl : TView
     {
-        private readonly TActivity _activity;
+        private readonly TViewImpl _viewImpl;
 
-        public ApplicationModule(TActivity activity)
+        public ApplicationModule(TViewImpl viewImpl)
         {
-            _activity = activity;
+            _viewImpl = viewImpl;
         }
 
         public override void Load()
         {
             base.Load();
-            Bind<TView>().ToConstant(_activity);
+            Bind<TView>().ToConstant(_viewImpl);
         }
     }
 }

@@ -81,7 +81,12 @@ namespace AniDroid.Widgets
 
         private void CalculateTextLength(object sender, ViewTreeObserver.PreDrawEventArgs e)
         {
-            if (!_textProcessed && _text.LineCount > 3)
+            if (_textProcessed)
+            {
+                return;
+            }
+
+            if (_text.LineCount > 3)
             {
                 _text.SetMaxLines(3);
                 _text.Ellipsize = TextUtils.TruncateAt.End;
@@ -89,8 +94,13 @@ namespace AniDroid.Widgets
                 _button.Clickable = true;
                 _button.Click -= ExpandText;
                 _button.Click += ExpandText;
-                _textProcessed = true;
             }
+            else
+            {
+                _button.Visibility = ViewStates.Gone;
+            }
+
+            _textProcessed = true;
         }
 
         private void ExpandText(object sender, EventArgs e)

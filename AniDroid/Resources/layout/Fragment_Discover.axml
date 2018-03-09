@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:background="?Background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:text="Trending"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Discover_TrendingLabel"
+            android:textColor="?Background_Text"
+            android:textSize="20dp"
+            android:layout_margin="5dp" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/Discover_TrendingRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_below="@id/Discover_TrendingLabel" />
+        <TextView
+            android:text="New Anime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Discover_NewAnimeLabel"
+            android:textColor="?Background_Text"
+            android:layout_below="@id/Discover_TrendingRecyclerView"
+            android:textSize="20dp"
+            android:layout_margin="5dp" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/Discover_NewAnimeRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_below="@id/Discover_NewAnimeLabel" />
+        <TextView
+            android:text="New Manga"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Discover_NewMangaLabel"
+            android:textColor="?Background_Text"
+            android:layout_below="@id/Discover_NewAnimeRecyclerView"
+            android:textSize="20dp"
+            android:layout_margin="5dp" />
+          <android.support.v7.widget.RecyclerView
+            android:id="@+id/Discover_NewMangaRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_below="@id/Discover_NewMangaLabel" />
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>

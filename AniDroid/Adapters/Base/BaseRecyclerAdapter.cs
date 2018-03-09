@@ -17,6 +17,7 @@ namespace AniDroid.Adapters.Base
     {
         private CardType _cardType;
         private int _cardColumns = 2;
+        private int _orientation = LinearLayoutManager.Vertical;
         private RecyclerView.ItemDecoration _decoration;
         protected readonly ColorStateList DefaultIconColor;
         protected readonly ColorStateList FavoriteIconColor;
@@ -41,6 +42,11 @@ namespace AniDroid.Adapters.Base
         protected void SetCardColumns(int columns)
         {
             _cardColumns = Math.Abs(columns); // no funny business again
+        }
+
+        protected void SetHorizontalOrientation()
+        {
+            _orientation = LinearLayoutManager.Horizontal;
         }
 
         public void AddItems(params T[] items)
@@ -125,16 +131,16 @@ namespace AniDroid.Adapters.Base
                 case CardType.FlatHorizontal:
                     _decoration = new DefaultItemDecoration(Context);
                     recyclerView.AddItemDecoration(_decoration);
-                    recyclerView.SetLayoutManager(new LinearLayoutManager(Context, LinearLayoutManager.Vertical, false));
+                    recyclerView.SetLayoutManager(new LinearLayoutManager(Context, _orientation, false));
                     break;
                 case CardType.Horizontal:
-                    recyclerView.SetLayoutManager(new LinearLayoutManager(Context, LinearLayoutManager.Vertical, false));
+                    recyclerView.SetLayoutManager(new LinearLayoutManager(Context, _orientation, false));
                     break;
                 case CardType.Vertical:
-                    recyclerView.SetLayoutManager(new GridLayoutManager(Context, _cardColumns, LinearLayoutManager.Vertical, false));
+                    recyclerView.SetLayoutManager(new GridLayoutManager(Context, _cardColumns, _orientation, false));
                     break;
                 case CardType.VerticalStaggered:
-                    recyclerView.SetLayoutManager(new StaggeredGridLayoutManager(_cardColumns, LinearLayoutManager.Vertical));
+                    recyclerView.SetLayoutManager(new StaggeredGridLayoutManager(_cardColumns, _orientation));
                     break;
             }
         }
@@ -182,6 +188,7 @@ namespace AniDroid.Adapters.Base
 
         public class CardItem : RecyclerView.ViewHolder
         {
+            public LinearLayout Container { get; set; }
             public ImageView Image { get; set; }
             public TextView Name { get; set; }
             public TextView DetailPrimary { get; set; }
@@ -192,6 +199,7 @@ namespace AniDroid.Adapters.Base
 
             public CardItem(View itemView) : base(itemView)
             {
+                Container = itemView.FindViewById<LinearLayout>(Resource.Id.CardItem_Container);
                 Image = itemView.FindViewById<ImageView>(Resource.Id.CardItem_Image);
                 Name = itemView.FindViewById<TextView>(Resource.Id.CardItem_Name);
                 DetailPrimary = itemView.FindViewById<TextView>(Resource.Id.CardItem_DetailPrimary);

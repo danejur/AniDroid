@@ -16,6 +16,7 @@ using Android.Widget;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
 using AniDroid.Dialogs;
+using AniDroid.Discover;
 using AniDroid.SearchResults;
 using AniDroid.Settings;
 using AniDroid.Utils;
@@ -32,7 +33,7 @@ namespace AniDroid.Main
         [InjectView(Resource.Id.Main_NavigationView)]
         private NavigationView _navigationView;
         [InjectView(Resource.Id.Main_DrawerLayout)]
-        private DrawerLayout _navDrawer;
+        private DrawerLayout _navigationDrawer;
         [InjectView(Resource.Id.Main_Toolbar)]
         private Toolbar _toolbar;
         [InjectView(Resource.Id.Main_SearchFab)]
@@ -40,6 +41,8 @@ namespace AniDroid.Main
 
         private Toast _exitToast;
         private Action _navClosedAction;
+        private BaseAniDroidFragment _currentFragment;
+        private bool _fragmentBeingReplaced;
 
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IMainView, MainActivity>(this));
 
@@ -132,7 +135,7 @@ namespace AniDroid.Main
         {
             if (item.ItemId == Android.Resource.Id.Home)
             {
-                _navDrawer.OpenDrawer(GravityCompat.Start);
+                _navigationDrawer.OpenDrawer(GravityCompat.Start);
                 return true;
             }
 
@@ -151,21 +154,64 @@ namespace AniDroid.Main
             settingsButton.Click += (settingsSender, settingsEventArgs) =>
             {
                 _navClosedAction = () => SettingsActivity.StartActivity(this);
-                _navDrawer.CloseDrawer(GravityCompat.Start);
+                _navigationDrawer.CloseDrawer(GravityCompat.Start);
             };
 
-            _navDrawer.DrawerClosed += OnDrawerClosed;
+            _navigationView.NavigationItemSelected += NavigationItemSelected;
+            _navigationDrawer.DrawerClosed += OnDrawerClosed;
         }
 
         //this is needed to delay fragment replacement until the drawer is actually closed, so as not to show crappy animations
         private void OnDrawerClosed(object sender, DrawerLayout.DrawerClosedEventArgs e)
         {
-            if (_navClosedAction != null)
+            if (_fragmentBeingReplaced)
+            {
+                ReplaceFragment();
+            }
+            else if (_navClosedAction != null)
             {
                 var action = _navClosedAction;
                 _navClosedAction = null;
                 action.Invoke();
             }
+        }
+
+        private void NavigationItemSelected(object sender, NavigationView.NavigationItemSelectedEventArgs e)
+        {
+            BaseAniDroidFragment newFragment = null;
+
+            switch (e.MenuItem.ItemId)
+            {
+                case Resource.Id.Menu_Navigation_Discover:
+                    newFragment = new DiscoverFragment();
+                    break;
+            }
+
+            var drawer = FindViewById<DrawerLayout>(Resource.Id.Main_DrawerLayout);
+            drawer.CloseDrawer(GravityCompat.Start);
+
+            if (newFragment != null && newFragment.FragmentName != _currentFragment?.FragmentName)
+            {
+                _currentFragment = newFragment;
+                _fragmentBeingReplaced = true;
+            }
+        }
+
+        private void ReplaceFragment()
+        {
+            //if (_currentFragment == null)
+            //    _currentFragment = new ErrorFragment();
+
+            if (SupportFragmentManager.FindFragmentById(Resource.Id.Main_FragmentContainer) == null)
+                SupportFragmentManager.BeginTransaction()
+                    .Add(Resource.Id.Main_FragmentContainer, _currentFragment)
+                    .CommitAllowingStateLoss();
+            else
+                SupportFragmentManager.BeginTransaction()
+                    .Replace(Resource.Id.Main_FragmentContainer, _currentFragment)
+                    .CommitAllowingStateLoss();
+
+            _fragmentBeingReplaced = false;
         }
 
         #endregion

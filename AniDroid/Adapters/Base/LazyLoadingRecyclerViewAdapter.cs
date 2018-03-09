@@ -28,6 +28,7 @@ namespace AniDroid.Adapters.Base
         private readonly IAsyncEnumerable<IPagedData<T>> _asyncEnumerable;
         private IAsyncEnumerator<IPagedData<T>> _asyncEnumerator;
         private bool _isLazyLoading;
+        private bool _dataLoaded;
 
         protected LazyLoadingRecyclerViewAdapter(BaseAniDroidActivity context, IAsyncEnumerable<IPagedData<T>> enumerable, CardType cardType, int verticalCardColumns = 3) : base(context, new List<T> { null }, cardType, verticalCardColumns)
         {
@@ -59,6 +60,12 @@ namespace AniDroid.Adapters.Base
 
             if (await _asyncEnumerator.MoveNextAsync())
             {
+                if (!_dataLoaded)
+                {
+                    DataLoaded?.Invoke(RecyclerView, _asyncEnumerator.Current.PageInfo.Total > 0);
+                    _dataLoaded = true;
+                }
+
                 AddItems(_asyncEnumerator.Current.Data, _asyncEnumerator.Current.PageInfo.HasNextPage);
             }
 
@@ -127,6 +134,8 @@ namespace AniDroid.Adapters.Base
             {
             }
         }
+
+        public event EventHandler<bool> DataLoaded;
 
         #region Constants
 
