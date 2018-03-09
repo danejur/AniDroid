@@ -43,7 +43,7 @@
             android:layout_below="@id/Discover_NewAnimeRecyclerView"
             android:textSize="20dp"
             android:layout_margin="5dp" />
-          <android.support.v7.widget.RecyclerView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/Discover_NewMangaRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="300dp"

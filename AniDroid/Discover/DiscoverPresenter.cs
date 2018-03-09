@@ -31,13 +31,13 @@ namespace AniDroid.Discover
                 new BrowseMediaDto
                 {
                     Type = Media.MediaType.Anime,
-                    Sort = new List<Media.MediaSort> {Media.MediaSort.IdDesc}
+                    Sort = new List<Media.MediaSort> { Media.MediaSort.IdDesc }
                 }, 5));
             View.ShowNewMangaResults(AniListService.BrowseMedia(
                 new BrowseMediaDto
                 {
                     Type = Media.MediaType.Manga,
-                    Sort = new List<Media.MediaSort> {Media.MediaSort.IdDesc}
+                    Sort = new List<Media.MediaSort> { Media.MediaSort.IdDesc }
                 }, 5));
             return Task.CompletedTask;
         }

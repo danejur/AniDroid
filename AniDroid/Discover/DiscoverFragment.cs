@@ -47,8 +47,7 @@ namespace AniDroid.Discover
         public void ShowTrendingResults(IAsyncEnumerable<IPagedData<Media>> mediaEnumerable)
         {
             var recycler = _view.FindViewById<RecyclerView>(Resource.Id.Discover_TrendingRecyclerView);
-            var adapter = new DiscoverMediaRecyclerAdapter(Activity, mediaEnumerable);
-            recycler.SetAdapter(adapter);
+            recycler.SetAdapter(new DiscoverMediaRecyclerAdapter(Activity, mediaEnumerable));
         }
 
         public void ShowNewAnimeResults(IAsyncEnumerable<IPagedData<Media>> mediaEnumerable)
