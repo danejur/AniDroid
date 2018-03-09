@@ -8,6 +8,7 @@ using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.V4.Widget;
+using Android.Util;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.Base;
@@ -20,8 +21,15 @@ namespace AniDroid.Adapters.MediaAdapters
 {
     public class DiscoverMediaRecyclerAdapter : LazyLoadingRecyclerViewAdapter<Media>
     {
+        private const int CardWidthDip = 150;
+
+        private readonly int _cardWidth;
+
         public DiscoverMediaRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<IPagedData<Media>> enumerable) : base(context, enumerable, CardType.Vertical, 1)
         {
+            _cardWidth = (int)TypedValue.ApplyDimension(ComplexUnitType.Dip, CardWidthDip, context.Resources.DisplayMetrics);
+            LoadingCardWidth = _cardWidth;
+            LoadingCardHeight = ViewGroup.LayoutParams.MatchParent;
             SetHorizontalOrientation();
         }
 
@@ -42,7 +50,7 @@ namespace AniDroid.Adapters.MediaAdapters
 
         public override CardItem SetupCardItemViewHolder(CardItem item)
         {
-            item.Container.LayoutParameters.Width = item.ContainerCard.LayoutParameters.Width = item.Image.LayoutParameters.Width = 500;
+            item.Container.LayoutParameters.Width = item.ContainerCard.LayoutParameters.Width = item.Image.LayoutParameters.Width = _cardWidth;
             item.Container.LayoutParameters.Height = item.ContainerCard.LayoutParameters.Height = item.Image.LayoutParameters.Height = ViewGroup.LayoutParams.MatchParent;
 
             item.Button.Clickable = false;

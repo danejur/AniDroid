@@ -30,6 +30,9 @@ namespace AniDroid.Adapters.Base
         private bool _isLazyLoading;
         private bool _dataLoaded;
 
+        protected int LoadingCardWidth = ViewGroup.LayoutParams.MatchParent;
+        protected int LoadingCardHeight = ViewGroup.LayoutParams.WrapContent;
+
         protected LazyLoadingRecyclerViewAdapter(BaseAniDroidActivity context, IAsyncEnumerable<IPagedData<T>> enumerable, CardType cardType, int verticalCardColumns = 3) : base(context, new List<T> { null }, cardType, verticalCardColumns)
         {
             _asyncEnumerable = enumerable;
@@ -82,12 +85,9 @@ namespace AniDroid.Adapters.Base
             }
 
             var view = Context.LayoutInflater.Inflate(Resource.Layout.View_IndeterminateProgressIndicator, parent, false);
+            view.LayoutParameters.Width = LoadingCardWidth;
+            view.LayoutParameters.Height = LoadingCardHeight;
             var holder = new ProgressBarViewHolder(view);
-
-            //if (BackgroundColorResource.HasValue)
-            //{
-            //    holder.Container.SetBackgroundResource(BackgroundColorResource.Value);
-            //}
 
             return holder;
         }
