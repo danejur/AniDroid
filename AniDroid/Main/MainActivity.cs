@@ -119,6 +119,8 @@ namespace AniDroid.Main
 
             if (data?.GetBooleanExtra(SettingsActivity.RecreateActivityIntentKey, false) == true)
             {
+                // TODO: probably a better way to do this, but this works for now
+                _currentFragment = null;
                 Recreate();
             }
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Android.Content;
 using Android.Views;
 using AniDroid.Adapters.Base;
 using AniDroid.AniList.Interfaces;
@@ -33,9 +34,16 @@ namespace AniDroid.Adapters.SearchAdapters
             return item;
         }
 
-        private static void RowClick(object sender, EventArgs e)
+        private void RowClick(object sender, EventArgs e)
         {
             // TODO: start forumthread activity here
+            var senderView = sender as View;
+            var itemPos = (int)senderView.GetTag(Resource.Id.Object_Position);
+            var item = Items[itemPos];
+
+            var intent = new Intent(Intent.ActionView);
+            intent.SetData(Android.Net.Uri.Parse(item.SiteUrl));
+            Context.StartActivity(intent);
         }
     }
 }
