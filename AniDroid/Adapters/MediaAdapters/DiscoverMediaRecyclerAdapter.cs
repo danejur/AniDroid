@@ -50,12 +50,15 @@ namespace AniDroid.Adapters.MediaAdapters
 
         public override CardItem SetupCardItemViewHolder(CardItem item)
         {
-            item.Container.LayoutParameters.Width = item.ContainerCard.LayoutParameters.Width = item.Image.LayoutParameters.Width = _cardWidth;
+            item.Container.LayoutParameters.Width = _cardWidth;
             item.Container.LayoutParameters.Height = item.ContainerCard.LayoutParameters.Height = item.Image.LayoutParameters.Height = ViewGroup.LayoutParams.MatchParent;
 
             item.Button.Clickable = false;
             item.ButtonIcon.SetImageResource(Resource.Drawable.ic_favorite_white_24px);
             ImageViewCompat.SetImageTintList(item.ButtonIcon, FavoriteIconColor);
+
+            item.Name.SetSingleLine(false);
+            item.Name.SetMaxLines(2);
 
             item.DetailSecondary.Visibility = ViewStates.Gone;
 

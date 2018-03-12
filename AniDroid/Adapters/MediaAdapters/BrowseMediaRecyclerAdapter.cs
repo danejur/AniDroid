@@ -49,6 +49,9 @@ namespace AniDroid.Adapters.MediaAdapters
             item.ButtonIcon.SetImageResource(Resource.Drawable.ic_favorite_white_24px);
             ImageViewCompat.SetImageTintList(item.ButtonIcon, FavoriteIconColor);
 
+            item.Name.SetSingleLine(false);
+            item.Name.SetMaxLines(2);
+
             item.DetailSecondary.Visibility = ViewStates.Gone;
 
             return item;
