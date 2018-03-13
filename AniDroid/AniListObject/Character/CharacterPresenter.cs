@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
+using OneOf;
 
 namespace AniDroid.AniListObject.Character
 {
@@ -30,7 +31,7 @@ namespace AniDroid.AniListObject.Character
                 .Switch(error => View.OnError(error));
         }
 
-        public IAsyncEnumerable<IPagedData<AniList.Models.Media.Edge>> GetCharacterMediaEnumerable(int characterId, AniList.Models.Media.MediaType mediaType, int perPage)
+        public IAsyncEnumerable<OneOf<IPagedData<AniList.Models.Media.Edge>, IAniListError>> GetCharacterMediaEnumerable(int characterId, AniList.Models.Media.MediaType mediaType, int perPage)
         {
             return AniListService.GetCharacterMedia(characterId, mediaType, perPage);
         }

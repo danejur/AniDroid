@@ -15,12 +15,13 @@ using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.AniListObject.Media;
 using AniDroid.Base;
+using OneOf;
 
 namespace AniDroid.Adapters.MediaAdapters
 {
     public class BrowseMediaRecyclerAdapter : LazyLoadingRecyclerViewAdapter<Media>
     {
-        public BrowseMediaRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<IPagedData<Media>> enumerable, CardType cardType, int verticalCardColumns = 3) : base(context, enumerable, cardType, verticalCardColumns)
+        public BrowseMediaRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> enumerable, CardType cardType, int verticalCardColumns = 3) : base(context, enumerable, cardType, verticalCardColumns)
         {
             if (cardType == CardType.VerticalStaggered)
             {

@@ -16,6 +16,7 @@ using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.AniListObject.Media;
 using AniDroid.Base;
+using OneOf;
 
 namespace AniDroid.Adapters.MediaAdapters
 {
@@ -25,7 +26,7 @@ namespace AniDroid.Adapters.MediaAdapters
 
         private readonly int _cardWidth;
 
-        public DiscoverMediaRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<IPagedData<Media>> enumerable) : base(context, enumerable, CardType.Vertical, 1)
+        public DiscoverMediaRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> enumerable) : base(context, enumerable, CardType.Vertical, 1)
         {
             _cardWidth = (int)TypedValue.ApplyDimension(ComplexUnitType.Dip, CardWidthDip, context.Resources.DisplayMetrics);
             LoadingCardWidth = _cardWidth;

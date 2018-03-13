@@ -15,12 +15,13 @@ using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.AniListObject.Staff;
 using AniDroid.Base;
+using OneOf;
 
 namespace AniDroid.Adapters.MediaAdapters
 {
     public class MediaStaffRecyclerAdapter : LazyLoadingRecyclerViewAdapter<Staff.Edge>
     {
-        public MediaStaffRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<IPagedData<Staff.Edge>> enumerable, CardType cardType, int verticalCardColumns = 3) : base(context, enumerable, cardType, verticalCardColumns)
+        public MediaStaffRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Staff.Edge>, IAniListError>> enumerable, CardType cardType, int verticalCardColumns = 3) : base(context, enumerable, cardType, verticalCardColumns)
         {
         }
 

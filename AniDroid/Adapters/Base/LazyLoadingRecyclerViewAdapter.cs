@@ -16,24 +16,26 @@ using Android.Support.V4.Content;
 using Android.Util;
 using System.Threading.Tasks;
 using Android.Support.Annotation;
+using Android.Support.Design.Widget;
 using Android.Views.Animations;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
+using OneOf;
 
 namespace AniDroid.Adapters.Base
 {
     public abstract class LazyLoadingRecyclerViewAdapter<T> : BaseRecyclerAdapter<T> where T : class
     {
-        private readonly IAsyncEnumerable<IPagedData<T>> _asyncEnumerable;
-        private IAsyncEnumerator<IPagedData<T>> _asyncEnumerator;
+        private readonly IAsyncEnumerable<OneOf<IPagedData<T>, IAniListError>> _asyncEnumerable;
+        private IAsyncEnumerator<OneOf<IPagedData<T>, IAniListError>> _asyncEnumerator;
         private bool _isLazyLoading;
         private bool _dataLoaded;
 
         protected int LoadingCardWidth = ViewGroup.LayoutParams.MatchParent;
         protected int LoadingCardHeight = ViewGroup.LayoutParams.WrapContent;
 
-        protected LazyLoadingRecyclerViewAdapter(BaseAniDroidActivity context, IAsyncEnumerable<IPagedData<T>> enumerable, CardType cardType, int verticalCardColumns = 3) : base(context, new List<T> { null }, cardType, verticalCardColumns)
+        protected LazyLoadingRecyclerViewAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<T>, IAniListError>> enumerable, CardType cardType, int verticalCardColumns = 3) : base(context, new List<T> { null }, cardType, verticalCardColumns)
         {
             _asyncEnumerable = enumerable;
             _asyncEnumerator = enumerable.GetEnumerator();
@@ -61,16 +63,25 @@ namespace AniDroid.Adapters.Base
 
             _isLazyLoading = true;
 
-            if (await _asyncEnumerator.MoveNextAsync())
-            {
-                if (!_dataLoaded)
-                {
-                    DataLoaded?.Invoke(RecyclerView, _asyncEnumerator.Current.PageInfo.Total > 0);
-                    _dataLoaded = true;
-                }
+            var moveNextResult = await _asyncEnumerator.MoveNextAsync();
 
-                AddItems(_asyncEnumerator.Current.Data, _asyncEnumerator.Current.PageInfo.HasNextPage);
-            }
+            _asyncEnumerator.Current?.Switch((IAniListError error) =>
+                    Context.DisplaySnackbarMessage("Error occurred while getting next page of data", Snackbar.LengthLong))
+                .Switch(data =>
+                {
+                    if (!moveNextResult)
+                    {
+                        return;
+                    }
+
+                    if (!_dataLoaded)
+                    {
+                        DataLoaded?.Invoke(RecyclerView, data.PageInfo.Total > 0);
+                        _dataLoaded = true;
+                    }
+
+                    AddItems(data.Data, data.PageInfo.HasNextPage);
+                });
 
             RemoveItem(position);
 

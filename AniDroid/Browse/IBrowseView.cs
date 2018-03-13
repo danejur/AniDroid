@@ -12,11 +12,12 @@ using Android.Widget;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
+using OneOf;
 
 namespace AniDroid.Browse
 {
     public interface IBrowseView : IAniDroidView
     {
-        void ShowMediaSearchResults(IAsyncEnumerable<IPagedData<Media>> mediaEnumerable);
+        void ShowMediaSearchResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable);
     }
 }

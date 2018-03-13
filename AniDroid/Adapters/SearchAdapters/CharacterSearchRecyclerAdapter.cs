@@ -6,12 +6,13 @@ using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.AniListObject.Character;
 using AniDroid.Base;
+using OneOf;
 
 namespace AniDroid.Adapters.SearchAdapters
 {
     public class CharacterSearchRecyclerAdapter : LazyLoadingRecyclerViewAdapter<Character>
     {
-        public CharacterSearchRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<IPagedData<Character>> enumerable, CardType cardType) : base(context, enumerable, cardType)
+        public CharacterSearchRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Character>, IAniListError>> enumerable, CardType cardType) : base(context, enumerable, cardType)
         {
         }
 

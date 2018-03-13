@@ -19,6 +19,7 @@ using AniDroid.Base;
 using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
 using Ninject;
+using OneOf;
 
 namespace AniDroid.Browse
 {
@@ -35,7 +36,7 @@ namespace AniDroid.Browse
             throw new NotImplementedException();
         }
 
-        public void ShowMediaSearchResults(IAsyncEnumerable<IPagedData<Media>> mediaEnumerable)
+        public void ShowMediaSearchResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
         {
             var recycler = View.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
             recycler.SetAdapter(new BrowseMediaRecyclerAdapter(Activity, mediaEnumerable, _cardType));

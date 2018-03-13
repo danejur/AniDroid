@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
+using OneOf;
 
 namespace AniDroid.AniListObject.Media
 {
@@ -29,12 +30,12 @@ namespace AniDroid.AniListObject.Media
                 .Switch(error => View.OnError(error));
         }
 
-        public IAsyncEnumerable<IPagedData<AniList.Models.Character.Edge>> GetMediaCharactersEnumerable(int mediaId, int perPage)
+        public IAsyncEnumerable<OneOf<IPagedData<AniList.Models.Character.Edge>, IAniListError>> GetMediaCharactersEnumerable(int mediaId, int perPage)
         {
             return AniListService.GetMediaCharacters(mediaId, perPage);
         }
 
-        public IAsyncEnumerable<IPagedData<AniList.Models.Staff.Edge>> GetMediaStaffEnumerable(int mediaId, int perPage)
+        public IAsyncEnumerable<OneOf<IPagedData<AniList.Models.Staff.Edge>, IAniListError>> GetMediaStaffEnumerable(int mediaId, int perPage)
         {
             return AniListService.GetMediaStaff(mediaId, perPage);
         }

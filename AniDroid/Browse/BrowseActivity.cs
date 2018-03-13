@@ -21,6 +21,7 @@ using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
 using Newtonsoft.Json;
 using Ninject;
+using OneOf;
 
 namespace AniDroid.Browse
 {
@@ -42,7 +43,7 @@ namespace AniDroid.Browse
             new StandardKernel(new ApplicationModule<IBrowseView, BrowseActivity>(this));
 
 
-        public void ShowMediaSearchResults(IAsyncEnumerable<IPagedData<Media>> mediaEnumerable)
+        public void ShowMediaSearchResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
         {
             _recyclerView.SetAdapter(new BrowseMediaRecyclerAdapter(this, mediaEnumerable, _cardType));
         }

@@ -6,12 +6,13 @@ using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.AniListObject.Studio;
 using AniDroid.Base;
+using OneOf;
 
 namespace AniDroid.Adapters.SearchAdapters
 {
     public class StudioSearchRecyclerAdapter : LazyLoadingRecyclerViewAdapter<Studio>
     {
-        public StudioSearchRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<IPagedData<Studio>> enumerable) : base(context, enumerable, CardType.Horizontal)
+        public StudioSearchRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Studio>, IAniListError>> enumerable) : base(context, enumerable, CardType.Horizontal)
         {
         }
 

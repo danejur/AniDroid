@@ -8,12 +8,13 @@ using AniDroid.AniList.Models;
 using AniDroid.AniListObject.Character;
 using AniDroid.Base;
 using AniDroid.Dialogs;
+using OneOf;
 
 namespace AniDroid.Adapters.MediaAdapters
 {
     public class MediaCharactersRecyclerAdapter : LazyLoadingRecyclerViewAdapter<Character.Edge>
     {
-        public MediaCharactersRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<IPagedData<Character.Edge>> enumerable, CardType cardType, int verticalCardColumns = 3) : base(context, enumerable, cardType, verticalCardColumns)
+        public MediaCharactersRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Character.Edge>, IAniListError>> enumerable, CardType cardType, int verticalCardColumns = 3) : base(context, enumerable, cardType, verticalCardColumns)
         {
         }
 

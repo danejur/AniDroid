@@ -7,12 +7,13 @@ using AniDroid.AniList.Models;
 using AniDroid.AniListObject.Character;
 using AniDroid.AniListObject.Media;
 using AniDroid.Base;
+using OneOf;
 
 namespace AniDroid.Adapters.StaffAdapters
 {
     public class StaffMediaRecyclerAdapter : LazyLoadingRecyclerViewAdapter<Media.Edge>
     {
-        public StaffMediaRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<IPagedData<Media.Edge>> enumerable, CardType cardType) : base(context, enumerable, cardType, 3)
+        public StaffMediaRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Media.Edge>, IAniListError>> enumerable, CardType cardType) : base(context, enumerable, cardType, 3)
         {
         }
 

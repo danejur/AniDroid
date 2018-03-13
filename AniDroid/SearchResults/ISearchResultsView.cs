@@ -12,16 +12,17 @@ using Android.Widget;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
+using OneOf;
 
 namespace AniDroid.SearchResults
 {
     public interface ISearchResultsView : IAniDroidView
     {
-        void ShowMediaSearchResults(IAsyncEnumerable<IPagedData<Media>> mediaEnumerable);
-        void ShowCharacterSearchResults(IAsyncEnumerable<IPagedData<Character>> characterEnumerable);
-        void ShowStaffSearchResults(IAsyncEnumerable<IPagedData<Staff>> staffEnumerable);
-        void ShowUserSearchResults(IAsyncEnumerable<IPagedData<User>> userEnumerable);
-        void ShowForumThreadSearchResults(IAsyncEnumerable<IPagedData<ForumThread>> forumThreadEnumerable);
-        void ShowStudioSearchResults(IAsyncEnumerable<IPagedData<Studio>> studioEnumerable);
+        void ShowMediaSearchResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable);
+        void ShowCharacterSearchResults(IAsyncEnumerable<OneOf<IPagedData<Character>, IAniListError>> characterEnumerable);
+        void ShowStaffSearchResults(IAsyncEnumerable<OneOf<IPagedData<Staff>, IAniListError>> staffEnumerable);
+        void ShowUserSearchResults(IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> userEnumerable);
+        void ShowForumThreadSearchResults(IAsyncEnumerable<OneOf<IPagedData<ForumThread>, IAniListError>> forumThreadEnumerable);
+        void ShowStudioSearchResults(IAsyncEnumerable<OneOf<IPagedData<Studio>, IAniListError>> studioEnumerable);
     }
 }

@@ -19,6 +19,7 @@ using AniDroid.Base;
 using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
 using Ninject;
+using OneOf;
 
 namespace AniDroid.Discover
 {
@@ -45,19 +46,19 @@ namespace AniDroid.Discover
             throw new NotImplementedException();
         }
 
-        public void ShowTrendingResults(IAsyncEnumerable<IPagedData<Media>> mediaEnumerable)
+        public void ShowTrendingResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
         {
             var recycler = View.FindViewById<RecyclerView>(Resource.Id.Discover_TrendingRecyclerView);
             recycler.SetAdapter(new DiscoverMediaRecyclerAdapter(Activity, mediaEnumerable));
         }
 
-        public void ShowNewAnimeResults(IAsyncEnumerable<IPagedData<Media>> mediaEnumerable)
+        public void ShowNewAnimeResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
         {
             var recycler = View.FindViewById<RecyclerView>(Resource.Id.Discover_NewAnimeRecyclerView);
             recycler.SetAdapter(new DiscoverMediaRecyclerAdapter(Activity, mediaEnumerable));
         }
 
-        public void ShowNewMangaResults(IAsyncEnumerable<IPagedData<Media>> mediaEnumerable)
+        public void ShowNewMangaResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
         {
             var recycler = View.FindViewById<RecyclerView>(Resource.Id.Discover_NewMangaRecyclerView);
             recycler.SetAdapter(new DiscoverMediaRecyclerAdapter(Activity, mediaEnumerable));

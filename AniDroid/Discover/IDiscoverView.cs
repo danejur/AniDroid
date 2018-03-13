@@ -12,13 +12,14 @@ using Android.Widget;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
+using OneOf;
 
 namespace AniDroid.Discover
 {
     public interface IDiscoverView : IAniDroidView
     {
-        void ShowTrendingResults(IAsyncEnumerable<IPagedData<Media>> mediaEnumerable);
-        void ShowNewAnimeResults(IAsyncEnumerable<IPagedData<Media>> mediaEnumerable);
-        void ShowNewMangaResults(IAsyncEnumerable<IPagedData<Media>> mediaEnumerable);
+        void ShowTrendingResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable);
+        void ShowNewAnimeResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable);
+        void ShowNewMangaResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable);
     }
 }

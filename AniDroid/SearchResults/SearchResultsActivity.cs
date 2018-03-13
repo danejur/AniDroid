@@ -15,6 +15,7 @@ using AniDroid.Dialogs;
 using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
 using Ninject;
+using OneOf;
 
 namespace AniDroid.SearchResults
 {
@@ -42,32 +43,32 @@ namespace AniDroid.SearchResults
             throw new NotImplementedException();
         }
 
-        public void ShowMediaSearchResults(IAsyncEnumerable<IPagedData<Media>> mediaEnumerable)
+        public void ShowMediaSearchResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
         {
             _recyclerView.SetAdapter(new MediaSearchRecyclerAdapter(this, mediaEnumerable, _cardType));
         }
 
-        public void ShowCharacterSearchResults(IAsyncEnumerable<IPagedData<Character>> characterEnumerable)
+        public void ShowCharacterSearchResults(IAsyncEnumerable<OneOf<IPagedData<Character>, IAniListError>> characterEnumerable)
         {
             _recyclerView.SetAdapter(new CharacterSearchRecyclerAdapter(this, characterEnumerable, _cardType));
         }
 
-        public void ShowStaffSearchResults(IAsyncEnumerable<IPagedData<Staff>> staffEnumerable)
+        public void ShowStaffSearchResults(IAsyncEnumerable<OneOf<IPagedData<Staff>, IAniListError>> staffEnumerable)
         {
             _recyclerView.SetAdapter(new StaffSearchRecyclerAdapter(this, staffEnumerable, _cardType));
         }
 
-        public void ShowUserSearchResults(IAsyncEnumerable<IPagedData<User>> userEnumerable)
+        public void ShowUserSearchResults(IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> userEnumerable)
         {
             _recyclerView.SetAdapter(new UserSearchRecyclerAdapter(this, userEnumerable, _cardType));
         }
 
-        public void ShowForumThreadSearchResults(IAsyncEnumerable<IPagedData<ForumThread>> forumThreadEnumerable)
+        public void ShowForumThreadSearchResults(IAsyncEnumerable<OneOf<IPagedData<ForumThread>, IAniListError>> forumThreadEnumerable)
         {
             _recyclerView.SetAdapter(new ForumThreadSearchRecyclerAdapter(this, forumThreadEnumerable));
         }
 
-        public void ShowStudioSearchResults(IAsyncEnumerable<IPagedData<Studio>> studioEnumerable)
+        public void ShowStudioSearchResults(IAsyncEnumerable<OneOf<IPagedData<Studio>, IAniListError>> studioEnumerable)
         {
             _recyclerView.SetAdapter(new StudioSearchRecyclerAdapter(this, studioEnumerable));
         }
