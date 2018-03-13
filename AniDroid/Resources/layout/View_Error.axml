@@ -29,23 +29,26 @@
     android:paddingTop="80dp">
     <ImageView
       app:srcCompat="@drawable/ic_sentiment_very_dissatisfied_white_48px"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
+      android:layout_width="80dp"
+      android:layout_height="80dp"
       android:tint="?Background_Text_Alternate"
       android:id="@+id/Error_AlertImage"
-      android:padding="20dp" />
+      android:layout_margin="20dp" />
     <TextView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:textColor="?Background_Text"
       android:id="@+id/Error_Title"
       android:gravity="center"
+      android:textSize="20dp"
       android:padding="10dp" />
     <TextView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:textColor="?Background_Text"
-      android:id="@+id/Error_Description"
-      android:gravity="center" />
+      android:id="@+id/Error_Message"
+      android:textSize="12dp"
+      android:gravity="center"
+      android:padding="10dp" />
   </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

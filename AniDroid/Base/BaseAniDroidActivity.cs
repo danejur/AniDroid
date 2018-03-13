@@ -83,7 +83,7 @@ namespace AniDroid.Base
             {
                 if (item.ItemId == Resource.Id.Menu_Error_Refresh)
                 {
-                    Presenter.Init().GetAwaiter().GetResult();
+                    Presenter.Init().ConfigureAwait(false).GetAwaiter();
                     return true;
                 }
             }
@@ -235,7 +235,7 @@ namespace AniDroid.Base
 
         public abstract Task OnCreateExtended(Bundle savedInstanceState);
 
-        public abstract void DisplaySnackbarMessage(string message, int length);
+        public abstract void DisplaySnackbarMessage(string message, int length = Snackbar.LengthShort);
 
         public abstract void DisplayNotYetImplemented();
 

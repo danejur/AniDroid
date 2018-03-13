@@ -67,7 +67,27 @@ namespace AniDroid.Base
 
         public sealed override void OnError(IAniListError error)
         {
-            SetErrorShown("Error!", "Error description");
+            var title = "Error!";
+            var message = "";
+
+            if (!string.IsNullOrWhiteSpace(error.ErrorMessage))
+            {
+                title = "Something happened while processing your request!";
+                message = error.ErrorMessage;
+            }
+            else if (error.ErrorException != null)
+            {
+                title = "An exception occurred while processing your request!";
+                message = error.ErrorException.Message;
+            }
+            else if (error.GraphQLErrors?.Any() == true)
+            {
+                title = "A GraphQL related error occurred while processing your request!";
+                message = error.GraphQLErrors.First().Message ?? "";
+            }
+
+
+            SetErrorShown(title, message);
         }
 
         protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
@@ -102,6 +122,9 @@ namespace AniDroid.Base
         {
             SetContentView(Resource.Layout.View_Error);
             CoordLayout = FindViewById<CoordinatorLayout>(Resource.Id.Error_CoordLayout);
+
+            FindViewById<TextView>(Resource.Id.Error_Title).Text = title;
+            FindViewById<TextView>(Resource.Id.Error_Message).Text = message;
 
             var toolbar = FindViewById<Toolbar>(Resource.Id.Error_Toolbar);
             ((AppBarLayout.LayoutParams)toolbar.LayoutParameters).ScrollFlags = 0;

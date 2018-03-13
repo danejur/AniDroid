@@ -3136,7 +3136,7 @@ namespace AniDroid
 			public const int Error_CoordLayout = 2131165429;
 			
 			// aapt resource value: 0x7f0700fa
-			public const int Error_Description = 2131165434;
+			public const int Error_Message = 2131165434;
 			
 			// aapt resource value: 0x7f0700f9
 			public const int Error_Title = 2131165433;
