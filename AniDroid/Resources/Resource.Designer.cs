@@ -3207,8 +3207,8 @@ namespace AniDroid
 			// aapt resource value: 0x7f07010c
 			public const int Media_AverageScoreContainer = 2131165452;
 			
-			// aapt resource value: 0x7f070109
-			public const int Media_DateRange = 2131165449;
+			// aapt resource value: 0x7f07010a
+			public const int Media_DateRange = 2131165450;
 			
 			// aapt resource value: 0x7f070108
 			public const int Media_Description = 2131165448;
@@ -3222,8 +3222,8 @@ namespace AniDroid
 			// aapt resource value: 0x7f070102
 			public const int Media_GeneralInfo = 2131165442;
 			
-			// aapt resource value: 0x7f07010a
-			public const int Media_Genres = 2131165450;
+			// aapt resource value: 0x7f070109
+			public const int Media_Genres = 2131165449;
 			
 			// aapt resource value: 0x7f070103
 			public const int Media_Image = 2131165443;

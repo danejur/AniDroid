@@ -87,6 +87,21 @@
           app:TextSize="14dp"
           app:TextColor="?Background_Text"
           app:ButtonColor="?Primary_Dark" />
+        <com.google.android.flexbox.FlexboxLayout
+          android:layout_marginTop="30dp"
+          android:paddingTop="10dp"
+          android:paddingBottom="10dp"
+          android:paddingLeft="30dp"
+          android:paddingRight="30dp"
+          android:layout_below="@id/Media_Description"
+          android:id="@+id/Media_Genres"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:dividerDrawable="@drawable/divider_8dp"
+          app:flexWrap="wrap"
+          app:justifyContent="center"
+          app:showDividerHorizontal="middle"
+          app:showDividerVertical="middle" />
         <AniDroid.Widgets.DataRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -98,32 +113,17 @@
             app:ButtonIcon="@drawable/ic_alarm_white_24px"
             android:layout_marginTop="30dp"
             android:layout_alignParentLeft="true"
-            android:layout_below="@id/Media_Description"
+            android:layout_below="@id/Media_Genres"
             android:gravity="center_vertical|left"
             android:minWidth="25px"
             android:minHeight="25px" />
-        <com.google.android.flexbox.FlexboxLayout
-            android:layout_marginTop="30dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:layout_below="@id/Media_DateRange"
-            android:id="@+id/Media_Genres"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:dividerDrawable="@drawable/divider_8dp"
-            app:flexWrap="wrap"
-            app:justifyContent="center"
-            app:showDividerHorizontal="middle"
-            app:showDividerVertical="middle" />
         <LinearLayout
             android:orientation="horizontal"
             android:minWidth="25px"
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/Media_Genres"
+            android:layout_below="@id/Media_DateRange"
             android:id="@+id/Media_ScoresContainer"
             android:layout_marginTop="30dp"
             android:background="?Background_Special">
