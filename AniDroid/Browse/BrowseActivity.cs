@@ -31,6 +31,7 @@ namespace AniDroid.Browse
         private const string BrowseDtoIntentKey = "BROWSE_DTO";
 
         private BaseRecyclerAdapter.CardType _cardType;
+        private Media.MediaSort _sortType;
 
         [InjectView(Resource.Id.Browse_CoordLayout)]
         private CoordinatorLayout _coordLayout;
@@ -45,7 +46,7 @@ namespace AniDroid.Browse
 
         public void ShowMediaSearchResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
         {
-            _recyclerView.SetAdapter(new BrowseMediaRecyclerAdapter(this, mediaEnumerable, _cardType));
+            _recyclerView.SetAdapter(new BrowseMediaRecyclerAdapter(this, mediaEnumerable, _cardType) { SortType = _sortType });
         }
 
         public override void DisplaySnackbarMessage(string message, int length)
@@ -61,6 +62,7 @@ namespace AniDroid.Browse
             try
             {
                 dto = AniListJsonSerializer.Default.Deserialize<BrowseMediaDto>(Intent.GetStringExtra(BrowseDtoIntentKey));
+                _sortType = dto.Sort?.FirstOrDefault() ?? Media.MediaSort.Id;
             }
             catch
             {

@@ -3093,20 +3093,20 @@ namespace AniDroid
 			// aapt resource value: 0x7f0700f4
 			public const int ChartLegendCell_Text = 2131165428;
 			
-			// aapt resource value: 0x7f07011a
-			public const int DataRow_Button = 2131165466;
+			// aapt resource value: 0x7f070121
+			public const int DataRow_Button = 2131165473;
 			
-			// aapt resource value: 0x7f07011b
-			public const int DataRow_ButtonIcon = 2131165467;
+			// aapt resource value: 0x7f070122
+			public const int DataRow_ButtonIcon = 2131165474;
 			
-			// aapt resource value: 0x7f070119
-			public const int DataRow_Icon = 2131165465;
+			// aapt resource value: 0x7f070120
+			public const int DataRow_Icon = 2131165472;
 			
-			// aapt resource value: 0x7f07011c
-			public const int DataRow_TextOne = 2131165468;
+			// aapt resource value: 0x7f070123
+			public const int DataRow_TextOne = 2131165475;
 			
-			// aapt resource value: 0x7f07011d
-			public const int DataRow_TextTwo = 2131165469;
+			// aapt resource value: 0x7f070124
+			public const int DataRow_TextTwo = 2131165476;
 			
 			// aapt resource value: 0x7f0700cb
 			public const int Discover_NewAnimeLabel = 2131165387;
@@ -3144,11 +3144,11 @@ namespace AniDroid
 			// aapt resource value: 0x7f0700f7
 			public const int Error_Toolbar = 2131165431;
 			
-			// aapt resource value: 0x7f07011f
-			public const int ExpandableText_ExpandButton = 2131165471;
+			// aapt resource value: 0x7f070126
+			public const int ExpandableText_ExpandButton = 2131165478;
 			
-			// aapt resource value: 0x7f07011e
-			public const int ExpandableText_Text = 2131165470;
+			// aapt resource value: 0x7f070125
+			public const int ExpandableText_Text = 2131165477;
 			
 			// aapt resource value: 0x7f070039
 			public const int FUNCTION = 2131165241;
@@ -3192,23 +3192,29 @@ namespace AniDroid
 			// aapt resource value: 0x7f0700ae
 			public const int Main_Toolbar = 2131165358;
 			
-			// aapt resource value: 0x7f07010c
-			public const int MediaRank_Image = 2131165452;
+			// aapt resource value: 0x7f070113
+			public const int MediaRank_Image = 2131165459;
 			
-			// aapt resource value: 0x7f07010d
-			public const int MediaRank_Text = 2131165453;
+			// aapt resource value: 0x7f070114
+			public const int MediaRank_Text = 2131165460;
 			
 			// aapt resource value: 0x7f070106
 			public const int Media_AiringStatus = 2131165446;
 			
+			// aapt resource value: 0x7f07010d
+			public const int Media_AverageScore = 2131165453;
+			
+			// aapt resource value: 0x7f07010c
+			public const int Media_AverageScoreContainer = 2131165452;
+			
+			// aapt resource value: 0x7f070109
+			public const int Media_DateRange = 2131165449;
+			
 			// aapt resource value: 0x7f070108
-			public const int Media_DateRange = 2131165448;
+			public const int Media_Description = 2131165448;
 			
-			// aapt resource value: 0x7f07010a
-			public const int Media_Description = 2131165450;
-			
-			// aapt resource value: 0x7f07010b
-			public const int Media_Episodes = 2131165451;
+			// aapt resource value: 0x7f070112
+			public const int Media_Episodes = 2131165458;
 			
 			// aapt resource value: 0x7f070105
 			public const int Media_Format = 2131165445;
@@ -3216,44 +3222,59 @@ namespace AniDroid
 			// aapt resource value: 0x7f070102
 			public const int Media_GeneralInfo = 2131165442;
 			
-			// aapt resource value: 0x7f070109
-			public const int Media_Genres = 2131165449;
+			// aapt resource value: 0x7f07010a
+			public const int Media_Genres = 2131165450;
 			
 			// aapt resource value: 0x7f070103
 			public const int Media_Image = 2131165443;
 			
+			// aapt resource value: 0x7f07010f
+			public const int Media_MeanScore = 2131165455;
+			
+			// aapt resource value: 0x7f07010e
+			public const int Media_MeanScoreContainer = 2131165454;
+			
 			// aapt resource value: 0x7f070107
 			public const int Media_NextEpisode = 2131165447;
+			
+			// aapt resource value: 0x7f070111
+			public const int Media_Popularity = 2131165457;
+			
+			// aapt resource value: 0x7f070110
+			public const int Media_PopularityContainer = 2131165456;
+			
+			// aapt resource value: 0x7f07010b
+			public const int Media_ScoresContainer = 2131165451;
 			
 			// aapt resource value: 0x7f070104
 			public const int Media_Title = 2131165444;
 			
-			// aapt resource value: 0x7f070122
-			public const int Menu_AniListObject_Favorite = 2131165474;
-			
-			// aapt resource value: 0x7f070123
-			public const int Menu_AniListObject_Share = 2131165475;
-			
-			// aapt resource value: 0x7f070124
-			public const int Menu_Error_Refresh = 2131165476;
-			
-			// aapt resource value: 0x7f070127
-			public const int Menu_Navigation_Anime = 2131165479;
-			
 			// aapt resource value: 0x7f070129
-			public const int Menu_Navigation_Browse = 2131165481;
-			
-			// aapt resource value: 0x7f070126
-			public const int Menu_Navigation_Discover = 2131165478;
-			
-			// aapt resource value: 0x7f070125
-			public const int Menu_Navigation_Home = 2131165477;
-			
-			// aapt resource value: 0x7f070128
-			public const int Menu_Navigation_Manga = 2131165480;
+			public const int Menu_AniListObject_Favorite = 2131165481;
 			
 			// aapt resource value: 0x7f07012a
-			public const int Menu_Navigation_TorrentSearch = 2131165482;
+			public const int Menu_AniListObject_Share = 2131165482;
+			
+			// aapt resource value: 0x7f07012b
+			public const int Menu_Error_Refresh = 2131165483;
+			
+			// aapt resource value: 0x7f07012e
+			public const int Menu_Navigation_Anime = 2131165486;
+			
+			// aapt resource value: 0x7f070130
+			public const int Menu_Navigation_Browse = 2131165488;
+			
+			// aapt resource value: 0x7f07012d
+			public const int Menu_Navigation_Discover = 2131165485;
+			
+			// aapt resource value: 0x7f07012c
+			public const int Menu_Navigation_Home = 2131165484;
+			
+			// aapt resource value: 0x7f07012f
+			public const int Menu_Navigation_Manga = 2131165487;
+			
+			// aapt resource value: 0x7f070131
+			public const int Menu_Navigation_TorrentSearch = 2131165489;
 			
 			// aapt resource value: 0x7f0700fd
 			public const int Navigation_Container = 2131165437;
@@ -3291,8 +3312,8 @@ namespace AniDroid
 			// aapt resource value: 0x7f07003c
 			public const int SYM = 2131165244;
 			
-			// aapt resource value: 0x7f07010e
-			public const int Scroll_Container = 2131165454;
+			// aapt resource value: 0x7f070115
+			public const int Scroll_Container = 2131165461;
 			
 			// aapt resource value: 0x7f0700b2
 			public const int SearchResults_CoordLayout = 2131165362;
@@ -3312,20 +3333,20 @@ namespace AniDroid
 			// aapt resource value: 0x7f0700c7
 			public const int Search_Type = 2131165383;
 			
-			// aapt resource value: 0x7f07010f
-			public const int SettingItem_Container = 2131165455;
+			// aapt resource value: 0x7f070116
+			public const int SettingItem_Container = 2131165462;
 			
-			// aapt resource value: 0x7f070111
-			public const int SettingItem_Details = 2131165457;
+			// aapt resource value: 0x7f070118
+			public const int SettingItem_Details = 2131165464;
 			
-			// aapt resource value: 0x7f070110
-			public const int SettingItem_Name = 2131165456;
+			// aapt resource value: 0x7f070117
+			public const int SettingItem_Name = 2131165463;
 			
-			// aapt resource value: 0x7f070113
-			public const int SettingItem_Spinner = 2131165459;
+			// aapt resource value: 0x7f07011a
+			public const int SettingItem_Spinner = 2131165466;
 			
-			// aapt resource value: 0x7f070114
-			public const int SettingItem_Switch = 2131165460;
+			// aapt resource value: 0x7f07011b
+			public const int SettingItem_Switch = 2131165467;
 			
 			// aapt resource value: 0x7f0700b8
 			public const int Settings_Container = 2131165368;
@@ -3336,17 +3357,17 @@ namespace AniDroid
 			// aapt resource value: 0x7f0700b7
 			public const int Settings_Toolbar = 2131165367;
 			
-			// aapt resource value: 0x7f070118
-			public const int Staff_Description = 2131165464;
+			// aapt resource value: 0x7f07011f
+			public const int Staff_Description = 2131165471;
 			
-			// aapt resource value: 0x7f070115
-			public const int Staff_Image = 2131165461;
+			// aapt resource value: 0x7f07011c
+			public const int Staff_Image = 2131165468;
 			
-			// aapt resource value: 0x7f070117
-			public const int Staff_Language = 2131165463;
+			// aapt resource value: 0x7f07011e
+			public const int Staff_Language = 2131165470;
 			
-			// aapt resource value: 0x7f070116
-			public const int Staff_Name = 2131165462;
+			// aapt resource value: 0x7f07011d
+			public const int Staff_Name = 2131165469;
 			
 			// aapt resource value: 0x7f0700d3
 			public const int action0 = 2131165395;
@@ -3600,8 +3621,8 @@ namespace AniDroid
 			// aapt resource value: 0x7f070018
 			public const int line3 = 2131165208;
 			
-			// aapt resource value: 0x7f070112
-			public const int linearLayout1 = 2131165458;
+			// aapt resource value: 0x7f070119
+			public const int linearLayout1 = 2131165465;
 			
 			// aapt resource value: 0x7f070022
 			public const int listMode = 2131165218;
@@ -3609,8 +3630,8 @@ namespace AniDroid
 			// aapt resource value: 0x7f070073
 			public const int list_item = 2131165299;
 			
-			// aapt resource value: 0x7f070121
-			public const int masked = 2131165473;
+			// aapt resource value: 0x7f070128
+			public const int masked = 2131165480;
 			
 			// aapt resource value: 0x7f0700d6
 			public const int media_actions = 2131165398;
@@ -3888,8 +3909,8 @@ namespace AniDroid
 			// aapt resource value: 0x7f070016
 			public const int view_offset_helper = 2131165206;
 			
-			// aapt resource value: 0x7f070120
-			public const int visible = 2131165472;
+			// aapt resource value: 0x7f070127
+			public const int visible = 2131165479;
 			
 			// aapt resource value: 0x7f070041
 			public const int withText = 2131165249;

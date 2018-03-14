@@ -227,6 +227,39 @@ namespace AniDroid.AniListObject.Media
                 }
             }
 
+            var scoresView = retView.FindViewById(Resource.Id.Media_ScoresContainer);
+            if (media.MeanScore > 30 || media.AverageScore > 30 || media.Popularity > 100)
+            {
+                retView.FindViewById<TextView>(Resource.Id.Media_MeanScore).Text = $"{media.MeanScore}%";
+                retView.FindViewById(Resource.Id.Media_MeanScoreContainer).Visibility = media.MeanScore > 30 ? ViewStates.Visible : ViewStates.Invisible;
+
+                var avgContainer = retView.FindViewById(Resource.Id.Media_AverageScoreContainer);
+                retView.FindViewById<TextView>(Resource.Id.Media_AverageScore).Text = $"{media.AverageScore}%";
+                avgContainer.Visibility = media.AverageScore > 30 ? ViewStates.Visible : ViewStates.Gone;
+                avgContainer.Click += (sender, args) => BrowseActivity.StartActivity(this,
+                    new BrowseMediaDto
+                    {
+                        Type = media.Type,
+                        AverageGreaterThan = media.AverageScore,
+                        Sort = new List<AniList.Models.Media.MediaSort> {AniList.Models.Media.MediaSort.ScoreDesc}
+                    }, ObjectBrowseRequestCode);
+
+                var popContainer = retView.FindViewById(Resource.Id.Media_PopularityContainer);
+                retView.FindViewById<TextView>(Resource.Id.Media_Popularity).Text = media.Popularity.ToString();
+                popContainer.Visibility = media.Popularity > 100 ? ViewStates.Visible : ViewStates.Gone;
+                popContainer.Click += (sender, args) => BrowseActivity.StartActivity(this,
+                    new BrowseMediaDto
+                    {
+                        Type = media.Type,
+                        PopularityGreaterThan = media.Popularity,
+                        Sort = new List<AniList.Models.Media.MediaSort> {AniList.Models.Media.MediaSort.PopularityDesc}
+                    }, ObjectBrowseRequestCode);
+            }
+            else
+            {
+                scoresView.Visibility = ViewStates.Gone;
+            }
+
             return retView;
         }
 

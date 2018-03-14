@@ -21,6 +21,8 @@ namespace AniDroid.Adapters.MediaAdapters
 {
     public class BrowseMediaRecyclerAdapter : LazyLoadingRecyclerViewAdapter<Media>
     {
+        public Media.MediaSort SortType { get; set; } = Media.MediaSort.Id;
+
         public BrowseMediaRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> enumerable, CardType cardType, int verticalCardColumns = 3) : base(context, enumerable, cardType, verticalCardColumns)
         {
             if (cardType == CardType.VerticalStaggered)
@@ -35,7 +37,7 @@ namespace AniDroid.Adapters.MediaAdapters
 
             holder.Name.Text = item.Title.UserPreferred;
             holder.DetailPrimary.Text = $"{item.Format?.DisplayValue}{(item.IsAdult ? " (Hentai)" : "")}";
-            holder.DetailSecondary.Text = $"{(item.AverageScore != 0 ? $"Average Rating: {item.AverageScore}" : "No Rating Data")}      Popularity: {item.Popularity}";
+            holder.DetailSecondary.Text = GetSecondaryDetail(item, SortType);
             holder.Button.Visibility = item.IsFavourite ? ViewStates.Visible : ViewStates.Gone;
             Context.LoadImage(holder.Image, item.CoverImage.Large);
 
@@ -53,7 +55,10 @@ namespace AniDroid.Adapters.MediaAdapters
             item.Name.SetSingleLine(false);
             item.Name.SetMaxLines(2);
 
-            item.DetailSecondary.Visibility = ViewStates.Gone;
+            if (SortType == null || SortType == Media.MediaSort.Id)
+            {
+                item.DetailSecondary.Visibility = ViewStates.Gone;
+            }
 
             return item;
         }
@@ -65,6 +70,22 @@ namespace AniDroid.Adapters.MediaAdapters
             var media = Items[mediaPos];
 
             MediaActivity.StartActivity(Context, media.Id, BaseAniDroidActivity.ObjectBrowseRequestCode);
+        }
+
+        private static string GetSecondaryDetail(Media item, Media.MediaSort sortType)
+        {
+            var retString = "";
+
+            if (Media.MediaSort.Popularity == sortType || Media.MediaSort.PopularityDesc == sortType)
+            {
+                retString = $"Popularity: {item.Popularity}";
+            }
+            else if (Media.MediaSort.Score == sortType || Media.MediaSort.ScoreDesc == sortType)
+            {
+                retString = $"Score: {item.AverageScore}%";
+            }
+
+            return retString;
         }
     }
 }

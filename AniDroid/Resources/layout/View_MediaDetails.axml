@@ -75,6 +75,18 @@
                 android:textColor="?Background_Text"
                 android:visibility="gone" />
         </RelativeLayout>
+        <AniDroid.Widgets.ExpandableText
+          app:Text="Description"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginRight="15dp"
+          android:layout_marginLeft="15dp"
+          android:layout_below="@id/Media_GeneralInfo"
+          android:layout_marginTop="30dp"
+          android:id="@+id/Media_Description"
+          app:TextSize="14dp"
+          app:TextColor="?Background_Text"
+          app:ButtonColor="?Primary_Dark" />
         <AniDroid.Widgets.DataRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -84,14 +96,14 @@
             app:TextOneColor="?Background_Text"
             app:TextTwoColor="?Primary"
             app:ButtonIcon="@drawable/ic_alarm_white_24px"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:layout_alignParentLeft="true"
-            android:layout_below="@id/Media_GeneralInfo"
+            android:layout_below="@id/Media_Description"
             android:gravity="center_vertical|left"
             android:minWidth="25px"
             android:minHeight="25px" />
         <com.google.android.flexbox.FlexboxLayout
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:paddingLeft="30dp"
@@ -105,18 +117,91 @@
             app:justifyContent="center"
             app:showDividerHorizontal="middle"
             app:showDividerVertical="middle" />
-        <AniDroid.Widgets.ExpandableText
-            app:Text="Description"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:minWidth="25px"
+            android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="15dp"
-            android:layout_marginLeft="15dp"
             android:layout_below="@id/Media_Genres"
-            android:layout_marginTop="20dp"
-            android:id="@+id/Media_Description"
-            app:TextSize="14dp"
-            app:TextColor="?Background_Text"
-            app:ButtonColor="?Primary_Dark" />
+            android:id="@+id/Media_ScoresContainer"
+            android:layout_marginTop="30dp"
+            android:background="?Background_Special">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/Media_AverageScoreContainer"
+                android:background="@drawable/Background_Alternate_Ripple"
+                android:clickable="true"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
+                <TextView
+                    android:text="Score%"
+                    android:textSize="20dp"
+                    android:textColor="?Background_Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/Media_AverageScore"
+                    android:textStyle="bold" />
+                <TextView
+                    android:text="Average Score"
+                    android:textSize="12dp"
+                    android:textColor="?Background_Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/Media_MeanScoreContainer"
+                android:layout_weight="1"
+                android:gravity="center">
+                <TextView
+                    android:text="Score%"
+                    android:textSize="20dp"
+                    android:textColor="?Background_Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/Media_MeanScore"
+                    android:textStyle="bold" />
+                <TextView
+                    android:text="Mean Score"
+                    android:textSize="12dp"
+                    android:textColor="?Background_Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+          <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/Media_PopularityContainer"
+            android:background="@drawable/Background_Alternate_Ripple"
+            android:clickable="true"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp">
+            <TextView
+              android:text="Pop Num"
+              android:textSize="20dp"
+              android:textColor="?Background_Text"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:id="@+id/Media_Popularity"
+              android:textStyle="bold" />
+            <TextView
+              android:text="Popularity"
+              android:textSize="12dp"
+              android:textColor="?Background_Text"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content" />
+          </LinearLayout>
+        </LinearLayout>
         <AniDroid.Widgets.DataRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -128,9 +213,9 @@
             app:ButtonVisible="false"
             app:ButtonIcon="@drawable/ic_chevron_right_white_24px"
             app:ButtonColor="?Background_Text"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:layout_alignParentLeft="true"
-            android:layout_below="@id/Media_Description"
+            android:layout_below="@id/Media_ScoresContainer"
             android:gravity="center_vertical|left" />
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>
