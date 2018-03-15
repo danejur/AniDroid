@@ -16,6 +16,7 @@ using Android.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
+using AniDroid.Main;
 using AniDroid.Utils;
 using Ninject;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
@@ -25,7 +26,6 @@ namespace AniDroid.Settings
     [Activity(Label = "Settings")]
     public class SettingsActivity : BaseAniDroidActivity<SettingsPresenter>, ISettingsView
     {
-        public const string RecreateActivityIntentKey = "RECREATE_ACTIVITY";
 
         [InjectView(Resource.Id.Settings_CoordLayout)]
         private CoordinatorLayout _coordLayout;
@@ -67,7 +67,7 @@ namespace AniDroid.Settings
                     if (theme != (AniDroidTheme) args.Position)
                     {
                         Recreate();
-                        Intent.PutExtra(RecreateActivityIntentKey, true);
+                        Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
                     }
                 }));
             _settingsContainer.AddView(CreateDivider());
@@ -89,7 +89,7 @@ namespace AniDroid.Settings
 
         public override async Task OnCreateExtended(Bundle savedInstanceState)
         {
-            _recreateActivity = Intent.GetBooleanExtra(RecreateActivityIntentKey, false);
+            _recreateActivity = Intent.GetBooleanExtra(MainActivity.RecreateActivityIntentKey, false);
 
             SetContentView(Resource.Layout.Activity_Settings);
 
@@ -103,7 +103,7 @@ namespace AniDroid.Settings
             if (_recreateActivity)
             {
                 var resultIntent = new Intent();
-                resultIntent.PutExtra(RecreateActivityIntentKey, true);
+                resultIntent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
                 SetResult(Result.Canceled, resultIntent);
                 Finish();
             }

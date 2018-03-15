@@ -34,7 +34,7 @@
       android:paddingRight="15dp"
       android:layout_gravity="bottom">
     <TextView
-        android:text="Username"
+        android:text="Login"
         android:id="@+id/Navigation_UserName"
         android:textSize="18dp"
         android:background="#00000000"

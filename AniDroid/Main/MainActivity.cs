@@ -18,6 +18,7 @@ using AniDroid.Base;
 using AniDroid.Browse;
 using AniDroid.Dialogs;
 using AniDroid.Discover;
+using AniDroid.Login;
 using AniDroid.SearchResults;
 using AniDroid.Settings;
 using AniDroid.TorrentSearch;
@@ -30,6 +31,8 @@ namespace AniDroid.Main
     [Activity(Label = "AniDroid", ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.KeyboardHidden | Android.Content.PM.ConfigChanges.ScreenSize, LaunchMode = Android.Content.PM.LaunchMode.SingleTask)]
     public class MainActivity : BaseAniDroidActivity<MainPresenter>, IMainView
     {
+        public const string RecreateActivityIntentKey = "RECREATE_ACTIVITY";
+
         [InjectView(Resource.Id.Main_CoordLayout)]
         private CoordinatorLayout _coordLayout;
         [InjectView(Resource.Id.Main_NavigationView)]
@@ -86,7 +89,7 @@ namespace AniDroid.Main
             context.StartActivityForResult(intent, requestCode);
         }
 
-        public override void DisplaySnackbarMessage(string message, int length)
+        public override void DisplaySnackbarMessage(string message, int length = Snackbar.LengthShort)
         {
             Snackbar.Make(_coordLayout, message, length).Show();
         }
@@ -119,7 +122,7 @@ namespace AniDroid.Main
         {
             base.OnActivityResult(requestCode, resultCode, data);
 
-            if (data?.GetBooleanExtra(SettingsActivity.RecreateActivityIntentKey, false) == true)
+            if (data?.GetBooleanExtra(RecreateActivityIntentKey, false) == true)
             {
                 // TODO: probably a better way to do this, but this works for now
                 _currentFragment = null;
@@ -161,6 +164,16 @@ namespace AniDroid.Main
                 _navClosedAction = () => SettingsActivity.StartActivity(this);
                 _navigationDrawer.CloseDrawer(GravityCompat.Start);
             };
+
+            var userNameView = navHeader.FindViewById<TextView>(Resource.Id.Navigation_UserName);
+            if (!Settings.IsUserAuthenticated)
+            {
+                userNameView.Click += (sender, args) =>
+                {
+                    _navClosedAction = () => LoginActivity.StartActivity(this);
+                    _navigationDrawer.CloseDrawer(GravityCompat.Start);
+                };
+            }
 
             _navigationView.NavigationItemSelected += NavigationItemSelected;
             _navigationDrawer.DrawerClosed += OnDrawerClosed;

@@ -11,6 +11,7 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
+using AniDroid.Main;
 using AniDroid.Utils;
 using Ninject;
 
@@ -23,8 +24,14 @@ namespace AniDroid.Login
 
         public override async Task OnCreateExtended(Bundle savedInstanceState)
         {
+            // TODO: Implement for real
+
             SetContentView(Resource.Layout.Activity_Login);
             await CreatePresenter(savedInstanceState);
+
+            var resultIntent = new Intent();
+            resultIntent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
+            SetResult(Result.Canceled, resultIntent);
         }
 
         public override void OnError(IAniListError error)
@@ -37,10 +44,10 @@ namespace AniDroid.Login
             // TODO: Implement
         }
 
-        public static void StartActivity(Context context)
+        public static void StartActivity(Activity context)
         {
             var intent = new Intent(context, typeof(LoginActivity));
-            context.StartActivity(intent);
+            context.StartActivityForResult(intent, 1);
         }
     }
 }
