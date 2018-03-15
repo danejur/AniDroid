@@ -16,6 +16,7 @@ namespace AniDroid.Utils
             Bind<IAuthCodeResolver>().To<AniDroidAuthCodeResolver>().InSingletonScope();
             Bind<IAniListService>().To<AniListService>().InSingletonScope();
             Bind<IAniDroidSettings>().ToConstructor(syntax => new AniDroidSettings(new SettingsStorage(Application.Context))).InSingletonScope();
+            Bind<IAniListAuthConfig>().ToConstructor(syntax => new AniDroidAniListAuthConfig(Application.Context)).InSingletonScope();
         }
     }
 

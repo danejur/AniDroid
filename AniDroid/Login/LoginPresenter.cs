@@ -18,26 +18,46 @@ namespace AniDroid.Login
 {
     public class LoginPresenter : BaseAniDroidPresenter<ILoginView>
     {
-        public LoginPresenter(ILoginView view, IAniListService service, IAniDroidSettings settings) : base(view, service, settings)
+        private readonly IAniListAuthConfig _authConfig;
+
+        public LoginPresenter(ILoginView view, IAniListService service, IAniDroidSettings settings, IAniListAuthConfig authConfig) : base(view, service, settings)
         {
+            _authConfig = authConfig;
         }
 
         public override Task Init()
         {
-            // TODO: do something here
+            AniDroidSettings.ClearUserAuthentication();
+            View.ShowLoginPage();
             return Task.CompletedTask;
         }
 
-        public override Task RestoreState(IList<string> savedState)
+        public async Task AuthenticateUser(string authCode)
         {
-            // TODO: do something here
-            return Task.CompletedTask;
-        }
+            View.OnAuthorizing();
 
-        public override IList<string> SaveState()
-        {
-            // TODO: do something here
-            return new List<string>();
+            var authResp = await AniListService.AuthenticateUser(_authConfig, authCode, default(CancellationToken));
+
+            if (!authResp.IsSuccessful || string.IsNullOrWhiteSpace(authResp.Data?.AccessToken))
+            {
+                View.OnErrorAuthorizing();
+            }
+            else
+            {
+                AniDroidSettings.UserAccessCode = authResp.Data.AccessToken;
+
+                var currentUser = await AniListService.GetCurrentUser(default(CancellationToken));
+
+                currentUser.Switch((IAniListError error) =>
+                    {
+                        AniDroidSettings.ClearUserAuthentication();
+                        View.OnErrorAuthorizing();
+                    }).Switch(user =>
+                    {
+                        AniDroidSettings.LoggedInUser = user;
+                        View.OnAuthorized();
+                    });
+            }
         }
     }
 }

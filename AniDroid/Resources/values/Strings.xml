@@ -3,10 +3,6 @@
   <string name="AppName">AniDroid</string>
   
   <!-- Login -->
-  <string name="Login_LoginButton">Login via AniList</string>
-  <string name="Login_AniListButton">AniList Homepage</string>
-  <string name="Login_WelcomeTitle">Welcome to AniDroid!</string>
-  <string name="Login_WelcomeMessage">To use this app, you will need to login with your AniList account.</string>
-  <string name="Login_ErrorMessage">You need to login to use the app!</string>
+  <string name="Login_LoggingInMessage">Logging in...</string>
 
 </resources>

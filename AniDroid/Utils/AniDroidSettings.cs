@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.Base;
+using AniDroid.AniList.Models;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
 using AniDroid.Utils.Storage;
@@ -53,7 +54,14 @@ namespace AniDroid.Utils
 
         public void ClearUserAuthentication()
         {
-            _settingStorage.Put(StorageKeys.AccessCode, null);
+            UserAccessCode = null;
+            LoggedInUser = null;
+        }
+
+        public User LoggedInUser
+        {
+            get => _settingStorage.Get<User>(StorageKeys.LoggedInUser);
+            set => _settingStorage.Put(StorageKeys.LoggedInUser, value);
         }
 
         #region Constants
@@ -65,6 +73,7 @@ namespace AniDroid.Utils
             public const string DisplayBannersKey = "DISPLAY_BANNERS";
 
             public const string AccessCode = "ACCESS_CODE";
+            public const string LoggedInUser = "LOGGED_IN_USER";
         }
 
         #endregion

@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.Base;
+using AniDroid.AniList.Models;
 using AniDroid.Base;
 
 namespace AniDroid.Utils.Interfaces
@@ -22,5 +23,6 @@ namespace AniDroid.Utils.Interfaces
         string UserAccessCode { get; set; }
         bool IsUserAuthenticated { get; }
         void ClearUserAuthentication();
+        User LoggedInUser { get; set; }
     }
 }

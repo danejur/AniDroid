@@ -15,5 +15,9 @@ namespace AniDroid.Login
 {
     public interface ILoginView : IAniDroidView
     {
+        void ShowLoginPage();
+        void OnErrorAuthorizing();
+        void OnAuthorizing();
+        void OnAuthorized();
     }
 }

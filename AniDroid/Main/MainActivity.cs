@@ -174,6 +174,26 @@ namespace AniDroid.Main
                     _navigationDrawer.CloseDrawer(GravityCompat.Start);
                 };
             }
+            else
+            {
+                var user = Settings.LoggedInUser;
+
+                userNameView.Text = user?.Name ?? "User Error";
+
+                if (!string.IsNullOrWhiteSpace(user?.Avatar?.Large))
+                {
+                    var profileImageView = navHeader.FindViewById<ImageView>(Resource.Id.Navigation_ProfileImage);
+                    profileImageView.Visibility = ViewStates.Visible;
+                    LoadImage(profileImageView, user?.Avatar?.Large);
+                }
+
+                if (!string.IsNullOrWhiteSpace(user?.BannerImage))
+                {
+                    var bannerView = navHeader.FindViewById<ImageView>(Resource.Id.Navigation_ProfileBannerImage);
+                    bannerView.Visibility = ViewStates.Visible;
+                    LoadImage(bannerView, user?.BannerImage);
+                }
+            }
 
             _navigationView.NavigationItemSelected += NavigationItemSelected;
             _navigationDrawer.DrawerClosed += OnDrawerClosed;

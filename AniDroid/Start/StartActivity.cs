@@ -34,7 +34,8 @@ namespace AniDroid.Start
         {
             // TODO: add checks for data store integrity and other start-up tasks
 
-            //MediaActivity.StartActivity(this, 87486);
+            Settings.ClearUserAuthentication();
+
             MainActivity.StartActivityForResult(this, 0);
             Finish();
             return Task.CompletedTask;

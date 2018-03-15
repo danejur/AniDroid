@@ -24,24 +24,12 @@ namespace AniDroid.Main
 
         public override Task Init()
         {
-            // TODO: do something here
+            // TODO: potentially update notifications here, or trigger update at least
 
-            View.SetAuthenticatedNavigationVisibility(false);
+            View.SetAuthenticatedNavigationVisibility(AniDroidSettings.IsUserAuthenticated);
             View.OnMainViewSetup();
 
             return Task.CompletedTask;
-        }
-
-        public override Task RestoreState(IList<string> savedState)
-        {
-            // TODO: do something here
-            return Task.CompletedTask;
-        }
-
-        public override IList<string> SaveState()
-        {
-            // TODO: do something here
-            return new List<string>();
         }
     }
 }
