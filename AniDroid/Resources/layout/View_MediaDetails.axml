@@ -28,26 +28,46 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp" />
-            <TextView
-                android:text="Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <LinearLayout
+                android:id="@+id/Media_TitleContainer"
                 android:layout_toRightOf="@id/Media_Image"
-                android:id="@+id/Media_Title"
                 android:layout_alignParentTop="true"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
                 android:layout_marginTop="25dp"
-                android:layout_marginRight="10dp"
-                android:textColor="?Background_Text"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                android:layout_marginRight="5dp"
+                android:gravity="center_vertical">
+                <TextView
+                    android:text="Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/Media_Title"
+                    android:layout_marginRight="5dp"
+                    android:textColor="?Background_Text"
+                    android:textSize="16dp"
+                    android:maxLines="3"
+                    android:ellipsize="end"
+                    android:textStyle="bold"
+                    android:layout_weight="1" />
+                <ImageView
+                    app:srcCompat="@android:drawable/ic_menu_gallery"
+                    android:id="@+id/Media_TitleIcon"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:clickable="true"
+                    android:tint="?Primary_Dark"
+                    android:layout_marginLeft="10dp"
+                    android:src="@drawable/ic_help_outline_white_24px" />
+            </LinearLayout>
             <TextView
                 android:text="Format"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/Media_Title"
+                android:layout_below="@id/Media_TitleContainer"
                 android:id="@+id/Media_Format"
                 android:layout_toRightOf="@id/Media_Image"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginRight="10dp"
                 android:textSize="16dp"
                 android:textColor="?Background_Text" />
@@ -58,7 +78,7 @@
                 android:layout_below="@id/Media_Format"
                 android:id="@+id/Media_AiringStatus"
                 android:layout_toRightOf="@id/Media_Image"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginRight="10dp"
                 android:textSize="16dp"
                 android:textColor="?Background_Text" />
@@ -69,61 +89,59 @@
                 android:layout_below="@id/Media_AiringStatus"
                 android:id="@+id/Media_NextEpisode"
                 android:layout_toRightOf="@id/Media_Image"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginRight="10dp"
                 android:textSize="16dp"
                 android:textColor="?Background_Text"
                 android:visibility="gone" />
+            <TextView
+                android:text="List Status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/Media_NextEpisode"
+                android:id="@+id/Media_ListStatus"
+                android:layout_toRightOf="@id/Media_Image"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="10dp"
+                android:textSize="16dp"
+                android:textColor="?Primary_Dark"
+                android:textStyle="italic"
+                android:visibility="gone" />
         </RelativeLayout>
         <AniDroid.Widgets.ExpandableText
-          app:Text="Description"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginRight="15dp"
-          android:layout_marginLeft="15dp"
-          android:layout_below="@id/Media_GeneralInfo"
-          android:layout_marginTop="30dp"
-          android:id="@+id/Media_Description"
-          app:TextSize="14dp"
-          app:TextColor="?Background_Text"
-          app:ButtonColor="?Primary_Dark" />
-        <com.google.android.flexbox.FlexboxLayout
-          android:layout_marginTop="30dp"
-          android:paddingTop="10dp"
-          android:paddingBottom="10dp"
-          android:paddingLeft="30dp"
-          android:paddingRight="30dp"
-          android:layout_below="@id/Media_Description"
-          android:id="@+id/Media_Genres"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          app:dividerDrawable="@drawable/divider_8dp"
-          app:flexWrap="wrap"
-          app:justifyContent="center"
-          app:showDividerHorizontal="middle"
-          app:showDividerVertical="middle" />
-        <AniDroid.Widgets.DataRow
+            app:Text="Description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/Media_DateRange"
-            android:background="@drawable/Background_Alternate_Ripple"
-            app:Icon="@drawable/ic_event_white_36px"
-            app:TextOneColor="?Background_Text"
-            app:TextTwoColor="?Primary"
-            app:ButtonIcon="@drawable/ic_alarm_white_24px"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_below="@id/Media_GeneralInfo"
             android:layout_marginTop="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/Media_Genres"
-            android:gravity="center_vertical|left"
-            android:minWidth="25px"
-            android:minHeight="25px" />
+            android:id="@+id/Media_Description"
+            app:TextSize="14dp"
+            app:TextColor="?Background_Text"
+            app:ButtonColor="?Primary_Dark" />
+        <com.google.android.flexbox.FlexboxLayout
+            android:layout_marginTop="30dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:layout_below="@id/Media_Description"
+            android:id="@+id/Media_Genres"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:dividerDrawable="@drawable/divider_8dp"
+            app:flexWrap="wrap"
+            app:justifyContent="center"
+            app:showDividerHorizontal="middle"
+            app:showDividerVertical="middle" />
         <LinearLayout
             android:orientation="horizontal"
             android:minWidth="25px"
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/Media_DateRange"
+            android:layout_below="@id/Media_Genres"
             android:id="@+id/Media_ScoresContainer"
             android:layout_marginTop="30dp"
             android:background="?Background_Special">
@@ -175,33 +193,49 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
-          <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/Media_PopularityContainer"
-            android:background="@drawable/Background_Alternate_Ripple"
-            android:clickable="true"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
-            <TextView
-              android:text="Pop Num"
-              android:textSize="20dp"
-              android:textColor="?Background_Text"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:id="@+id/Media_Popularity"
-              android:textStyle="bold" />
-            <TextView
-              android:text="Popularity"
-              android:textSize="12dp"
-              android:textColor="?Background_Text"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content" />
-          </LinearLayout>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/Media_PopularityContainer"
+                android:background="@drawable/Background_Alternate_Ripple"
+                android:clickable="true"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp">
+                <TextView
+                    android:text="Pop Num"
+                    android:textSize="20dp"
+                    android:textColor="?Background_Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/Media_Popularity"
+                    android:textStyle="bold" />
+                <TextView
+                    android:text="Popularity"
+                    android:textSize="12dp"
+                    android:textColor="?Background_Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
         </LinearLayout>
+        <AniDroid.Widgets.DataRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Media_DateRange"
+            android:background="@drawable/Background_Alternate_Ripple"
+            app:Icon="@drawable/ic_event_white_36px"
+            app:TextOneColor="?Background_Text"
+            app:TextTwoColor="?Primary"
+            app:ButtonIcon="@drawable/ic_alarm_white_24px"
+            android:layout_marginTop="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/Media_ScoresContainer"
+            android:gravity="center_vertical|left"
+            android:visibility="gone"
+            android:minWidth="25px"
+            android:minHeight="25px" />
         <AniDroid.Widgets.DataRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -215,7 +249,7 @@
             app:ButtonColor="?Background_Text"
             android:layout_marginTop="30dp"
             android:layout_alignParentLeft="true"
-            android:layout_below="@id/Media_ScoresContainer"
+            android:layout_below="@id/Media_DateRange"
             android:gravity="center_vertical|left" />
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

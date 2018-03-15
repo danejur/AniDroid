@@ -48,7 +48,7 @@ namespace AniDroid.Base
         {
             if (string.IsNullOrWhiteSpace(_shareTitle) || string.IsNullOrWhiteSpace(_shareUri))
             {
-                DisplaySnackbarMessage("Error occurred while sharing", Snackbar.LengthShort);
+                DisplaySnackbarMessage("Error occurred while sharing");
                 return;
             }
 
@@ -60,7 +60,7 @@ namespace AniDroid.Base
             StartActivity(sendIntent);
         }
 
-        public sealed override void DisplaySnackbarMessage(string message, int length)
+        public sealed override void DisplaySnackbarMessage(string message, int length = Snackbar.LengthShort)
         {
             Snackbar.Make(CoordLayout, message, length).Show();
         }
@@ -167,7 +167,6 @@ namespace AniDroid.Base
             {
                 var bannerView = FindViewById<ImageView>(Resource.Id.AniListObject_BannerImage);
                 LoadImage(bannerView, bannerUri, false);
-                bannerView.SetColorFilter(Color.Argb(102, 0, 0, 0));
             }
         }
 

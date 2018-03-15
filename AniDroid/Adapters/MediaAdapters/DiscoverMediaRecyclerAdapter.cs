@@ -7,6 +7,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.Design.Widget;
 using Android.Support.V4.Widget;
 using Android.Util;
 using Android.Views;
@@ -47,6 +48,8 @@ namespace AniDroid.Adapters.MediaAdapters
             holder.ContainerCard.SetTag(Resource.Id.Object_Position, position);
             holder.ContainerCard.Click -= RowClick;
             holder.ContainerCard.Click += RowClick;
+            holder.ContainerCard.LongClick -= RowLongClick;
+            holder.ContainerCard.LongClick += RowLongClick;
         }
 
         public override CardItem SetupCardItemViewHolder(CardItem item)
@@ -73,6 +76,15 @@ namespace AniDroid.Adapters.MediaAdapters
             var media = Items[mediaPos];
 
             MediaActivity.StartActivity(Context, media.Id, BaseAniDroidActivity.ObjectBrowseRequestCode);
+        }
+
+        private void RowLongClick(object sender, View.LongClickEventArgs longClickEventArgs)
+        {
+            var senderView = sender as View;
+            var mediaPos = (int)senderView.GetTag(Resource.Id.Object_Position);
+            var media = Items[mediaPos];
+
+            Context.DisplaySnackbarMessage(media.Title?.UserPreferred, Snackbar.LengthLong);
         }
     }
 }

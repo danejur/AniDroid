@@ -1,50 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  android:id="@+id/AniListObject_CoordLayout"
-  android:layout_width="match_parent"
-  android:layout_height="match_parent">
-  <android.support.design.widget.AppBarLayout
-    android:id="@+id/AniListObject_AppBar"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/AniListObject_CoordLayout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    style="?AppBarLayout_Style">
-    <android.support.design.widget.CollapsingToolbarLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-      app:collapsedTitleTextAppearance="?Toolbar_Theme"
-      app:expandedTitleTextAppearance="?ExpandedToolbar_Theme"
-      style="?Toolbar_Style"
-      android:fitsSystemWindows="true">
-      <ImageView
-        style="?Toolbar_Style"
-        android:id="@+id/AniListObject_BannerImage"
+    android:layout_height="match_parent">
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/AniListObject_AppBar"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:fitsSystemWindows="true"
-        app:layout_collapseMode="parallax" />
-      <android.support.v7.widget.Toolbar
-        android:id="@+id/AniListObject_Toolbar"
+        android:layout_height="wrap_content"
+        style="?AppBarLayout_Style">
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:collapsedTitleTextAppearance="?Toolbar_Theme"
+            app:expandedTitleTextAppearance="?ExpandedToolbar_Theme"
+            style="?Toolbar_Style"
+            android:fitsSystemWindows="true">
+            <ImageView
+                style="?Toolbar_Style"
+                android:id="@+id/AniListObject_BannerImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:fitsSystemWindows="true"
+                app:layout_collapseMode="parallax"
+                android:tint="#4000"
+                android:tintMode="src_over"
+                android:backgroundTint="#ffffffff"
+                android:backgroundTintMode="src_in" />
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/AniListObject_Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                app:layout_collapseMode="pin"
+                app:popupTheme="?Toolbar_PopupTheme"
+                app:layout_scrollFlags="scroll|enterAlways" />
+        </android.support.design.widget.CollapsingToolbarLayout>
+        <android.support.design.widget.TabLayout
+            app:tabMode="scrollable"
+            android:id="@+id/AniListObject_Tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="?TabLayout_Style" />
+    </android.support.design.widget.AppBarLayout>
+    <android.support.v4.view.ViewPager
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:id="@+id/AniListObject_ViewPager"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        app:layout_collapseMode="pin"
-        app:popupTheme="?Toolbar_PopupTheme"
-        app:layout_scrollFlags="scroll|enterAlways"/>
-    </android.support.design.widget.CollapsingToolbarLayout>
-    <android.support.design.widget.TabLayout
-      app:tabMode="scrollable"
-      android:id="@+id/AniListObject_Tabs"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      style="?TabLayout_Style" />
-  </android.support.design.widget.AppBarLayout>
-  <android.support.v4.view.ViewPager
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:id="@+id/AniListObject_ViewPager"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?Background" />
+        android:layout_height="wrap_content"
+        android:background="?Background" />
 </android.support.design.widget.CoordinatorLayout>

@@ -58,7 +58,7 @@ namespace AniDroid.Base
             outState.PutStringArrayList(PresenterStateKey, Presenter?.SaveState());
         }
 
-        public abstract override void DisplaySnackbarMessage(string message, int length);
+        public abstract override void DisplaySnackbarMessage(string message, int length = Snackbar.LengthShort);
 
         public sealed override void DisplayNotYetImplemented()
         {

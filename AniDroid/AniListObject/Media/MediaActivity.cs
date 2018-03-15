@@ -143,6 +143,8 @@ namespace AniDroid.AniListObject.Media
             retView.FindViewById<TextView>(Resource.Id.Media_Title).Text = media.Title?.UserPreferred;
             retView.FindViewById<TextView>(Resource.Id.Media_AiringStatus).Text = media.Status?.DisplayValue;
             retView.FindViewById<ExpandableText>(Resource.Id.Media_Description).TextFormatted = FromHtml(media.Description ?? "No Description");
+            retView.FindViewById<ImageView>(Resource.Id.Media_TitleIcon).Click +=
+                (sender, args) => MediaTitlesDialog.Create(this, media.Title, media.Synonyms);
 
             var formatView = retView.FindViewById<TextView>(Resource.Id.Media_Format);
             formatView.Text = (media.Format?.DisplayValue ?? "Unknown Format") +
@@ -153,6 +155,13 @@ namespace AniDroid.AniListObject.Media
             {
                 nextAiringView.Visibility = ViewStates.Visible;
                 nextAiringView.Text = $"Next Episode:  {DateTimeOffset.FromUnixTimeSeconds(media.NextAiringEpisode.AiringAt).DateTime.ToShortDateString()}";
+            }
+
+            var listStatusView = retView.FindViewById<TextView>(Resource.Id.Media_ListStatus);
+            if (media.MediaListEntry != null)
+            {
+                listStatusView.Visibility = ViewStates.Visible;
+                listStatusView.Text = media.MediaListEntry?.Status?.DisplayValue;
             }
 
             LoadImage(retView.FindViewById<ImageView>(Resource.Id.Media_Image), media.CoverImage.Large);
@@ -168,24 +177,28 @@ namespace AniDroid.AniListObject.Media
             }
 
             var dateRangeView = retView.FindViewById<DataRow>(Resource.Id.Media_DateRange);
-            dateRangeView.TextOne = media.GetFormattedDateRangeString();
-
-            var startDate = media.StartDate?.GetDate();
-
-            if (AniList.Models.Media.MediaStatus.NotYetReleased.Equals(media.Status) && startDate.HasValue &&
-                startDate.Value > DateTime.Now.Date)
+            if (media.StartDate?.IsValid() == true || media.EndDate?.IsValid() == true)
             {
-                dateRangeView.ButtonVisible = true;
-                dateRangeView.ButtonClickable = true;
-                dateRangeView.ButtonClick += (sender, eventArgs) =>
+                dateRangeView.Visibility = ViewStates.Visible;
+                dateRangeView.TextOne = media.GetFormattedDateRangeString();
+
+                var startDate = media.StartDate?.GetDate();
+
+                if (AniList.Models.Media.MediaStatus.NotYetReleased.Equals(media.Status) && startDate.HasValue &&
+                    startDate.Value > DateTime.Now.Date)
                 {
-                    var calIntent = new Intent(Intent.ActionEdit);
-                    calIntent.SetType("vnd.android.cursor.item/event");
-                    calIntent.PutExtra("beginTime", new DateTimeOffset(startDate.Value).ToUnixTimeMilliseconds());
-                    calIntent.PutExtra("allDay", true);
-                    calIntent.PutExtra("title", $"{media.Title?.UserPreferred} starts");
-                    StartActivity(calIntent);
-                };
+                    dateRangeView.ButtonVisible = true;
+                    dateRangeView.ButtonClickable = true;
+                    dateRangeView.ButtonClick += (sender, eventArgs) =>
+                    {
+                        var calIntent = new Intent(Intent.ActionEdit);
+                        calIntent.SetType("vnd.android.cursor.item/event");
+                        calIntent.PutExtra("beginTime", new DateTimeOffset(startDate.Value).ToUnixTimeMilliseconds());
+                        calIntent.PutExtra("allDay", true);
+                        calIntent.PutExtra("title", $"{media.Title?.UserPreferred} starts");
+                        StartActivity(calIntent);
+                    };
+                }
             }
 
             if (media.Season != null)
@@ -231,7 +244,7 @@ namespace AniDroid.AniListObject.Media
             if (media.MeanScore > 30 || media.AverageScore > 30 || media.Popularity > 100)
             {
                 retView.FindViewById<TextView>(Resource.Id.Media_MeanScore).Text = $"{media.MeanScore}%";
-                retView.FindViewById(Resource.Id.Media_MeanScoreContainer).Visibility = media.MeanScore > 30 ? ViewStates.Visible : ViewStates.Invisible;
+                retView.FindViewById(Resource.Id.Media_MeanScoreContainer).Visibility = media.MeanScore > 30 ? ViewStates.Visible : ViewStates.Gone;
 
                 var avgContainer = retView.FindViewById(Resource.Id.Media_AverageScoreContainer);
                 retView.FindViewById<TextView>(Resource.Id.Media_AverageScore).Text = $"{media.AverageScore}%";
