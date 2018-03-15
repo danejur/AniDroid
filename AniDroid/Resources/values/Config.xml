@@ -2,7 +2,4 @@
 <resources>
   <item name="AniListAuthorizeUri" type="config">https://anilist.co/api/v2/oauth/authorize?client_id={0}&amp;redirect_uri={1}&amp;response_type=code</item>
   <item name="AniListAuthTokenUri" type="config">https://anilist.co/api/v2/oauth/token</item>
-  <item name="ApiClientId" type="config"></item>
-  <item name="ApiClientSecret" type="config"></item>
-  <item name="ApiRedirectUri" type="config"></item>
 </resources>

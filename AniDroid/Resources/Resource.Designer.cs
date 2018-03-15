@@ -114,8 +114,8 @@ namespace AniDroid
 		public partial class Array
 		{
 			
-			// aapt resource value: 0x7f0d0000
-			public const int Chart_Colors = 2131558400;
+			// aapt resource value: 0x7f0e0000
+			public const int Chart_Colors = 2131623936;
 			
 			static Array()
 			{
@@ -2005,20 +2005,20 @@ namespace AniDroid
 		public partial class Config
 		{
 			
-			// aapt resource value: 0x7f0e0001
-			public const int AniListAuthTokenUri = 2131623937;
+			// aapt resource value: 0x7f0d0004
+			public const int AniListAuthTokenUri = 2131558404;
 			
-			// aapt resource value: 0x7f0e0000
-			public const int AniListAuthorizeUri = 2131623936;
+			// aapt resource value: 0x7f0d0003
+			public const int AniListAuthorizeUri = 2131558403;
 			
-			// aapt resource value: 0x7f0e0002
-			public const int ApiClientId = 2131623938;
+			// aapt resource value: 0x7f0d0000
+			public const int ApiClientId = 2131558400;
 			
-			// aapt resource value: 0x7f0e0003
-			public const int ApiClientSecret = 2131623939;
+			// aapt resource value: 0x7f0d0001
+			public const int ApiClientSecret = 2131558401;
 			
-			// aapt resource value: 0x7f0e0004
-			public const int ApiRedirectUri = 2131623940;
+			// aapt resource value: 0x7f0d0002
+			public const int ApiRedirectUri = 2131558402;
 			
 			static Config()
 			{
