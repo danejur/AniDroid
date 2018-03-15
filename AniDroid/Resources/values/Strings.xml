@@ -2,7 +2,8 @@
 <resources>
   <string name="AppName">AniDroid</string>
   
-  <!-- Login -->
-  <string name="Login_LoggingInMessage">Logging in...</string>
+  <!-- Login / Logout -->
+  <string name="LoginLogout_LoggingInMessage">Logging in...</string>
+  <string name="LoginLogout_LogoutDialogMessage">Are you sure you want to logout?</string>
 
 </resources>

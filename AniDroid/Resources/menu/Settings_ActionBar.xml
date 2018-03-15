@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+  <item
+    android:id="@+id/Menu_Settings_Logout"
+    android:title="Logout"
+    app:showAsAction="ifRoom"
+    android:actionViewClass="android.widget.ImageButton"
+    android:icon="@drawable/ic_logout_white_24px"/>
+</menu>

@@ -22,7 +22,7 @@
             android:layout_gravity="center" />
         <TextView
             android:textColor="?Background_Text"
-            android:text="@string/Login_LoggingInMessage"
+            android:text="@string/LoginLogout_LoggingInMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

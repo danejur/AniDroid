@@ -184,14 +184,14 @@ namespace AniDroid.Main
                 {
                     var profileImageView = navHeader.FindViewById<ImageView>(Resource.Id.Navigation_ProfileImage);
                     profileImageView.Visibility = ViewStates.Visible;
-                    LoadImage(profileImageView, user?.Avatar?.Large);
+                    LoadImage(profileImageView, user.Avatar.Large);
                 }
 
                 if (!string.IsNullOrWhiteSpace(user?.BannerImage))
                 {
                     var bannerView = navHeader.FindViewById<ImageView>(Resource.Id.Navigation_ProfileBannerImage);
                     bannerView.Visibility = ViewStates.Visible;
-                    LoadImage(bannerView, user?.BannerImage);
+                    LoadImage(bannerView, user.BannerImage);
                 }
             }
 

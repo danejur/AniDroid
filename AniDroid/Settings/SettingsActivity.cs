@@ -113,6 +113,24 @@ namespace AniDroid.Settings
             }
         }
 
+        private void DisplayLogoutDialog()
+        {
+            var alert = new Android.Support.V7.App.AlertDialog.Builder(this,
+                    GetThemedResourceId(Resource.Attribute.Dialog_Theme))
+                .SetMessage(Resource.String.LoginLogout_LogoutDialogMessage)
+                .SetCancelable(true).Create();
+            alert.SetButton((int) DialogButtonType.Neutral, "Cancel", (sender, eventArgs) => alert.Dismiss());
+            alert.SetButton((int) DialogButtonType.Positive, "Logout", (sender, eventArgs) =>
+                {
+                    Settings.ClearUserAuthentication();
+                    var resultIntent = new Intent();
+                    resultIntent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
+                    SetResult(Result.Canceled, resultIntent);
+                    Finish();
+                });
+            alert.Show();
+        }
+
         #region Settings Views
 
         private View CreateSettingRow(string name, string description, EventHandler tapEvent)
@@ -190,12 +208,24 @@ namespace AniDroid.Settings
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
         }
 
+        public override bool SetupMenu(IMenu menu)
+        {
+            menu?.Clear();
+            MenuInflater.Inflate(Resource.Menu.Settings_ActionBar, menu);
+            menu?.FindItem(Resource.Id.Menu_Settings_Logout)?.SetVisible(Settings.IsUserAuthenticated);
+            return true;
+        }
+
         public override bool MenuItemSelected(IMenuItem item)
         {
-            if (item.ItemId == Android.Resource.Id.Home)
+            switch (item.ItemId)
             {
-                Finish();
-                return true;
+                case Android.Resource.Id.Home:
+                    Finish();
+                    return true;
+                case Resource.Id.Menu_Settings_Logout:
+                    DisplayLogoutDialog();
+                    return true;
             }
 
             return false;
