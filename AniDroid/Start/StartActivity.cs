@@ -33,6 +33,15 @@ namespace AniDroid.Start
 
         public override Task OnCreateExtended(Bundle savedInstanceState)
         {
+            // this implemntation taken from https://stackoverflow.com/a/38878907
+            // need to make sure tht it is actually functioning as intended
+            if (!IsTaskRoot)
+            {
+                Finish();
+
+                return Task.CompletedTask;
+            }
+
             if (Intent?.Action == Intent.ActionView)
             {
                 var code = Intent.Data?.GetQueryParameter("code");

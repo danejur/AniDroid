@@ -121,7 +121,7 @@ namespace AniDroid.Main
             }
         }
 
-        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        protected override async void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
             base.OnActivityResult(requestCode, resultCode, data);
 
@@ -129,7 +129,15 @@ namespace AniDroid.Main
             {
                 // TODO: probably a better way to do this, but this works for now
                 _currentFragment = null;
-                Recreate();
+
+                SetTheme(GetThemeResource());
+
+                SetContentView(Resource.Layout.Activity_Main);
+
+                SetupToolbar();
+                SetupNavigation();
+
+                await Presenter.Init();
             }
         }
 
