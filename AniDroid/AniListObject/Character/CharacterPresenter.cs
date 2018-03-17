@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using AniDroid.AniList.Dto;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
@@ -34,6 +36,16 @@ namespace AniDroid.AniListObject.Character
         public IAsyncEnumerable<OneOf<IPagedData<AniList.Models.Media.Edge>, IAniListError>> GetCharacterMediaEnumerable(int characterId, AniList.Models.Media.MediaType mediaType, int perPage)
         {
             return AniListService.GetCharacterMedia(characterId, mediaType, perPage);
+        }
+
+        public async Task ToggleFavorite()
+        {
+            var characterId = View.GetCharacterId();
+            var favResp = await AniListService.ToggleFavorite(new FavoriteDto {CharacterId = characterId},
+                default(CancellationToken));
+
+            favResp.Switch(error => View.OnError(error))
+                .Switch(favorites => View.SetIsFavorite(favorites.Characters?.Nodes?.Any(x => x.Id == characterId) == true, true));
         }
     }
 }

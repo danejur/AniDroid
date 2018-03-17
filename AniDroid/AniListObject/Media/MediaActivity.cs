@@ -45,6 +45,7 @@ namespace AniDroid.AniListObject.Media
         public const string MediaIdIntentKey = "MEDIA_ID";
 
         private int _mediaId;
+        private AniList.Models.Media.MediaType _mediaType;
 
         protected override IReadOnlyKernel Kernel =>
             new StandardKernel(new ApplicationModule<IMediaView, MediaActivity>(this));
@@ -93,10 +94,14 @@ namespace AniDroid.AniListObject.Media
             return _mediaId;
         }
 
+        public AniList.Models.Media.MediaType GetMediaType()
+        {
+            return _mediaType;
+        }
+
         public void SetupMediaView(AniList.Models.Media media)
         {
-            // TODO: implement toggle favorite
-            //ToggleFavorite = () => ToggleFavoriteInternal(staff.Id);
+            _mediaType = media.Type;
 
             var adapter = new FragmentlessViewPagerAdapter();
             adapter.AddView(CreateMediaDetailsView(media), "Details");
@@ -136,6 +141,8 @@ namespace AniDroid.AniListObject.Media
 
             TabLayout.SetupWithViewPager(ViewPager);
         }
+
+        protected override Func<Task> ToggleFavorite => () => Presenter.ToggleFavorite();
 
         private View CreateMediaDetailsView(AniList.Models.Media media)
         {

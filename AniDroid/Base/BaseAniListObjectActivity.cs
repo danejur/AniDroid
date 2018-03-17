@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.Graphics;
@@ -42,7 +42,7 @@ namespace AniDroid.Base
         protected Toolbar Toolbar;
         protected AppBarLayout AppBar;
 
-        protected virtual Action ToggleFavorite { get; set; }
+        protected virtual Func<Task> ToggleFavorite { get; set; }
 
         public void Share()
         {
@@ -136,7 +136,7 @@ namespace AniDroid.Base
             InvalidateOptionsMenu();
         }
 
-        public void SetIsFavorite(bool isFavorite)
+        public void SetIsFavorite(bool isFavorite, bool showNotification = false)
         {
             var settings = Kernel.Get<IAniDroidSettings>();
             _canFavorite = settings.IsUserAuthenticated;
@@ -144,6 +144,11 @@ namespace AniDroid.Base
             _menu?.FindItem(Resource.Id.Menu_AniListObject_Favorite)?.SetIcon(_isFavorite
                 ? Resource.Drawable.ic_favorite_white_24px
                 : Resource.Drawable.ic_favorite_border_white_24px);
+
+            if (showNotification)
+            {
+                DisplaySnackbarMessage("Favorite toggled");
+            }
         }
 
         public void SetShareText(string title, string uri)

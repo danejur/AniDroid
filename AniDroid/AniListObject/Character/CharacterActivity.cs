@@ -74,9 +74,6 @@ namespace AniDroid.AniListObject.Character
 
         public void SetupCharacterView(AniList.Models.Character character)
         {
-            // TODO: implement toggle favorite
-            //ToggleFavorite = () => ToggleFavoriteInternal(staff.Id);
-
             var adapter = new FragmentlessViewPagerAdapter();
             adapter.AddView(CreateCharacterDetailsView(character), "Details");
 
@@ -95,6 +92,8 @@ namespace AniDroid.AniListObject.Character
 
             TabLayout.SetupWithViewPager(ViewPager);
         }
+
+        protected override Func<Task> ToggleFavorite => () => Presenter.ToggleFavorite();
 
         private View CreateCharacterDetailsView(AniList.Models.Character character)
         {

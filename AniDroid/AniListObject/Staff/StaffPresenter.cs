@@ -11,6 +11,7 @@ using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
+using AniDroid.AniList.Dto;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
@@ -49,6 +50,16 @@ namespace AniDroid.AniListObject.Staff
         public IAsyncEnumerable<OneOf<IPagedData<AniList.Models.Media.Edge>, IAniListError>> GetStaffMediaEnumerable(int staffId, AniList.Models.Media.MediaType mediaType, int perPage)
         {
             return AniListService.GetStaffMedia(staffId, mediaType, perPage);
+        }
+
+        public async Task ToggleFavorite()
+        {
+            var staffId = View.GetStaffId();
+            var favResp = await AniListService.ToggleFavorite(new FavoriteDto { StaffId = staffId },
+                default(CancellationToken));
+
+            favResp.Switch(error => View.OnError(error))
+                .Switch(favorites => View.SetIsFavorite(favorites.Staff?.Nodes?.Any(x => x.Id == staffId) == true, true));
         }
     }
 }

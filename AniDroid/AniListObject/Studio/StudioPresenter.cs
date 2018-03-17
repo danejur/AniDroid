@@ -10,6 +10,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using AniDroid.AniList.Dto;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
@@ -43,6 +44,16 @@ namespace AniDroid.AniListObject.Studio
         public IAsyncEnumerable<OneOf<IPagedData<AniList.Models.Media.Edge>, IAniListError>> GetStudioMediaEnumerable(int studioId, int perPage)
         {
             return AniListService.GetStudioMedia(studioId, perPage);
+        }
+
+        public async Task ToggleFavorite()
+        {
+            var studioId = View.GetStudioId();
+            var favResp = await AniListService.ToggleFavorite(new FavoriteDto { StudioId = studioId },
+                default(CancellationToken));
+
+            favResp.Switch(error => View.OnError(error))
+                .Switch(favorites => View.SetIsFavorite(favorites.Studios?.Nodes?.Any(x => x.Id == studioId) == true, true));
         }
     }
 }

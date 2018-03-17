@@ -75,11 +75,10 @@ namespace AniDroid.AniListObject.Studio
             return _studioId;
         }
 
+        protected override Func<Task> ToggleFavorite => () => Presenter.ToggleFavorite();
+
         public void SetupStudioView(AniList.Models.Studio studio)
         {
-            // TODO: implement toggle favorite
-            //ToggleFavorite = () => ToggleFavoriteInternal(staff.Id);
-
             var adapter = new FragmentlessViewPagerAdapter();
 
             if (studio.Media?.PageInfo?.Total > 0)

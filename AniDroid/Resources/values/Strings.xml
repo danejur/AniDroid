@@ -5,5 +5,7 @@
   <!-- Login / Logout -->
   <string name="LoginLogout_LoggingInMessage">Logging in...</string>
   <string name="LoginLogout_LogoutDialogMessage">Are you sure you want to logout?</string>
+  <string name="LoginLogout_AlreadyAuthenticatedMessage">You are already logged in with another account! Log out first.</string>
+  <string name="LoginLogout_LoginErrorMessage">An error occurred while trying to login.</string>
 
 </resources>

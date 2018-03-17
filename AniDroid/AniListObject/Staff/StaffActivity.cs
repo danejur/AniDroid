@@ -77,11 +77,10 @@ namespace AniDroid.AniListObject.Staff
             return _staffId;
         }
 
+        protected override Func<Task> ToggleFavorite => () => Presenter.ToggleFavorite();
+
         public void SetupStaffView(AniList.Models.Staff staff)
         {
-            // TODO: implement toggle favorite
-            //ToggleFavorite = () => ToggleFavoriteInternal(staff.Id);
-
             var adapter = new FragmentlessViewPagerAdapter();
             adapter.AddView(CreateStaffDetailsView(staff), "Details");
 

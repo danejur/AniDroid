@@ -25,16 +25,16 @@ namespace AniDroid.Login
             _authConfig = authConfig;
         }
 
-        public override Task Init()
+        public override async Task Init()
         {
             AniDroidSettings.ClearUserAuthentication();
-            View.ShowLoginPage();
-            return Task.CompletedTask;
-        }
+            var authCode = View.GetAuthCode();
 
-        public async Task AuthenticateUser(string authCode)
-        {
-            View.OnAuthorizing();
+            if (string.IsNullOrWhiteSpace(authCode))
+            {
+                View.OnErrorAuthorizing();
+                return;
+            }
 
             var authResp = await AniListService.AuthenticateUser(_authConfig, authCode, default(CancellationToken));
 
@@ -49,14 +49,14 @@ namespace AniDroid.Login
                 var currentUser = await AniListService.GetCurrentUser(default(CancellationToken));
 
                 currentUser.Switch((IAniListError error) =>
-                    {
-                        AniDroidSettings.ClearUserAuthentication();
-                        View.OnErrorAuthorizing();
-                    }).Switch(user =>
-                    {
-                        AniDroidSettings.LoggedInUser = user;
-                        View.OnAuthorized();
-                    });
+                {
+                    AniDroidSettings.ClearUserAuthentication();
+                    View.OnErrorAuthorizing();
+                }).Switch(user =>
+                {
+                    AniDroidSettings.LoggedInUser = user;
+                    View.OnAuthorized();
+                });
             }
         }
     }

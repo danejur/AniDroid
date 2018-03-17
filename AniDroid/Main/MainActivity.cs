@@ -14,6 +14,7 @@ using Android.Support.V7.App;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Interfaces;
+using AniDroid.AniListObject.User;
 using AniDroid.Base;
 using AniDroid.Browse;
 using AniDroid.Dialogs;
@@ -28,10 +29,11 @@ using Toolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace AniDroid.Main
 {
-    [Activity(Label = "AniDroid", ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.KeyboardHidden | Android.Content.PM.ConfigChanges.ScreenSize, LaunchMode = Android.Content.PM.LaunchMode.SingleTask)]
+    [Activity(Label = "AniDroid", ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.KeyboardHidden | Android.Content.PM.ConfigChanges.ScreenSize)]
     public class MainActivity : BaseAniDroidActivity<MainPresenter>, IMainView
     {
         public const string RecreateActivityIntentKey = "RECREATE_ACTIVITY";
+        public const string NotificationTextIntentKey = "NOTIFICATION_TEXT";
 
         [InjectView(Resource.Id.Main_CoordLayout)]
         private CoordinatorLayout _coordLayout;
@@ -77,15 +79,10 @@ namespace AniDroid.Main
             SearchDialog.Create(this, (type, term) => SearchResultsActivity.StartActivity(this, type, term));
         }
 
-        public static void StartActivity(Activity context)
+        public static void StartActivityForResult(Activity context, int requestCode, string notificationText = "")
         {
             var intent = new Intent(context, typeof(MainActivity));
-            context.StartActivity(intent);
-        }
-
-        public static void StartActivityForResult(Activity context, int requestCode)
-        {
-            var intent = new Intent(context, typeof(MainActivity));
+            intent.PutExtra(NotificationTextIntentKey, notificationText ?? "");
             context.StartActivityForResult(intent, requestCode);
         }
 
@@ -100,6 +97,12 @@ namespace AniDroid.Main
 
             SetupToolbar();
             SetupNavigation();
+
+            var notificationText = Intent.GetStringExtra(NotificationTextIntentKey);
+            if (!string.IsNullOrWhiteSpace(notificationText))
+            {
+                DisplaySnackbarMessage(notificationText, Snackbar.LengthLong);
+            }
 
             await CreatePresenter(savedInstanceState);
         }
@@ -170,7 +173,11 @@ namespace AniDroid.Main
             {
                 userNameView.Click += (sender, args) =>
                 {
-                    _navClosedAction = () => LoginActivity.StartActivity(this);
+                    _navClosedAction = () =>
+                    {
+                        LoginActivity.RedirectToLogin(this);
+                        Finish();
+                    };
                     _navigationDrawer.CloseDrawer(GravityCompat.Start);
                 };
             }
@@ -179,12 +186,22 @@ namespace AniDroid.Main
                 var user = Settings.LoggedInUser;
 
                 userNameView.Text = user?.Name ?? "User Error";
+                userNameView.Click += (sender, args) =>
+                {
+                    _navClosedAction = () => UserActivity.StartActivity(this, user?.Id ?? 0);
+                    _navigationDrawer.CloseDrawer(GravityCompat.Start);
+                };
 
                 if (!string.IsNullOrWhiteSpace(user?.Avatar?.Large))
                 {
                     var profileImageView = navHeader.FindViewById<ImageView>(Resource.Id.Navigation_ProfileImage);
                     profileImageView.Visibility = ViewStates.Visible;
                     LoadImage(profileImageView, user.Avatar.Large);
+                    profileImageView.Click += (sender, args) =>
+                    {
+                        _navClosedAction = () => UserActivity.StartActivity(this, user.Id);
+                        _navigationDrawer.CloseDrawer(GravityCompat.Start);
+                    };
                 }
 
                 if (!string.IsNullOrWhiteSpace(user?.BannerImage))

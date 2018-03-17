@@ -22,16 +22,18 @@ namespace AniDroid.Login
     [Activity(Label = "Login")]
     public class LoginActivity : BaseAniDroidActivity<LoginPresenter>, ILoginView
     {
-        [InjectView(Resource.Id.Login_WebView)]
-        private WebView _webView;
-        [InjectView(Resource.Id.Login_LoggingInView)]
-        private LinearLayout _loggingInView;
+        private const string AuthCodeIntentKey = "AUTH_CODE";
+
+        private string _authCode;
 
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<ILoginView, LoginActivity>(this));
 
         public override async Task OnCreateExtended(Bundle savedInstanceState)
         {
             SetContentView(Resource.Layout.Activity_Login);
+
+            _authCode = Intent.GetStringExtra(AuthCodeIntentKey);
+
             await CreatePresenter(savedInstanceState);
         }
 
@@ -45,67 +47,39 @@ namespace AniDroid.Login
             // TODO: Implement
         }
 
-        public void ShowLoginPage()
+        public string GetAuthCode()
         {
-            var webViewClient = new AniListLoginWebClient(Presenter);
-            var authUrl = Resources.GetString(Resource.Config.AniListAuthorizeUri);
-            var clientId = Resources.GetString(Resource.Config.ApiClientId);
-            var redirectUri = Resources.GetString(Resource.Config.ApiRedirectUri);
-
-            _webView.ClearCache(true);
-            _webView.ClearHistory();
-            _webView.Settings.JavaScriptEnabled = true;
-            _webView.Settings.DomStorageEnabled = true;
-            _webView.SetWebViewClient(webViewClient);
-            _webView.LoadUrl(string.Format(authUrl, clientId, redirectUri));
+            return _authCode;
         }
 
         public void OnErrorAuthorizing()
         {
-            Toast.MakeText(this, "Error occurred while authorizing", ToastLength.Long).Show();
+            MainActivity.StartActivityForResult(this, 0, GetString(Resource.String.LoginLogout_LoginErrorMessage));
             Finish();
-        }
-
-        public void OnAuthorizing()
-        {
-            _webView.Visibility = ViewStates.Gone;
-            _loggingInView.Visibility = ViewStates.Visible;
         }
 
         public void OnAuthorized()
         {
-            var resultIntent = new Intent();
-            resultIntent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
-            SetResult(Result.Canceled, resultIntent);
+            MainActivity.StartActivityForResult(this, 0);
             Finish();
         }
 
-        public static void StartActivity(Activity context)
+        public static void RedirectToLogin(Activity context)
         {
-            var intent = new Intent(context, typeof(LoginActivity));
-            context.StartActivityForResult(intent, 1);
+            var authUrl = context.Resources.GetString(Resource.Config.AniListAuthorizeUri);
+            var clientId = context.Resources.GetString(Resource.Config.ApiClientId);
+            var redirectUri = context.Resources.GetString(Resource.Config.ApiRedirectUri);
+
+
+            var browserIntent = new Intent(Intent.ActionView, Android.Net.Uri.Parse(string.Format(authUrl, clientId, redirectUri)));
+            context.StartActivityForResult(browserIntent, 0);
         }
 
-        private class AniListLoginWebClient : WebViewClient
+        public static void StartActivityForResult(Activity context, int requestCode, string authCode)
         {
-            private readonly LoginPresenter _presenter;
-
-            public AniListLoginWebClient(LoginPresenter presenter)
-            {
-                _presenter = presenter;
-            }
-
-            public override void OnPageStarted(WebView view, string url, Android.Graphics.Bitmap favicon)
-            {
-                if (!url.Contains("code="))
-                {
-                    return;
-                }
-
-                var query = new Uri(url).Query;
-                var code = query.Trim('?').Split('&').First(x => x.Contains("code=")).Replace("code=", "");
-                _presenter.AuthenticateUser(code);
-            }
+            var intent = new Intent(context, typeof(LoginActivity));
+            intent.PutExtra(AuthCodeIntentKey, authCode);
+            context.StartActivityForResult(intent, 0);
         }
     }
 }

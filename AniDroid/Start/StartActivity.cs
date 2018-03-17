@@ -20,6 +20,7 @@ using Ninject;
 namespace AniDroid.Start
 {
     [Activity(Label = "AniDroidNew", MainLauncher = true)]
+    [IntentFilter(new[] { Intent.ActionView }, Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable }, DataHost = "login", DataSchemes = new[] { "anidroid" }, Label = "AniDroid")]
     public class StartActivity : BaseAniDroidActivity
     {
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule());
@@ -32,12 +33,40 @@ namespace AniDroid.Start
 
         public override Task OnCreateExtended(Bundle savedInstanceState)
         {
+            if (Intent?.Action == Intent.ActionView)
+            {
+                var code = Intent.Data?.GetQueryParameter("code");
+
+                if (!string.IsNullOrWhiteSpace(code))
+                {
+                    if (Settings.IsUserAuthenticated)
+                    {
+                        MainActivity.StartActivityForResult(this, 0, GetString(Resource.String.LoginLogout_AlreadyAuthenticatedMessage));
+                        Finish();
+                    }
+                    else
+                    {
+                        LoginActivity.StartActivityForResult(this, 0, code);
+                        Finish();
+                    }
+                }
+                else
+                {
+                    MainActivity.StartActivityForResult(this, 0, GetString(Resource.String.LoginLogout_LoginErrorMessage));
+                    Finish();
+                }
+
+                return Task.CompletedTask;
+            }
+
+
             // TODO: add checks for data store integrity and other start-up tasks
 
             Settings.ClearUserAuthentication();
 
             MainActivity.StartActivityForResult(this, 0);
             Finish();
+
             return Task.CompletedTask;
         }
 
