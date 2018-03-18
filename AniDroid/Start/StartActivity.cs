@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -19,8 +20,7 @@ using Ninject;
 
 namespace AniDroid.Start
 {
-    [Activity(Label = "AniDroidNew", MainLauncher = true)]
-    [IntentFilter(new[] { Intent.ActionView }, Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable }, DataHost = "login", DataSchemes = new[] { "anidroid" }, Label = "AniDroid")]
+    [Activity(Label = "AniDroidNew", MainLauncher = true, ResizeableActivity = false)]
     public class StartActivity : BaseAniDroidActivity
     {
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule());
@@ -33,45 +33,9 @@ namespace AniDroid.Start
 
         public override Task OnCreateExtended(Bundle savedInstanceState)
         {
-            // this implemntation taken from https://stackoverflow.com/a/38878907
-            // need to make sure tht it is actually functioning as intended
-            if (!IsTaskRoot)
-            {
-                Finish();
-
-                return Task.CompletedTask;
-            }
-
-            if (Intent?.Action == Intent.ActionView)
-            {
-                var code = Intent.Data?.GetQueryParameter("code");
-
-                if (!string.IsNullOrWhiteSpace(code))
-                {
-                    if (Settings.IsUserAuthenticated)
-                    {
-                        MainActivity.StartActivityForResult(this, 0, GetString(Resource.String.LoginLogout_AlreadyAuthenticatedMessage));
-                        Finish();
-                    }
-                    else
-                    {
-                        LoginActivity.StartActivityForResult(this, 0, code);
-                        Finish();
-                    }
-                }
-                else
-                {
-                    MainActivity.StartActivityForResult(this, 0, GetString(Resource.String.LoginLogout_LoginErrorMessage));
-                    Finish();
-                }
-
-                return Task.CompletedTask;
-            }
-
-
             // TODO: add checks for data store integrity and other start-up tasks
 
-            Settings.ClearUserAuthentication();
+            //Settings.ClearUserAuthentication();
 
             MainActivity.StartActivityForResult(this, 0);
             Finish();

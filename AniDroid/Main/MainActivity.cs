@@ -139,6 +139,10 @@ namespace AniDroid.Main
 
                 await Presenter.Init();
             }
+            else if (!string.IsNullOrWhiteSpace(data?.GetStringExtra(NotificationTextIntentKey)))
+            {
+                DisplaySnackbarMessage(data.GetStringExtra(NotificationTextIntentKey));
+            }
         }
 
         #region Toolbar
@@ -183,8 +187,7 @@ namespace AniDroid.Main
                 {
                     _navClosedAction = () =>
                     {
-                        LoginActivity.RedirectToLogin(this);
-                        Finish();
+                        LoginActivity.StartActivity(this);
                     };
                     _navigationDrawer.CloseDrawer(GravityCompat.Start);
                 };

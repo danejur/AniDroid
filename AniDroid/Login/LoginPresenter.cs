@@ -25,7 +25,12 @@ namespace AniDroid.Login
             _authConfig = authConfig;
         }
 
-        public override async Task Init()
+        public override Task Init()
+        {
+            return Task.CompletedTask;
+        }
+
+        public async Task Login(CancellationToken token)
         {
             AniDroidSettings.ClearUserAuthentication();
             var authCode = View.GetAuthCode();
@@ -36,28 +41,25 @@ namespace AniDroid.Login
                 return;
             }
 
-            var authResp = await AniListService.AuthenticateUser(_authConfig, authCode, default(CancellationToken));
+            var authResp = await AniListService.AuthenticateUser(_authConfig, authCode, token);
 
-            if (!authResp.IsSuccessful || string.IsNullOrWhiteSpace(authResp.Data?.AccessToken))
-            {
-                View.OnErrorAuthorizing();
-            }
-            else
-            {
-                AniDroidSettings.UserAccessCode = authResp.Data.AccessToken;
-
-                var currentUser = await AniListService.GetCurrentUser(default(CancellationToken));
-
-                currentUser.Switch((IAniListError error) =>
+            authResp.Switch((IAniListError error) => View.OnErrorAuthorizing())
+                .Switch(async auth =>
                 {
-                    AniDroidSettings.ClearUserAuthentication();
-                    View.OnErrorAuthorizing();
-                }).Switch(user =>
-                {
-                    AniDroidSettings.LoggedInUser = user;
-                    View.OnAuthorized();
+                    AniDroidSettings.UserAccessCode = auth.Data.AccessToken;
+
+                    var currentUser = await AniListService.GetCurrentUser(token);
+
+                    currentUser.Switch((IAniListError error) =>
+                    {
+                        AniDroidSettings.ClearUserAuthentication();
+                        View.OnErrorAuthorizing();
+                    }).Switch(user =>
+                    {
+                        AniDroidSettings.LoggedInUser = user;
+                        View.OnAuthorized();
+                    });
                 });
-            }
         }
     }
 }

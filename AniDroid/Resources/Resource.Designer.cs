@@ -4364,6 +4364,9 @@ namespace AniDroid
 			// aapt resource value: 0x7f0a0028
 			public const int LoginLogout_LoggingInMessage = 2131361832;
 			
+			// aapt resource value: 0x7f0a002c
+			public const int LoginLogout_LoginAbortedMessage = 2131361836;
+			
 			// aapt resource value: 0x7f0a002b
 			public const int LoginLogout_LoginErrorMessage = 2131361835;
 			
