@@ -11,8 +11,10 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Interfaces;
+using AniDroid.AniList.Models;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
+using OneOf;
 
 namespace AniDroid.Main
 {
@@ -30,6 +32,18 @@ namespace AniDroid.Main
             View.OnMainViewSetup();
 
             return Task.CompletedTask;
+        }
+
+        public void SetupNotifications()
+        {
+            if (AniDroidSettings.IsUserAuthenticated)
+            {
+                View.SetupNotificationView(AniListService.GetAniListNotifications(20));
+            }
+            else
+            {
+                View.HideNotificationView();
+            }
         }
     }
 }

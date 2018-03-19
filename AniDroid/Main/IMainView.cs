@@ -9,7 +9,10 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using AniDroid.AniList.Interfaces;
+using AniDroid.AniList.Models;
 using AniDroid.Base;
+using OneOf;
 
 namespace AniDroid.Main
 {
@@ -17,5 +20,7 @@ namespace AniDroid.Main
     {
         void SetAuthenticatedNavigationVisibility(bool isAuthenticated);
         void OnMainViewSetup();
+        void HideNotificationView();
+        void SetupNotificationView(IAsyncEnumerable<OneOf<IPagedData<AniListNotification>, IAniListError>> enumerable);
     }
 }

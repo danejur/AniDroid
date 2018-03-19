@@ -11,9 +11,12 @@ using Android.Support.Design.Widget;
 using Android.Support.V4.View;
 using Android.Support.V4.Widget;
 using Android.Support.V7.App;
+using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using AniDroid.Adapters.AniListActivityAdapters;
 using AniDroid.AniList.Interfaces;
+using AniDroid.AniList.Models;
 using AniDroid.AniListObject.User;
 using AniDroid.Base;
 using AniDroid.Browse;
@@ -26,6 +29,7 @@ using AniDroid.Settings;
 using AniDroid.TorrentSearch;
 using AniDroid.Utils;
 using Ninject;
+using OneOf;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace AniDroid.Main
@@ -46,6 +50,10 @@ namespace AniDroid.Main
         private Toolbar _toolbar;
         [InjectView(Resource.Id.Main_SearchFab)]
         private FloatingActionButton _searchButton;
+        [InjectView(Resource.Id.Navigation_FooterContainer)]
+        private LinearLayout _navigationFooterContainer;
+        [InjectView(Resource.Id.Navigation_NotificationRecyclerView)]
+        private RecyclerView _navigationNotificationRecyclerView;
 
         private Toast _exitToast;
         private Action _navClosedAction;
@@ -73,6 +81,17 @@ namespace AniDroid.Main
             _searchButton.Click -= SearchButtonOnClick;
             _searchButton.Click += SearchButtonOnClick;
             SelectDefaultFragment();
+        }
+
+        public void HideNotificationView()
+        {
+            _navigationFooterContainer.Visibility = ViewStates.Gone;
+        }
+
+        public void SetupNotificationView(IAsyncEnumerable<OneOf<IPagedData<AniListNotification>, IAniListError>> enumerable)
+        {
+            _navigationFooterContainer.Visibility = ViewStates.Visible;
+            _navigationNotificationRecyclerView.SetAdapter(new AniListNotificationRecyclerAdapter(this, enumerable));
         }
 
         private void SearchButtonOnClick(object sender, EventArgs eventArgs)
@@ -106,6 +125,8 @@ namespace AniDroid.Main
             }
 
             await CreatePresenter(savedInstanceState);
+
+            Presenter.SetupNotifications();
         }
 
         public override void OnBackPressed()
@@ -139,6 +160,8 @@ namespace AniDroid.Main
                 SetupNavigation();
 
                 await Presenter.Init();
+
+                Presenter.SetupNotifications();
             }
             else if (!string.IsNullOrWhiteSpace(data?.GetStringExtra(NotificationTextIntentKey)))
             {

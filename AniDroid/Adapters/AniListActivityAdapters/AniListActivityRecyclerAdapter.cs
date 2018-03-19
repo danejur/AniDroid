@@ -43,7 +43,6 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             _actionColorHex = $"#{Context.GetThemedColor(Resource.Attribute.Primary_Dark) & 0xffffff:X6}";
             _userId = userId;
             _defaultIconColor = new Color(context.GetThemedColor(Resource.Attribute.Secondary_Dark));
-            Items = new List<AniListActivity> {null};
         }
 
         public override void BindCustomViewHolder(RecyclerView.ViewHolder holder, int position)

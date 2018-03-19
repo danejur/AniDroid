@@ -21,6 +21,7 @@ namespace AniDroid.Adapters.Base
         private RecyclerView.ItemDecoration _decoration;
         protected readonly ColorStateList DefaultIconColor;
         protected readonly ColorStateList FavoriteIconColor;
+        protected bool CustomCardUseItemDecoration;
 
         public List<T> Items { get; protected set; }
         public sealed override int ItemCount => Items.Count;
@@ -155,6 +156,11 @@ namespace AniDroid.Adapters.Base
                     recyclerView.SetLayoutManager(new StaggeredGridLayoutManager(_cardColumns, _orientation));
                     break;
                 case CardType.Custom:
+                    if (CustomCardUseItemDecoration)
+                    {
+                        _decoration = new DefaultItemDecoration(Context);
+                        recyclerView.AddItemDecoration(_decoration);
+                    }
                     recyclerView.SetLayoutManager(new LinearLayoutManager(Context));
                     break;
             }

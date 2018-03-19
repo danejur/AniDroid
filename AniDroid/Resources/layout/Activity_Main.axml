@@ -43,6 +43,22 @@
       android:layout_gravity="start"
       android:id="@+id/Main_NavigationView"
       android:theme="?NavDrawer_Theme"
+      android:paddingBottom="175dp"
+      android:clipToPadding="false"
       app:headerLayout="@layout/view_mainnavigationheader"
-      app:menu="@menu/main_navigation" />
+      app:menu="@menu/main_navigation">
+    <LinearLayout
+        android:id="@+id/Navigation_FooterContainer"
+        android:layout_width="match_parent"
+        android:layout_height="175dp"
+        android:layout_marginBottom="-175dp"
+        android:layout_gravity="bottom">
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/Navigation_NotificationRecyclerView"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:scrollbars="vertical"
+          app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+    </LinearLayout>
+  </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>

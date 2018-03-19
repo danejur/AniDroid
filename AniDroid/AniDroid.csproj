@@ -149,6 +149,7 @@
   <ItemGroup>
     <Compile Include="Adapters\AniListActivityAdapters\AniListActivityRecyclerAdapter.cs" />
     <Compile Include="Adapters\AniListActivityAdapters\AniListActivityRepliesRecyclerAdapter.cs" />
+    <Compile Include="Adapters\AniListActivityAdapters\AniListNotificationRecyclerAdapter.cs" />
     <Compile Include="Adapters\Base\LazyLoadingRecyclerViewAdapter.cs" />
     <Compile Include="Adapters\CharacterAdapters\CharacterMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\FragmentlessViewPagerAdapter.cs" />
@@ -353,6 +354,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\Dialog_AniListActivityCreate.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\View_AniListNotificationItem.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
