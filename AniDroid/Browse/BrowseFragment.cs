@@ -42,7 +42,7 @@ namespace AniDroid.Browse
             recycler.SetAdapter(new BrowseMediaRecyclerAdapter(Activity, mediaEnumerable, _cardType));
         }
 
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public override View CreateView(ViewGroup container, Bundle savedInstanceState)
         {
             CreatePresenter(savedInstanceState).GetAwaiter().GetResult();
             var settings = Kernel.Get<IAniDroidSettings>();

@@ -28,16 +28,16 @@ namespace AniDroid.TorrentSearch
             throw new NotImplementedException();
         }
 
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public override View CreateView(ViewGroup container, Bundle savedInstanceState)
         {
-            CreatePresenter(savedInstanceState).GetAwaiter().GetResult();
-
-            return LayoutInflater.Inflate(Resource.Layout.View_List, container, false);
+            return LayoutInflater.Inflate(Resource.Layout.Fragment_NotImplemented, container, false);
         }
 
-        public override void OnViewCreated(View view, Bundle savedInstanceState)
+        public override async void OnViewCreated(View view, Bundle savedInstanceState)
         {
             base.OnViewCreated(view, savedInstanceState);
+
+            await CreatePresenter(savedInstanceState);
         }
     }
 }

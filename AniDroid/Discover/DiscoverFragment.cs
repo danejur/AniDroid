@@ -29,7 +29,7 @@ namespace AniDroid.Discover
 
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IDiscoverView, DiscoverFragment>(this));
 
-        public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+        public override View CreateView(ViewGroup container, Bundle savedInstanceState)
         {
             CreatePresenter(savedInstanceState).GetAwaiter().GetResult();
 

@@ -147,6 +147,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Adapters\AniListActivityAdapters\AniListActivityAdapter.cs" />
     <Compile Include="Adapters\Base\LazyLoadingRecyclerViewAdapter.cs" />
     <Compile Include="Adapters\CharacterAdapters\CharacterMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\FragmentlessViewPagerAdapter.cs" />
@@ -197,6 +198,9 @@
     <Compile Include="Discover\DiscoverFragment.cs" />
     <Compile Include="Discover\DiscoverPresenter.cs" />
     <Compile Include="Discover\IDiscoverView.cs" />
+    <Compile Include="Home\HomeFragment.cs" />
+    <Compile Include="Home\HomePresenter.cs" />
+    <Compile Include="Home\IHomeView.cs" />
     <Compile Include="SearchResults\ISearchResultsView.cs" />
     <Compile Include="SearchResults\SearchResultsActivity.cs" />
     <Compile Include="SearchResults\SearchResultsPresenter.cs" />
@@ -337,6 +341,10 @@
     <AndroidResource Include="Resources\layout\Dialog_MediaTitles.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\Fragment_NotImplemented.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\View_AniListActivityItem.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />
@@ -557,6 +565,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\menu\Settings_ActionBar.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_reply_white_24px.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_mode_comment_white_24px.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

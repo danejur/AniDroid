@@ -19,6 +19,7 @@ using AniDroid.Base;
 using AniDroid.Browse;
 using AniDroid.Dialogs;
 using AniDroid.Discover;
+using AniDroid.Home;
 using AniDroid.Login;
 using AniDroid.SearchResults;
 using AniDroid.Settings;
@@ -246,6 +247,9 @@ namespace AniDroid.Main
         {
             switch (e.MenuItem.ItemId)
             {
+                case Resource.Id.Menu_Navigation_Home:
+                    ChangeFragment(new HomeFragment());
+                    break;
                 case Resource.Id.Menu_Navigation_Discover:
                     ChangeFragment(new DiscoverFragment());
                     break;
