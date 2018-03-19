@@ -25,25 +25,16 @@ using OneOf;
 
 namespace AniDroid.Adapters.AniListActivityAdapters
 {
-    public class AniListActivityAdapter : BaseRecyclerAdapter
+    public class AniListActivityAdapter : LazyLoadingRecyclerViewAdapter<AniListActivity>
     {
-        private const int ProgressBarViewType = -1;
-
-        private readonly IAsyncEnumerable<OneOf<IPagedData<AniListActivity>, IAniListError>> _activityEnumerable;
-        private readonly IAsyncEnumerator<OneOf<IPagedData<AniListActivity>, IAniListError>> _activityEnumerator;
-        private bool _isLazyLoading;
         private readonly string _userNameColorHex;
         private readonly string _actionColorHex;
         private readonly int _userId;
         private readonly Color _defaultIconColor;
 
-        public List<AniListActivity> Items { get; protected set; }
-
         public AniListActivityAdapter(BaseAniDroidActivity context,
-            IAsyncEnumerable<OneOf<IPagedData<AniListActivity>, IAniListError>> enumerable, int userId) : base(context)
+            IAsyncEnumerable<OneOf<IPagedData<AniListActivity>, IAniListError>> enumerable, int userId) : base(context, enumerable, CardType.Custom)
         {
-            _activityEnumerable = enumerable;
-            _activityEnumerator = enumerable.GetEnumerator();
             _userNameColorHex = $"#{Context.GetThemedColor(Resource.Attribute.Primary) & 0xffffff:X6}";
             _actionColorHex = $"#{Context.GetThemedColor(Resource.Attribute.Primary_Dark) & 0xffffff:X6}";
             _userId = userId;
@@ -51,7 +42,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             Items = new List<AniListActivity> {null};
         }
 
-        private void BindAniListActivityViewHolder(RecyclerView.ViewHolder holder, int position)
+        public override void BindCustomViewHolder(RecyclerView.ViewHolder holder, int position)
         {
             var viewHolder = holder as AniListActivityViewHolder;
             var item = Items[position];
@@ -93,120 +84,12 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             }
         }
 
-        public override async void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
+        public override RecyclerView.ViewHolder CreateCustomViewHolder(ViewGroup parent, int viewType)
         {
-            if (Items[position] != null)
-            {
-                BindAniListActivityViewHolder(holder, position);
-                return;
-            }
-
-            if (position < ItemCount - 1 || _isLazyLoading)
-            {
-                return;
-            }
-
-            _isLazyLoading = true;
-
-            var moveNextResult = await _activityEnumerator.MoveNextAsync();
-
-            _activityEnumerator.Current?.Switch((IAniListError error) =>
-                    Context.DisplaySnackbarMessage("Error occurred while getting next page of data",
-                        Snackbar.LengthLong))
-                .Switch(data =>
-                {
-                    if (!moveNextResult)
-                    {
-                        return;
-                    }
-
-                    AddItems(data.Data, data.PageInfo.HasNextPage);
-                });
-
-            RemoveItem(position);
-
-            _isLazyLoading = false;
+            return new AniListActivityViewHolder(
+                Context.LayoutInflater.Inflate(Resource.Layout.View_AniListActivityItem, parent, false));
         }
 
-        public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
-        {
-            if (viewType != ProgressBarViewType)
-            {
-                return new AniListActivityViewHolder(
-                    Context.LayoutInflater.Inflate(Resource.Layout.View_AniListActivityItem, parent, false));
-            }
-
-            var view = Context.LayoutInflater.Inflate(Resource.Layout.View_IndeterminateProgressIndicator, parent,
-                false);
-            var holder = new ProgressBarViewHolder(view);
-
-            return holder;
-        }
-
-        public override int ItemCount => Items?.Count ?? 0;
-
-        public bool ReplaceItem(int position, AniListActivity item, bool notify = true)
-        {
-            if (_isLazyLoading)
-            {
-                return false;
-            }
-
-            if (position >= ItemCount || position < 0)
-            {
-                return false;
-            }
-
-            Items[position] = item;
-
-            if (notify)
-            {
-                NotifyItemChanged(position);
-            }
-
-            return true;
-        }
-
-        private void AddItems(IEnumerable<AniListActivity> itemsToAdd, bool hasNextPage)
-        {
-            var initialAdd = Items.Count == 1 && Items[0] == null;
-
-            if (hasNextPage)
-            {
-                itemsToAdd = itemsToAdd.Append(null);
-            }
-
-            Items.AddRange(itemsToAdd);
-
-            NotifyDataSetChanged();
-
-            if (initialAdd)
-            {
-                var controller =
-                    AnimationUtils.LoadLayoutAnimation(Context, Resource.Animation.Layout_Animation_Falldown);
-                RecyclerView.LayoutAnimation = controller;
-                RecyclerView.ScheduleLayoutAnimation();
-            }
-        }
-
-        private void RemoveItem(int position)
-        {
-            Items.RemoveAt(position);
-            NotifyItemRemoved(position);
-        }
-
-        public sealed override void OnAttachedToRecyclerView(RecyclerView recyclerView)
-        {
-            base.OnAttachedToRecyclerView(recyclerView);
-
-            recyclerView.AddItemDecoration(new DefaultItemDecoration(Context));
-            recyclerView.SetLayoutManager(new LinearLayoutManager(Context));
-        }
-
-        public sealed override int GetItemViewType(int position)
-        {
-            return (Items[position] == null) ? ProgressBarViewType : 0;
-        }
 
         private void BindTextActivityViewHolder(AniListActivityViewHolder viewHolder, AniListActivity item)
         {
@@ -287,13 +170,6 @@ namespace AniDroid.Adapters.AniListActivityAdapters
                 ReplyLikeContainer = view.FindViewById(Resource.Id.AniListActivity_ReplyLikeContainer);
                 LikeCount = view.FindViewById<TextView>(Resource.Id.AniListActivity_LikeCount);
                 LikeIcon = view.FindViewById<ImageView>(Resource.Id.AniListActivity_LikeIcon);
-            }
-        }
-
-        private class ProgressBarViewHolder : RecyclerView.ViewHolder
-        {
-            public ProgressBarViewHolder(View itemView) : base(itemView)
-            {
             }
         }
     }

@@ -101,6 +101,11 @@ namespace AniDroid.Adapters.Base
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
+            if (_cardType == CardType.Custom)
+            {
+                return CreateCustomViewHolder(parent, viewType);
+            }
+
             var layoutResource = Resource.Layout.View_CardItem_Horizontal;
 
             switch (_cardType)
@@ -119,7 +124,14 @@ namespace AniDroid.Adapters.Base
 
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
-            BindCardViewHolder(holder as CardItem, position);
+            if (_cardType == CardType.Custom)
+            {
+                BindCustomViewHolder(holder, position);
+            }
+            else
+            {
+                BindCardViewHolder(holder as CardItem, position);
+            }
         }
 
         public sealed override void OnAttachedToRecyclerView(RecyclerView recyclerView)
@@ -142,6 +154,9 @@ namespace AniDroid.Adapters.Base
                 case CardType.VerticalStaggered:
                     recyclerView.SetLayoutManager(new StaggeredGridLayoutManager(_cardColumns, _orientation));
                     break;
+                case CardType.Custom:
+                    recyclerView.SetLayoutManager(new LinearLayoutManager(Context));
+                    break;
             }
         }
 
@@ -154,7 +169,18 @@ namespace AniDroid.Adapters.Base
             }
         }
 
-        public abstract void BindCardViewHolder(CardItem holder, int position);
+        public virtual RecyclerView.ViewHolder CreateCustomViewHolder(ViewGroup parent, int viewType)
+        {
+            return null;
+        }
+
+        public virtual void BindCustomViewHolder(RecyclerView.ViewHolder holder, int position)
+        {
+        }
+
+        public virtual void BindCardViewHolder(CardItem holder, int position)
+        {
+        }
 
         public virtual CardItem SetupCardItemViewHolder(CardItem item)
         {
@@ -180,6 +206,7 @@ namespace AniDroid.Adapters.Base
 
         public enum CardType
         {
+            Custom = -1,
             Vertical = 0,
             VerticalStaggered = 1,
             Horizontal = 2,
