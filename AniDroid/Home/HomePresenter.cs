@@ -50,6 +50,14 @@ namespace AniDroid.Home
                 });
         }
 
+        public async Task PostStatusActivity(string text)
+        {
+            var postResp = await AniListService.PostTextActivity(text, default(CancellationToken));
+
+            postResp.Switch((IAniListError error) => View.DisplaySnackbarMessage("Error occurred while posting status", Snackbar.LengthLong))
+                .Switch(activity => View.RefreshActivity());
+        }
+
         public async Task PostActivityReply(AniListActivity activity, int activityPosition, string text)
         {
             var postResp = await AniListService.PostActivityReply(activity.Id, text, default(CancellationToken));

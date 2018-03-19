@@ -25,8 +25,12 @@ namespace AniDroid.Discover
 {
     public class DiscoverFragment : BaseAniDroidFragment<DiscoverPresenter>, IDiscoverView
     {
-        public override string FragmentName => "DISCOVER_FRAGMENT";
+        private DiscoverMediaRecyclerAdapter _trendingRecyclerAdapter;
+        private DiscoverMediaRecyclerAdapter _newAnimeRecyclerAdapter;
+        private DiscoverMediaRecyclerAdapter _newMangaRecyclerAdapter;
 
+        public override bool HasMenu => true;
+        public override string FragmentName => "DISCOVER_FRAGMENT";
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IDiscoverView, DiscoverFragment>(this));
 
         public override View CreateView(ViewGroup container, Bundle savedInstanceState)
@@ -41,6 +45,26 @@ namespace AniDroid.Discover
             Presenter.GetDiscoverLists();
         }
 
+        public override void SetupMenu(IMenu menu)
+        {
+            menu.Clear();
+            var inflater = new MenuInflater(Context);
+            inflater.Inflate(Resource.Menu.Discover_ActionBar, menu);
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            if (item.ItemId == Resource.Id.Menu_Discover_Refresh)
+            {
+                _trendingRecyclerAdapter.ResetAdapter();
+                _newAnimeRecyclerAdapter.ResetAdapter();
+                _newMangaRecyclerAdapter.ResetAdapter();
+                return true;
+            }
+
+            return base.OnOptionsItemSelected(item);
+        }
+
         public override void OnError(IAniListError error)
         {
             throw new NotImplementedException();
@@ -49,19 +73,19 @@ namespace AniDroid.Discover
         public void ShowTrendingResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
         {
             var recycler = View.FindViewById<RecyclerView>(Resource.Id.Discover_TrendingRecyclerView);
-            recycler.SetAdapter(new DiscoverMediaRecyclerAdapter(Activity, mediaEnumerable));
+            recycler.SetAdapter(_trendingRecyclerAdapter = new DiscoverMediaRecyclerAdapter(Activity, mediaEnumerable));
         }
 
         public void ShowNewAnimeResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
         {
             var recycler = View.FindViewById<RecyclerView>(Resource.Id.Discover_NewAnimeRecyclerView);
-            recycler.SetAdapter(new DiscoverMediaRecyclerAdapter(Activity, mediaEnumerable));
+            recycler.SetAdapter(_newAnimeRecyclerAdapter = new DiscoverMediaRecyclerAdapter(Activity, mediaEnumerable));
         }
 
         public void ShowNewMangaResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
         {
             var recycler = View.FindViewById<RecyclerView>(Resource.Id.Discover_NewMangaRecyclerView);
-            recycler.SetAdapter(new DiscoverMediaRecyclerAdapter(Activity, mediaEnumerable));
+            recycler.SetAdapter(_newMangaRecyclerAdapter = new DiscoverMediaRecyclerAdapter(Activity, mediaEnumerable));
         }
     }
 }

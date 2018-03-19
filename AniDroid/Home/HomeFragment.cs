@@ -14,6 +14,7 @@ using AniDroid.Adapters.AniListActivityAdapters;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
+using AniDroid.Dialogs;
 using AniDroid.Utils;
 using Ninject;
 using OneOf;
@@ -24,6 +25,7 @@ namespace AniDroid.Home
     {
         private AniListActivityRecyclerAdapter _recyclerAdapter;
 
+        public override bool HasMenu => true;
         public override string FragmentName => "HOME_FRAGMENT";
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IHomeView, HomeFragment>(this));
 
@@ -38,6 +40,28 @@ namespace AniDroid.Home
             base.OnViewCreated(view, savedInstanceState);
 
             Presenter.GetAniListActivity(true);
+        }
+
+        public override void SetupMenu(IMenu menu)
+        {
+            menu.Clear();
+            var inflater = new MenuInflater(Context);
+            inflater.Inflate(Resource.Menu.Home_ActionBar, menu);
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Resource.Id.Menu_Home_Refresh:
+                    RefreshActivity();
+                    return true;
+                case Resource.Id.Menu_Home_PostStatus:
+                    AniListActivityCreateDialog.Create(Activity, Presenter.PostStatusActivity);
+                    return true;
+            }
+
+            return base.OnOptionsItemSelected(item);
         }
 
         public override void OnError(IAniListError error)
@@ -60,6 +84,11 @@ namespace AniDroid.Home
         {
             _recyclerAdapter.Items[activityPosition] = activity;
             _recyclerAdapter.NotifyItemChanged(activityPosition);
+        }
+
+        public void RefreshActivity()
+        {
+            _recyclerAdapter?.ResetAdapter();
         }
     }
 }

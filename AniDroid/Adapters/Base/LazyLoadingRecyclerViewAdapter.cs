@@ -43,8 +43,9 @@ namespace AniDroid.Adapters.Base
 
         public void ResetAdapter()
         {
-            RemoveAllItems();
-            AddItems(null);
+            Items.Clear();
+            Items.Add(null);
+            NotifyDataSetChanged();
             _asyncEnumerator = _asyncEnumerable.GetEnumerator();
         }
 

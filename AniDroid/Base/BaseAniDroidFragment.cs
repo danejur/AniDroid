@@ -44,5 +44,23 @@ namespace AniDroid.Base
 
         public sealed override View OnCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) => CreateView(container, savedInstanceState);
+
+        public override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+            HasOptionsMenu = HasMenu;
+        }
+
+        public virtual bool HasMenu => false;
+
+        public sealed override void OnPrepareOptionsMenu(IMenu menu)
+        {
+            base.OnPrepareOptionsMenu(menu);
+            SetupMenu(menu);
+        }
+
+        public virtual void SetupMenu(IMenu menu)
+        {
+        }
     }
 }

@@ -193,6 +193,7 @@
     <Compile Include="AniListObject\Character\CharacterPresenter.cs" />
     <Compile Include="AniListObject\Character\ICharacterView.cs" />
     <Compile Include="Dialogs\AniListActivityRepliesDialog.cs" />
+    <Compile Include="Dialogs\AniListActivityCreateDialog.cs" />
     <Compile Include="Dialogs\MediaStreamingEpisodeListDialog.cs" />
     <Compile Include="Dialogs\MediaTitlesDialog.cs" />
     <Compile Include="Dialogs\SearchDialog.cs" />
@@ -216,6 +217,7 @@
     <Compile Include="Utils\ChartUtils.cs" />
     <Compile Include="Utils\Formatting\NumberFormatters.cs" />
     <Compile Include="Utils\Integration\AniDroidAniListAuthConfig.cs" />
+    <Compile Include="Utils\Listeners\InterceptClickListener.cs" />
     <Compile Include="Utils\Storage\AniDroidStorage.cs" />
     <Compile Include="Utils\ApplicationModule.cs" />
     <Compile Include="Base\BaseAniDroidActivity.cs" />
@@ -348,6 +350,9 @@
     </AndroidResource>
     <AndroidResource Include="Resources\layout\View_AniListActivityItem.axml" />
     <AndroidResource Include="Resources\layout\Dialog_AniListActivityReply.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Dialog_AniListActivityCreate.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -576,6 +581,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_mode_comment_white_24px.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\Home_ActionBar.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\Discover_ActionBar.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
