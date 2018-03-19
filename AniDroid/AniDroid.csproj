@@ -147,7 +147,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Adapters\AniListActivityAdapters\AniListActivityAdapter.cs" />
+    <Compile Include="Adapters\AniListActivityAdapters\AniListActivityRecyclerAdapter.cs" />
+    <Compile Include="Adapters\AniListActivityAdapters\AniListActivityRepliesRecyclerAdapter.cs" />
     <Compile Include="Adapters\Base\LazyLoadingRecyclerViewAdapter.cs" />
     <Compile Include="Adapters\CharacterAdapters\CharacterMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\FragmentlessViewPagerAdapter.cs" />
@@ -191,6 +192,7 @@
     <Compile Include="AniListObject\Character\CharacterActivity.cs" />
     <Compile Include="AniListObject\Character\CharacterPresenter.cs" />
     <Compile Include="AniListObject\Character\ICharacterView.cs" />
+    <Compile Include="Dialogs\AniListActivityRepliesDialog.cs" />
     <Compile Include="Dialogs\MediaStreamingEpisodeListDialog.cs" />
     <Compile Include="Dialogs\MediaTitlesDialog.cs" />
     <Compile Include="Dialogs\SearchDialog.cs" />
@@ -345,6 +347,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\View_AniListActivityItem.axml" />
+    <AndroidResource Include="Resources\layout\Dialog_AniListActivityReply.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />

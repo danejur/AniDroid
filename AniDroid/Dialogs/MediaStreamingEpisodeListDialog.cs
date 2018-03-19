@@ -27,7 +27,7 @@ namespace AniDroid.Dialogs
             var recyclerAdapter = new MediaStreamingEpisodesRecyclerAdapter(context, streamingEpisodes);
             dialogRecycler.SetAdapter(recyclerAdapter);
 
-            var dialog = new AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme));
+            var dialog = new Android.Support.V7.App.AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme));
             dialog.SetView(dialogView);
             dialog.Show();
         }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      android:orientation="vertical"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:minWidth="25px"
+      android:minHeight="25px">
+  <android.support.v7.widget.RecyclerView
+    android:id="@+id/AniListActivityReply_Recycler"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" />
+  <LinearLayout
+    android:orientation="horizontal"
+    android:id="@+id/AniListActivityReply_LikesContainer"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="5dp" />
+  <android.support.design.widget.TextInputLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:theme="?TextInput_Theme">
+    <EditText
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:id="@+id/AniListActivityReply_Reply"
+      style="?TextInput_Theme"
+      android:hint="Reply" />
+  </android.support.design.widget.TextInputLayout>
+</LinearLayout>

@@ -28,7 +28,7 @@ namespace AniDroid.Dialogs
             var recyclerAdapter = new StaffRecyclerAdapter(context, staff.ToList(), BaseRecyclerAdapter.CardType.FlatHorizontal);
             dialogRecycler.SetAdapter(recyclerAdapter);
 
-            var dialog = new AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme));
+            var dialog = new Android.Support.V7.App.AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme));
             dialog.SetView(dialogView);
             dialog.Show();
         }

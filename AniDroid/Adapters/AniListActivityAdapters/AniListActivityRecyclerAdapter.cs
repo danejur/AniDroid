@@ -21,20 +21,24 @@ using AniDroid.AniList.Models;
 using AniDroid.AniListObject.Media;
 using AniDroid.AniListObject.User;
 using AniDroid.Base;
+using AniDroid.Dialogs;
+using AniDroid.Home;
 using OneOf;
 
 namespace AniDroid.Adapters.AniListActivityAdapters
 {
-    public class AniListActivityAdapter : LazyLoadingRecyclerViewAdapter<AniListActivity>
+    public class AniListActivityRecyclerAdapter : LazyLoadingRecyclerViewAdapter<AniListActivity>
     {
+        private readonly HomePresenter _presenter;
         private readonly string _userNameColorHex;
         private readonly string _actionColorHex;
         private readonly int _userId;
         private readonly Color _defaultIconColor;
 
-        public AniListActivityAdapter(BaseAniDroidActivity context,
+        public AniListActivityRecyclerAdapter(BaseAniDroidActivity context, HomePresenter presenter,
             IAsyncEnumerable<OneOf<IPagedData<AniListActivity>, IAniListError>> enumerable, int userId) : base(context, enumerable, CardType.Custom)
         {
+            _presenter = presenter;
             _userNameColorHex = $"#{Context.GetThemedColor(Resource.Attribute.Primary) & 0xffffff:X6}";
             _actionColorHex = $"#{Context.GetThemedColor(Resource.Attribute.Primary_Dark) & 0xffffff:X6}";
             _userId = userId;
@@ -62,8 +66,8 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             viewHolder.LikeCount.Text = item.Likes?.Count.ToString();
             viewHolder.LikeIcon.ImageTintList = ColorStateList.ValueOf(item.Likes?.Any(x => x.Id == _userId) == true ? Color.Crimson : _defaultIconColor);
             viewHolder.ReplyLikeContainer.SetTag(Resource.Id.Object_Position, position);
-            //viewHolder.ReplyLikeContainer.Click -= ShowReplyDialog;
-            //viewHolder.ReplyLikeContainer.Click += ShowReplyDialog;
+            viewHolder.ReplyLikeContainer.Click -= ShowReplyDialog;
+            viewHolder.ReplyLikeContainer.Click += ShowReplyDialog;
 
             viewHolder.Image.SetTag(Resource.Id.Object_Position, position);
             viewHolder.Image.Click -= ImageClick;
@@ -139,6 +143,35 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             {
                 MediaActivity.StartActivity(Context, item.Media.Id);
             }
+        }
+
+        private void ShowReplyDialog(object sender, EventArgs e)
+        {
+            var senderView = sender as View;
+            var activityPosition = (int)senderView.GetTag(Resource.Id.Object_Position);
+            var activity = Items[activityPosition];
+
+            AniListActivityRepliesDialog.Create(Context, activity, _userId, PostReply, ToggleLikeActivity);
+        }
+
+        private async void ToggleLikeActivity(int activityId)
+        {
+            var activityItemPosition = Items.FindIndex(x => x.Id == activityId);
+            var activityItem = Items[activityItemPosition];
+            Items[activityItemPosition] = null;
+            NotifyItemChanged(activityItemPosition);
+
+            await _presenter.ToggleLike(activityItem, activityItemPosition);
+        }
+
+        private async void PostReply(int activityId, string text)
+        {
+            var activityItemPosition = Items.FindIndex(x => x.Id == activityId);
+            var activityItem = Items[activityItemPosition];
+            Items[activityItemPosition] = null;
+            NotifyItemChanged(activityItemPosition);
+
+            await _presenter.PostActivityReply(activityItem, activityItemPosition, text);
         }
 
         public class AniListActivityViewHolder : RecyclerView.ViewHolder
