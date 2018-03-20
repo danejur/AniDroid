@@ -31,7 +31,11 @@ namespace AniDroid.Discover
 
         public void GetDiscoverLists()
         {
-            View.ShowTrendingResults(AniListService.BrowseMedia(new BrowseMediaDto(), 5));
+            View.ShowTrendingResults(AniListService.BrowseMedia(new BrowseMediaDto
+            {
+                Type = Media.MediaType.Anime,
+                Sort = new List<Media.MediaSort> {Media.MediaSort.TrendingDesc}
+            }, 5));
             View.ShowNewAnimeResults(AniListService.BrowseMedia(
                 new BrowseMediaDto
                 {
