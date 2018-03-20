@@ -195,6 +195,7 @@
     <Compile Include="AniListObject\Character\ICharacterView.cs" />
     <Compile Include="Dialogs\AniListActivityRepliesDialog.cs" />
     <Compile Include="Dialogs\AniListActivityCreateDialog.cs" />
+    <Compile Include="Dialogs\AniListNotificationsDialog.cs" />
     <Compile Include="Dialogs\MediaStreamingEpisodeListDialog.cs" />
     <Compile Include="Dialogs\MediaTitlesDialog.cs" />
     <Compile Include="Dialogs\SearchDialog.cs" />

@@ -35,7 +35,7 @@ using Toolbar = Android.Support.V7.Widget.Toolbar;
 namespace AniDroid.Main
 {
     [Activity(Label = "AniDroid", ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.KeyboardHidden | Android.Content.PM.ConfigChanges.ScreenSize)]
-    public class MainActivity : BaseAniDroidActivity<MainPresenter>, IMainView
+    public class MainActivity : BaseAniDroidActivity<MainPresenter>, IMainView, NavigationView.IOnNavigationItemSelectedListener
     {
         public const string RecreateActivityIntentKey = "RECREATE_ACTIVITY";
         public const string NotificationTextIntentKey = "NOTIFICATION_TEXT";
@@ -50,10 +50,6 @@ namespace AniDroid.Main
         private Toolbar _toolbar;
         [InjectView(Resource.Id.Main_SearchFab)]
         private FloatingActionButton _searchButton;
-        [InjectView(Resource.Id.Navigation_FooterContainer)]
-        private LinearLayout _navigationFooterContainer;
-        [InjectView(Resource.Id.Navigation_NotificationRecyclerView)]
-        private RecyclerView _navigationNotificationRecyclerView;
 
         private Toast _exitToast;
         private Action _navClosedAction;
@@ -70,9 +66,7 @@ namespace AniDroid.Main
 
         public void SetAuthenticatedNavigationVisibility(bool isAuthenticated)
         {
-            _navigationView?.Menu?.FindItem(Resource.Id.Menu_Navigation_Anime)?.SetVisible(isAuthenticated);
-            _navigationView?.Menu?.FindItem(Resource.Id.Menu_Navigation_Manga)?.SetVisible(isAuthenticated);
-            _navigationView?.Menu?.FindItem(Resource.Id.Menu_Navigation_Home)?.SetVisible(isAuthenticated);
+            _navigationView?.Menu?.SetGroupVisible(Resource.Id.Menu_NavigationGroup_AuthenticatedUser, isAuthenticated);
         }
 
         public void OnMainViewSetup()
@@ -81,17 +75,6 @@ namespace AniDroid.Main
             _searchButton.Click -= SearchButtonOnClick;
             _searchButton.Click += SearchButtonOnClick;
             SelectDefaultFragment();
-        }
-
-        public void HideNotificationView()
-        {
-            _navigationFooterContainer.Visibility = ViewStates.Gone;
-        }
-
-        public void SetupNotificationView(IAsyncEnumerable<OneOf<IPagedData<AniListNotification>, IAniListError>> enumerable)
-        {
-            _navigationFooterContainer.Visibility = ViewStates.Visible;
-            _navigationNotificationRecyclerView.SetAdapter(new AniListNotificationRecyclerAdapter(this, enumerable));
         }
 
         private void SearchButtonOnClick(object sender, EventArgs eventArgs)
@@ -125,8 +108,6 @@ namespace AniDroid.Main
             }
 
             await CreatePresenter(savedInstanceState);
-
-            Presenter.SetupNotifications();
         }
 
         public override void OnBackPressed()
@@ -160,8 +141,6 @@ namespace AniDroid.Main
                 SetupNavigation();
 
                 await Presenter.Init();
-
-                Presenter.SetupNotifications();
             }
             else if (!string.IsNullOrWhiteSpace(data?.GetStringExtra(NotificationTextIntentKey)))
             {
@@ -197,17 +176,13 @@ namespace AniDroid.Main
         {
             var navHeader = _navigationView.GetHeaderView(0);
 
-            var settingsButton = navHeader.FindViewById<ImageButton>(Resource.Id.Navigation_SettingsButton);
-            settingsButton.Click += (settingsSender, settingsEventArgs) =>
-            {
-                _navClosedAction = () => SettingsActivity.StartActivity(this);
-                _navigationDrawer.CloseDrawer(GravityCompat.Start);
-            };
-
+            var userNameViewContainer = navHeader.FindViewById<LinearLayout>(Resource.Id.Navigation_UserNameContainer);
             var userNameView = navHeader.FindViewById<TextView>(Resource.Id.Navigation_UserName);
             if (!Settings.IsUserAuthenticated)
             {
-                userNameView.Click += (sender, args) =>
+                navHeader.FindViewById(Resource.Id.Navigation_NotificationIcon).Visibility = ViewStates.Gone;
+
+                userNameViewContainer.Click += (sender, args) =>
                 {
                     _navClosedAction = () =>
                     {
@@ -221,9 +196,10 @@ namespace AniDroid.Main
                 var user = Settings.LoggedInUser;
 
                 userNameView.Text = user?.Name ?? "User Error";
-                userNameView.Click += (sender, args) =>
+                userNameViewContainer.Click += (sender, args) =>
                 {
-                    _navClosedAction = () => UserActivity.StartActivity(this, user?.Id ?? 0);
+                    _navClosedAction = () =>
+                        AniListNotificationsDialog.Create(this, Presenter.GetNotificationsEnumerable());
                     _navigationDrawer.CloseDrawer(GravityCompat.Start);
                 };
 
@@ -247,7 +223,7 @@ namespace AniDroid.Main
                 }
             }
 
-            _navigationView.NavigationItemSelected += NavigationItemSelected;
+            _navigationView.SetNavigationItemSelectedListener(this);
             _navigationDrawer.DrawerClosed += OnDrawerClosed;
         }
 
@@ -263,25 +239,6 @@ namespace AniDroid.Main
                 var action = _navClosedAction;
                 _navClosedAction = null;
                 action.Invoke();
-            }
-        }
-
-        private void NavigationItemSelected(object sender, NavigationView.NavigationItemSelectedEventArgs e)
-        {
-            switch (e.MenuItem.ItemId)
-            {
-                case Resource.Id.Menu_Navigation_Home:
-                    ChangeFragment(new HomeFragment());
-                    break;
-                case Resource.Id.Menu_Navigation_Discover:
-                    ChangeFragment(new DiscoverFragment());
-                    break;
-                case Resource.Id.Menu_Navigation_TorrentSearch:
-                    ChangeFragment(new TorrentSearchFragment());
-                    break;
-                case Resource.Id.Menu_Navigation_Browse:
-                    ChangeFragment(new BrowseFragment());
-                    break;
             }
         }
 
@@ -325,6 +282,32 @@ namespace AniDroid.Main
             _navigationView.SetCheckedItem(Resource.Id.Menu_Navigation_Discover);
         }
 
+        public bool OnNavigationItemSelected(IMenuItem menuItem)
+        {
+            switch (menuItem.ItemId)
+            {
+                case Resource.Id.Menu_Navigation_Home:
+                    ChangeFragment(new HomeFragment());
+                    break;
+                case Resource.Id.Menu_Navigation_Discover:
+                    ChangeFragment(new DiscoverFragment());
+                    break;
+                case Resource.Id.Menu_Navigation_TorrentSearch:
+                    ChangeFragment(new TorrentSearchFragment());
+                    break;
+                case Resource.Id.Menu_Navigation_Browse:
+                    ChangeFragment(new BrowseFragment());
+                    break;
+                case Resource.Id.Menu_Navigation_Settings:
+                    _navClosedAction = () => SettingsActivity.StartActivity(this);
+                    _navigationDrawer.CloseDrawer(GravityCompat.Start);
+                    return false;
+            }
+
+            return true;
+        }
+
         #endregion
+
     }
 }

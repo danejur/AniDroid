@@ -4,13 +4,13 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?Background_Special_Dark"
+    android:background="?android:attr/selectableItemBackground"
     android:paddingTop="1dp"
     android:paddingBottom="1dp"
     android:gravity="top">
   <ImageView
-      android:layout_width="30dp"
-      android:layout_height="30dp"
+      android:layout_width="40dp"
+      android:layout_height="40dp"
       android:id="@+id/AniListNotification_Image"
       android:visibility="visible"
       android:layout_marginRight="5dp"
@@ -28,7 +28,7 @@
       android:paddingBottom="5dp">
       <TextView
           android:id="@+id/AniListNotification_Text"
-          android:textSize="12dp"
+          android:textSize="14dp"
           android:text="Main Row"
           android:layout_width="match_parent"
           android:layout_height="match_parent"

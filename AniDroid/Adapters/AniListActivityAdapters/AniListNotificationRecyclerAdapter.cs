@@ -13,6 +13,7 @@ using Android.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 using OneOf;
 
@@ -36,6 +37,23 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             viewHolder.Text.TextFormatted = BaseAniDroidActivity.FromHtml(item.GetNotificationHtml(_accentColorHex));
             viewHolder.Timestamp.Text = item.GetAgeString(item.CreatedAt);
             Context.LoadImage(viewHolder.Image, item.GetImageUri());
+
+            viewHolder.ItemView.SetTag(Resource.Id.Object_Position, position);
+            viewHolder.ItemView.Click -= RowClick;
+            viewHolder.ItemView.Click += RowClick;
+        }
+
+        private void RowClick(object sender, EventArgs eventArgs)
+        {
+            var senderView = sender as View;
+            var itemPos = (int) senderView.GetTag(Resource.Id.Object_Position);
+            var item = Items[itemPos];
+
+            if (item.Type == AniListNotification.NotificationType.Airing)
+            {
+                MediaActivity.StartActivity(Context, item.Media.Id);
+            }
+
         }
 
         public override RecyclerView.ViewHolder CreateCustomViewHolder(ViewGroup parent, int viewType)

@@ -34,16 +34,9 @@ namespace AniDroid.Main
             return Task.CompletedTask;
         }
 
-        public void SetupNotifications()
+        public IAsyncEnumerable<OneOf<IPagedData<AniListNotification>, IAniListError>> GetNotificationsEnumerable()
         {
-            if (AniDroidSettings.IsUserAuthenticated)
-            {
-                View.SetupNotificationView(AniListService.GetAniListNotifications(20));
-            }
-            else
-            {
-                View.HideNotificationView();
-            }
+            return AniListService.GetAniListNotifications(20);
         }
     }
 }

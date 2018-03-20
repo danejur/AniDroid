@@ -1,14 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-  <group android:checkableBehavior="single">
+  <group android:checkableBehavior="single"
+         android:id="@+id/Menu_NavigationGroup_AuthenticatedUser">
     <item
       android:id="@+id/Menu_Navigation_Home"
       android:title="Home"
       android:icon="@drawable/ic_home_white_24px"/>
-    <item
-      android:id="@+id/Menu_Navigation_Discover"
-      android:title="Discover"
-      android:icon="@drawable/ic_public_white_24px"/>
     <item
       android:id="@+id/Menu_Navigation_Anime"
       android:title="Anime"
@@ -17,6 +14,13 @@
       android:id="@+id/Menu_Navigation_Manga"
       android:title="Manga"
       android:icon="@drawable/ic_view_list_white_24px"/>
+  </group>
+  <group android:checkableBehavior="single"
+    android:id="@+id/Menu_NavigationGroup_AniList">
+    <item
+      android:id="@+id/Menu_Navigation_Discover"
+      android:title="Discover"
+      android:icon="@drawable/ic_public_white_24px"/>
     <item
       android:id="@+id/Menu_Navigation_Browse"
       android:title="Browse"
@@ -25,5 +29,12 @@
       android:id="@+id/Menu_Navigation_TorrentSearch"
       android:title="Torrent Search"
       android:icon="@drawable/ic_search_white_24px"/>
+  </group>
+  <group android:checkableBehavior="single"
+    android:id="@+id/Menu_NavigationGroup_Settings">
+    <item
+      android:id="@+id/Menu_Navigation_Settings"
+      android:title="Settings"
+      android:icon="@drawable/ic_settings_white_24px" />
   </group>
 </menu>

@@ -5,60 +5,45 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="?android:windowBackground">
-  <android.support.design.widget.CoordinatorLayout
-      android:id="@+id/Main_CoordLayout"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent">
-    <android.support.design.widget.AppBarLayout
+    <android.support.design.widget.CoordinatorLayout
+        android:id="@+id/Main_CoordLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-      <android.support.v7.widget.Toolbar
-          android:id="@+id/Main_Toolbar"
-          android:layout_width="match_parent"
-          android:layout_height="56dp"
-          app:popupTheme="?Toolbar_PopupTheme"
-          app:theme="?Toolbar_Theme"
-          style="?Toolbar_Style" />
-    </android.support.design.widget.AppBarLayout>
-    <FrameLayout
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:id="@+id/Main_FragmentContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/Main_SearchFab"
-        app:srcCompat="@drawable/ic_search_white_24px"
-        style="?FabLarge_Style"
-        app:layout_behavior="AniDroid.Utils.Behaviors.FloatingActionButtonScrollBehavior"
-        android:elevation="10dp"
+        android:layout_height="match_parent">
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/Main_Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                app:popupTheme="?Toolbar_PopupTheme"
+                app:theme="?Toolbar_Theme"
+                style="?Toolbar_Style" />
+        </android.support.design.widget.AppBarLayout>
+        <FrameLayout
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:id="@+id/Main_FragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/Main_SearchFab"
+            app:srcCompat="@drawable/ic_search_white_24px"
+            style="?FabLarge_Style"
+            app:layout_behavior="AniDroid.Utils.Behaviors.FloatingActionButtonScrollBehavior"
+            android:elevation="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="12dp"
+            android:layout_marginRight="16dp" />
+    </android.support.design.widget.CoordinatorLayout>
+    <android.support.design.widget.NavigationView
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_marginBottom="12dp"
-        android:layout_marginRight="16dp" />
-  </android.support.design.widget.CoordinatorLayout>
-  <android.support.design.widget.NavigationView
-      android:layout_width="wrap_content"
-      android:layout_height="match_parent"
-      android:layout_gravity="start"
-      android:id="@+id/Main_NavigationView"
-      android:theme="?NavDrawer_Theme"
-      android:paddingBottom="175dp"
-      android:clipToPadding="false"
-      app:headerLayout="@layout/view_mainnavigationheader"
-      app:menu="@menu/main_navigation">
-    <LinearLayout
-        android:id="@+id/Navigation_FooterContainer"
-        android:layout_width="match_parent"
-        android:layout_height="175dp"
-        android:layout_marginBottom="-175dp"
-        android:layout_gravity="bottom">
-      <android.support.v7.widget.RecyclerView
-          android:id="@+id/Navigation_NotificationRecyclerView"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:scrollbars="vertical"
-          app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-    </LinearLayout>
-  </android.support.design.widget.NavigationView>
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:id="@+id/Main_NavigationView"
+        android:theme="?NavDrawer_Theme"
+        app:headerLayout="@layout/view_mainnavigationheader"
+        app:menu="@menu/main_navigation">
+    </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>

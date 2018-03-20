@@ -20,7 +20,5 @@ namespace AniDroid.Main
     {
         void SetAuthenticatedNavigationVisibility(bool isAuthenticated);
         void OnMainViewSetup();
-        void HideNotificationView();
-        void SetupNotificationView(IAsyncEnumerable<OneOf<IPagedData<AniListNotification>, IAniListError>> enumerable);
     }
 }

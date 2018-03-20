@@ -221,6 +221,12 @@ namespace AniDroid.Settings
             switch (item.ItemId)
             {
                 case Android.Resource.Id.Home:
+                    if (_recreateActivity)
+                    {
+                        var resultIntent = new Intent();
+                        resultIntent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
+                        SetResult(Result.Canceled, resultIntent);
+                    }
                     Finish();
                     return true;
                 case Resource.Id.Menu_Settings_Logout:
