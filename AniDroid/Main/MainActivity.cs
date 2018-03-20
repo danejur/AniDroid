@@ -59,6 +59,7 @@ namespace AniDroid.Main
         private BaseAniDroidFragment _currentFragment;
         private bool _fragmentBeingReplaced;
         private BadgeDrawerToggle _drawerToggle;
+        private BadgeImageView _notificationImageView;
 
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IMainView, MainActivity>(this));
 
@@ -95,6 +96,7 @@ namespace AniDroid.Main
             }
 
             _drawerToggle?.SetBadgeText(countVal);
+            _notificationImageView?.SetText(countVal);
         }
 
         private void SearchButtonOnClick(object sender, EventArgs eventArgs)
@@ -215,6 +217,8 @@ namespace AniDroid.Main
         private void SetupNavigation()
         {
             var navHeader = _navigationView.GetHeaderView(0);
+
+            _notificationImageView = navHeader.FindViewById<BadgeImageView>(Resource.Id.Navigation_NotificationIcon);
 
             var userNameViewContainer = navHeader.FindViewById<LinearLayout>(Resource.Id.Navigation_UserNameContainer);
             var userNameView = navHeader.FindViewById<TextView>(Resource.Id.Navigation_UserName);

@@ -26,6 +26,8 @@
   <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:clipChildren="false"
     android:layout_gravity="bottom"
     android:background="#88000000">
       <LinearLayout
@@ -34,6 +36,8 @@
           android:background="?android:attr/selectableItemBackground"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:clipChildren="false"
+          android:clipToPadding="false"
           android:paddingTop="8dp"
           android:paddingBottom="8dp"
           android:paddingLeft="15dp"
@@ -48,7 +52,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center_vertical" />
-        <ImageView
+        <AniDroid.Widgets.BadgeImageView
             android:id="@+id/Navigation_NotificationIcon"
             android:background="@android:color/transparent"
             app:srcCompat="@drawable/ic_mode_comment_white_24px"

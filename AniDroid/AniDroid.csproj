@@ -243,7 +243,7 @@
     <Compile Include="Utils\Storage\SettingsStorage.cs" />
     <Compile Include="Widgets\BadgeDrawerArrowDrawable.cs" />
     <Compile Include="Widgets\BadgeDrawerToggle.cs" />
-    <Compile Include="Widgets\BadgeIconDrawable.cs" />
+    <Compile Include="Widgets\BadgeImageView.cs" />
     <Compile Include="Widgets\DataRow.cs" />
     <Compile Include="Widgets\ExpandableText.cs" />
   </ItemGroup>
