@@ -38,5 +38,13 @@ namespace AniDroid.Main
         {
             return AniListService.GetAniListNotifications(20);
         }
+
+        public async Task GetUserNotificationCount()
+        {
+            var countResp = await AniListService.GetAniListNotificationCount(default(CancellationToken));
+
+            countResp.Switch((IAniListError error) => { })
+                .Switch(user => View.SetNotificationCount(user.UnreadNotificationCount));
+        }
     }
 }

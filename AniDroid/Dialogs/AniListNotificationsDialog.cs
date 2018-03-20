@@ -22,12 +22,18 @@ namespace AniDroid.Dialogs
 {
     public static class AniListNotificationsDialog
     {
-        public static void Create(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<AniListNotification>, IAniListError>> enumerable)
+        public static void Create(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<AniListNotification>, IAniListError>> enumerable, Action dataLoadedAction = null)
         {
             var dialogView = context.LayoutInflater.Inflate(Resource.Layout.View_List, null);
             dialogView.SetBackgroundColor(Color.Transparent);
             var recycler = dialogView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
-            recycler.SetAdapter(new AniListNotificationRecyclerAdapter(context, enumerable) { LoadingItemBackgroundColor = Color.Transparent});
+            var adapter =
+                new AniListNotificationRecyclerAdapter(context, enumerable)
+                {
+                    LoadingItemBackgroundColor = Color.Transparent
+                };
+            adapter.DataLoaded += (sender, b) => dataLoadedAction?.Invoke();
+            recycler.SetAdapter(adapter);
             var dialog = new Android.Support.V7.App.AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme))
                 .SetView(dialogView)
                 .Create();

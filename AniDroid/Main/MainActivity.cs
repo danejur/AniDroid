@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Support.V4.View;
 using Android.Support.V4.Widget;
 using Android.Support.V7.App;
+using Android.Support.V7.Content.Res;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
@@ -28,6 +30,7 @@ using AniDroid.SearchResults;
 using AniDroid.Settings;
 using AniDroid.TorrentSearch;
 using AniDroid.Utils;
+using AniDroid.Widgets;
 using Ninject;
 using OneOf;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
@@ -55,6 +58,7 @@ namespace AniDroid.Main
         private Action _navClosedAction;
         private BaseAniDroidFragment _currentFragment;
         private bool _fragmentBeingReplaced;
+        private BadgeDrawerToggle _drawerToggle;
 
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IMainView, MainActivity>(this));
 
@@ -75,6 +79,22 @@ namespace AniDroid.Main
             _searchButton.Click -= SearchButtonOnClick;
             _searchButton.Click += SearchButtonOnClick;
             SelectDefaultFragment();
+        }
+
+        public void SetNotificationCount(int count)
+        {
+            var countVal = "";
+
+            if (count > 99)
+            {
+                countVal = "99+";
+            }
+            else if (count > 0)
+            {
+                countVal = count.ToString();
+            }
+
+            _drawerToggle?.SetBadgeText(countVal);
         }
 
         private void SearchButtonOnClick(object sender, EventArgs eventArgs)
@@ -108,6 +128,16 @@ namespace AniDroid.Main
             }
 
             await CreatePresenter(savedInstanceState);
+        }
+
+        protected override async void OnResume()
+        {
+            base.OnResume();
+
+            if (Presenter != null)
+            {
+                await Presenter.GetUserNotificationCount();
+            }
         }
 
         public override void OnBackPressed()
@@ -153,8 +183,18 @@ namespace AniDroid.Main
         private void SetupToolbar()
         {
             SetSupportActionBar(_toolbar);
-            SupportActionBar.SetHomeAsUpIndicator(Resource.Drawable.ic_menu_white_24px);
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+
+            _drawerToggle = new BadgeDrawerToggle(this, _navigationDrawer, _toolbar, 0, 0)
+            {
+                DrawerIndicatorEnabled = true,
+                DrawerSlideAnimationEnabled = true
+            };
+            _drawerToggle.SetToggleColor(Color.White);
+
+            _navigationDrawer.AddDrawerListener(_drawerToggle);
+            _drawerToggle.SyncState();
+
         }
 
         public override bool MenuItemSelected(IMenuItem item)
@@ -199,7 +239,7 @@ namespace AniDroid.Main
                 userNameViewContainer.Click += (sender, args) =>
                 {
                     _navClosedAction = () =>
-                        AniListNotificationsDialog.Create(this, Presenter.GetNotificationsEnumerable());
+                        AniListNotificationsDialog.Create(this, Presenter.GetNotificationsEnumerable(), () => SetNotificationCount(0));
                     _navigationDrawer.CloseDrawer(GravityCompat.Start);
                 };
 

@@ -20,5 +20,6 @@ namespace AniDroid.Main
     {
         void SetAuthenticatedNavigationVisibility(bool isAuthenticated);
         void OnMainViewSetup();
+        void SetNotificationCount(int count);
     }
 }

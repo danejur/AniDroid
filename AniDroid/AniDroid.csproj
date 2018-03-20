@@ -241,6 +241,9 @@
     <Compile Include="Utils\Integration\AniDroidAuthCodeResolver.cs" />
     <Compile Include="Utils\Interfaces\IAniDroidSettings.cs" />
     <Compile Include="Utils\Storage\SettingsStorage.cs" />
+    <Compile Include="Widgets\BadgeDrawerArrowDrawable.cs" />
+    <Compile Include="Widgets\BadgeDrawerToggle.cs" />
+    <Compile Include="Widgets\BadgeIconDrawable.cs" />
     <Compile Include="Widgets\DataRow.cs" />
     <Compile Include="Widgets\ExpandableText.cs" />
   </ItemGroup>
@@ -592,6 +595,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\menu\Discover_ActionBar.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_comment_plus_outline_white_24px.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
