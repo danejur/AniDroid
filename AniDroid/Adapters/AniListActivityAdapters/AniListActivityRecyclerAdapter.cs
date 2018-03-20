@@ -44,6 +44,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             _actionColorHex = $"#{Context.GetThemedColor(Resource.Attribute.Primary_Dark) & 0xffffff:X6}";
             _userId = userId;
             _defaultIconColor = new Color(context.GetThemedColor(Resource.Attribute.Secondary_Dark));
+            CustomCardUseItemDecoration = true;
         }
 
         public override void BindCustomViewHolder(RecyclerView.ViewHolder holder, int position)
@@ -72,6 +73,10 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             viewHolder.Image.SetTag(Resource.Id.Object_Position, position);
             viewHolder.Image.Click -= ImageClick;
             viewHolder.Image.Click += ImageClick;
+
+            viewHolder.Container.SetTag(Resource.Id.Object_Position, position);
+            viewHolder.Container.Click -= RowClick;
+            viewHolder.Container.Click += RowClick;
 
             if (item.Type == AniListActivity.ActivityType.Text)
             {
@@ -142,6 +147,22 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             else if (item.Type == AniListActivity.ActivityType.AnimeList || item.Type == AniListActivity.ActivityType.MangaList)
             {
                 MediaActivity.StartActivity(Context, item.Media.Id);
+            }
+        }
+
+        private void RowClick(object sender, EventArgs e)
+        {
+            var view = sender as View;
+            var position = (int)view.GetTag(Resource.Id.Object_Position);
+            var item = Items[position];
+
+            if (item.Type == AniListActivity.ActivityType.Text || item.Type == AniListActivity.ActivityType.AnimeList || item.Type == AniListActivity.ActivityType.MangaList)
+            {
+                UserActivity.StartActivity(Context, item.User.Id);
+            }
+            else if (item.Type == AniListActivity.ActivityType.Message)
+            {
+                UserActivity.StartActivity(Context, item.Messenger.Id);
             }
         }
 
