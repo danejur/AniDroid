@@ -15,7 +15,7 @@ namespace AniDroid.AniListObject
 {
     public interface IAniListActivityPresenter
     {
-        Task ToggleLike(AniListActivity activity, int activityPosition);
+        Task ToggleActivityLike(AniListActivity activity, int activityPosition);
         Task PostActivityReply(AniListActivity activity, int activityPosition, string activityText);
     }
 }

@@ -52,8 +52,18 @@ namespace AniDroid.Settings
         {
             var options = new List<string> {"Vertical", "Horizontal", "Flat Horizontal"};
             _settingsContainer.AddView(
-                CreateSpinnerSettingRow("Card Display Type", "Choose how you would like to display lists in AniDroid", options, (int) cardType, (sender, args) =>
-                    Presenter.SetCardType((BaseRecyclerAdapter.CardType) args.Position)));
+                CreateSpinnerSettingRow("Card Display Type", "Choose how you would like to display lists in AniDroid",
+                    options, (int) cardType,
+                    (sender, args) =>
+                    {
+                        Presenter.SetCardType((BaseRecyclerAdapter.CardType) args.Position);
+
+                        if (cardType != (BaseRecyclerAdapter.CardType) args.Position)
+                        {
+                            _recreateActivity = true;
+                            Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
+                        }
+                    }));
             _settingsContainer.AddView(CreateDivider());
         }
 
@@ -64,6 +74,7 @@ namespace AniDroid.Settings
                 CreateSpinnerSettingRow("AniDroid Theme", "Choose the theme you'd like to use", options, (int)theme, (sender, args) =>
                 {
                     Presenter.SetTheme((AniDroidTheme) args.Position);
+
                     if (theme != (AniDroidTheme) args.Position)
                     {
                         Recreate();

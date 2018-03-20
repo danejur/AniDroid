@@ -485,7 +485,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\menu\AniListObject_ActionBar.xml" />
+    <AndroidResource Include="Resources\menu\User_ActionBar.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Arrays.xml" />
@@ -606,6 +606,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_group_white_24px.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\AniListObject_ActionBar.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\ic_star_outline_white_24px.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

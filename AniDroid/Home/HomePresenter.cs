@@ -37,7 +37,7 @@ namespace AniDroid.Home
             View.ShowUserActivity(AniListService.GetAniListActivity(new AniListActivityDto { IsFollowing = isFollowingOnly }, 20), AniDroidSettings.LoggedInUser?.Id ?? 0);
         }
 
-        public async Task ToggleLike(AniListActivity activity, int activityPosition)
+        public async Task ToggleActivityLike(AniListActivity activity, int activityPosition)
         {
             var toggleResp = await AniListService.ToggleLike(activity.Id, AniList.Models.AniListObject.LikeableType.Activity, default(CancellationToken));
 

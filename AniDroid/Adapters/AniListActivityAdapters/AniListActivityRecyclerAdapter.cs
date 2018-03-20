@@ -182,7 +182,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             Items[activityItemPosition] = null;
             NotifyItemChanged(activityItemPosition);
 
-            await _presenter.ToggleLike(activityItem, activityItemPosition);
+            await _presenter.ToggleActivityLike(activityItem, activityItemPosition);
         }
 
         private async void PostReply(int activityId, string text)

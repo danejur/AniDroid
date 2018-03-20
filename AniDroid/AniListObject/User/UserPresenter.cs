@@ -8,6 +8,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Dto;
@@ -35,6 +36,13 @@ namespace AniDroid.AniListObject.User
 
             userResp.Switch(user =>
                 {
+                    if (AniDroidSettings.IsUserAuthenticated && user.Id != AniDroidSettings.LoggedInUser.Id)
+                    {
+                        View.SetCanFollow();
+                        View.SetCanMessage();
+                        View.SetIsFollowing(user.IsFollowing, false);
+                    }
+
                     View.SetShareText(user.Name, user.SiteUrl);
                     View.SetContentShown(false); // TODO: change this to switch based on banner presence
                     View.SetupToolbar(user.Name);
@@ -48,7 +56,30 @@ namespace AniDroid.AniListObject.User
             return AniListService.GetAniListActivity(new AniListActivityDto {UserId = userId}, count);
         }
 
-        public async Task ToggleLike(AniListActivity activity, int activityPosition)
+        public async Task ToggleFollowUser(int userId)
+        {
+            var toggleResp = await AniListService.ToggleFollowUser(userId, default(CancellationToken));
+
+            toggleResp.Switch((IAniListError error) =>
+                    View.DisplaySnackbarMessage("Error occurred while trying to toggle following status",
+                        Snackbar.LengthLong))
+                .Switch(user => View.SetIsFollowing(user.IsFollowing, true));
+        }
+
+        public async Task PostUserMessage(int userId, string message)
+        {
+            var postResp = await AniListService.PostUserMessage(userId, message, default(CancellationToken));
+
+            postResp.Switch((IAniListError error) =>
+                    View.DisplaySnackbarMessage("Error occurred while posting message", Snackbar.LengthLong))
+                .Switch(activity =>
+                {
+                    View.RefreshUserActivity();
+                    View.DisplaySnackbarMessage("Message posted successfully", Snackbar.LengthShort);
+                });
+        }
+
+        public async Task ToggleActivityLike(AniListActivity activity, int activityPosition)
         {
             //var toggleResp = await AniListService.ToggleLike(activity.Id, AniList.Models.AniListObject.LikeableType.Activity, default(CancellationToken));
 

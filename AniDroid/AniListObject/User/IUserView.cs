@@ -17,6 +17,10 @@ namespace AniDroid.AniListObject.User
     {
         int? GetUserId();
         string GetUserName();
+        void SetIsFollowing(bool isFollowing, bool showNotification);
+        void SetCanFollow();
+        void SetCanMessage();
         void SetupUserView(AniList.Models.User user);
+        void RefreshUserActivity();
     }
 }

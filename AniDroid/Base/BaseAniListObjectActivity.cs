@@ -199,7 +199,7 @@ namespace AniDroid.Base
         }
         
 
-        public sealed override bool SetupMenu(IMenu menu)
+        public override bool SetupMenu(IMenu menu)
         {
             menu?.Clear();
             MenuInflater.Inflate(Resource.Menu.AniListObject_ActionBar, _menu = menu);
@@ -211,7 +211,7 @@ namespace AniDroid.Base
             return true;
         }
 
-        public sealed override bool MenuItemSelected(IMenuItem item)
+        public override bool MenuItemSelected(IMenuItem item)
         {
             switch (item.ItemId)
             {

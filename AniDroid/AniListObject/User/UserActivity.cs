@@ -15,7 +15,9 @@ using Android.Widget;
 using AniDroid.Adapters;
 using AniDroid.Adapters.AniListActivityAdapters;
 using AniDroid.Base;
+using AniDroid.Dialogs;
 using AniDroid.Utils;
+using AniDroid.Utils.Interfaces;
 using Ninject;
 
 namespace AniDroid.AniListObject.User
@@ -26,8 +28,13 @@ namespace AniDroid.AniListObject.User
     {
         public const string UserIdIntentKey = "USER_ID";
 
+        private IMenu _menu;
+        private bool _canMessage;
+        private bool _canFollow;
+        private bool _isFollowing;
         private int? _userId;
         private string _userName;
+        private AniListActivityRecyclerAdapter _userActivityRecyclerAdapter;
 
         protected override IReadOnlyKernel Kernel =>
             new StandardKernel(new ApplicationModule<IUserView, UserActivity>(this));
@@ -78,6 +85,29 @@ namespace AniDroid.AniListObject.User
             return _userName;
         }
 
+        public void SetIsFollowing(bool isFollowing, bool showNotification)
+        {
+            _isFollowing = isFollowing;
+            _menu?.FindItem(Resource.Id.Menu_User_Follow)?.SetIcon(_isFollowing
+                ? Resource.Drawable.ic_star_white_24px
+                : Resource.Drawable.ic_star_outline_white_24px);
+
+            if (showNotification)
+            {
+                DisplaySnackbarMessage(_isFollowing ? "Followed user" : "Unfollowed user");
+            }
+        }
+
+        public void SetCanFollow()
+        {
+            _canFollow = true;
+        }
+
+        public void SetCanMessage()
+        {
+            _canMessage = true;
+        }
+
         public void SetupUserView(AniList.Models.User user)
         {
             var adapter = new FragmentlessViewPagerAdapter();
@@ -89,15 +119,50 @@ namespace AniDroid.AniListObject.User
             TabLayout.SetupWithViewPager(ViewPager);
         }
 
+        public void RefreshUserActivity()
+        {
+            _userActivityRecyclerAdapter.ResetAdapter();
+        }
+
         private View CreateUserActivityView(int userId)
         {
             var userActivityEnumerable = Presenter.GetUserActivityEnumrable(userId, PageLength);
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
-            var dialogRecyclerAdapter = new AniListActivityRecyclerAdapter(this, Presenter, userActivityEnumerable, userId);
-            recycler.SetAdapter(dialogRecyclerAdapter);
+            _userActivityRecyclerAdapter = new AniListActivityRecyclerAdapter(this, Presenter, userActivityEnumerable, userId);
+            recycler.SetAdapter(_userActivityRecyclerAdapter);
 
             return retView;
+        }
+
+        public override bool SetupMenu(IMenu menu)
+        {
+            menu?.Clear();
+            MenuInflater.Inflate(Resource.Menu.User_ActionBar, _menu = menu);
+            menu?.FindItem(Resource.Id.Menu_User_Message)?.SetVisible(_canMessage);
+            menu?.FindItem(Resource.Id.Menu_User_Follow)?.SetIcon(_isFollowing
+                ? Resource.Drawable.ic_star_white_24px
+                : Resource.Drawable.ic_star_outline_white_24px);
+            menu?.FindItem(Resource.Id.Menu_User_Follow)?.SetVisible(_canFollow);
+            return true;
+        }
+
+        public override bool MenuItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Resource.Id.Menu_User_Share:
+                    Share();
+                    return true;
+                case Resource.Id.Menu_User_Follow:
+                    Presenter.ToggleFollowUser(_userId ?? 0);
+                    return true;
+                case Resource.Id.Menu_User_Message:
+                    AniListActivityCreateDialog.Create(this, (message) => Presenter?.PostUserMessage(_userId ?? 0, message));
+                    return true;
+            }
+
+            return base.MenuItemSelected(item);
         }
     }
 }
