@@ -64,6 +64,12 @@ namespace AniDroid.Utils
             set => _settingStorage.Put(StorageKeys.LoggedInUser, value);
         }
 
+        public bool ShowAllAniListActivity
+        {
+            get => _settingStorage.Get(StorageKeys.ShowAllActivityKey, false);
+            set => _settingStorage.Put(StorageKeys.ShowAllActivityKey, value);
+        }
+
         #region Constants
 
         private static class StorageKeys
@@ -74,6 +80,8 @@ namespace AniDroid.Utils
 
             public const string AccessCode = "ACCESS_CODE";
             public const string LoggedInUser = "LOGGED_IN_USER";
+
+            public const string ShowAllActivityKey = "SHOW_ALL_ACTIVITY";
         }
 
         #endregion

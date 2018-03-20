@@ -3,6 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
   <item
+      android:id="@+id/Menu_Home_ToggleActivityType"
+      android:title="Show Public Activity"
+      android:showAsAction="always"
+      android:icon="@drawable/ic_group_white_24px"/>
+  <item
       android:id="@+id/Menu_Home_PostStatus"
       android:title="Post Status"
       android:showAsAction="always"

@@ -11,14 +11,16 @@ using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
+using AniDroid.AniList.Dto;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniListObject;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
 
 namespace AniDroid.Home
 {
-    public class HomePresenter : BaseAniDroidPresenter<IHomeView>
+    public class HomePresenter : BaseAniDroidPresenter<IHomeView>, IAniListActivityPresenter
     {
         public HomePresenter(IHomeView view, IAniListService service, IAniDroidSettings settings) : base(view, service, settings)
         {
@@ -29,9 +31,10 @@ namespace AniDroid.Home
             return Task.CompletedTask;
         }
 
-        public void GetAniListActivity(bool onlyUserActivity)
+        public void GetAniListActivity(bool isFollowingOnly)
         {
-            View.ShowUserActivity(AniListService.GetAniListActivity(20), AniDroidSettings.LoggedInUser?.Id ?? 0);
+            AniDroidSettings.ShowAllAniListActivity = !isFollowingOnly;
+            View.ShowUserActivity(AniListService.GetAniListActivity(new AniListActivityDto { IsFollowing = isFollowingOnly }, 20), AniDroidSettings.LoggedInUser?.Id ?? 0);
         }
 
         public async Task ToggleLike(AniListActivity activity, int activityPosition)

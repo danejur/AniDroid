@@ -18,6 +18,7 @@ using AniDroid.Adapters.Base;
 using AniDroid.AniList;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniListObject;
 using AniDroid.AniListObject.Media;
 using AniDroid.AniListObject.User;
 using AniDroid.Base;
@@ -29,13 +30,13 @@ namespace AniDroid.Adapters.AniListActivityAdapters
 {
     public class AniListActivityRecyclerAdapter : LazyLoadingRecyclerViewAdapter<AniListActivity>
     {
-        private readonly HomePresenter _presenter;
+        private readonly IAniListActivityPresenter _presenter;
         private readonly string _userNameColorHex;
         private readonly string _actionColorHex;
         private readonly int _userId;
         private readonly Color _defaultIconColor;
 
-        public AniListActivityRecyclerAdapter(BaseAniDroidActivity context, HomePresenter presenter,
+        public AniListActivityRecyclerAdapter(BaseAniDroidActivity context, IAniListActivityPresenter presenter,
             IAsyncEnumerable<OneOf<IPagedData<AniListActivity>, IAniListError>> enumerable, int userId) : base(context, enumerable, CardType.Custom)
         {
             _presenter = presenter;

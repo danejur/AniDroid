@@ -16,6 +16,7 @@ using AniDroid.AniList.Models;
 using AniDroid.Base;
 using AniDroid.Dialogs;
 using AniDroid.Utils;
+using AniDroid.Utils.Interfaces;
 using Ninject;
 using OneOf;
 
@@ -24,6 +25,7 @@ namespace AniDroid.Home
     public class HomeFragment : BaseAniDroidFragment<HomePresenter>, IHomeView
     {
         private AniListActivityRecyclerAdapter _recyclerAdapter;
+        private bool _isFollowingOnly;
 
         public override bool HasMenu => true;
         public override string FragmentName => "HOME_FRAGMENT";
@@ -31,6 +33,8 @@ namespace AniDroid.Home
 
         public override View CreateView(ViewGroup container, Bundle savedInstanceState)
         {
+            _isFollowingOnly = !Kernel.Get<IAniDroidSettings>().ShowAllAniListActivity;
+
             CreatePresenter(savedInstanceState).GetAwaiter().GetResult();
             return LayoutInflater.Inflate(Resource.Layout.View_List, container, false);
         }
@@ -39,7 +43,7 @@ namespace AniDroid.Home
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            Presenter.GetAniListActivity(true);
+            Presenter.GetAniListActivity(_isFollowingOnly);
         }
 
         public override void SetupMenu(IMenu menu)
@@ -47,6 +51,8 @@ namespace AniDroid.Home
             menu.Clear();
             var inflater = new MenuInflater(Context);
             inflater.Inflate(Resource.Menu.Home_ActionBar, menu);
+
+            SetActivityIcon(menu.FindItem(Resource.Id.Menu_Home_ToggleActivityType));
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
@@ -58,6 +64,11 @@ namespace AniDroid.Home
                     return true;
                 case Resource.Id.Menu_Home_PostStatus:
                     AniListActivityCreateDialog.Create(Activity, Presenter.PostStatusActivity);
+                    return true;
+                case Resource.Id.Menu_Home_ToggleActivityType:
+                    _isFollowingOnly = !_isFollowingOnly;
+                    Presenter.GetAniListActivity(_isFollowingOnly);
+                    SetActivityIcon(item);
                     return true;
             }
 
@@ -89,6 +100,20 @@ namespace AniDroid.Home
         public void RefreshActivity()
         {
             _recyclerAdapter?.ResetAdapter();
+        }
+
+        private void SetActivityIcon(IMenuItem menuItem)
+        {
+            if (_isFollowingOnly)
+            {
+                menuItem.SetIcon(Resource.Drawable.ic_group_white_24px);
+                menuItem.SetTitle("Show Public Activity");
+            }
+            else
+            {
+                menuItem.SetIcon(Resource.Drawable.ic_person_white_24px);
+                menuItem.SetTitle("Show Personal Activity");
+            }
         }
     }
 }

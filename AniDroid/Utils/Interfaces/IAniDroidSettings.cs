@@ -24,5 +24,6 @@ namespace AniDroid.Utils.Interfaces
         bool IsUserAuthenticated { get; }
         void ClearUserAuthentication();
         User LoggedInUser { get; set; }
+        bool ShowAllAniListActivity { get; set; }
     }
 }

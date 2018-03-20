@@ -9,8 +9,11 @@ using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
+using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using AniDroid.Adapters;
+using AniDroid.Adapters.AniListActivityAdapters;
 using AniDroid.Base;
 using AniDroid.Utils;
 using Ninject;
@@ -77,7 +80,24 @@ namespace AniDroid.AniListObject.User
 
         public void SetupUserView(AniList.Models.User user)
         {
-            DisplaySnackbarMessage(user.Name, Snackbar.LengthShort);
+            var adapter = new FragmentlessViewPagerAdapter();
+            adapter.AddView(CreateUserActivityView(user.Id), "Activity");
+
+            ViewPager.OffscreenPageLimit = adapter.Count - 1;
+            ViewPager.Adapter = adapter;
+
+            TabLayout.SetupWithViewPager(ViewPager);
+        }
+
+        private View CreateUserActivityView(int userId)
+        {
+            var userActivityEnumerable = Presenter.GetUserActivityEnumrable(userId, PageLength);
+            var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
+            var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
+            var dialogRecyclerAdapter = new AniListActivityRecyclerAdapter(this, Presenter, userActivityEnumerable, userId);
+            recycler.SetAdapter(dialogRecyclerAdapter);
+
+            return retView;
         }
     }
 }
