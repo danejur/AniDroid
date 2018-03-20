@@ -55,7 +55,6 @@ namespace AniDroid.Adapters.MediaAdapters
         public override CardItem SetupCardItemViewHolder(CardItem item)
         {
             item.Container.LayoutParameters.Width = _cardWidth;
-            item.Container.LayoutParameters.Height = item.ContainerCard.LayoutParameters.Height = item.Image.LayoutParameters.Height = ViewGroup.LayoutParams.MatchParent;
 
             item.Button.Clickable = false;
             item.ButtonIcon.SetImageResource(Resource.Drawable.ic_favorite_white_24px);

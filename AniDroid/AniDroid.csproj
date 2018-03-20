@@ -247,6 +247,7 @@
     <Compile Include="Widgets\BadgeImageView.cs" />
     <Compile Include="Widgets\DataRow.cs" />
     <Compile Include="Widgets\ExpandableText.cs" />
+    <Compile Include="Widgets\ScalingImageView.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

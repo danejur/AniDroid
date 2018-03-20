@@ -22,14 +22,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="4dp">
-            <ImageView
+          <AniDroid.Widgets.ScalingImageView
                 android:layout_width="wrap_content"
                 android:layout_height="80dp"
+                app:WidthToHeightRatio="0.625"
                 android:id="@+id/CardItem_Image"
                 android:layout_alignParentLeft="true"
                 android:layout_marginRight="16dp"
                 android:layout_centerVertical="true"
-                android:scaleType="fitCenter"
+                android:scaleType="centerCrop"
                 android:adjustViewBounds="true"
                 app:srcCompat="@android:drawable/ic_menu_gallery" />
             <TextView

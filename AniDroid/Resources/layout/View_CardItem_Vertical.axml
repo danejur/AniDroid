@@ -18,13 +18,14 @@
       app:cardUseCompatPadding="true"
       app:cardPreventCornerOverlap="false"
       android:id="@+id/CardItem_Card">
-    <ImageView
+    <AniDroid.Widgets.ScalingImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/CardItem_Image"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:scaleType="centerCrop"
+        app:HeightToWidthRatio="1.6"
         android:adjustViewBounds="true" />
     <RelativeLayout
         android:layout_width="match_parent"

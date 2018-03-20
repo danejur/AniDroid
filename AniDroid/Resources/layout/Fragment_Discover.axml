@@ -18,7 +18,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/Discover_TrendingRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="225dp"
+            android:layout_height="200dp"
             android:layout_below="@id/Discover_TrendingLabel"
             android:layout_marginBottom="20dp" />
         <TextView
@@ -33,7 +33,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/Discover_NewAnimeRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="225dp"
+            android:layout_height="200dp"
             android:layout_below="@id/Discover_NewAnimeLabel"
             android:layout_marginBottom="20dp" />
         <TextView
@@ -48,7 +48,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/Discover_NewMangaRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="225dp"
+            android:layout_height="200dp"
             android:layout_below="@id/Discover_NewMangaLabel" />
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>

@@ -130,35 +130,35 @@ namespace AniDroid
 		public partial class Attribute
 		{
 			
-			// aapt resource value: 0x7f010194
-			public const int AppBarLayout_Style = 2130772372;
-			
-			// aapt resource value: 0x7f0101a3
-			public const int Background = 2130772387;
-			
-			// aapt resource value: 0x7f0101a4
-			public const int Background_Alternate = 2130772388;
-			
-			// aapt resource value: 0x7f0101ab
-			public const int Background_RemakeTorrent = 2130772395;
+			// aapt resource value: 0x7f010196
+			public const int AppBarLayout_Style = 2130772374;
 			
 			// aapt resource value: 0x7f0101a5
-			public const int Background_Special = 2130772389;
+			public const int Background = 2130772389;
 			
 			// aapt resource value: 0x7f0101a6
-			public const int Background_Special_Dark = 2130772390;
+			public const int Background_Alternate = 2130772390;
+			
+			// aapt resource value: 0x7f0101ad
+			public const int Background_RemakeTorrent = 2130772397;
 			
 			// aapt resource value: 0x7f0101a7
-			public const int Background_Text = 2130772391;
+			public const int Background_Special = 2130772391;
 			
 			// aapt resource value: 0x7f0101a8
-			public const int Background_Text_Alternate = 2130772392;
+			public const int Background_Special_Dark = 2130772392;
 			
 			// aapt resource value: 0x7f0101a9
-			public const int Background_Text_Special = 2130772393;
+			public const int Background_Text = 2130772393;
 			
 			// aapt resource value: 0x7f0101aa
-			public const int Background_TrustedTorrent = 2130772394;
+			public const int Background_Text_Alternate = 2130772394;
+			
+			// aapt resource value: 0x7f0101ab
+			public const int Background_Text_Special = 2130772395;
+			
+			// aapt resource value: 0x7f0101ac
+			public const int Background_TrustedTorrent = 2130772396;
 			
 			// aapt resource value: 0x7f010182
 			public const int ButtonClickable = 2130772354;
@@ -172,89 +172,92 @@ namespace AniDroid
 			// aapt resource value: 0x7f010181
 			public const int ButtonVisible = 2130772353;
 			
-			// aapt resource value: 0x7f01018a
-			public const int Checkbox_Theme = 2130772362;
-			
-			// aapt resource value: 0x7f01018d
-			public const int Dialog_Theme = 2130772365;
-			
-			// aapt resource value: 0x7f010188
-			public const int ExpandedToolbar_Theme = 2130772360;
-			
-			// aapt resource value: 0x7f010190
-			public const int FabLarge_Style = 2130772368;
+			// aapt resource value: 0x7f01018c
+			public const int Checkbox_Theme = 2130772364;
 			
 			// aapt resource value: 0x7f01018f
-			public const int FabSmallAlternate_Style = 2130772367;
+			public const int Dialog_Theme = 2130772367;
 			
-			// aapt resource value: 0x7f01018e
-			public const int FabSmall_Style = 2130772366;
+			// aapt resource value: 0x7f01018a
+			public const int ExpandedToolbar_Theme = 2130772362;
+			
+			// aapt resource value: 0x7f010192
+			public const int FabLarge_Style = 2130772370;
+			
+			// aapt resource value: 0x7f010191
+			public const int FabSmallAlternate_Style = 2130772369;
+			
+			// aapt resource value: 0x7f010190
+			public const int FabSmall_Style = 2130772368;
+			
+			// aapt resource value: 0x7f010186
+			public const int HeightToWidthRatio = 2130772358;
 			
 			// aapt resource value: 0x7f01017e
 			public const int Icon = 2130772350;
 			
-			// aapt resource value: 0x7f010196
-			public const int ListItem_Divider = 2130772374;
-			
-			// aapt resource value: 0x7f010195
-			public const int NavDrawer_Theme = 2130772373;
+			// aapt resource value: 0x7f010198
+			public const int ListItem_Divider = 2130772376;
 			
 			// aapt resource value: 0x7f010197
-			public const int Primary = 2130772375;
+			public const int NavDrawer_Theme = 2130772375;
 			
 			// aapt resource value: 0x7f010199
-			public const int Primary_Dark = 2130772377;
-			
-			// aapt resource value: 0x7f01019a
-			public const int Primary_Dark_Text = 2130772378;
-			
-			// aapt resource value: 0x7f010198
-			public const int Primary_Text = 2130772376;
-			
-			// aapt resource value: 0x7f01018c
-			public const int Radio_Theme = 2130772364;
-			
-			// aapt resource value: 0x7f0101ac
-			public const int Ripple_Background = 2130772396;
-			
-			// aapt resource value: 0x7f0101ad
-			public const int Ripple_Highlight = 2130772397;
-			
-			// aapt resource value: 0x7f0101ae
-			public const int Ripple_Text = 2130772398;
+			public const int Primary = 2130772377;
 			
 			// aapt resource value: 0x7f01019b
-			public const int Secondary = 2130772379;
-			
-			// aapt resource value: 0x7f01019d
-			public const int Secondary_Dark = 2130772381;
-			
-			// aapt resource value: 0x7f01019e
-			public const int Secondary_Dark_Text = 2130772382;
+			public const int Primary_Dark = 2130772379;
 			
 			// aapt resource value: 0x7f01019c
-			public const int Secondary_Text = 2130772380;
+			public const int Primary_Dark_Text = 2130772380;
 			
-			// aapt resource value: 0x7f010192
-			public const int Spinner_Theme = 2130772370;
+			// aapt resource value: 0x7f01019a
+			public const int Primary_Text = 2130772378;
 			
-			// aapt resource value: 0x7f01018b
-			public const int Switch_Theme = 2130772363;
+			// aapt resource value: 0x7f01018e
+			public const int Radio_Theme = 2130772366;
 			
-			// aapt resource value: 0x7f010193
-			public const int TabLayout_Style = 2130772371;
+			// aapt resource value: 0x7f0101ae
+			public const int Ripple_Background = 2130772398;
+			
+			// aapt resource value: 0x7f0101af
+			public const int Ripple_Highlight = 2130772399;
+			
+			// aapt resource value: 0x7f0101b0
+			public const int Ripple_Text = 2130772400;
+			
+			// aapt resource value: 0x7f01019d
+			public const int Secondary = 2130772381;
 			
 			// aapt resource value: 0x7f01019f
-			public const int Tertiary = 2130772383;
-			
-			// aapt resource value: 0x7f0101a1
-			public const int Tertiary_Dark = 2130772385;
-			
-			// aapt resource value: 0x7f0101a2
-			public const int Tertiary_Dark_Text = 2130772386;
+			public const int Secondary_Dark = 2130772383;
 			
 			// aapt resource value: 0x7f0101a0
-			public const int Tertiary_Text = 2130772384;
+			public const int Secondary_Dark_Text = 2130772384;
+			
+			// aapt resource value: 0x7f01019e
+			public const int Secondary_Text = 2130772382;
+			
+			// aapt resource value: 0x7f010194
+			public const int Spinner_Theme = 2130772372;
+			
+			// aapt resource value: 0x7f01018d
+			public const int Switch_Theme = 2130772365;
+			
+			// aapt resource value: 0x7f010195
+			public const int TabLayout_Style = 2130772373;
+			
+			// aapt resource value: 0x7f0101a1
+			public const int Tertiary = 2130772385;
+			
+			// aapt resource value: 0x7f0101a3
+			public const int Tertiary_Dark = 2130772387;
+			
+			// aapt resource value: 0x7f0101a4
+			public const int Tertiary_Dark_Text = 2130772388;
+			
+			// aapt resource value: 0x7f0101a2
+			public const int Tertiary_Text = 2130772386;
 			
 			// aapt resource value: 0x7f010183
 			public const int Text = 2130772355;
@@ -262,8 +265,8 @@ namespace AniDroid
 			// aapt resource value: 0x7f010184
 			public const int TextColor = 2130772356;
 			
-			// aapt resource value: 0x7f010191
-			public const int TextInput_Theme = 2130772369;
+			// aapt resource value: 0x7f010193
+			public const int TextInput_Theme = 2130772371;
 			
 			// aapt resource value: 0x7f01017a
 			public const int TextOne = 2130772346;
@@ -280,14 +283,17 @@ namespace AniDroid
 			// aapt resource value: 0x7f01017d
 			public const int TextTwoColor = 2130772349;
 			
-			// aapt resource value: 0x7f010189
-			public const int Toolbar_PopupTheme = 2130772361;
+			// aapt resource value: 0x7f01018b
+			public const int Toolbar_PopupTheme = 2130772363;
 			
-			// aapt resource value: 0x7f010186
-			public const int Toolbar_Style = 2130772358;
+			// aapt resource value: 0x7f010188
+			public const int Toolbar_Style = 2130772360;
+			
+			// aapt resource value: 0x7f010189
+			public const int Toolbar_Theme = 2130772361;
 			
 			// aapt resource value: 0x7f010187
-			public const int Toolbar_Theme = 2130772359;
+			public const int WidthToHeightRatio = 2130772359;
 			
 			// aapt resource value: 0x7f01005d
 			public const int actionBarDivider = 2130772061;
@@ -7614,6 +7620,16 @@ namespace AniDroid
 			
 			// aapt resource value: 5
 			public const int RecyclerView_stackFromEnd = 5;
+			
+			public static int[] ScalingImageView = new int[] {
+					2130772358,
+					2130772359};
+			
+			// aapt resource value: 0
+			public const int ScalingImageView_HeightToWidthRatio = 0;
+			
+			// aapt resource value: 1
+			public const int ScalingImageView_WidthToHeightRatio = 1;
 			
 			public static int[] ScrimInsetsFrameLayout = new int[] {
 					2130772283};
