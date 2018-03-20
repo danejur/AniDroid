@@ -99,6 +99,7 @@ namespace AniDroid.Widgets
                 return;
             }
 
+            _enabled = true;
             _text = text;
             Drawable.InvalidateSelf();
         }
