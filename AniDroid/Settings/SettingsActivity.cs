@@ -50,7 +50,7 @@ namespace AniDroid.Settings
 
         public void CreateCardTypeSettingItem(BaseRecyclerAdapter.CardType cardType)
         {
-            var options = new List<string> {"Vertical", "Vertical (Staggered)", "Horizontal", "Flat Horizontal"};
+            var options = new List<string> {"Vertical", "Horizontal", "Flat Horizontal"};
             _settingsContainer.AddView(
                 CreateSpinnerSettingRow("Card Display Type", "Choose how you would like to display lists in AniDroid", options, (int) cardType, (sender, args) =>
                     Presenter.SetCardType((BaseRecyclerAdapter.CardType) args.Position)));

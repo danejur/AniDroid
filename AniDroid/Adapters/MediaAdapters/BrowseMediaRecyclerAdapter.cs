@@ -26,10 +26,6 @@ namespace AniDroid.Adapters.MediaAdapters
 
         public BrowseMediaRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> enumerable, CardType cardType, int verticalCardColumns = 3) : base(context, enumerable, cardType, verticalCardColumns)
         {
-            if (cardType == CardType.VerticalStaggered)
-            {
-                SetCardType(CardType.Vertical);
-            }
         }
 
         public override void BindCardViewHolder(CardItem holder, int position)

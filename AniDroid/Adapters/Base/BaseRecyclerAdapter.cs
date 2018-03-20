@@ -115,7 +115,6 @@ namespace AniDroid.Adapters.Base
                     layoutResource = Resource.Layout.View_CardItem_FlatHorizontal;
                     break;
                 case CardType.Vertical:
-                case CardType.VerticalStaggered:
                     layoutResource = Resource.Layout.View_CardItem_Vertical;
                     break;
             }
@@ -151,9 +150,6 @@ namespace AniDroid.Adapters.Base
                     break;
                 case CardType.Vertical:
                     recyclerView.SetLayoutManager(new GridLayoutManager(Context, _cardColumns, _orientation, false));
-                    break;
-                case CardType.VerticalStaggered:
-                    recyclerView.SetLayoutManager(new StaggeredGridLayoutManager(_cardColumns, _orientation));
                     break;
                 case CardType.Custom:
                     if (CustomCardUseItemDecoration)
@@ -214,7 +210,6 @@ namespace AniDroid.Adapters.Base
         {
             Custom = -1,
             Vertical = 0,
-            VerticalStaggered = 1,
             Horizontal = 2,
             FlatHorizontal = 3
         }
