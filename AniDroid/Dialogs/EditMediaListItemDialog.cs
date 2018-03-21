@@ -31,11 +31,13 @@ namespace AniDroid.Dialogs
             public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
             {
                 var view = Activity.LayoutInflater.Inflate(Resource.Layout.Fragment_EditMediaListItem, container, false);
-
-                var list = Enumerable.Range(1, 100).Select(x => new KeyValuePair<string, string>($"{x}", $"{x}")).ToList();
-
                 var scorePicker = view.FindViewById<Picker>(Resource.Id.EditMediaListItem_ScorePicker);
-                scorePicker.SetItems(Activity, list);
+
+                //var list = new List<string> { "★", "★★", "★★★", "★★★★", "★★\n★★★" };
+                //scorePicker.SetItems(list, true, 2);
+
+                var resIds = new List<int> { Resource.Drawable.svg_sad, Resource.Drawable.svg_neutral, Resource.Drawable.svg_happy };
+                scorePicker.SetDrawableItems(resIds, 1);
 
                 return view;
             }
