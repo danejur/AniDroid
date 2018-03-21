@@ -44,6 +44,9 @@ namespace AniDroid.AniListObject.Media
     {
         public const string MediaIdIntentKey = "MEDIA_ID";
 
+        [InjectView(Resource.Id.AniListObject_EditFab)]
+        private FloatingActionButton _mediaFab;
+
         private int _mediaId;
         private AniList.Models.Media.MediaType _mediaType;
 
@@ -142,7 +145,15 @@ namespace AniDroid.AniListObject.Media
             TabLayout.SetupWithViewPager(ViewPager);
         }
 
+        public void SetupMediaFab(AniList.Models.Media media)
+        {
+            _mediaFab.Visibility = ViewStates.Visible;
+            _mediaFab.Click += (sender, eventArgs) => EditMediaListItemDialog.Create(this);
+        }
+
         protected override Func<Task> ToggleFavorite => () => Presenter.ToggleFavorite();
+
+        #region Media Data
 
         private View CreateMediaDetailsView(AniList.Models.Media media)
         {
@@ -362,6 +373,8 @@ namespace AniDroid.AniListObject.Media
 
             return retView;
         }
+
+        #endregion
 
         #region User Data
 

@@ -81,44 +81,47 @@ namespace AniDroid.AniListObject.User
 
         public async Task ToggleActivityLike(AniListActivity activity, int activityPosition)
         {
-            //var toggleResp = await AniListService.ToggleLike(activity.Id, AniList.Models.AniListObject.LikeableType.Activity, default(CancellationToken));
+            var toggleResp = await AniListService.ToggleLike(activity.Id,
+                AniList.Models.AniListObject.LikeableType.Activity, default(CancellationToken));
 
-            //toggleResp.Switch((IAniListError error) =>
-            //{
-            //    View.UpdateActivity(activityPosition, activity);
-            //    View.DisplaySnackbarMessage("Error occurred while toggling like", Snackbar.LengthLong);
-            //})
-            //    .Switch(userLikes =>
-            //    {
-            //        activity.Likes = userLikes;
-            //        View.UpdateActivity(activityPosition, activity);
-            //    });
+            toggleResp.Switch((IAniListError error) =>
+                {
+                    View.UpdateActivity(activityPosition, activity);
+                    View.DisplaySnackbarMessage("Error occurred while toggling like", Snackbar.LengthLong);
+                })
+                .Switch(userLikes =>
+                {
+                    activity.Likes = userLikes;
+                    View.UpdateActivity(activityPosition, activity);
+                });
         }
 
         public async Task PostActivityReply(AniListActivity activity, int activityPosition, string text)
         {
-            //var postResp = await AniListService.PostActivityReply(activity.Id, text, default(CancellationToken));
+            var postResp = await AniListService.PostActivityReply(activity.Id, text, default(CancellationToken));
 
-            //postResp.Switch((IAniListError error) =>
-            //{
-            //    View.UpdateActivity(activityPosition, activity);
-            //    View.DisplaySnackbarMessage("Error occurred while posting reply", Snackbar.LengthLong);
-            //})
-            //    .Switch(async reply =>
-            //    {
-            //        var refreshResp = await AniListService.GetAniListActivityById(activity.Id, default(CancellationToken));
+            postResp.Switch((IAniListError error) =>
+                {
+                    View.UpdateActivity(activityPosition, activity);
+                    View.DisplaySnackbarMessage("Error occurred while posting reply", Snackbar.LengthLong);
+                })
+                .Switch(async reply =>
+                {
+                    var refreshResp =
+                        await AniListService.GetAniListActivityById(activity.Id, default(CancellationToken));
 
-            //        refreshResp.Switch((IAniListError error) =>
-            //        {
-            //            View.UpdateActivity(activityPosition, activity);
-            //            View.DisplaySnackbarMessage("Error occurred while refreshing activity", Snackbar.LengthLong);
-            //        })
-            //            .Switch(activityResp =>
-            //            {
-            //                View.UpdateActivity(activityPosition, activityResp);
-            //                View.DisplaySnackbarMessage("Reply posted successfully", Snackbar.LengthShort);
-            //            });
-            //    });
+                    refreshResp.Switch((IAniListError error) =>
+                        {
+                            View.UpdateActivity(activityPosition, activity);
+                            View.DisplaySnackbarMessage("Error occurred while refreshing activity",
+                                Snackbar.LengthLong);
+                        })
+                        .Switch(activityResp =>
+                        {
+                            View.UpdateActivity(activityPosition, activityResp);
+                            View.DisplaySnackbarMessage("Reply posted successfully", Snackbar.LengthShort);
+                        });
+                });
         }
     }
 }

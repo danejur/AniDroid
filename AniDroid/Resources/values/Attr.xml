@@ -24,6 +24,9 @@
     <attr name="WidthToHeightRatio" format="float" />
   </declare-styleable>
 
+  <declare-styleable name="Picker">
+  </declare-styleable>
+
   <!-- 
   **
   Styles

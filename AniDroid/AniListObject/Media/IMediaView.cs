@@ -7,5 +7,6 @@ namespace AniDroid.AniListObject.Media
         int GetMediaId();
         AniList.Models.Media.MediaType GetMediaType();
         void SetupMediaView(AniList.Models.Media media);
+        void SetupMediaFab(AniList.Models.Media media);
     }
 }

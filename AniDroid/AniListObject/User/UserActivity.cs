@@ -14,6 +14,7 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters;
 using AniDroid.Adapters.AniListActivityAdapters;
+using AniDroid.AniList.Models;
 using AniDroid.Base;
 using AniDroid.Dialogs;
 using AniDroid.Utils;
@@ -122,6 +123,12 @@ namespace AniDroid.AniListObject.User
         public void RefreshUserActivity()
         {
             _userActivityRecyclerAdapter.ResetAdapter();
+        }
+
+        public void UpdateActivity(int activityPosition, AniListActivity activity)
+        {
+            _userActivityRecyclerAdapter.Items[activityPosition] = activity;
+            _userActivityRecyclerAdapter.NotifyItemChanged(activityPosition);
         }
 
         private View CreateUserActivityView(int userId)

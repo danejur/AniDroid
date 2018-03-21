@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using AniDroid.AniList.Models;
 using AniDroid.Base;
 
 namespace AniDroid.AniListObject.User
@@ -22,5 +23,6 @@ namespace AniDroid.AniListObject.User
         void SetCanMessage();
         void SetupUserView(AniList.Models.User user);
         void RefreshUserActivity();
+        void UpdateActivity(int activityPosition, AniListActivity activity);
     }
 }

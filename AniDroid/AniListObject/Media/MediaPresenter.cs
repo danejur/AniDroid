@@ -28,6 +28,7 @@ namespace AniDroid.AniListObject.Media
                     View.SetContentShown(!string.IsNullOrWhiteSpace(media.BannerImage));
                     View.SetupToolbar(media.Title?.UserPreferred, media.BannerImage);
                     View.SetupMediaView(media);
+                    View.SetupMediaFab(media);
                 })
                 .Switch(error => View.OnError(error));
         }
