@@ -3517,20 +3517,20 @@ namespace AniDroid
 			// aapt resource value: 0x7f070020
 			public const int Object_Value = 2131165216;
 			
-			// aapt resource value: 0x7f07014e
-			public const int PickerViewHolder_EditView = 2131165518;
-			
 			// aapt resource value: 0x7f07014d
-			public const int PickerViewHolder_ReadOnlyView = 2131165517;
+			public const int Picker_EditView = 2131165517;
 			
 			// aapt resource value: 0x7f07014a
 			public const int Picker_MinusButton = 2131165514;
 			
+			// aapt resource value: 0x7f07014e
+			public const int Picker_PlusButton = 2131165518;
+			
 			// aapt resource value: 0x7f07014c
-			public const int Picker_PlusButton = 2131165516;
+			public const int Picker_ReadOnlyView = 2131165516;
 			
 			// aapt resource value: 0x7f07014b
-			public const int Picker_Recycler = 2131165515;
+			public const int Picker_TextContainer = 2131165515;
 			
 			// aapt resource value: 0x7f07003b
 			public const int SHIFT = 2131165243;
@@ -4505,9 +4505,6 @@ namespace AniDroid
 			
 			// aapt resource value: 0x7f030063
 			public const int Widget_Picker = 2130903139;
-			
-			// aapt resource value: 0x7f030064
-			public const int Widget_PickerViewHolder = 2130903140;
 			
 			static Layout()
 			{

@@ -13,15 +13,34 @@
         android:background="?android:attr/selectableItemBackground"
         android:id="@+id/Picker_MinusButton"
         android:layout_centerVertical="true" />
-    <android.support.v7.widget.RecyclerView
+    <FrameLayout
+        android:minWidth="25px"
+        android:minHeight="25px"
         android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:id="@+id/Picker_Recycler"
+        android:id="@+id/Picker_TextContainer"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_toEndOf="@id/Picker_MinusButton"
-        android:background="@android:color/transparent"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/Picker_MinusButton">
+        <TextView
+            android:text="Text"
+            android:id="@+id/Picker_ReadOnlyView"
+            android:width="80dp"
+            android:gravity="center"
+            android:textSize="18dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@id/Picker_MinusButton"
+            android:visibility="gone" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/Picker_EditView"
+            android:gravity="center"
+            android:numeric="integer"
+            android:inputType="number" />
+    </FrameLayout>
     <ImageView
         android:tint="?Secondary_Dark"
         android:src="@drawable/svg_plus_circle_outline"
@@ -30,5 +49,5 @@
         android:background="?android:attr/selectableItemBackground"
         android:id="@+id/Picker_PlusButton"
         android:layout_centerVertical="true"
-        android:layout_toEndOf="@id/Picker_Recycler" />
+        android:layout_toRightOf="@id/Picker_TextContainer" />
 </merge>
