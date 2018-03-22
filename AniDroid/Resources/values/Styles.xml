@@ -109,7 +109,7 @@
 
   <style name="Dark_Dialog" parent="Theme.AppCompat.Dialog.Alert">
     <item name="android:buttonStyle">@style/Dark_Button</item>
-    <item name="android:background">@color/Dark_Background_Alternate</item>
+    <item name="android:windowBackground">@color/Dark_Background_Alternate</item>
     <item name="android:textColor">@color/Dark_Background_Text</item>
     <item name="android:textColorPrimary">@color/Dark_Background_Text</item>
     <item name="colorAccent">@color/Dark_Primary_Dark</item>
@@ -257,7 +257,7 @@
   
   <style name="AniList_Dialog" parent="Theme.AppCompat.Light.Dialog.Alert">
     <item name="android:buttonStyle">@style/AniList_Button</item>
-    <item name="android:background">@color/AniList_DialogBackground</item>
+    <item name="android:windowBackground">@color/AniList_DialogBackground</item>
     <item name="android:textColor">@color/AniList_DialogText</item>
     <item name="android:textColorPrimary">@color/AniList_DialogText</item>
     <item name="colorAccent">@color/AniList_Secondary</item>

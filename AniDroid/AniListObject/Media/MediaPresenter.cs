@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Android.Support.Design.Widget;
 using AniDroid.AniList.Dto;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
@@ -19,18 +20,28 @@ namespace AniDroid.AniListObject.Media
         {
             View.SetLoadingShown();
             var mediaId = View.GetMediaId();
-            var mediaResp = await AniListService.GetMediaById(mediaId, default(CancellationToken));
+            var mediaResp = AniListService.GetMediaById(mediaId, default(CancellationToken));
+            var userResp = AniListService.GetCurrentUser(default(CancellationToken));
 
-            mediaResp.Switch(media =>
+            await Task.WhenAll(mediaResp, userResp);
+
+            mediaResp.Result.Switch(media =>
                 {
                     View.SetIsFavorite(media.IsFavourite);
                     View.SetShareText(media.Title?.UserPreferred, media.SiteUrl);
                     View.SetContentShown(!string.IsNullOrWhiteSpace(media.BannerImage));
                     View.SetupToolbar(media.Title?.UserPreferred, media.BannerImage);
                     View.SetupMediaView(media);
-                    View.SetupMediaFab(media);
                 })
                 .Switch(error => View.OnError(error));
+
+            userResp.Result.Switch(user => View.SetCurrentUserMediaListOptions(user.MediaListOptions))
+                .Switch(error => {
+                    if (AniDroidSettings.IsUserAuthenticated)
+                    {
+                        View.DisplaySnackbarMessage("Error occurred while getting user settings", Snackbar.LengthLong);
+                    }
+                });
         }
 
         public IAsyncEnumerable<OneOf<IPagedData<AniList.Models.Character.Edge>, IAniListError>> GetMediaCharactersEnumerable(int mediaId, int perPage)

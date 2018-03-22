@@ -48,7 +48,8 @@ namespace AniDroid.AniListObject.Media
         private FloatingActionButton _mediaFab;
 
         private int _mediaId;
-        private AniList.Models.Media.MediaType _mediaType;
+        private AniList.Models.Media _media;
+        private AniList.Models.User.UserMediaListOptions _mediaListOptions;
 
         protected override IReadOnlyKernel Kernel =>
             new StandardKernel(new ApplicationModule<IMediaView, MediaActivity>(this));
@@ -99,12 +100,12 @@ namespace AniDroid.AniListObject.Media
 
         public AniList.Models.Media.MediaType GetMediaType()
         {
-            return _mediaType;
+            return _media.Type;
         }
 
         public void SetupMediaView(AniList.Models.Media media)
         {
-            _mediaType = media.Type;
+            _media = media;
 
             var adapter = new FragmentlessViewPagerAdapter();
             adapter.AddView(CreateMediaDetailsView(media), "Details");
@@ -145,10 +146,16 @@ namespace AniDroid.AniListObject.Media
             TabLayout.SetupWithViewPager(ViewPager);
         }
 
-        public void SetupMediaFab(AniList.Models.Media media)
+        public void SetCurrentUserMediaListOptions(AniList.Models.User.UserMediaListOptions mediaListOptions)
+        {
+            _mediaListOptions = mediaListOptions;
+            SetupMediaFab();
+        }
+
+        private void SetupMediaFab()
         {
             _mediaFab.Visibility = ViewStates.Visible;
-            _mediaFab.Click += (sender, eventArgs) => EditMediaListItemDialog.Create(this);
+            _mediaFab.Click += (sender, eventArgs) => EditMediaListItemDialog.Create(this, _media, _mediaListOptions);
         }
 
         protected override Func<Task> ToggleFavorite => () => Presenter.ToggleFavorite();

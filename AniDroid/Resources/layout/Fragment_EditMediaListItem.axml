@@ -1,43 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:theme="?Dialog_Theme"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:background="?Background_Alternate"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+  <android.support.design.widget.AppBarLayout
+    android:id="@+id/EditMediaListItem_AppBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="?AppBarLayout_Style">
+    <android.support.v7.widget.Toolbar
+      android:id="@+id/EditMediaListItem_Toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="56dp"
+      app:popupTheme="?Toolbar_PopupTheme"
+      app:theme="?Toolbar_Theme"
+      style="?Toolbar_Style"
+      app:layout_scrollFlags="enterAlways" />
+  </android.support.design.widget.AppBarLayout>
+  <android.support.v4.widget.NestedScrollView 
+      app:layout_behavior="@string/appbar_scrolling_view_behavior"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent">
     <LinearLayout
         android:orientation="vertical"
+        android:background="?Background_Alternate"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:text="Status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/spinner1" />
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="vertical"
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:text="Score"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView1" />
-            <AniDroid.Widgets.Picker
-                android:id="@+id/EditMediaListItem_ScorePicker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal" />
-        </LinearLayout>
+      <LinearLayout
+          android:orientation="horizontal"
+          android:background="?Background_Special"
+          android:layout_width="match_parent"
+          android:layout_height="60dp"
+          android:paddingLeft="15dp"
+          android:paddingRight="15dp"
+          android:gravity="center_vertical"
+          android:layout_marginTop="20dp">
+        <TextView
+            android:text="Score"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:layout_marginRight="20dp"
+            android:background="@android:color/transparent" />
+        <AniDroid.Widgets.Picker
+            android:id="@+id/EditMediaListItem_ScorePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent" />
+      </LinearLayout>
+      <LinearLayout
+          android:orientation="horizontal"
+          android:layout_width="match_parent"
+          android:layout_height="60dp"
+          android:paddingLeft="15dp"
+          android:paddingRight="15dp"
+          android:gravity="center_vertical"
+          android:background="?Background_Special"
+          android:layout_marginTop="20dp">
+        <TextView
+            android:text="Status"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:layout_marginRight="20dp"
+            android:background="@android:color/transparent" />
+        <Spinner
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/EditMediaListItem_StatusSpinner" />
+      </LinearLayout>
+      <LinearLayout
+          android:orientation="horizontal"
+          android:background="?Background_Special"
+          android:layout_width="match_parent"
+          android:layout_height="60dp"
+          android:paddingLeft="15dp"
+          android:paddingRight="15dp"
+          android:gravity="center_vertical"
+          android:layout_marginTop="20dp"
+          android:id="@+id/linearLayout1">
+        <TextView
+            android:text="Progress"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:textSize="18dp"
+            android:layout_marginRight="20dp"
+            android:background="@android:color/transparent"
+            android:id="@+id/textView1" />
+        <AniDroid.Widgets.Picker
+            android:id="@+id/EditMediaListItem_ProgressPicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent" />
+      </LinearLayout>
     </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+  </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>

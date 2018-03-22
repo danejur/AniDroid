@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Android.Content;
-using AniDroid.Utils.Interfaces;
-using Newtonsoft.Json;
+using AniDroid.AniList.Utils;
 using Trace = System.Diagnostics.Trace;
 
 namespace AniDroid.Utils.Storage
@@ -64,7 +63,7 @@ namespace AniDroid.Utils.Storage
         /// <param name="value">The value of the key-value pair. If value is null, the key will be deleted. Value must be serializable.</param>
         public void Put<T>(string key, T value)
         {
-            var data = JsonConvert.SerializeObject(value);
+            var data = AniListJsonSerializer.Default.Serialize(value);
             Put(key, data);
         }
 
@@ -84,7 +83,7 @@ namespace AniDroid.Utils.Storage
 
             try
             {
-                return JsonConvert.DeserializeObject<T>(data);
+                return AniListJsonSerializer.Default.Deserialize<T>(data);
             }
             catch (Exception)
             {
