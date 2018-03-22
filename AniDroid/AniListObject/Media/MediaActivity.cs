@@ -49,7 +49,9 @@ namespace AniDroid.AniListObject.Media
 
         private int _mediaId;
         private AniList.Models.Media _media;
+        private AniList.Models.Media.MediaList _mediaList;
         private AniList.Models.User.UserMediaListOptions _mediaListOptions;
+        private View _mediaDetailsView;
 
         protected override IReadOnlyKernel Kernel =>
             new StandardKernel(new ApplicationModule<IMediaView, MediaActivity>(this));
@@ -106,9 +108,10 @@ namespace AniDroid.AniListObject.Media
         public void SetupMediaView(AniList.Models.Media media)
         {
             _media = media;
+            _mediaList = media.MediaListEntry;
 
             var adapter = new FragmentlessViewPagerAdapter();
-            adapter.AddView(CreateMediaDetailsView(media), "Details");
+            adapter.AddView(_mediaDetailsView = CreateMediaDetailsView(media), "Details");
 
             if (media.Characters?.PageInfo?.Total > 0)
             {
@@ -152,11 +155,41 @@ namespace AniDroid.AniListObject.Media
             SetupMediaFab();
         }
 
+        public void ShowMediaListEditDialog(AniList.Models.Media.MediaList mediaList)
+        {
+            EditMediaListItemDialog.Create(this, Presenter, _media, mediaList, _mediaListOptions);
+        }
+
+        public void UpdateMediaListItem(AniList.Models.Media.MediaList mediaList)
+        {
+            _media.MediaListEntry = _mediaList = mediaList;
+
+            if (_mediaDetailsView == null)
+            {
+                DisplaySnackbarMessage("Error occurred while updating media view", Snackbar.LengthLong);
+                return;
+            }
+
+            var statusView = _mediaDetailsView.FindViewById<TextView>(Resource.Id.Media_ListStatus);
+            statusView.Visibility = ViewStates.Visible;
+            statusView.Text = _mediaList.Status.DisplayValue;
+
+            SetupMediaFab();
+        }
+
         private void SetupMediaFab()
         {
+            _mediaFab.Enabled = true;
             _mediaFab.Visibility = ViewStates.Visible;
-            _mediaFab.Click += (sender, eventArgs) => EditMediaListItemDialog.Create(this, _media, _mediaListOptions);
+            _mediaFab.SetImageResource(_mediaList == null
+                ? Resource.Drawable.svg_library_plus
+                : Resource.Drawable.svg_pencil);
+
+            _mediaFab.Click -= MediaFabClick;
+            _mediaFab.Click += MediaFabClick;
         }
+
+        private void MediaFabClick(object sender, EventArgs eventArgs) => ShowMediaListEditDialog(_mediaList);
 
         protected override Func<Task> ToggleFavorite => () => Presenter.ToggleFavorite();
 

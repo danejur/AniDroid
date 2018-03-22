@@ -25,7 +25,6 @@ namespace AniDroid.Widgets
     {
         private IList<string> _stringItems;
         private IList<int> _resIdItems;
-        private Tuple<float, float> _minMaxDecimalValue;
         private PickerType _type;
         private ImageView _plusButton;
         private ImageView _minusButton;
@@ -35,9 +34,9 @@ namespace AniDroid.Widgets
         private ImageView _imageView;
         private int _selectedPosition;
 
-        public int ItemCount => _type == PickerType.Drawable ? _resIdItems?.Count ?? 0 : _stringItems?.Count ?? 0;
+        public bool IsDecimal => _type == PickerType.Decimal;
 
-        public bool HasErrors { get; private set; }
+        public int ItemCount => _type == PickerType.Drawable ? _resIdItems?.Count ?? 0 : _stringItems?.Count ?? 0;
 
         public Picker(Context context) : base(context)
         {
@@ -86,10 +85,7 @@ namespace AniDroid.Widgets
             }
 
             _selectedPosition = defaultPosition;
-
             _editView.SetFilters(new IInputFilter[] {new ValidValuesInputFilter(_stringItems) });
-            _editView.AfterTextChanged -= EditViewOnAfterTextChanged;
-            _editView.AfterTextChanged += EditViewOnAfterTextChanged;
 
             DisplayValue();
         }
@@ -99,9 +95,9 @@ namespace AniDroid.Widgets
             _resIdItems = resIds;
             _type = PickerType.Drawable;
 
-            if (defaultPosition <= 0 || defaultPosition >= _resIdItems.Count)
+            if (defaultPosition <= -1 || defaultPosition >= _resIdItems.Count)
             {
-                defaultPosition = 0;
+                defaultPosition = -1;
             }
 
             _selectedPosition = defaultPosition;
@@ -111,7 +107,6 @@ namespace AniDroid.Widgets
 
         public void SetDecimalMinMax(float min, float max, float defaultValue)
         {
-            _minMaxDecimalValue = new Tuple<float, float>(min, max);
             _editDecimalView.SetFilters(new IInputFilter[] {new MinMaxInputFilter(min, max)});
             _type = PickerType.Decimal;
             _editDecimalView.Text = defaultValue.ToString(CultureInfo.InvariantCulture);
@@ -119,22 +114,30 @@ namespace AniDroid.Widgets
             DisplayValue();
         }
 
-        private void EditViewOnAfterTextChanged(object sender, AfterTextChangedEventArgs afterTextChangedEventArgs)
-        {
-            if (!string.IsNullOrEmpty(_editView.Text))
-            {
-                _selectedPosition = _stringItems.IndexOf(_editView.Text);
-            }
-        }
-
         public int GetSelectedPosition()
         {
-            return _selectedPosition;
+            return _selectedPosition + 1;
         }
+
+        public int? GetNullableSelectedPosition() => _selectedPosition >= 0 ? _selectedPosition + 1 : (int?) null;
 
         public float? GetDecimalValue()
         {
             return float.TryParse(_editDecimalView.Text, out var outVal) ? outVal : (float?)null;
+        }
+
+        public void SetValue(int value)
+        {
+            if (_type == PickerType.Decimal)
+            {
+                _editDecimalView.Text = value.ToString();
+            }
+            else
+            {
+                _selectedPosition = value;
+            }
+
+            DisplayValue();
         }
 
         private void DisplayValue()

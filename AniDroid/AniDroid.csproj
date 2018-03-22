@@ -172,6 +172,7 @@
     <Compile Include="Adapters\StaffAdapters\StaffRecyclerAdapter.cs" />
     <Compile Include="Adapters\StudioAdapters\StudioMediaRecyclerAdapter.cs" />
     <Compile Include="AniListObject\IAniListActivityPresenter.cs" />
+    <Compile Include="AniListObject\Media\IAniListMediaListEditPresenter.cs" />
     <Compile Include="AniListObject\Media\IMediaView.cs" />
     <Compile Include="AniListObject\Media\MediaActivity.cs" />
     <Compile Include="AniListObject\Media\MediaPresenter.cs" />
@@ -641,6 +642,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\svg_sad.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\EditMediaListItem_ActionBar.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\svg_save.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

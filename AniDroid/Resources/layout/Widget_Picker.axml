@@ -21,7 +21,6 @@
         android:id="@+id/Picker_TextContainer"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:background="@android:color/transparent"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/Picker_MinusButton">
         <TextView
@@ -31,7 +30,6 @@
             android:width="80dp"
             android:gravity="center"
             android:textSize="20dp"
-            android:background="@android:color/transparent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone" />
@@ -41,7 +39,6 @@
             android:id="@+id/Picker_EditView"
             android:textSize="20dp"
             android:gravity="center"
-            android:background="@android:color/transparent"
             android:inputType="number" />
         <EditText
             android:layout_width="match_parent"
@@ -49,13 +46,11 @@
             android:id="@+id/Picker_EditDecimalView"
             android:textSize="20dp"
             android:gravity="center"
-            android:background="@android:color/transparent"
             android:inputType="numberDecimal" />
         <ImageView
             android:src="@android:drawable/ic_menu_gallery"
             android:tint="?Background_Text"
             android:layout_width="match_parent"
-            android:background="@android:color/transparent"
             android:layout_height="match_parent"
             android:id="@+id/Picker_ImageView" />
     </FrameLayout>

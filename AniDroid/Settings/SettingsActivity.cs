@@ -52,7 +52,7 @@ namespace AniDroid.Settings
         {
             var options = new List<string> {"Vertical", "Horizontal", "Flat Horizontal"};
             _settingsContainer.AddView(
-                CreateSpinnerSettingRow("Card Display Type", "Choose how you would like to display lists in AniDroid",
+                CreateSpinnerSettingRow(this, "Card Display Type", "Choose how you would like to display lists in AniDroid",
                     options, (int) cardType,
                     (sender, args) =>
                     {
@@ -64,14 +64,14 @@ namespace AniDroid.Settings
                             Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
                         }
                     }));
-            _settingsContainer.AddView(CreateDivider());
+            _settingsContainer.AddView(CreateSettingDivider(this));
         }
 
         public void CreateAniDroidThemeSettingItem(AniDroidTheme theme)
         {
             var options = new List<string> { "AniList", "Dark" };
             _settingsContainer.AddView(
-                CreateSpinnerSettingRow("AniDroid Theme", "Choose the theme you'd like to use", options, (int)theme, (sender, args) =>
+                CreateSpinnerSettingRow(this, "AniDroid Theme", "Choose the theme you'd like to use", options, (int)theme, (sender, args) =>
                 {
                     Presenter.SetTheme((AniDroidTheme) args.Position);
 
@@ -81,15 +81,15 @@ namespace AniDroid.Settings
                         Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
                     }
                 }));
-            _settingsContainer.AddView(CreateDivider());
+            _settingsContainer.AddView(CreateSettingDivider(this));
         }
 
         public void CreateDisplayBannersSettingItem(bool displayBanners)
         {
             _settingsContainer.AddView(
-                CreateSwitchSettingRow("Display Banners", "Choose whether you'd like to display banner images for Media and Users", displayBanners, (sender, args) =>
+                CreateSwitchSettingRow(this, "Display Banners", "Choose whether you'd like to display banner images for Media and Users", displayBanners, (sender, args) =>
                     Presenter.SetDisplayBanners(args.IsChecked)));
-            _settingsContainer.AddView(CreateDivider());
+            _settingsContainer.AddView(CreateSettingDivider(this));
         }
 
         public static void StartActivity(Activity context)
@@ -159,9 +159,9 @@ namespace AniDroid.Settings
             return view;
         }
 
-        private View CreateSwitchSettingRow(string name, string description, bool switchState, EventHandler<CompoundButton.CheckedChangeEventArgs> switchEvent)
+        public static View CreateSwitchSettingRow(BaseAniDroidActivity context, string name, string description, bool switchState, EventHandler<CompoundButton.CheckedChangeEventArgs> switchEvent)
         {
-            var view = LayoutInflater.Inflate(Resource.Layout.View_SettingItem_Switch, null);
+            var view = context.LayoutInflater.Inflate(Resource.Layout.View_SettingItem_Switch, null);
             view.FindViewById<TextView>(Resource.Id.SettingItem_Name).Text = name;
 
             var switchView = view.FindViewById<SwitchCompat>(Resource.Id.SettingItem_Switch);
@@ -177,14 +177,14 @@ namespace AniDroid.Settings
             return view;
         }
 
-        private View CreateSpinnerSettingRow(string name, string description, IList<string> items, int selectedPosition, EventHandler<AdapterView.ItemSelectedEventArgs> selectedEvent)
+        public static View CreateSpinnerSettingRow(BaseAniDroidActivity context, string name, string description, IList<string> items, int selectedPosition, EventHandler<AdapterView.ItemSelectedEventArgs> selectedEvent)
         {
-            var view = LayoutInflater.Inflate(Resource.Layout.View_SettingItem_Spinner, null);
+            var view = context.LayoutInflater.Inflate(Resource.Layout.View_SettingItem_Spinner, null);
             view.FindViewById<TextView>(Resource.Id.SettingItem_Name).Text = name;
 
             var spinner = view.FindViewById<Spinner>(Resource.Id.SettingItem_Spinner);
             spinner.Id = (int)DateTime.Now.Ticks;
-            spinner.Adapter = new ArrayAdapter<string>(this, Resource.Layout.View_SpinnerDropDownItem, items);
+            spinner.Adapter = new ArrayAdapter<string>(context, Resource.Layout.View_SpinnerDropDownItem, items);
             spinner.SetSelection(selectedPosition);
             spinner.ItemSelected -= selectedEvent;
             spinner.ItemSelected += selectedEvent;
@@ -198,11 +198,11 @@ namespace AniDroid.Settings
             return view;
         }
 
-        private View CreateDivider()
+        public static View CreateSettingDivider(BaseAniDroidActivity context)
         {
             var typedValue = new TypedValue();
-            Theme.ResolveAttribute(Resource.Attribute.ListItem_Divider, typedValue, true);
-            var dividerView = new LinearLayout(this) { LayoutParameters = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, 2) };
+            context.Theme.ResolveAttribute(Resource.Attribute.ListItem_Divider, typedValue, true);
+            var dividerView = new LinearLayout(context) { LayoutParameters = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MatchParent, 2) };
             dividerView.SetBackgroundResource(typedValue.ResourceId);
 
             return dividerView;
