@@ -162,11 +162,37 @@ namespace AniDroid.Settings
         public static View CreateSwitchSettingRow(BaseAniDroidActivity context, string name, string description, bool switchState, EventHandler<CompoundButton.CheckedChangeEventArgs> switchEvent)
         {
             var view = context.LayoutInflater.Inflate(Resource.Layout.View_SettingItem_Switch, null);
-            view.FindViewById<TextView>(Resource.Id.SettingItem_Name).Text = name;
+            var nameView = view.FindViewById<TextView>(Resource.Id.SettingItem_Name);
+            if (!string.IsNullOrWhiteSpace(name))
+                nameView.Text = name;
+            else
+                nameView.Visibility = ViewStates.Gone;
 
             var switchView = view.FindViewById<SwitchCompat>(Resource.Id.SettingItem_Switch);
             switchView.Checked = switchState;
             switchView.CheckedChange += switchEvent;
+
+            var textTwoView = view.FindViewById<TextView>(Resource.Id.SettingItem_Details);
+            if (!string.IsNullOrWhiteSpace(description))
+                textTwoView.Text = description;
+            else
+                textTwoView.Visibility = ViewStates.Gone;
+
+            return view;
+        }
+
+        public static View CreateCheckboxSettingRow(BaseAniDroidActivity context, string name, string description, bool isChecked, EventHandler<CompoundButton.CheckedChangeEventArgs> checkEvent)
+        {
+            var view = context.LayoutInflater.Inflate(Resource.Layout.View_SettingItem_Checkbox, null);
+            var nameView = view.FindViewById<TextView>(Resource.Id.SettingItem_Name);
+            if (!string.IsNullOrWhiteSpace(name))
+                nameView.Text = name;
+            else
+                nameView.Visibility = ViewStates.Gone;
+
+            var checkboxView = view.FindViewById<AppCompatCheckBox>(Resource.Id.SettingItem_Checkbox);
+            checkboxView.Checked = isChecked;
+            checkboxView.CheckedChange += checkEvent;
 
             var textTwoView = view.FindViewById<TextView>(Resource.Id.SettingItem_Details);
             if (!string.IsNullOrWhiteSpace(description))

@@ -225,9 +225,9 @@
     <item name="android:textColor">@color/AniList_Background_Text</item>
   </style>
 
-  <style name="AniList_Checkbox" parent="Theme.AppCompat.Light">
-    <item name="colorControlNormal">@color/AniList_Inactive</item>
-    <item name="colorControlActivated">@color/AniList_Primary</item>
+  <style name="AniList_Checkbox" parent="Theme.AppCompat.NoActionBar">
+    <item name="android:textColorSecondary">@color/AniList_Inactive</item>
+    <item name="colorAccent">@color/AniList_Primary</item>
     <item name="android:textColor">@color/AniList_Background_Text</item>
     <item name="android:textSize">14dp</item>
   </style>

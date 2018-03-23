@@ -106,12 +106,12 @@ namespace AniDroid.Home
         {
             if (_isFollowingOnly)
             {
-                menuItem.SetIcon(Resource.Drawable.ic_group_white_24px);
+                menuItem.SetIcon(Resource.Drawable.ic_person_white_24px);
                 menuItem.SetTitle("Show Public Activity");
             }
             else
             {
-                menuItem.SetIcon(Resource.Drawable.ic_person_white_24px);
+                menuItem.SetIcon(Resource.Drawable.ic_group_white_24px);
                 menuItem.SetTitle("Show Personal Activity");
             }
         }

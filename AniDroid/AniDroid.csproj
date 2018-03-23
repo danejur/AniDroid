@@ -374,6 +374,9 @@
     <AndroidResource Include="Resources\layout\Widget_Picker.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\View_SettingItem_Checkbox.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />

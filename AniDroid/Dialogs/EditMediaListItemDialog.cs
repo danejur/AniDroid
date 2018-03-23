@@ -19,6 +19,7 @@ using AniDroid.AniList.Dto;
 using AniDroid.AniList.Models;
 using AniDroid.AniListObject.Media;
 using AniDroid.Base;
+using AniDroid.Settings;
 using AniDroid.Widgets;
 using AlertDialog = Android.Support.V7.App.AlertDialog;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
@@ -45,8 +46,10 @@ namespace AniDroid.Dialogs
             private readonly Media.MediaList _mediaList;
             private readonly User.UserMediaListOptions _mediaListOptions;
             private readonly List<string> _mediaStatusList;
+            private readonly HashSet<string> _customLists;
             private new BaseAniDroidActivity Activity => base.Activity as BaseAniDroidActivity;
             private bool _isPrivate;
+            private bool _hideFromStatusLists;
 
             private Picker _scorePicker;
             private AppCompatSpinner _statusSpinner;
@@ -62,6 +65,9 @@ namespace AniDroid.Dialogs
                 _mediaList = mediaList;
                 _mediaListOptions = mediaListOptions;
                 _isPrivate = mediaList?.Private ?? false;
+                _hideFromStatusLists = mediaList?.HiddenFromStatusLists ?? false;
+                _customLists = (mediaList?.CustomLists?.Where(x => x.Enabled).Select(x => x.Name).ToList() ??
+                               new List<string>()).ToHashSet();
 
                 _mediaStatusList = AniListEnum.GetEnumValues<Media.MediaListStatus>().OrderBy(x => x.Index)
                     .Select(x => x.DisplayValue).ToList();
@@ -82,6 +88,8 @@ namespace AniDroid.Dialogs
                 SetupRepeat(_repeatPicker = view.FindViewById<Picker>(Resource.Id.EditMediaListItem_RewatchedPicker),
                     view.FindViewById<TextView>(Resource.Id.EditMediaListItem_RewatchedLabel));
                 SetupNotes(_notesView = view.FindViewById<EditText>(Resource.Id.EditMediaListItem_Notes));
+                SetupCustomLists(view.FindViewById(Resource.Id.EditMediaListItem_CustomListsContainer),
+                    view.FindViewById<LinearLayout>(Resource.Id.EditMediaListItem_CustomLists));
 
                 return view;
             }
@@ -212,6 +220,56 @@ namespace AniDroid.Dialogs
                 notesView.Text = _mediaList?.Notes;
             }
 
+            private void SetupCustomLists(View customListsContainer, LinearLayout customLists)
+            {
+                var lists = _media.Type == Media.MediaType.Anime
+                    ? _mediaListOptions?.AnimeList?.CustomLists
+                    : _mediaListOptions?.MangaList?.CustomLists;
+
+                if (lists?.Any() != true)
+                {
+                    customListsContainer.Visibility = ViewStates.Gone;
+                    return;
+                }
+
+                var hideSwitchRow =
+                    SettingsActivity.CreateSwitchSettingRow(Activity, null, "Hide from status lists", _hideFromStatusLists,
+                        (sender, eventArgs) => {
+                            if (eventArgs.IsChecked && _customLists.Count == 0)
+                            {
+                                (sender as SwitchCompat).Checked = false;
+                                Toast.MakeText(Activity, "Must be on at least one list!", ToastLength.Short).Show();
+                                return;
+                            }
+
+                            _hideFromStatusLists = eventArgs.IsChecked;
+                        });
+                var hideSwitchView = hideSwitchRow.FindViewById<SwitchCompat>(Resource.Id.SettingItem_Switch);
+
+                foreach (var list in lists)
+                {
+                    customLists.AddView(SettingsActivity.CreateCheckboxSettingRow(Activity, null, list, _customLists.Contains(list),
+                        (sender, eventArgs) => {
+                            if (eventArgs.IsChecked)
+                            {
+                                _customLists.Add(list);
+                            }
+                            else
+                            {
+                                _customLists.Remove(list);
+
+                                if (_customLists.Count == 0)
+                                {
+                                    hideSwitchView.Checked = false;
+                                }
+                            }
+                        }));
+                }
+
+                customLists.AddView(SettingsActivity.CreateSettingDivider(Activity));
+                customLists.AddView(hideSwitchRow);
+            }
+
             private async Task SaveMediaListItem()
             {
 
@@ -224,7 +282,10 @@ namespace AniDroid.Dialogs
                     ProgressVolumes = _media.Type == Media.MediaType.Manga ? (int?)_progressVolumesPicker.GetValue() : null,
                     Repeat = (int?)_repeatPicker.GetValue(),
                     Notes = _notesView.Text,
-                    Private = _isPrivate
+                    Private = _isPrivate,
+                    CustomLists = _customLists.ToList(),
+                    HiddenFromStatusLists = _hideFromStatusLists
+
                 };
 
                 if ((_mediaListOptions.ScoreFormat == User.ScoreFormat.FiveStars ||
