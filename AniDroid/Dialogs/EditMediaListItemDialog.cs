@@ -88,7 +88,7 @@ namespace AniDroid.Dialogs
 
             private void SetupToolbar(Toolbar toolbar)
             {
-                toolbar.Title = $"Editing: {_media.Title.UserPreferred}";
+                toolbar.Title = $"{(_mediaList == null ? "Adding" : "Editing")}: {_media.Title.UserPreferred}";
                 toolbar.InflateMenu(Resource.Menu.EditMediaListItem_ActionBar);
 
                 var privateItem = toolbar.Menu.FindItem(Resource.Id.Menu_EditMediaListItem_MarkPrivate);
@@ -221,7 +221,7 @@ namespace AniDroid.Dialogs
                     Status = AniListEnum.GetEnum<Media.MediaListStatus>(_statusSpinner.SelectedItemPosition),
                     Score = _scorePicker.GetValue(),
                     Progress = (int?) _progressPicker.GetValue(),
-                    ProgressVolumes = _media.Type == Media.MediaType.Manga ? (int?)_progressPicker.GetValue() : null,
+                    ProgressVolumes = _media.Type == Media.MediaType.Manga ? (int?)_progressVolumesPicker.GetValue() : null,
                     Repeat = (int?)_repeatPicker.GetValue(),
                     Notes = _notesView.Text,
                     Private = _isPrivate
