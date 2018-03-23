@@ -52,6 +52,7 @@ namespace AniDroid.Dialogs
             private Picker _progressPicker;
             private Picker _progressVolumesPicker;
             private Picker _repeatPicker;
+            private EditText _notesView;
 
             public EditMediaListItemDialogFragment(IAniListMediaListEditPresenter presenter, Media media, Media.MediaList mediaList, User.UserMediaListOptions mediaListOptions)
             {
@@ -78,6 +79,7 @@ namespace AniDroid.Dialogs
                     _progressVolumesPicker = view.FindViewById<Picker>(Resource.Id.EditMediaListItem_VolumeProgressPicker));
                 SetupRepeat(_repeatPicker = view.FindViewById<Picker>(Resource.Id.EditMediaListItem_RewatchedPicker),
                     view.FindViewById<TextView>(Resource.Id.EditMediaListItem_RewatchedLabel));
+                SetupNotes(_notesView = view.FindViewById<EditText>(Resource.Id.EditMediaListItem_Notes));
 
                 return view;
             }
@@ -188,6 +190,11 @@ namespace AniDroid.Dialogs
                 rewatchedPicker.SetMaxValue(DefaultMaxPickerValue, 0, false, _mediaList?.Repeat);
             }
 
+            private void SetupNotes(TextView notesView)
+            {
+                notesView.Text = _mediaList?.Notes;
+            }
+
             private async Task SaveMediaListItem()
             {
 
@@ -198,7 +205,8 @@ namespace AniDroid.Dialogs
                     Score = _scorePicker.GetValue(),
                     Progress = (int?) _progressPicker.GetValue(),
                     ProgressVolumes = _media.Type == Media.MediaType.Manga ? (int?)_progressPicker.GetValue() : null,
-                    Repeat = (int?)_repeatPicker.GetValue()
+                    Repeat = (int?)_repeatPicker.GetValue(),
+                    Notes = _notesView.Text
                 };
 
                 if ((_mediaListOptions.ScoreFormat == User.ScoreFormat.FiveStars ||

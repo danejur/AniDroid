@@ -32,7 +32,7 @@
                 android:orientation="horizontal"
                 android:background="?Background_Special"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:gravity="center_vertical"
@@ -40,8 +40,9 @@
                 <TextView
                     android:text="Score"
                     android:layout_width="90dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:textSize="17dp"
+                    android:gravity="center_vertical"
                     android:layout_marginRight="20dp"
                     android:background="@android:color/transparent" />
                 <AniDroid.Widgets.Picker
@@ -53,7 +54,7 @@
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:gravity="center_vertical"
@@ -62,8 +63,9 @@
                 <TextView
                     android:text="Status"
                     android:layout_width="90dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:textSize="17dp"
+                    android:gravity="center_vertical"
                     android:layout_marginRight="20dp"
                     android:background="@android:color/transparent" />
                 <android.support.v7.widget.AppCompatSpinner
@@ -75,7 +77,7 @@
                 android:orientation="horizontal"
                 android:background="?Background_Special"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:gravity="center_vertical"
@@ -85,8 +87,9 @@
                     android:id="@+id/EditMediaListItem_ProgressLabel"
                     android:text="Progress"
                     android:layout_width="90dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:textSize="17dp"
+                    android:gravity="center_vertical"
                     android:layout_marginRight="20dp"
                     android:background="@android:color/transparent" />
                 <AniDroid.Widgets.Picker
@@ -99,7 +102,7 @@
                 android:orientation="horizontal"
                 android:background="?Background_Special"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:visibility="gone"
@@ -109,8 +112,9 @@
                 <TextView
                     android:text="Volumes"
                     android:layout_width="90dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:textSize="17dp"
+                    android:gravity="center_vertical"
                     android:layout_marginRight="20dp"
                     android:background="@android:color/transparent" />
                 <AniDroid.Widgets.Picker
@@ -123,7 +127,7 @@
                 android:orientation="horizontal"
                 android:background="?Background_Special"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:gravity="center_vertical"
@@ -132,15 +136,34 @@
                     android:id="@+id/EditMediaListItem_RewatchedLabel"
                     android:text="Rewatched"
                     android:layout_width="90dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="60dp"
                     android:textSize="17dp"
+                    android:gravity="center_vertical"
                     android:layout_marginRight="20dp"
-                    android:background="@android:color/transparent" />
+                    android:background="@android:color/transparent"
+                    android:layout_gravity="top" />
                 <AniDroid.Widgets.Picker
                     android:id="@+id/EditMediaListItem_RewatchedPicker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:background="?Background_Special"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:layout_marginTop="20dp">
+                <EditText
+                    android:id="@+id/EditMediaListItem_Notes"
+                    android:layout_width="match_parent"
+                    android:hint="Notes"
+                    android:layout_height="wrap_content"
+                    android:textSize="15dp"
+                    android:inputType="textMultiLine" />
             </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
