@@ -46,6 +46,7 @@ namespace AniDroid.Dialogs
             private readonly User.UserMediaListOptions _mediaListOptions;
             private readonly List<string> _mediaStatusList;
             private new BaseAniDroidActivity Activity => base.Activity as BaseAniDroidActivity;
+            private bool _isPrivate;
 
             private Picker _scorePicker;
             private AppCompatSpinner _statusSpinner;
@@ -60,6 +61,7 @@ namespace AniDroid.Dialogs
                 _media = media;
                 _mediaList = mediaList;
                 _mediaListOptions = mediaListOptions;
+                _isPrivate = mediaList?.Private ?? false;
 
                 _mediaStatusList = AniListEnum.GetEnumValues<Media.MediaListStatus>().OrderBy(x => x.Index)
                     .Select(x => x.DisplayValue).ToList();
@@ -88,13 +90,28 @@ namespace AniDroid.Dialogs
             {
                 toolbar.Title = $"Editing: {_media.Title.UserPreferred}";
                 toolbar.InflateMenu(Resource.Menu.EditMediaListItem_ActionBar);
+
+                var privateItem = toolbar.Menu.FindItem(Resource.Id.Menu_EditMediaListItem_MarkPrivate);
+                SetupIsPrivate(privateItem);
+
                 toolbar.MenuItemClick += async (sender, args) =>
                 {
                     if (args.Item.ItemId == Resource.Id.Menu_EditMediaListItem_Save)
                     {
                         await SaveMediaListItem();
                     }
+                    else if (args.Item.ItemId == Resource.Id.Menu_EditMediaListItem_MarkPrivate)
+                    {
+                        _isPrivate = !_isPrivate;
+                        SetupIsPrivate(privateItem);
+                    }
                 };
+            }
+
+            private void SetupIsPrivate(IMenuItem isPrivateItem)
+            {
+                isPrivateItem.SetIcon(_isPrivate ? Resource.Drawable.svg_eye_off : Resource.Drawable.svg_eye);
+                isPrivateItem.SetTitle(_isPrivate ? "Mark as Public" : "Mark as Private");
             }
 
             private void SetupScore(Picker scorePicker)
@@ -206,7 +223,8 @@ namespace AniDroid.Dialogs
                     Progress = (int?) _progressPicker.GetValue(),
                     ProgressVolumes = _media.Type == Media.MediaType.Manga ? (int?)_progressPicker.GetValue() : null,
                     Repeat = (int?)_repeatPicker.GetValue(),
-                    Notes = _notesView.Text
+                    Notes = _notesView.Text,
+                    Private = _isPrivate
                 };
 
                 if ((_mediaListOptions.ScoreFormat == User.ScoreFormat.FiveStars ||
