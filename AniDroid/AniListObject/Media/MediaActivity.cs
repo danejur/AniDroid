@@ -105,6 +105,12 @@ namespace AniDroid.AniListObject.Media
             return _media.Type;
         }
 
+        public void SetMediaListSaving()
+        {
+            _mediaFab.Enabled = false;
+            //_mediaFab.Clickable
+        }
+
         public void SetupMediaView(AniList.Models.Media media)
         {
             _media = media;
@@ -157,6 +163,7 @@ namespace AniDroid.AniListObject.Media
 
         public void ShowMediaListEditDialog(AniList.Models.Media.MediaList mediaList)
         {
+            _mediaFab.Enabled = true;
             EditMediaListItemDialog.Create(this, Presenter, _media, mediaList, _mediaListOptions);
         }
 
@@ -179,7 +186,6 @@ namespace AniDroid.AniListObject.Media
 
         private void SetupMediaFab()
         {
-            _mediaFab.Enabled = true;
             _mediaFab.Visibility = ViewStates.Visible;
             _mediaFab.SetImageResource(_mediaList == null
                 ? Resource.Drawable.svg_library_plus
@@ -187,6 +193,7 @@ namespace AniDroid.AniListObject.Media
 
             _mediaFab.Click -= MediaFabClick;
             _mediaFab.Click += MediaFabClick;
+            _mediaFab.Enabled = true;
         }
 
         private void MediaFabClick(object sender, EventArgs eventArgs) => ShowMediaListEditDialog(_mediaList);

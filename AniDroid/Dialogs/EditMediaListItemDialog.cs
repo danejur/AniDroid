@@ -64,13 +64,6 @@ namespace AniDroid.Dialogs
                     .Select(x => x.DisplayValue).ToList();
             }
 
-            //public override Dialog OnCreateDialog(Bundle savedInstanceState)
-            //{
-            //    new AlertDialog.Builder(Activity).set
-            //    return new AlertDialog.Builder(Activity).SetView(OnCreateView(Activity.LayoutInflater, null, savedInstanceState))
-            //        .Create();
-            //}
-
             public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
             {
                 var view = Activity.LayoutInflater.Inflate(Resource.Layout.Fragment_EditMediaListItem, container,
@@ -107,19 +100,19 @@ namespace AniDroid.Dialogs
                 if (_mediaListOptions.ScoreFormat == User.ScoreFormat.FiveStars)
                 {
                     var list = new List<string> { "★", "★★", "★★★", "★★★★", "★★\n★★★" };
-                    scorePicker.SetItems(list, true, (int)(_mediaList?.Score ?? 3) - 1);
+                    scorePicker.SetStringItems(list, (int)(_mediaList?.Score ?? 3) - 1);
                 }
                 else if (_mediaListOptions.ScoreFormat == User.ScoreFormat.Hundred)
                 {
-                    scorePicker.SetItems(Enumerable.Range(1, 100).Select(x => x.ToString()).ToList(), false, (int)(_mediaList?.Score ?? 0) - 1);
+                    scorePicker.SetMaxValue(100, 0, false, _mediaList?.Score);
                 }
                 else if (_mediaListOptions.ScoreFormat == User.ScoreFormat.Ten)
                 {
-                    scorePicker.SetItems(Enumerable.Range(1, 10).Select(x => x.ToString()).ToList(), false, (int)((_mediaList?.Score ?? 0) / 10) - 1);
+                    scorePicker.SetMaxValue(10, 0, false, _mediaList?.Score);
                 }
                 else if (_mediaListOptions.ScoreFormat == User.ScoreFormat.TenDecimal)
                 {
-                    scorePicker.SetDecimalMinMax(0, 10, _mediaList?.Score ?? 0);
+                    scorePicker.SetMaxValue(10, 1, false, _mediaList?.Score);
                 }
                 else if (_mediaListOptions.ScoreFormat == User.ScoreFormat.ThreeSmileys)
                 {
@@ -165,16 +158,12 @@ namespace AniDroid.Dialogs
                         ? _media.Episodes
                         : (_media?.NextAiringEpisode?.Episode > 0 ? _media.NextAiringEpisode.Episode : DefaultMaxPickerValue);
 
-                    progressPicker.SetItems(Enumerable.Range(1, episodes).Select(x => x.ToString()).ToList(),
-                        false,
-                        (_mediaList?.Progress ?? 0) - 1);
+                    progressPicker.SetMaxValue(episodes, 0, false, _mediaList?.Progress);
                 }
                 else if (_media.Type == Media.MediaType.Manga)
                 {
                     progressLabel.Text = "Chapters";
-                    progressPicker.SetItems(Enumerable.Range(1, _media.Chapters ?? DefaultMaxPickerValue).Select(x => x.ToString()).ToList(),
-                        false,
-                        (_mediaList?.Progress ?? 0) - 1);
+                    progressPicker.SetMaxValue(_media.Chapters ?? DefaultMaxPickerValue, 0, false, _mediaList?.Progress);
                 }
             }
 
@@ -186,10 +175,7 @@ namespace AniDroid.Dialogs
                 }
 
                 volumeProgressContainer.Visibility = ViewStates.Visible;
-                volumeProgressPicker.SetItems(
-                    Enumerable.Range(1, _media.Volumes ?? DefaultMaxPickerValue).Select(x => x.ToString()).ToList(),
-                    false,
-                    (_mediaList?.Progress ?? 0) - 1);
+                volumeProgressPicker.SetMaxValue(_media.Volumes ?? DefaultMaxPickerValue, 0, false, _mediaList?.ProgressVolumes);
             }
 
             private void SetupRepeat(Picker rewatchedPicker, TextView rewatchedLabel)
@@ -199,9 +185,7 @@ namespace AniDroid.Dialogs
                     rewatchedLabel.Text = "Reread";
                 }
 
-                rewatchedPicker.SetItems(Enumerable.Range(1, DefaultMaxPickerValue).Select(x => x.ToString()).ToList(),
-                    false,
-                    (_mediaList?.Repeat ?? 0) - 1);
+                rewatchedPicker.SetMaxValue(DefaultMaxPickerValue, 0, false, _mediaList?.Repeat);
             }
 
             private async Task SaveMediaListItem()
@@ -211,13 +195,17 @@ namespace AniDroid.Dialogs
                 {
                     MediaId = _media.Id,
                     Status = AniListEnum.GetEnum<Media.MediaListStatus>(_statusSpinner.SelectedItemPosition),
-                    Score = !_scorePicker.IsDecimal
-                        ? _scorePicker.GetSelectedPosition()
-                        : _scorePicker.GetDecimalValue(),
-                    Progress = _progressPicker.GetSelectedPosition(),
-                    ProgressVolumes = _media.Type == Media.MediaType.Manga ? _progressVolumesPicker.GetSelectedPosition() : (int?)null,
-                    Repeat = _repeatPicker.GetSelectedPosition()
+                    Score = _scorePicker.GetValue(),
+                    Progress = (int?) _progressPicker.GetValue(),
+                    ProgressVolumes = _media.Type == Media.MediaType.Manga ? (int?)_progressPicker.GetValue() : null,
+                    Repeat = (int?)_repeatPicker.GetValue()
                 };
+
+                if ((_mediaListOptions.ScoreFormat == User.ScoreFormat.FiveStars ||
+                    _mediaListOptions.ScoreFormat == User.ScoreFormat.ThreeSmileys) && editDto.Score.HasValue)
+                {
+                    editDto.Score += 1;
+                }
 
                 Dismiss();
                 await _presenter.SaveMediaListEntry(editDto);

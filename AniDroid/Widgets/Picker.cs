@@ -17,26 +17,24 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.Base;
 using Java.Lang;
+using Math = System.Math;
 using Single = System.Single;
 
 namespace AniDroid.Widgets
 {
     public class Picker : RelativeLayout
     {
-        private IList<string> _stringItems;
-        private IList<int> _resIdItems;
         private PickerType _type;
         private ImageView _plusButton;
         private ImageView _minusButton;
         private TextView _readOnlyView;
         private EditText _editView;
-        private EditText _editDecimalView;
         private ImageView _imageView;
-        private int _selectedPosition;
-
-        public bool IsDecimal => _type == PickerType.Decimal;
-
-        public int ItemCount => _type == PickerType.Drawable ? _resIdItems?.Count ?? 0 : _stringItems?.Count ?? 0;
+        private IList<int> _resIdItems;
+        private IList<string> _stringItems;
+        private float _maxValue;
+        private uint _precision;
+        private float? _currentValue;
 
         public Picker(Context context) : base(context)
         {
@@ -66,255 +64,177 @@ namespace AniDroid.Widgets
             _readOnlyView = FindViewById<TextView>(Resource.Id.Picker_ReadOnlyView);
             _editView = FindViewById<EditText>(Resource.Id.Picker_EditView);
             _imageView = FindViewById<ImageView>(Resource.Id.Picker_ImageView);
-            _editDecimalView = FindViewById<EditText>(Resource.Id.Picker_EditDecimalView);
-
-            _stringItems = new List<string>();
 
             _plusButton.Click += IncrementCounter;
             _minusButton.Click += DecrementCounter;
         }
 
-        public void SetItems(IList<string> items, bool readOnly, int defaultPosition = -1)
-        {
-            _stringItems = items;
-            _type = readOnly ? PickerType.ReadOnly : PickerType.Editable;
-
-            if (defaultPosition <= -1 || defaultPosition >= _stringItems.Count)
-            {
-                defaultPosition = -1;
-            }
-
-            _selectedPosition = defaultPosition;
-            _editView.SetFilters(new IInputFilter[] {new ValidValuesInputFilter(_stringItems) });
-
-            DisplayValue();
-        }
-
-        public void SetDrawableItems(IList<int> resIds, int defaultPosition)
+        public void SetDrawableItems(IList<int> resIds, int? defaultPosition)
         {
             _resIdItems = resIds;
             _type = PickerType.Drawable;
 
-            if (defaultPosition <= -1 || defaultPosition >= _resIdItems.Count)
+            _editView.Visibility = _readOnlyView.Visibility = ViewStates.Gone;
+
+            if (defaultPosition < 0 || defaultPosition >= _resIdItems.Count)
             {
-                defaultPosition = -1;
+                defaultPosition = null;
             }
 
-            _selectedPosition = defaultPosition;
+            _currentValue = defaultPosition;
 
             DisplayValue();
         }
 
-        public void SetDecimalMinMax(float min, float max, float defaultValue)
+        public void SetStringItems(IList<string> strings, int? defaultPosition)
         {
-            _editDecimalView.SetFilters(new IInputFilter[] {new MinMaxInputFilter(min, max)});
-            _type = PickerType.Decimal;
-            _editDecimalView.Text = defaultValue.ToString(CultureInfo.InvariantCulture);
+            _stringItems = strings;
+            _type = PickerType.Strings;
+
+            _readOnlyView.Visibility = ViewStates.Visible;
+            _editView.Visibility = _imageView.Visibility = ViewStates.Gone;
+
+            if (defaultPosition < 0 || defaultPosition >= _stringItems.Count)
+            {
+                defaultPosition = null;
+            }
+
+            _currentValue = defaultPosition;
 
             DisplayValue();
         }
 
-        public int GetSelectedPosition()
+        public void SetMaxValue(float max, uint precision, bool readOnly, float? defaultValue)
         {
-            return _selectedPosition + 1;
-        }
+            _maxValue = max;
+            _precision = precision;
+            _type = readOnly ? PickerType.ReadOnly : PickerType.Editable;
 
-        public int? GetNullableSelectedPosition() => _selectedPosition >= 0 ? _selectedPosition + 1 : (int?) null;
+            _imageView.Visibility = ViewStates.Gone;
+            _editView.Visibility = readOnly ? ViewStates.Gone : ViewStates.Visible;
+            _readOnlyView.Visibility = readOnly ? ViewStates.Visible : ViewStates.Gone;
 
-        public float? GetDecimalValue()
-        {
-            return float.TryParse(_editDecimalView.Text, out var outVal) ? outVal : (float?)null;
-        }
-
-        public void SetValue(int value)
-        {
-            if (_type == PickerType.Decimal)
+            if (_precision == 0)
             {
-                _editDecimalView.Text = value.ToString();
+                _editView.InputType = InputTypes.ClassNumber;
             }
-            else
+
+            _editView.AfterTextChanged += (sender, args) =>
             {
-                _selectedPosition = value;
-            }
+                var str = args.Editable.ToString();
+                var length = str.Length;
+
+                if (!float.TryParse(str, out var parsedResult) && args.Editable.All(x => x == '.') ||
+                    parsedResult < 0)
+                {
+                    _currentValue = 0;
+                }
+                else if (parsedResult > _maxValue)
+                {
+                    _currentValue = _maxValue;
+                    args.Editable.Replace(0, length, _maxValue.ToString(CultureInfo.InvariantCulture));
+                }
+                else
+                {
+                    _currentValue = parsedResult;
+                }
+
+            };
+
+           
+
+            _currentValue = defaultValue;
 
             DisplayValue();
+        }
+
+        public float? GetValue() => _currentValue;
+
+        public void SetValue(float? value)
+        {
+            _currentValue = value;
+
+            DisplayValue();
+        }
+
+        private int? GetCollectionPosition(float? value)
+        {
+            var count = _type == PickerType.Drawable ? _resIdItems?.Count : _stringItems?.Count;
+            return (int?) (value < 0 || value >= count ? null : value);
         }
 
         private void DisplayValue()
         {
-            if (_selectedPosition == -1)
+            if (_type == PickerType.Drawable)
             {
-                _readOnlyView.Visibility = ViewStates.Gone;
-                _editView.Visibility = ViewStates.Gone;
-                _imageView.Visibility = ViewStates.Gone;
-                _editDecimalView.Visibility = ViewStates.Gone;
+                var position = GetCollectionPosition(_currentValue);
+
+                if (position.HasValue)
+                {
+                    _imageView.Visibility = ViewStates.Visible;
+                    _imageView.SetImageResource(_resIdItems[position.Value]);
+                }
+                else
+                {
+                    _imageView.Visibility = ViewStates.Gone;
+                }
+
+                return;
+            }
+            if (_type == PickerType.Strings)
+            {
+                var position = GetCollectionPosition(_currentValue);
+
+                if (position.HasValue)
+                {
+                    _readOnlyView.Visibility = ViewStates.Visible;
+                    _readOnlyView.Text = _stringItems[position.Value];
+                }
+                else
+                {
+                    _readOnlyView.Visibility = ViewStates.Gone;
+                }
+
                 return;
             }
 
-            switch (_type)
-            {
-                case PickerType.Drawable:
-                    _imageView.SetImageResource(_resIdItems[_selectedPosition]);
-                    _readOnlyView.Visibility = ViewStates.Gone;
-                    _editView.Visibility = ViewStates.Gone;
-                    _imageView.Visibility = ViewStates.Visible;
-                    _editDecimalView.Visibility = ViewStates.Gone;
-                    break;
-                case PickerType.Editable:
-                    _readOnlyView.Text = _editView.Text = _stringItems[_selectedPosition];
-                    _readOnlyView.Visibility = ViewStates.Gone;
-                    _editView.Visibility = ViewStates.Visible;
-                    _imageView.Visibility = ViewStates.Gone;
-                    _editDecimalView.Visibility = ViewStates.Gone;
-                    break;
-                case PickerType.ReadOnly:
-                    _readOnlyView.Text = _editView.Text = _stringItems[_selectedPosition];
-                    _readOnlyView.Visibility = ViewStates.Visible;
-                    _editView.Visibility = ViewStates.Gone;
-                    _imageView.Visibility = ViewStates.Gone;
-                    _editDecimalView.Visibility = ViewStates.Gone;
-                    break;
-                case PickerType.Decimal:
-                    _readOnlyView.Visibility = ViewStates.Gone;
-                    _editView.Visibility = ViewStates.Gone;
-                    _imageView.Visibility = ViewStates.Gone;
-                    _editDecimalView.Visibility = ViewStates.Visible;
-                    break;
-
-            }
+            _editView.Text = _readOnlyView.Text = _currentValue?.ToString("N" + _precision) ?? "";
         }
 
         private void IncrementCounter(object sender, EventArgs eventArgs)
         {
-            if (_type == PickerType.Decimal && float.TryParse(_editDecimalView.Text, out var parsedVal))
+            var alteredVal = (_currentValue ?? (_type == PickerType.Drawable || _type == PickerType.Strings ? -1 : 0)) + 1 / (float)Math.Pow(10, _precision);
+
+            if ((_type == PickerType.Drawable || _type == PickerType.Strings) && !GetCollectionPosition(alteredVal).HasValue || (_type != PickerType.Drawable && _type != PickerType.Strings) && alteredVal > _maxValue)
             {
-                parsedVal += .1f;
-                _editDecimalView.Text = parsedVal.ToString("#.#");
+                return;
             }
-            else if (_selectedPosition + 1 < ItemCount)
-            {
-                _selectedPosition += 1;
-            }
+
+            _currentValue = alteredVal;
 
             DisplayValue();
         }
 
         private void DecrementCounter(object sender, EventArgs eventArgs)
         {
-            if (_type == PickerType.Decimal && float.TryParse(_editDecimalView.Text, out var parsedVal))
+            var alteredVal = _currentValue - 1;
+
+            if (alteredVal < 0)
             {
-                parsedVal -= .1f;
-                _editDecimalView.Text = parsedVal.ToString("#.#");
+                alteredVal = null;
             }
-            else if (_selectedPosition > -1)
-            {
-                _selectedPosition -= 1;
-            }
+
+            _currentValue = alteredVal;
 
             DisplayValue();
-        }
-
-        private class ValidValuesInputFilter : Java.Lang.Object, IInputFilter
-        {
-            private readonly HashSet<string> _values;
-            private readonly Java.Lang.String _emptyString = new Java.Lang.String();
-
-            public ValidValuesInputFilter(IEnumerable<string> values)
-            {
-                _values = values.ToHashSet();
-            }
-
-            public ICharSequence FilterFormatted(ICharSequence source, int start, int end, ISpanned dest, int dstart, int dend)
-            {
-                var arraySize = dest.Length();
-                var retArr = new char[arraySize > dend + 1 ? arraySize : dend + 1];
-
-                dest.ToArray().CopyTo(retArr, 0);
-
-                var delOp = source.Length() == 0;
-                for (var i = 0; i < retArr.Length; i++)
-                {
-                    if (dstart > i || dend < i)
-                    {
-                        continue;
-                    }
-
-                    if (delOp)
-                    {
-                        retArr[i] = '\0';
-                    }
-                    else if (start < end)
-                    {
-                        retArr[i] = source.CharAt(start);
-                        start += 1;
-                    }
-                    else
-                    {
-                        retArr[i] = '\0';
-                    }
-                }
-
-                return _values.Contains(new string(retArr)) ? null : _emptyString;
-            }   
-        }
-
-        private class MinMaxInputFilter : Java.Lang.Object, IInputFilter
-        {
-            private readonly float _min;
-            private readonly float _max;
-            private readonly Java.Lang.String _emptyString = new Java.Lang.String();
-
-            public MinMaxInputFilter(float min, float max)
-            {
-                _min = min;
-                _max = max;
-            }
-
-            public ICharSequence FilterFormatted(ICharSequence source, int start, int end, ISpanned dest, int dstart, int dend)
-            {
-                var arraySize = dest.Length();
-                var retArr = new char[arraySize > dend + 1 ? arraySize : dend + 1];
-
-                dest.ToArray().CopyTo(retArr, 0);
-
-                var delOp = source.Length() == 0;
-                for (var i = 0; i < retArr.Length; i++)
-                {
-                    if (dstart > i || dend < i)
-                    {
-                        continue;
-                    }
-
-                    if (delOp)
-                    {
-                        retArr[i] = '\0';
-                    }
-                    else if (start < end)
-                    {
-                        retArr[i] = source.CharAt(start);
-                        start += 1;
-                    }
-                    else
-                    {
-                        retArr[i] = '\0';
-                    }
-                }
-
-                if (!float.TryParse(new string(retArr), out var parsedResult))
-                {
-                    return retArr.Length > 0 && retArr.All(x => x == '.' || x == '-') ? null : _emptyString;
-                }
-
-                return parsedResult >= _min && parsedResult <= _max ? null : _emptyString;
-            }
         }
 
         private enum PickerType
         {
             ReadOnly = 0,
             Editable = 1,
-            Decimal = 2,
-            Drawable = 3
+            Drawable = 2,
+            Strings = 3
         }
     }
 }

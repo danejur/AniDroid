@@ -6,6 +6,7 @@ namespace AniDroid.AniListObject.Media
     {
         int GetMediaId();
         AniList.Models.Media.MediaType GetMediaType();
+        void SetMediaListSaving();
         void SetupMediaView(AniList.Models.Media media);
         void SetCurrentUserMediaListOptions(AniList.Models.User.UserMediaListOptions mediaListOptions);
         void ShowMediaListEditDialog(AniList.Models.Media.MediaList mediaList);

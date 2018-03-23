@@ -83,6 +83,8 @@ namespace AniDroid.AniListObject.Media
 
         public async Task SaveMediaListEntry(MediaListEditDto editDto)
         {
+            View.SetMediaListSaving();
+
             var mediaUpdateResp = await AniListService.UpdateMediaListEntry(editDto, default(CancellationToken));
 
             mediaUpdateResp.Switch(mediaList =>

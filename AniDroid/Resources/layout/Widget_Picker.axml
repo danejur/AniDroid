@@ -27,7 +27,6 @@
             android:text="Text"
             android:textColor="?Background_Text"
             android:id="@+id/Picker_ReadOnlyView"
-            android:width="80dp"
             android:gravity="center"
             android:textSize="20dp"
             android:layout_width="match_parent"
@@ -39,17 +38,11 @@
             android:id="@+id/Picker_EditView"
             android:textSize="20dp"
             android:gravity="center"
-            android:inputType="number" />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/Picker_EditDecimalView"
-            android:textSize="20dp"
-            android:gravity="center"
             android:inputType="numberDecimal" />
         <ImageView
             android:src="@android:drawable/ic_menu_gallery"
             android:tint="?Background_Text"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/Picker_ImageView" />
