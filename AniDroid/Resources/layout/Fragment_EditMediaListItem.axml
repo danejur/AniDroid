@@ -25,8 +25,8 @@
         android:layout_height="match_parent">
         <LinearLayout
             android:orientation="vertical"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:background="?Background_Alternate"
             android:layout_width="match_parent"
             android:layout_height="match_parent">

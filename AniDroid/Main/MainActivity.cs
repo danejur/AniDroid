@@ -26,6 +26,7 @@ using AniDroid.Dialogs;
 using AniDroid.Discover;
 using AniDroid.Home;
 using AniDroid.Login;
+using AniDroid.MediaList;
 using AniDroid.SearchResults;
 using AniDroid.Settings;
 using AniDroid.TorrentSearch;
@@ -332,6 +333,12 @@ namespace AniDroid.Main
             {
                 case Resource.Id.Menu_Navigation_Home:
                     ChangeFragment(new HomeFragment());
+                    break;
+                case Resource.Id.Menu_Navigation_Anime:
+                    ChangeFragment(MediaListFragment.CreateMediaListFragment(Media.MediaType.Anime));
+                    break;
+                case Resource.Id.Menu_Navigation_Manga:
+                    ChangeFragment(MediaListFragment.CreateMediaListFragment(Media.MediaType.Manga));
                     break;
                 case Resource.Id.Menu_Navigation_Discover:
                     ChangeFragment(new DiscoverFragment());
