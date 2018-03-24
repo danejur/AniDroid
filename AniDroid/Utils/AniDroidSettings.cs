@@ -70,6 +70,18 @@ namespace AniDroid.Utils
             set => _settingStorage.Put(StorageKeys.ShowAllActivityKey, value);
         }
 
+        public List<KeyValuePair<string, bool>> AnimeListOrder
+        {
+            get => _settingStorage.Get(StorageKeys.AnimeListOrderKey, (List<KeyValuePair<string, bool>>)null);
+            set => _settingStorage.Put(StorageKeys.AnimeListOrderKey, value);
+        }
+
+        public List<KeyValuePair<string, bool>> MangaListOrder
+        {
+            get => _settingStorage.Get(StorageKeys.MangaListOrderKey, (List<KeyValuePair<string, bool>>)null);
+            set => _settingStorage.Put(StorageKeys.MangaListOrderKey, value);
+        }
+
         #region Constants
 
         private static class StorageKeys
@@ -80,6 +92,8 @@ namespace AniDroid.Utils
 
             public const string AccessCode = "ACCESS_CODE";
             public const string LoggedInUser = "LOGGED_IN_USER";
+            public const string AnimeListOrderKey = "ANIME_LIST_ORDER_KEY";
+            public const string MangaListOrderKey = "MANGA_LIST_ORDER_KEY";
 
             public const string ShowAllActivityKey = "SHOW_ALL_ACTIVITY";
         }

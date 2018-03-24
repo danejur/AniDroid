@@ -11,6 +11,7 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 
 namespace AniDroid.MediaList
@@ -18,6 +19,7 @@ namespace AniDroid.MediaList
     public interface IMediaListView : IAniDroidView
     {
         Media.MediaType GetMediaType();
-        void DisplayMediaLists(Media.MediaListCollection collection);
+        void SetCollection(Media.MediaListCollection collection);
+        void UpdateMediaListItem(Media.MediaList mediaList);
     }
 }

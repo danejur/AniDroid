@@ -182,7 +182,7 @@ namespace AniDroid.Dialogs
                 if (_media.Type == Media.MediaType.Anime)
                 {
                     var episodes = _media.Episodes > 0
-                        ? _media.Episodes
+                        ? _media.Episodes.Value
                         : (_media?.NextAiringEpisode?.Episode > 0 ? _media.NextAiringEpisode.Episode : DefaultMaxPickerValue);
 
                     progressPicker.SetMaxValue(episodes, 0, false, _mediaList?.Progress);

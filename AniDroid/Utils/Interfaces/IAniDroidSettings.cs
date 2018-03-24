@@ -25,5 +25,7 @@ namespace AniDroid.Utils.Interfaces
         void ClearUserAuthentication();
         User LoggedInUser { get; set; }
         bool ShowAllAniListActivity { get; set; }
+        List<KeyValuePair<string, bool>> AnimeListOrder { get; set; }
+        List<KeyValuePair<string, bool>> MangaListOrder { get; set; }
     }
 }

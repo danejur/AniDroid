@@ -8,15 +8,19 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
+using AniDroid.AniList.Dto;
 using AniDroid.AniList.Interfaces;
+using AniDroid.AniList.Models;
+using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
 
 namespace AniDroid.MediaList
 {
-    public class MediaListPresenter : BaseAniDroidPresenter<IMediaListView>
+    public class MediaListPresenter : BaseAniDroidPresenter<IMediaListView>, IAniListMediaListEditPresenter
     {
         public MediaListPresenter(IMediaListView view, IAniListService service, IAniDroidSettings settings) : base(view, service, settings)
         {
@@ -33,7 +37,33 @@ namespace AniDroid.MediaList
                 View.GetMediaType(), default(CancellationToken));
 
             mediaListResp.Switch(error => View.OnError(error))
-                .Switch(mediaLists => View.DisplayMediaLists(mediaLists));
+                .Switch(mediaLists => View.SetCollection(mediaLists));
+        }
+
+        public async Task SaveMediaListEntry(MediaListEditDto editDto)
+        {
+            //View.SetMediaListSaving();
+
+            var mediaUpdateResp = await AniListService.UpdateMediaListEntry(editDto, default(CancellationToken));
+
+            mediaUpdateResp.Switch(mediaList =>
+                {
+                    View.DisplaySnackbarMessage("Saved", Snackbar.LengthShort);
+                    View.UpdateMediaListItem(mediaList);
+                })
+                .Switch(error =>
+                {
+                    View.DisplaySnackbarMessage("Error occurred while saving list entry", Snackbar.LengthLong);
+                    //View.ShowMediaListEditDialog(new AniList.Models.Media.MediaList
+                    //{
+                    //    Score = editDto.Score ?? 0,
+                    //    Progress = editDto.Progress,
+                    //    ProgressVolumes = editDto.ProgressVolumes,
+                    //    Status = editDto.Status,
+                    //    Notes = editDto.Notes,
+                    //    Repeat = editDto.Repeat
+                    //});
+                });
         }
     }
 }

@@ -332,13 +332,15 @@ namespace AniDroid.Main
             switch (menuItem.ItemId)
             {
                 case Resource.Id.Menu_Navigation_Home:
-                    ChangeFragment(new HomeFragment());
+                    ChangeFragment(HomeFragment.GetInstance(HomeFragment.HomeFragmentName) ?? new HomeFragment());
                     break;
                 case Resource.Id.Menu_Navigation_Anime:
-                    ChangeFragment(MediaListFragment.CreateMediaListFragment(Media.MediaType.Anime));
+                    ChangeFragment(MediaListFragment.GetInstance(MediaListFragment.AnimeMediaListFragmentName) ??
+                                   MediaListFragment.CreateMediaListFragment(Media.MediaType.Anime));
                     break;
                 case Resource.Id.Menu_Navigation_Manga:
-                    ChangeFragment(MediaListFragment.CreateMediaListFragment(Media.MediaType.Manga));
+                    ChangeFragment(MediaListFragment.GetInstance(MediaListFragment.MangaMediaListFragmentName) ??
+                                   MediaListFragment.CreateMediaListFragment(Media.MediaType.Manga));
                     break;
                 case Resource.Id.Menu_Navigation_Discover:
                     ChangeFragment(new DiscoverFragment());

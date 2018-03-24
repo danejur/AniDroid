@@ -156,6 +156,7 @@
     <Compile Include="Adapters\MediaAdapters\BrowseMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\DiscoverMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaCharactersRecyclerAdapter.cs" />
+    <Compile Include="Adapters\MediaAdapters\MediaListRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaRelationsRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaStaffRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaStreamingEpisodesRecyclerAdapter.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="AniListObject\User\UserPresenter.cs" />
     <Compile Include="Base\BaseAniDroidFragment.cs" />
     <Compile Include="Base\BaseAniListObjectActivity.cs" />
+    <Compile Include="Base\BaseMainActivityFragment.cs" />
     <Compile Include="Base\IAniListObjectView.cs" />
     <Compile Include="Browse\BrowseActivity.cs" />
     <Compile Include="Browse\BrowseFragment.cs" />
@@ -209,8 +211,8 @@
     <Compile Include="Home\HomeFragment.cs" />
     <Compile Include="Home\HomePresenter.cs" />
     <Compile Include="Home\IHomeView.cs" />
-    <Compile Include="MediaList\IMediaListView.cs" />
     <Compile Include="MediaList\MediaListFragment.cs" />
+    <Compile Include="MediaList\IMediaListView.cs" />
     <Compile Include="MediaList\MediaListPresenter.cs" />
     <Compile Include="SearchResults\ISearchResultsView.cs" />
     <Compile Include="SearchResults\SearchResultsActivity.cs" />
@@ -378,6 +380,9 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\View_SettingItem_Checkbox.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Fragment_MediaLists.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -660,6 +665,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\svg_eye.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\MediaLists_ActionBar.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

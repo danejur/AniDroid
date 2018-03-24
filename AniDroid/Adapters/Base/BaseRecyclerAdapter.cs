@@ -210,8 +210,8 @@ namespace AniDroid.Adapters.Base
         {
             Custom = -1,
             Vertical = 0,
-            Horizontal = 2,
-            FlatHorizontal = 3
+            Horizontal = 1,
+            FlatHorizontal = 2
         }
 
         public class CardItem : RecyclerView.ViewHolder

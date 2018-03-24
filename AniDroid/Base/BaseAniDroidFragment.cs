@@ -20,6 +20,11 @@ namespace AniDroid.Base
 
         protected async Task CreatePresenter(Bundle savedInstanceState)
         {
+            if (Presenter != null)
+            {
+                return;
+            }
+
             Presenter = Kernel.Get<T>();
             await Presenter.Init().ConfigureAwait(false);
         }
@@ -61,6 +66,19 @@ namespace AniDroid.Base
 
         public virtual void SetupMenu(IMenu menu)
         {
+        }
+
+        public void RecreateFragment()
+        {
+            if (IsDetached)
+            {
+                return;
+            }
+
+            FragmentManager.BeginTransaction()
+                .Detach(this)
+                .Attach(this)
+                .Commit();
         }
     }
 }

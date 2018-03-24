@@ -26,26 +26,26 @@ namespace AniDroid.Adapters
             }
         }
 
-        public override Java.Lang.Object InstantiateItem(ViewGroup container, int position)
+        public override Object InstantiateItem(ViewGroup container, int position)
         {
             var view = _viewList[position];
             container.AddView(view.Value);
             return view.Value;
         }
 
-        public override void DestroyItem(ViewGroup container, int position, Java.Lang.Object @object)
+        public override void DestroyItem(ViewGroup container, int position, Object @object)
         {
-            _viewList.RemoveAt(position);
+            container.RemoveView((View)@object);
         }
 
-        public override bool IsViewFromObject(View view, Java.Lang.Object @object)
+        public override bool IsViewFromObject(View view, Object @object)
         {
             return view == @object;
         }
 
         public override ICharSequence GetPageTitleFormatted(int position)
         {
-            return new Java.Lang.String(_viewList[position].Key);
+            return new String(_viewList[position].Key);
         }
 
         public override int Count => _viewList?.Count ?? 0;

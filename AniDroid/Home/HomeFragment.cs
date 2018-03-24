@@ -22,20 +22,23 @@ using OneOf;
 
 namespace AniDroid.Home
 {
-    public class HomeFragment : BaseAniDroidFragment<HomePresenter>, IHomeView
+    public class HomeFragment : BaseMainActivityFragment<HomePresenter>, IHomeView
     {
+        public const string HomeFragmentName = "HOME_FRAGMENT";
+
         private AniListActivityRecyclerAdapter _recyclerAdapter;
         private bool _isFollowingOnly;
 
         public override bool HasMenu => true;
-        public override string FragmentName => "HOME_FRAGMENT";
+        public override string FragmentName => HomeFragmentName;
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IHomeView, HomeFragment>(this));
 
-        public override View CreateView(ViewGroup container, Bundle savedInstanceState)
+        public override View CreateMainActivityFragmentView(ViewGroup container, Bundle savedInstanceState)
         {
             _isFollowingOnly = !Kernel.Get<IAniDroidSettings>().ShowAllAniListActivity;
 
             CreatePresenter(savedInstanceState).GetAwaiter().GetResult();
+
             return LayoutInflater.Inflate(Resource.Layout.View_List, container, false);
         }
 
@@ -43,7 +46,10 @@ namespace AniDroid.Home
         {
             base.OnViewCreated(view, savedInstanceState);
 
-            Presenter.GetAniListActivity(_isFollowingOnly);
+            if (_recyclerAdapter == null)
+            {
+                Presenter.GetAniListActivity(_isFollowingOnly);
+            }
         }
 
         public override void SetupMenu(IMenu menu)
