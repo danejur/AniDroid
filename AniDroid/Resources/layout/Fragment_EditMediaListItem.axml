@@ -25,174 +25,189 @@
         android:layout_height="match_parent">
         <LinearLayout
             android:orientation="vertical"
+            android:paddingTop="20dp"
             android:paddingBottom="20dp"
             android:background="?Background_Alternate"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <LinearLayout
                 android:orientation="horizontal"
-                android:background="?Background_Special"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:gravity="center_vertical"
-                android:layout_marginTop="20dp">
-                <TextView
-                    android:text="Score"
-                    android:layout_width="90dp"
-                    android:layout_height="60dp"
-                    android:textSize="17dp"
-                    android:gravity="center_vertical"
-                    android:layout_marginRight="20dp"
-                    android:background="@android:color/transparent" />
-                <AniDroid.Widgets.Picker
-                    android:id="@+id/EditMediaListItem_ScorePicker"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent" />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:gravity="center_vertical"
-                android:background="?Background_Special"
-                android:layout_marginTop="20dp">
-                <TextView
-                    android:text="Status"
-                    android:layout_width="90dp"
-                    android:layout_height="60dp"
-                    android:textSize="17dp"
-                    android:gravity="center_vertical"
-                    android:layout_marginRight="20dp"
-                    android:background="@android:color/transparent" />
-                <android.support.v7.widget.AppCompatSpinner
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/EditMediaListItem_StatusSpinner" />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:background="?Background_Special"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:gravity="center_vertical"
-                android:layout_marginTop="20dp"
-                android:id="@+id/linearLayout1">
-                <TextView
-                    android:id="@+id/EditMediaListItem_ProgressLabel"
-                    android:text="Progress"
-                    android:layout_width="90dp"
-                    android:layout_height="60dp"
-                    android:textSize="17dp"
-                    android:gravity="center_vertical"
-                    android:layout_marginRight="20dp"
-                    android:background="@android:color/transparent" />
-                <AniDroid.Widgets.Picker
-                    android:id="@+id/EditMediaListItem_ProgressPicker"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent" />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:background="?Background_Special"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:visibility="gone"
-                android:gravity="center_vertical"
-                android:layout_marginTop="20dp"
-                android:id="@+id/EditMediaListItem_VolumeProgressContainer">
-                <TextView
-                    android:text="Volumes"
-                    android:layout_width="90dp"
-                    android:layout_height="60dp"
-                    android:textSize="17dp"
-                    android:gravity="center_vertical"
-                    android:layout_marginRight="20dp"
-                    android:background="@android:color/transparent" />
-                <AniDroid.Widgets.Picker
-                    android:id="@+id/EditMediaListItem_VolumeProgressPicker"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent" />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:background="?Background_Special"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:gravity="center_vertical"
-                android:layout_marginTop="20dp">
-                <TextView
-                    android:id="@+id/EditMediaListItem_RewatchedLabel"
-                    android:text="Rewatched"
-                    android:layout_width="90dp"
-                    android:layout_height="60dp"
-                    android:textSize="17dp"
-                    android:gravity="center_vertical"
-                    android:layout_marginRight="20dp"
-                    android:background="@android:color/transparent"
-                    android:layout_gravity="top" />
-                <AniDroid.Widgets.Picker
-                    android:id="@+id/EditMediaListItem_RewatchedPicker"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent" />
-            </LinearLayout>
-            <LinearLayout
-                android:orientation="horizontal"
-                android:background="?Background_Special"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:gravity="center_vertical"
-                android:layout_marginTop="20dp">
-                <EditText
-                    android:id="@+id/EditMediaListItem_Notes"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:hint="Notes"
+                    android:layout_height="80dp">
+                    <TextView
+                        android:text="Score"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="?Primary_Dark"
+                        android:layout_gravity="top" />
+                    <AniDroid.Widgets.Picker
+                        android:id="@+id/EditMediaListItem_ScorePicker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_gravity="bottom"
+                        android:background="@android:color/transparent" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:text="Status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="?Primary_Dark"
+                        android:layout_gravity="top" />
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_gravity="bottom"
+                        android:id="@+id/EditMediaListItem_StatusSpinner" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp">
+                        <TextView
+                            android:id="@+id/EditMediaListItem_ProgressLabel"
+                            android:text="Progress"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:textColor="?Primary_Dark"
+                            android:layout_gravity="top" />
+                        <AniDroid.Widgets.Picker
+                            android:id="@+id/EditMediaListItem_ProgressPicker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_gravity="bottom"
+                            android:background="@android:color/transparent" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/EditMediaListItem_VolumeProgressContainer"
+                        android:layout_marginTop="20dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:orientation="vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp">
+                        <TextView
+                            android:text="Volumes"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="14dp"
+                            android:textColor="?Primary_Dark"
+                            android:layout_gravity="top" />
+                        <AniDroid.Widgets.Picker
+                            android:id="@+id/EditMediaListItem_VolumeProgressPicker"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_gravity="bottom"
+                            android:background="@android:color/transparent" />
+                    </LinearLayout>
+                </LinearLayout>
+              <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_marginTop="20dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp">
+                    <TextView
+                        android:id="@+id/EditMediaListItem_RewatchedLabel"
+                        android:text="Rewatched"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="?Primary_Dark"
+                        android:layout_gravity="top" />
+                    <AniDroid.Widgets.Picker
+                        android:id="@+id/EditMediaListItem_RewatchedPicker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_gravity="bottom"
+                        android:background="@android:color/transparent" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center_vertical"
+                android:layout_marginTop="20dp">
+              <android.support.design.widget.TextInputLayout
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:theme="?TextInput_Theme">
+                <EditText
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="15dp"
+                    android:textSize="14dp"
                     android:inputType="textMultiLine"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp" />
+                    android:id="@+id/EditMediaListItem_Notes"
+                    android:hint="Notes" />
+              </android.support.design.widget.TextInputLayout>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/EditMediaListItem_CustomListsContainer"
-                android:orientation="horizontal"
-                android:background="?Background_Special"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:gravity="center_vertical"
                 android:layout_marginTop="20dp">
-                <TextView
+              <TextView
                   android:text="Custom Lists"
-                  android:layout_width="90dp"
-                  android:layout_height="60dp"
-                  android:textSize="17dp"
-                  android:gravity="center_vertical"
-                  android:layout_marginRight="20dp"
-                  android:background="@android:color/transparent"
-                  android:layout_gravity="top" />
-                <LinearLayout
-                  android:id="@+id/EditMediaListItem_CustomLists"
-                  android:orientation="vertical"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:background="@android:color/transparent" />
+                  android:textSize="14dp"
+                  android:textColor="?Primary_Dark"
+                  android:layout_gravity="top" />
+                <LinearLayout
+                    android:id="@+id/EditMediaListItem_CustomLists"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent" />
             </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

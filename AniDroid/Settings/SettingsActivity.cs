@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Speech;
@@ -147,14 +148,26 @@ namespace AniDroid.Settings
         private View CreateSettingRow(string name, string description, EventHandler tapEvent)
         {
             var view = LayoutInflater.Inflate(Resource.Layout.View_SettingItem, null);
-            view.FindViewById<LinearLayout>(Resource.Id.SettingItem_Container).Click += tapEvent;
-            view.FindViewById<TextView>(Resource.Id.SettingItem_Name).Text = name;
-
+            var nameView = view.FindViewById<TextView>(Resource.Id.SettingItem_Name);
             var textTwoView = view.FindViewById<TextView>(Resource.Id.SettingItem_Details);
-            if (!string.IsNullOrWhiteSpace(description))
-                textTwoView.Text = description;
+
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                nameView.Text = name;
+            }
             else
+            {
+                nameView.Visibility = ViewStates.Gone;
+            }
+
+            if (!string.IsNullOrWhiteSpace(description))
+            {
+                textTwoView.Text = description;
+            }
+            else
+            {
                 textTwoView.Visibility = ViewStates.Gone;
+            }
 
             return view;
         }
@@ -163,20 +176,30 @@ namespace AniDroid.Settings
         {
             var view = context.LayoutInflater.Inflate(Resource.Layout.View_SettingItem_Switch, null);
             var nameView = view.FindViewById<TextView>(Resource.Id.SettingItem_Name);
+            var textTwoView = view.FindViewById<TextView>(Resource.Id.SettingItem_Details);
+
             if (!string.IsNullOrWhiteSpace(name))
+            {
                 nameView.Text = name;
+            }
             else
+            {
                 nameView.Visibility = ViewStates.Gone;
+                textTwoView.SetTextColor(new Color(context.GetThemedColor(Resource.Attribute.Background_Text)));
+            }
+
+            if (!string.IsNullOrWhiteSpace(description))
+            {
+                textTwoView.Text = description;
+            }
+            else
+            {
+                textTwoView.Visibility = ViewStates.Gone;
+            }
 
             var switchView = view.FindViewById<SwitchCompat>(Resource.Id.SettingItem_Switch);
             switchView.Checked = switchState;
             switchView.CheckedChange += switchEvent;
-
-            var textTwoView = view.FindViewById<TextView>(Resource.Id.SettingItem_Details);
-            if (!string.IsNullOrWhiteSpace(description))
-                textTwoView.Text = description;
-            else
-                textTwoView.Visibility = ViewStates.Gone;
 
             return view;
         }
@@ -184,21 +207,32 @@ namespace AniDroid.Settings
         public static View CreateCheckboxSettingRow(BaseAniDroidActivity context, string name, string description, bool isChecked, EventHandler<CompoundButton.CheckedChangeEventArgs> checkEvent)
         {
             var view = context.LayoutInflater.Inflate(Resource.Layout.View_SettingItem_Checkbox, null);
+
             var nameView = view.FindViewById<TextView>(Resource.Id.SettingItem_Name);
+            var textTwoView = view.FindViewById<TextView>(Resource.Id.SettingItem_Details);
+
             if (!string.IsNullOrWhiteSpace(name))
+            {
                 nameView.Text = name;
+            }
             else
+            {
                 nameView.Visibility = ViewStates.Gone;
+                textTwoView.SetTextColor(new Color(context.GetThemedColor(Resource.Attribute.Background_Text)));
+            }
+
+            if (!string.IsNullOrWhiteSpace(description))
+            {
+                textTwoView.Text = description;
+            }
+            else
+            {
+                textTwoView.Visibility = ViewStates.Gone;
+            }
 
             var checkboxView = view.FindViewById<AppCompatCheckBox>(Resource.Id.SettingItem_Checkbox);
             checkboxView.Checked = isChecked;
             checkboxView.CheckedChange += checkEvent;
-
-            var textTwoView = view.FindViewById<TextView>(Resource.Id.SettingItem_Details);
-            if (!string.IsNullOrWhiteSpace(description))
-                textTwoView.Text = description;
-            else
-                textTwoView.Visibility = ViewStates.Gone;
 
             return view;
         }
@@ -206,7 +240,28 @@ namespace AniDroid.Settings
         public static View CreateSpinnerSettingRow(BaseAniDroidActivity context, string name, string description, IList<string> items, int selectedPosition, EventHandler<AdapterView.ItemSelectedEventArgs> selectedEvent)
         {
             var view = context.LayoutInflater.Inflate(Resource.Layout.View_SettingItem_Spinner, null);
-            view.FindViewById<TextView>(Resource.Id.SettingItem_Name).Text = name;
+
+            var nameView = view.FindViewById<TextView>(Resource.Id.SettingItem_Name);
+            var textTwoView = view.FindViewById<TextView>(Resource.Id.SettingItem_Details);
+
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                nameView.Text = name;
+            }
+            else
+            {
+                nameView.Visibility = ViewStates.Gone;
+                textTwoView.SetTextColor(new Color(context.GetThemedColor(Resource.Attribute.Background_Text)));
+            }
+
+            if (!string.IsNullOrWhiteSpace(description))
+            {
+                textTwoView.Text = description;
+            }
+            else
+            {
+                textTwoView.Visibility = ViewStates.Gone;
+            }
 
             var spinner = view.FindViewById<Spinner>(Resource.Id.SettingItem_Spinner);
             spinner.Id = (int)DateTime.Now.Ticks;
@@ -214,12 +269,6 @@ namespace AniDroid.Settings
             spinner.SetSelection(selectedPosition);
             spinner.ItemSelected -= selectedEvent;
             spinner.ItemSelected += selectedEvent;
-
-            var textTwoView = view.FindViewById<TextView>(Resource.Id.SettingItem_Details);
-            if (!string.IsNullOrWhiteSpace(description))
-                textTwoView.Text = description;
-            else
-                textTwoView.Visibility = ViewStates.Gone;
 
             return view;
         }

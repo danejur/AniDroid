@@ -12,23 +12,21 @@
         android:layout_height="36dp"
         android:background="?android:attr/selectableItemBackground"
         android:id="@+id/Picker_MinusButton"
-        android:layout_centerVertical="true" />
+        android:layout_centerVertical="true"
+        android:padding="4dp" />
     <FrameLayout
-        android:minWidth="25px"
-        android:minHeight="25px"
-        android:layout_width="80dp"
-        android:layout_height="50dp"
+        android:layout_width="60dp"
+        android:layout_height="40dp"
         android:id="@+id/Picker_TextContainer"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/Picker_MinusButton">
         <TextView
-            android:text="Text"
             android:textColor="?Background_Text"
             android:id="@+id/Picker_ReadOnlyView"
             android:gravity="center"
-            android:textSize="20dp"
+            android:textSize="14dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone" />
@@ -36,9 +34,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/Picker_EditView"
-            android:textSize="20dp"
+            android:textSize="14dp"
+            android:theme="?TextInput_Theme"
             android:gravity="center"
-            android:inputType="numberDecimal" />
+            android:inputType="numberDecimal"
+            android:paddingBottom="15dp"
+            android:visibility="visible" />
         <ImageView
             android:src="@android:drawable/ic_menu_gallery"
             android:tint="?Background_Text"
@@ -55,5 +56,6 @@
         android:background="?android:attr/selectableItemBackground"
         android:id="@+id/Picker_PlusButton"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/Picker_TextContainer" />
+        android:layout_toRightOf="@id/Picker_TextContainer"
+        android:padding="4dp" />
 </merge>

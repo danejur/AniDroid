@@ -62,13 +62,13 @@
   <color name="AniList_Primary_Text">#fff</color>
   <color name="AniList_Primary_Dark">#005C99</color>
   <color name="AniList_Primary_Dark_Text">#fff</color>
-  <color name="AniList_Secondary">#304C9B</color>
+  <color name="AniList_Secondary">#00FF8B</color>
   <color name="AniList_Secondary_Text">#E4FFFFFF</color>
-  <color name="AniList_Secondary_Dark">#01227F</color>
+  <color name="AniList_Secondary_Dark">#009551</color>
   <color name="AniList_Secondary_Dark_Text">#E4FFFFFF</color>
-  <color name="AniList_Tertiary">#00FF8B</color>
+  <color name="AniList_Tertiary">#FF662D</color>
   <color name="AniList_Tertiary_Text">#7E000000</color>
-  <color name="AniList_Tertiary_Dark">#009551</color>
+  <color name="AniList_Tertiary_Dark">#D83A00</color>
   <color name="AniList_Tertiary_Dark_Text">#E4E9E9E9</color>
   <color name="AniList_Inactive">#FF9E9E9E</color>
 

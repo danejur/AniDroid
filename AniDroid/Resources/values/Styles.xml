@@ -82,7 +82,7 @@
 
   <style name="Dark_Checkbox" parent="Theme.AppCompat">
     <item name="colorControlNormal">@color/Dark_Inactive</item>
-    <item name="colorControlActivated">@color/Dark_Primary</item>
+    <item name="colorControlActivated">@color/Dark_Primary_Dark</item>
     <item name="android:textColor">@color/Dark_Background_Text</item>
     <item name="android:textSize">14dp</item>
   </style>
@@ -131,10 +131,9 @@
   </style>
 
   <style name="Dark_TextInput" parent="Theme.AppCompat">
-    <item name="colorControlActivated">@color/Dark_Primary</item>
-    <item name="colorControlActivated">@color/Dark_Primary</item>
-    <item name="colorControlNormal">@color/Dark_Inactive</item>
-    <item name="colorAccent">@color/Dark_Primary</item>
+    <item name="colorControlActivated">@color/Dark_Primary_Dark</item>
+    <item name="colorControlNormal">@color/Dark_Primary_Dark</item>
+    <item name="colorAccent">@color/Dark_Primary_Dark</item>
     <item name="android:textColorPrimary">@color/Dark_Background_Text</item>
     <item name="android:textColorHint">@color/Dark_Background_Text_Alternate</item>
     <item name="android:textSize">16dp</item>
@@ -227,7 +226,7 @@
 
   <style name="AniList_Checkbox" parent="Theme.AppCompat.NoActionBar">
     <item name="android:textColorSecondary">@color/AniList_Inactive</item>
-    <item name="colorAccent">@color/AniList_Primary</item>
+    <item name="colorAccent">@color/AniList_Primary_Dark</item>
     <item name="android:textColor">@color/AniList_Background_Text</item>
     <item name="android:textSize">14dp</item>
   </style>
@@ -278,9 +277,9 @@
   
   <style name="AniList_TextInput"
          parent="Theme.AppCompat.Light">
-    <item name="colorControlActivated">@color/AniList_Primary</item>
-    <item name="colorControlNormal">@color/AniList_Inactive</item>
-    <item name="colorAccent">@color/AniList_Primary</item>
+    <item name="colorControlActivated">@color/AniList_Primary_Dark</item>
+    <item name="colorControlNormal">@color/AniList_Primary_Dark</item>
+    <item name="colorAccent">@color/AniList_Primary_Dark</item>
     <item name="android:textColor">@color/AniList_Background_Text</item>
     <item name="android:textSize">16dp</item>
   </style>
@@ -330,15 +329,15 @@
     <item name="android:windowBackground">@color/AniList_Primary</item>
     <item name="itemTextColor">@color/AniList_Primary_Text</item>
     <item name="itemIconTint">@color/AniList_Primary_Text</item>
-    <item name="colorControlHighlight">@color/AniList_Tertiary</item>
+    <item name="colorControlHighlight">@color/AniList_Secondary</item>
   </style>
   
   <!-- Tab Layout -->
 
   <style name="AniList_TabLayout" parent="Theme.AppCompat.Light.NoActionBar">
-    <item name="tabIndicatorColor">@color/AniList_Tertiary</item>
+    <item name="tabIndicatorColor">@color/AniList_Secondary</item>
     <item name="tabBackground">@color/AniList_Primary</item>
-    <item name="tabSelectedTextColor">@color/AniList_Tertiary</item>
+    <item name="tabSelectedTextColor">@color/AniList_Secondary</item>
     <item name="tabTextColor">@color/AniList_Primary_Text</item>
   </style>
 </resources>

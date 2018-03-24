@@ -198,6 +198,7 @@ namespace AniDroid.Dialogs
             {
                 if (_media.Type != Media.MediaType.Manga || _media.Volumes == 0)
                 {
+                    volumeProgressContainer.Visibility = ViewStates.Gone;
                     return;
                 }
 
