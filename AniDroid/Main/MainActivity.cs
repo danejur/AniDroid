@@ -38,7 +38,7 @@ using Toolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace AniDroid.Main
 {
-    [Activity(Label = "AniDroid", ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.KeyboardHidden | Android.Content.PM.ConfigChanges.ScreenSize)]
+    [Activity(ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.KeyboardHidden | Android.Content.PM.ConfigChanges.ScreenSize)]
     public class MainActivity : BaseAniDroidActivity<MainPresenter>, IMainView, NavigationView.IOnNavigationItemSelectedListener
     {
         public const string RecreateActivityIntentKey = "RECREATE_ACTIVITY";

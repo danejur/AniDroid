@@ -620,7 +620,7 @@
     <AndroidResource Include="Resources\values\Config.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\values\ApiConfig.xml" />
+    <AndroidResource Include="Resources\values\AppConfig.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_logout_white_24px.xml" />

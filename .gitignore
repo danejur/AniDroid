@@ -262,3 +262,4 @@ __pycache__/
 *.bak
 *.rej
 AniDroid/Resources/values/ApiConfig.xml
+AniDroid/Resources/values/AppConfig.xml
