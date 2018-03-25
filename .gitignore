@@ -263,3 +263,4 @@ __pycache__/
 *.rej
 AniDroid/Resources/values/ApiConfig.xml
 AniDroid/Resources/values/AppConfig.xml
+AniDroid/Properties/AndroidManifest.xml
