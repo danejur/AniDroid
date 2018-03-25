@@ -283,6 +283,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <GoogleServicesJson Include="google-services.json" Condition=" '$(Configuration)' == 'Release' "/>
     <None Include="packages.config" />
     <None Include="Properties\AndroidManifest.xml" />
     <AndroidResource Include="Resources\layout\Activity_Login.axml">

@@ -2011,32 +2011,26 @@ namespace AniDroid
 		public partial class Config
 		{
 			
-			// aapt resource value: 0x7f0d0008
-			public const int AniListAuthTokenUri = 2131558408;
-			
-			// aapt resource value: 0x7f0d0007
-			public const int AniListAuthorizeUri = 2131558407;
-			
-			// aapt resource value: 0x7f0d0004
-			public const int ApiClientId = 2131558404;
+			// aapt resource value: 0x7f0d0006
+			public const int AniListAuthTokenUri = 2131558406;
 			
 			// aapt resource value: 0x7f0d0005
-			public const int ApiClientSecret = 2131558405;
+			public const int AniListAuthorizeUri = 2131558405;
 			
-			// aapt resource value: 0x7f0d0006
-			public const int ApiRedirectUri = 2131558406;
+			// aapt resource value: 0x7f0d0002
+			public const int ApiClientId = 2131558402;
+			
+			// aapt resource value: 0x7f0d0003
+			public const int ApiClientSecret = 2131558403;
+			
+			// aapt resource value: 0x7f0d0004
+			public const int ApiRedirectUri = 2131558404;
 			
 			// aapt resource value: 0x7f0d0000
 			public const int AppName = 2131558400;
 			
-			// aapt resource value: 0x7f0d0002
-			public const int AppNameDebug = 2131558402;
-			
 			// aapt resource value: 0x7f0d0001
-			public const int PackageName = 2131558401;
-			
-			// aapt resource value: 0x7f0d0003
-			public const int PackageNameDebug = 2131558403;
+			public const int AppNameDebug = 2131558401;
 			
 			static Config()
 			{

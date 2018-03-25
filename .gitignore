@@ -261,6 +261,8 @@ __pycache__/
 *.pyc
 *.bak
 *.rej
-AniDroid/Resources/values/ApiConfig.xml
+
+# AniDroid Config
 AniDroid/Resources/values/AppConfig.xml
 AniDroid/Properties/AndroidManifest.xml
+AniDroid/google-services.json
