@@ -64,9 +64,12 @@ namespace AniDroid.MediaList
             }
         }
 
-        public override void OnDetach()
+        public override void OnCreate(Bundle savedInstanceState)
         {
-            base.OnDetach();
+            base.OnCreate(savedInstanceState);
+
+            var typeString = Arguments.GetString(MediaTypeKey);
+            _type = AniListEnum.GetEnum<Media.MediaType>(typeString);
 
             if (_type == Media.MediaType.Anime)
             {
@@ -87,8 +90,8 @@ namespace AniDroid.MediaList
             var bundle = new Bundle(6);
             bundle.PutString(MediaTypeKey, type.Value);
             frag.Arguments = bundle;
-            return frag;
 
+            return frag;
         }
 
         public override void OnError(IAniListError error)
@@ -102,14 +105,12 @@ namespace AniDroid.MediaList
             {
                 return GetMediaListCollectionView();
             }
-
-            var typeString = Arguments.GetString(MediaTypeKey);
-            if (string.IsNullOrWhiteSpace(typeString))
+            
+            if (_type == null)
             {
                 return LayoutInflater.Inflate(Resource.Layout.View_Error, container, false);
             }
 
-            _type = AniListEnum.GetEnum<Media.MediaType>(typeString);
             CreatePresenter(savedInstanceState).GetAwaiter().GetResult();
             Presenter.GetMediaLists();
 
@@ -173,7 +174,7 @@ namespace AniDroid.MediaList
                     continue;
                 }
 
-                var adapter = new MediaListRecyclerAdapter(Activity, statusList.Entries,
+                var adapter = new MediaListRecyclerAdapter(Activity, statusList,
                     _collection.User.MediaListOptions, Presenter, Kernel.Get<IAniDroidSettings>().CardType);
                 _recyclerAdapters.Add(adapter);
                 var listView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
