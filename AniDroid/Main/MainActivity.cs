@@ -100,6 +100,11 @@ namespace AniDroid.Main
             _notificationImageView?.SetText(countVal);
         }
 
+        public void ShowSearchButton()
+        {
+            _searchButton?.Show();
+        }
+
         private void SearchButtonOnClick(object sender, EventArgs eventArgs)
         {
             SearchDialog.Create(this, (type, term) => SearchResultsActivity.StartActivity(this, type, term));
@@ -322,9 +327,14 @@ namespace AniDroid.Main
                 return;
             }
 
-            _currentFragment = new DiscoverFragment();
+            var defaultMenuItem = Presenter.GetIsUserAuthenticated()
+                ? Resource.Id.Menu_Navigation_Anime
+                : Resource.Id.Menu_Navigation_Discover;
+
+            OnNavigationItemSelected(_navigationView.Menu.FindItem(defaultMenuItem));
+            _navigationView.SetCheckedItem(defaultMenuItem);
+
             ReplaceFragment();
-            _navigationView.SetCheckedItem(Resource.Id.Menu_Navigation_Discover);
         }
 
         public bool OnNavigationItemSelected(IMenuItem menuItem)

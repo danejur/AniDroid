@@ -33,7 +33,7 @@ namespace AniDroid.MediaList
 
         private Media.MediaType _type;
         private View _view;
-        private Dictionary<string, BaseRecyclerAdapter<Media>> _recyclerAdapters;
+        private IList<MediaListRecyclerAdapter> _recyclerAdapters;
         private Media.MediaListCollection _collection;
 
         private static BaseMainActivityFragment<MediaListPresenter> _animeListFragmentInstance;
@@ -129,7 +129,10 @@ namespace AniDroid.MediaList
 
         public void UpdateMediaListItem(Media.MediaList mediaList)
         {
-            // TODO: update media list item
+            foreach (var adapter in _recyclerAdapters)
+            {
+                adapter.UpdateMediaListItem(mediaList.Media.Id, mediaList);
+            }
         }
 
         public override void SetupMenu(IMenu menu)
@@ -156,7 +159,7 @@ namespace AniDroid.MediaList
         {
             var mediaCollectionView = LayoutInflater.Inflate(Resource.Layout.Fragment_MediaLists, null);
             var pagerAdapter = new FragmentlessViewPagerAdapter();
-            _recyclerAdapters = new Dictionary<string, BaseRecyclerAdapter<Media>>();
+            _recyclerAdapters = new List<MediaListRecyclerAdapter>();
 
             var listOrder = GetListOrder();
             var orderedLists = !listOrder.Any()
@@ -172,6 +175,7 @@ namespace AniDroid.MediaList
 
                 var adapter = new MediaListRecyclerAdapter(Activity, statusList.Entries,
                     _collection.User.MediaListOptions, Presenter, Kernel.Get<IAniDroidSettings>().CardType);
+                _recyclerAdapters.Add(adapter);
                 var listView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
                 listView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView).SetAdapter(adapter);
                 pagerAdapter.AddView(listView, statusList.Name);

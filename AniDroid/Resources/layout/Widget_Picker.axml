@@ -40,6 +40,7 @@
             android:textSize="14dp"
             android:theme="?TextInput_Theme"
             android:gravity="center"
+            android:selectAllOnFocus="true"
             android:inputType="numberDecimal"
             android:paddingBottom="15dp"
             android:visibility="visible" />

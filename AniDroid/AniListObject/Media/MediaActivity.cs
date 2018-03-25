@@ -26,6 +26,7 @@ using AniDroid.AniListObject.Staff;
 using AniDroid.Base;
 using AniDroid.Browse;
 using AniDroid.Dialogs;
+using AniDroid.MediaList;
 using AniDroid.SearchResults;
 using AniDroid.Utils;
 using AniDroid.Utils.Formatting;
@@ -44,14 +45,13 @@ namespace AniDroid.AniListObject.Media
     {
         public const string MediaIdIntentKey = "MEDIA_ID";
 
-        [InjectView(Resource.Id.AniListObject_EditFab)]
-        private FloatingActionButton _mediaFab;
-
         private int _mediaId;
         private AniList.Models.Media _media;
         private AniList.Models.Media.MediaList _mediaList;
         private AniList.Models.User.UserMediaListOptions _mediaListOptions;
         private View _mediaDetailsView;
+        private bool _canEditListItem;
+        private IMenuItem _editItem;
 
         protected override IReadOnlyKernel Kernel =>
             new StandardKernel(new ApplicationModule<IMediaView, MediaActivity>(this));
@@ -105,10 +105,14 @@ namespace AniDroid.AniListObject.Media
             return _media.Type;
         }
 
+        public void SetCanEditListItem()
+        {
+            _canEditListItem = true;
+        }
+
         public void SetMediaListSaving()
         {
-            _mediaFab.Enabled = false;
-            //_mediaFab.Clickable
+            _editItem?.SetEnabled(false);
         }
 
         public void SetupMediaView(AniList.Models.Media media)
@@ -158,12 +162,11 @@ namespace AniDroid.AniListObject.Media
         public void SetCurrentUserMediaListOptions(AniList.Models.User.UserMediaListOptions mediaListOptions)
         {
             _mediaListOptions = mediaListOptions;
-            SetupMediaFab();
         }
 
         public void ShowMediaListEditDialog(AniList.Models.Media.MediaList mediaList)
         {
-            _mediaFab.Enabled = true;
+            _editItem?.SetEnabled(true);
             EditMediaListItemDialog.Create(this, Presenter, _media, mediaList, _mediaListOptions);
         }
 
@@ -181,24 +184,46 @@ namespace AniDroid.AniListObject.Media
             statusView.Visibility = ViewStates.Visible;
             statusView.Text = _mediaList.Status.DisplayValue;
 
-            SetupMediaFab();
+            InvalidateOptionsMenu();
+
+            if (_media.Type == AniList.Models.Media.MediaType.Anime)
+            {
+                var instance = MediaListFragment.GetInstance(MediaListFragment.AnimeMediaListFragmentName);
+
+                (instance as MediaListFragment)?.UpdateMediaListItem(mediaList);
+            }
+            else if (_media.Type == AniList.Models.Media.MediaType.Manga)
+            {
+                (MediaListFragment.GetInstance(MediaListFragment.MangaMediaListFragmentName) as MediaListFragment)
+                    ?.UpdateMediaListItem(mediaList);
+            }
         }
-
-        private void SetupMediaFab()
-        {
-            _mediaFab.Visibility = ViewStates.Visible;
-            _mediaFab.SetImageResource(_mediaList == null
-                ? Resource.Drawable.svg_library_plus
-                : Resource.Drawable.svg_pencil);
-
-            _mediaFab.Click -= MediaFabClick;
-            _mediaFab.Click += MediaFabClick;
-            _mediaFab.Enabled = true;
-        }
-
-        private void MediaFabClick(object sender, EventArgs eventArgs) => ShowMediaListEditDialog(_mediaList);
 
         protected override Func<Task> ToggleFavorite => () => Presenter.ToggleFavorite();
+
+        public override bool SetupMenu(IMenu menu)
+        {
+            base.SetupMenu(menu);
+
+            _editItem = menu?.FindItem(Resource.Id.Menu_AniListObject_Edit);
+            _editItem?.SetIcon(_mediaList == null
+                ? Resource.Drawable.svg_library_plus
+                : Resource.Drawable.svg_pencil);
+            _editItem?.SetVisible(_canEditListItem);
+
+            return true;
+        }
+
+        public override bool MenuItemSelected(IMenuItem item)
+        {
+            if (item.ItemId == Resource.Id.Menu_AniListObject_Edit)
+            {
+                ShowMediaListEditDialog(_mediaList);
+                return true;
+            }
+
+            return base.MenuItemSelected(item);
+        }
 
         #region Media Data
 

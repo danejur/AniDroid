@@ -46,5 +46,10 @@ namespace AniDroid.Main
             countResp.Switch((IAniListError error) => { })
                 .Switch(user => View.SetNotificationCount(user.UnreadNotificationCount));
         }
+
+        public bool GetIsUserAuthenticated()
+        {
+            return AniDroidSettings.IsUserAuthenticated;
+        }
     }
 }

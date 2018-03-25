@@ -23,6 +23,11 @@ namespace AniDroid.AniListObject.Media
             var mediaResp = AniListService.GetMediaById(mediaId, default(CancellationToken));
             var userResp = AniListService.GetCurrentUser(default(CancellationToken));
 
+            if (AniDroidSettings.IsUserAuthenticated)
+            {
+                View.SetCanEditListItem();
+            }
+
             await Task.WhenAll(mediaResp, userResp);
 
             mediaResp.Result.Switch(media =>

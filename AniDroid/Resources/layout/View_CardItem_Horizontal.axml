@@ -72,7 +72,7 @@
                 android:visibility="gone"
                 android:orientation="horizontal"
                 android:id="@+id/CardItem_Button"
-                android:foreground="?android:attr/selectableItemBackground"
+                android:background="?selectableItemBackgroundBorderless"
                 android:clickable="true"
                 android:layout_margin="5dp"
                 android:layout_alignParentEnd="true"

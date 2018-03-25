@@ -65,5 +65,48 @@ namespace AniDroid.MediaList
                     //});
                 });
         }
+
+        public async Task IncreaseMediaProgress(Media.MediaList mediaListToUpdate)
+        {
+            var editDto = new MediaListEditDto
+            {
+                MediaId = mediaListToUpdate.Media.Id,
+                Progress = (mediaListToUpdate.Progress ?? 0) + 1
+            };
+
+            var mediaUpdateResp = await AniListService.UpdateMediaListEntry(editDto, default(CancellationToken));
+
+            mediaUpdateResp.Switch(mediaList =>
+                {
+                    View.DisplaySnackbarMessage($"Updated progress for {mediaList.Media.Title.UserPreferred}", Snackbar.LengthShort);
+                    View.UpdateMediaListItem(mediaList);
+                })
+                .Switch(error =>
+                {
+                    View.DisplaySnackbarMessage("Error occurred while saving list entry", Snackbar.LengthLong);
+                });
+        }
+
+        public async Task CompleteMedia(Media.MediaList mediaListToComplete)
+        {
+            var editDto = new MediaListEditDto
+            {
+                MediaId = mediaListToComplete.Media.Id,
+                Progress = mediaListToComplete.Media.Episodes,
+                Status = Media.MediaListStatus.Completed
+            };
+
+            var mediaUpdateResp = await AniListService.UpdateMediaListEntry(editDto, default(CancellationToken));
+
+            mediaUpdateResp.Switch(mediaList =>
+                {
+                    View.DisplaySnackbarMessage($"Completed {mediaList.Media.Title.UserPreferred}", Snackbar.LengthShort);
+                    View.UpdateMediaListItem(mediaList);
+                })
+                .Switch(error =>
+                {
+                    View.DisplaySnackbarMessage("Error occurred while saving list entry", Snackbar.LengthLong);
+                });
+        }
     }
 }

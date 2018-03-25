@@ -2,6 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
   <item
+    android:id="@+id/Menu_AniListObject_Edit"
+    android:title="Edit List Item"
+    android:icon="@drawable/svg_pencil"
+    android:visible="false"
+    app:showAsAction="always"/>
+  <item
     android:id="@+id/Menu_AniListObject_Favorite"
     android:title="Favorite"
     android:icon="@drawable/ic_favorite_border_white_24px"
