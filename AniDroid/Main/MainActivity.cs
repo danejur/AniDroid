@@ -169,7 +169,16 @@ namespace AniDroid.Main
             if (data?.GetBooleanExtra(RecreateActivityIntentKey, false) == true)
             {
                 // TODO: probably a better way to do this, but this works for now
-                _currentFragment = null;
+
+                if (_currentFragment != null)
+                {
+                    SupportFragmentManager.BeginTransaction()
+                        .Detach(_currentFragment)
+                        .Attach(_currentFragment)
+                        .Commit();
+                }
+
+                SelectDefaultFragment();
 
                 SetTheme(GetThemeResource());
 
@@ -308,6 +317,8 @@ namespace AniDroid.Main
 
         private void ReplaceFragment()
         {
+            var asdf = SupportFragmentManager.Fragments;
+
             if (SupportFragmentManager.FindFragmentById(Resource.Id.Main_FragmentContainer) == null)
                 SupportFragmentManager.BeginTransaction()
                     .Add(Resource.Id.Main_FragmentContainer, _currentFragment)

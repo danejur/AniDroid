@@ -23,6 +23,14 @@ namespace AniDroid.Base
 
         public static BaseMainActivityFragment<T> GetInstance(string fragmentName) => _instance?.FragmentName == fragmentName ? _instance : null;
 
+        public static void ClearInstance(string fragmentName)
+        {
+            if (_instance?.FragmentName == fragmentName)
+            {
+                _instance = null;
+            }
+        }
+
         public new void RecreateFragment()
         {
             _recreatingFragment = true;

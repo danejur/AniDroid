@@ -64,6 +64,19 @@ namespace AniDroid.MediaList
             }
         }
 
+        public new static void ClearInstance(string fragmentName)
+        {
+            switch (fragmentName)
+            {
+                case AnimeMediaListFragmentName:
+                    _animeListFragmentInstance = null;
+                    break;
+                case MangaMediaListFragmentName:
+                    _mangaListFragmentInstance = null;
+                    break;
+            }
+        }
+
         public override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
