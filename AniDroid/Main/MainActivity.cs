@@ -61,6 +61,7 @@ namespace AniDroid.Main
         private bool _fragmentBeingReplaced;
         private BadgeDrawerToggle _drawerToggle;
         private BadgeImageView _notificationImageView;
+        private IMenuItem _selectedItem;
 
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IMainView, MainActivity>(this));
 
@@ -169,20 +170,17 @@ namespace AniDroid.Main
             if (data?.GetBooleanExtra(RecreateActivityIntentKey, false) == true)
             {
                 // TODO: probably a better way to do this, but this works for now
+                SetTheme(GetThemeResource());
+
+                SetContentView(Resource.Layout.Activity_Main);
 
                 if (_currentFragment != null)
                 {
                     SupportFragmentManager.BeginTransaction()
                         .Detach(_currentFragment)
                         .Attach(_currentFragment)
-                        .Commit();
+                        .CommitAllowingStateLoss();
                 }
-
-                SelectDefaultFragment();
-
-                SetTheme(GetThemeResource());
-
-                SetContentView(Resource.Layout.Activity_Main);
 
                 SetupToolbar();
                 SetupNavigation();
@@ -317,8 +315,6 @@ namespace AniDroid.Main
 
         private void ReplaceFragment()
         {
-            var asdf = SupportFragmentManager.Fragments;
-
             if (SupportFragmentManager.FindFragmentById(Resource.Id.Main_FragmentContainer) == null)
                 SupportFragmentManager.BeginTransaction()
                     .Add(Resource.Id.Main_FragmentContainer, _currentFragment)
@@ -338,22 +334,31 @@ namespace AniDroid.Main
                 return;
             }
 
-            var defaultMenuItem = Presenter.GetIsUserAuthenticated()
-                ? Resource.Id.Menu_Navigation_Anime
-                : Resource.Id.Menu_Navigation_Discover;
+            var selectedItem = _selectedItem ?? _navigationView.Menu.FindItem(Presenter.GetIsUserAuthenticated()
+                                   ? Resource.Id.Menu_Navigation_Anime
+                                   : Resource.Id.Menu_Navigation_Discover);
 
-            OnNavigationItemSelected(_navigationView.Menu.FindItem(defaultMenuItem));
-            _navigationView.SetCheckedItem(defaultMenuItem);
+            OnNavigationItemSelected(selectedItem);
+            _navigationView.SetCheckedItem(selectedItem.ItemId);
 
             ReplaceFragment();
         }
 
         public bool OnNavigationItemSelected(IMenuItem menuItem)
         {
-            switch (menuItem.ItemId)
+            if (menuItem.ItemId == Resource.Id.Menu_Navigation_Settings)
+            {
+                _navClosedAction = () => SettingsActivity.StartActivity(this);
+                _navigationDrawer.CloseDrawer(GravityCompat.Start);
+                return false;
+            }
+
+            _selectedItem = menuItem;
+
+            switch (_selectedItem.ItemId)
             {
                 case Resource.Id.Menu_Navigation_Home:
-                    ChangeFragment(HomeFragment.GetInstance(HomeFragment.HomeFragmentName) ?? new HomeFragment());
+                    ChangeFragment(HomeFragment.GetInstance() ?? new HomeFragment());
                     break;
                 case Resource.Id.Menu_Navigation_Anime:
                     ChangeFragment(MediaListFragment.GetInstance(MediaListFragment.AnimeMediaListFragmentName) ??
@@ -372,10 +377,6 @@ namespace AniDroid.Main
                 case Resource.Id.Menu_Navigation_Browse:
                     ChangeFragment(new BrowseFragment());
                     break;
-                case Resource.Id.Menu_Navigation_Settings:
-                    _navClosedAction = () => SettingsActivity.StartActivity(this);
-                    _navigationDrawer.CloseDrawer(GravityCompat.Start);
-                    return false;
             }
 
             return true;

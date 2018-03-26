@@ -37,14 +37,25 @@ namespace AniDroid.Adapters.AniListActivityAdapters
         private readonly Color _defaultIconColor;
 
         public AniListActivityRecyclerAdapter(BaseAniDroidActivity context, IAniListActivityPresenter presenter,
-            IAsyncEnumerable<OneOf<IPagedData<AniListActivity>, IAniListError>> enumerable, int userId) : base(context, enumerable, CardType.Custom)
+            IAsyncEnumerable<OneOf<IPagedData<AniListActivity>, IAniListError>> enumerable, int userId) : base(context, enumerable, RecyclerCardType.Custom)
         {
             _presenter = presenter;
+            _userId = userId;
             _userNameColorHex = $"#{Context.GetThemedColor(Resource.Attribute.Primary) & 0xffffff:X6}";
             _actionColorHex = $"#{Context.GetThemedColor(Resource.Attribute.Primary_Dark) & 0xffffff:X6}";
-            _userId = userId;
             _defaultIconColor = new Color(context.GetThemedColor(Resource.Attribute.Secondary_Dark));
             CustomCardUseItemDecoration = true;
+        }
+
+        public AniListActivityRecyclerAdapter(BaseAniDroidActivity context, AniListActivityRecyclerAdapter adapter) :
+            base(context, adapter)
+        {
+            _presenter = adapter._presenter;
+            _userId = adapter._userId;
+            _userNameColorHex = $"#{Context.GetThemedColor(Resource.Attribute.Primary) & 0xffffff:X6}";
+            _actionColorHex = $"#{Context.GetThemedColor(Resource.Attribute.Primary_Dark) & 0xffffff:X6}";
+            _defaultIconColor = new Color(context.GetThemedColor(Resource.Attribute.Secondary_Dark));
+            CustomCardUseItemDecoration = adapter.CustomCardUseItemDecoration;
         }
 
         public override void BindCustomViewHolder(RecyclerView.ViewHolder holder, int position)

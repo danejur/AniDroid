@@ -11,7 +11,7 @@ namespace AniDroid.Adapters.SearchAdapters
 {
     public class UserSearchRecyclerAdapter : LazyLoadingRecyclerViewAdapter<User>
     {
-        public UserSearchRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> enumerable, CardType cardType) : base(context, enumerable, cardType)
+        public UserSearchRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> enumerable, RecyclerCardType cardType) : base(context, enumerable, cardType)
         {
         }
 

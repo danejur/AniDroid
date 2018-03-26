@@ -30,7 +30,7 @@ namespace AniDroid.Browse
     {
         private const string BrowseDtoIntentKey = "BROWSE_DTO";
 
-        private BaseRecyclerAdapter.CardType _cardType;
+        private BaseRecyclerAdapter.RecyclerCardType _cardType;
         private Media.MediaSort _sortType;
 
         [InjectView(Resource.Id.Browse_CoordLayout)]

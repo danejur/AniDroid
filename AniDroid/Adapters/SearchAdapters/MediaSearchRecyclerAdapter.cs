@@ -15,7 +15,7 @@ namespace AniDroid.Adapters.SearchAdapters
 {
     public class MediaSearchRecyclerAdapter : LazyLoadingRecyclerViewAdapter<Media>
     {
-        public MediaSearchRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> enumerable, CardType cardType) : base(context, enumerable, cardType)
+        public MediaSearchRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> enumerable, RecyclerCardType cardType) : base(context, enumerable, cardType)
         {
         }
 

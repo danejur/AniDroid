@@ -26,9 +26,9 @@ namespace AniDroid.Utils
             _settingStorage = settingsStorage;
         }
 
-        public BaseRecyclerAdapter.CardType CardType
+        public BaseRecyclerAdapter.RecyclerCardType CardType
         {
-            get => _settingStorage.Get(StorageKeys.CardTypeKey, BaseRecyclerAdapter.CardType.Vertical);
+            get => _settingStorage.Get(StorageKeys.CardTypeKey, BaseRecyclerAdapter.RecyclerCardType.Vertical);
             set => _settingStorage.Put(StorageKeys.CardTypeKey, value);
         }
 

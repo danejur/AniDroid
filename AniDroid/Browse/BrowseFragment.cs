@@ -23,11 +23,12 @@ using OneOf;
 
 namespace AniDroid.Browse
 {
-    public class BrowseFragment : BaseAniDroidFragment<BrowsePresenter>, IBrowseView
+    public class BrowseFragment : BaseMainActivityFragment<BrowsePresenter>, IBrowseView
     {
         public override string FragmentName => "BROWSE_FRAGMENT";
 
-        private BaseRecyclerAdapter.CardType _cardType;
+        private BaseRecyclerAdapter.RecyclerCardType _cardType;
+        private static BrowseFragment _instance;
 
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IBrowseView, BrowseFragment>(this));
 
@@ -42,7 +43,17 @@ namespace AniDroid.Browse
             recycler.SetAdapter(new BrowseMediaRecyclerAdapter(Activity, mediaEnumerable, _cardType));
         }
 
-        public override View CreateView(ViewGroup container, Bundle savedInstanceState)
+        protected override void SetInstance(BaseMainActivityFragment instance)
+        {
+            _instance = instance as BrowseFragment;
+        }
+
+        public override void ClearState()
+        {
+            _instance = null;
+        }
+
+        public override View CreateMainActivityFragmentView(ViewGroup container, Bundle savedInstanceState)
         {
             CreatePresenter(savedInstanceState).GetAwaiter().GetResult();
             var settings = Kernel.Get<IAniDroidSettings>();

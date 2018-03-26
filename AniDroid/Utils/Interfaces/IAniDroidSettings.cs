@@ -17,7 +17,7 @@ namespace AniDroid.Utils.Interfaces
 {
     public interface IAniDroidSettings
     {
-        BaseRecyclerAdapter.CardType CardType { get; set; }
+        BaseRecyclerAdapter.RecyclerCardType CardType { get; set; }
         BaseAniDroidActivity.AniDroidTheme Theme { get; set; }
         bool DisplayBanners { get; set; }
         string UserAccessCode { get; set; }

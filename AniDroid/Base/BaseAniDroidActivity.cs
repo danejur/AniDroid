@@ -107,7 +107,7 @@ namespace AniDroid.Base
         protected IAniDroidSettings Settings { get; private set; }
         protected bool HasError { get; set; }
         public sealed override LayoutInflater LayoutInflater => ThemedInflater;
-        public BaseRecyclerAdapter.CardType CardType { get; private set; }
+        public BaseRecyclerAdapter.RecyclerCardType CardType { get; private set; }
 
         #region Overrides
 

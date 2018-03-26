@@ -27,7 +27,7 @@ namespace AniDroid.Adapters.MediaAdapters
         private readonly string _listName;
 
         public MediaListRecyclerAdapter(BaseAniDroidActivity context, Media.MediaListGroup mediaListGroup,
-            User.UserMediaListOptions mediaListOptions, MediaListPresenter presenter, CardType cardType,
+            User.UserMediaListOptions mediaListOptions, MediaListPresenter presenter, RecyclerCardType cardType,
             int verticalCardColumns = 2) : base(context, mediaListGroup.Entries, cardType, verticalCardColumns)
         {
             _presenter = presenter;

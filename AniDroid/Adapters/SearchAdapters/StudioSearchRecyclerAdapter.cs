@@ -12,7 +12,7 @@ namespace AniDroid.Adapters.SearchAdapters
 {
     public class StudioSearchRecyclerAdapter : LazyLoadingRecyclerViewAdapter<Studio>
     {
-        public StudioSearchRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Studio>, IAniListError>> enumerable) : base(context, enumerable, CardType.Horizontal)
+        public StudioSearchRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Studio>, IAniListError>> enumerable) : base(context, enumerable, RecyclerCardType.Horizontal)
         {
         }
 

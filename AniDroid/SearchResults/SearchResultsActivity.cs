@@ -24,7 +24,7 @@ namespace AniDroid.SearchResults
     {
         private string _searchType;
         private string _searchTerm;
-        private BaseRecyclerAdapter.CardType _cardType;
+        private BaseRecyclerAdapter.RecyclerCardType _cardType;
 
         [InjectView(Resource.Id.SearchResults_CoordLayout)]
         private CoordinatorLayout _coordLayout;

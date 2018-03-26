@@ -20,7 +20,7 @@ namespace AniDroid.Adapters.StaffAdapters
 {
     public class StaffRecyclerAdapter : BaseRecyclerAdapter<Staff>
     {
-        public StaffRecyclerAdapter(BaseAniDroidActivity context, List<Staff> items, CardType cardType) : base(context, items, cardType)
+        public StaffRecyclerAdapter(BaseAniDroidActivity context, List<Staff> items, RecyclerCardType cardType) : base(context, items, cardType)
         {
         }
 

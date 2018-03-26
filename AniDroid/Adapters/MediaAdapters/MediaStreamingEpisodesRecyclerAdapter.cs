@@ -18,7 +18,7 @@ namespace AniDroid.Adapters.MediaAdapters
 {
     public class MediaStreamingEpisodesRecyclerAdapter : BaseRecyclerAdapter<Media.MediaStreamingEpisode>
     {
-        public MediaStreamingEpisodesRecyclerAdapter(BaseAniDroidActivity context, List<Media.MediaStreamingEpisode> items) : base(context, items, CardType.Vertical)
+        public MediaStreamingEpisodesRecyclerAdapter(BaseAniDroidActivity context, List<Media.MediaStreamingEpisode> items) : base(context, items, RecyclerCardType.Vertical)
         {
         }
 

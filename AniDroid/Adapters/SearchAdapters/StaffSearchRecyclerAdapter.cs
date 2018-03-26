@@ -13,7 +13,7 @@ namespace AniDroid.Adapters.SearchAdapters
 {
     public class StaffSearchRecyclerAdapter : LazyLoadingRecyclerViewAdapter<Staff>
     {
-        public StaffSearchRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Staff>, IAniListError>> enumerable, CardType cardType) : base(context, enumerable, cardType)
+        public StaffSearchRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Staff>, IAniListError>> enumerable, RecyclerCardType cardType) : base(context, enumerable, cardType)
         {
         }
 

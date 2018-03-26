@@ -49,7 +49,7 @@ namespace AniDroid.Settings
             Snackbar.Make(_coordLayout, message, length).Show();
         }
 
-        public void CreateCardTypeSettingItem(BaseRecyclerAdapter.CardType cardType)
+        public void CreateCardTypeSettingItem(BaseRecyclerAdapter.RecyclerCardType cardType)
         {
             var options = new List<string> {"Vertical", "Horizontal", "Flat Horizontal"};
             _settingsContainer.AddView(
@@ -57,9 +57,9 @@ namespace AniDroid.Settings
                     options, (int) cardType,
                     (sender, args) =>
                     {
-                        Presenter.SetCardType((BaseRecyclerAdapter.CardType) args.Position);
+                        Presenter.SetCardType((BaseRecyclerAdapter.RecyclerCardType) args.Position);
 
-                        if (cardType != (BaseRecyclerAdapter.CardType) args.Position)
+                        if (cardType != (BaseRecyclerAdapter.RecyclerCardType) args.Position)
                         {
                             _recreateActivity = true;
                             Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);

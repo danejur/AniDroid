@@ -15,34 +15,23 @@ namespace AniDroid.Adapters.Base
 {
     public abstract class BaseRecyclerAdapter<T> : BaseRecyclerAdapter
     {
-        private CardType _cardType;
-        private int _cardColumns = 2;
         private int _orientation = LinearLayoutManager.Vertical;
         private RecyclerView.ItemDecoration _decoration;
         protected readonly ColorStateList DefaultIconColor;
         protected readonly ColorStateList FavoriteIconColor;
         protected bool CustomCardUseItemDecoration;
-
+        public RecyclerCardType CardType { get; protected set; }
+        public int CardColumns { get; protected set; }
         public List<T> Items { get; protected set; }
         public sealed override int ItemCount => Items.Count;
 
-        protected BaseRecyclerAdapter(BaseAniDroidActivity context, List<T> items, CardType cardType, int verticalCardColumns = 2) : base(context)
+        protected BaseRecyclerAdapter(BaseAniDroidActivity context, List<T> items, RecyclerCardType cardType, int verticalCardColumns = 2) : base(context)
         {
             Items = items ?? throw new ArgumentNullException(nameof(items));
-            _cardType = cardType;
-            _cardColumns = Math.Abs(verticalCardColumns); // no funny business
+            CardType = cardType;
+            CardColumns = verticalCardColumns;
             DefaultIconColor = ColorStateList.ValueOf(new Color(context.GetThemedColor(Resource.Attribute.Secondary_Dark)));
             FavoriteIconColor = ColorStateList.ValueOf(new Color(ContextCompat.GetColor(context, Resource.Color.Favorite_Red)));
-        }
-
-        protected void SetCardType(CardType type)
-        {
-            _cardType = type;
-        }
-
-        protected void SetCardColumns(int columns)
-        {
-            _cardColumns = Math.Abs(columns); // no funny business again
         }
 
         protected void SetHorizontalOrientation()
@@ -102,19 +91,19 @@ namespace AniDroid.Adapters.Base
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
-            if (_cardType == CardType.Custom)
+            if (CardType == RecyclerCardType.Custom)
             {
                 return CreateCustomViewHolder(parent, viewType);
             }
 
             var layoutResource = Resource.Layout.View_CardItem_Horizontal;
 
-            switch (_cardType)
+            switch (CardType)
             {
-                case CardType.FlatHorizontal:
+                case RecyclerCardType.FlatHorizontal:
                     layoutResource = Resource.Layout.View_CardItem_FlatHorizontal;
                     break;
-                case CardType.Vertical:
+                case RecyclerCardType.Vertical:
                     layoutResource = Resource.Layout.View_CardItem_Vertical;
                     break;
             }
@@ -124,7 +113,7 @@ namespace AniDroid.Adapters.Base
 
         public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
         {
-            if (_cardType == CardType.Custom)
+            if (CardType == RecyclerCardType.Custom)
             {
                 BindCustomViewHolder(holder, position);
             }
@@ -138,20 +127,20 @@ namespace AniDroid.Adapters.Base
         {
             base.OnAttachedToRecyclerView(recyclerView);
 
-            switch (_cardType)
+            switch (CardType)
             {
-                case CardType.FlatHorizontal:
+                case RecyclerCardType.FlatHorizontal:
                     _decoration = new DefaultItemDecoration(Context);
                     recyclerView.AddItemDecoration(_decoration);
                     recyclerView.SetLayoutManager(new LinearLayoutManager(Context, _orientation, false));
                     break;
-                case CardType.Horizontal:
+                case RecyclerCardType.Horizontal:
                     recyclerView.SetLayoutManager(new LinearLayoutManager(Context, _orientation, false));
                     break;
-                case CardType.Vertical:
-                    recyclerView.SetLayoutManager(new GridLayoutManager(Context, _cardColumns, _orientation, false));
+                case RecyclerCardType.Vertical:
+                    recyclerView.SetLayoutManager(new GridLayoutManager(Context, (int)CardColumns, _orientation, false));
                     break;
-                case CardType.Custom:
+                case RecyclerCardType.Custom:
                     if (CustomCardUseItemDecoration)
                     {
                         _decoration = new DefaultItemDecoration(Context);
@@ -193,7 +182,7 @@ namespace AniDroid.Adapters.Base
     public abstract class BaseRecyclerAdapter : RecyclerView.Adapter
     {
         protected RecyclerView RecyclerView { get; private set; }
-        protected BaseAniDroidActivity Context { get; }
+        protected BaseAniDroidActivity Context { get; private set; }
 
         protected BaseRecyclerAdapter(BaseAniDroidActivity context)
         {
@@ -206,7 +195,12 @@ namespace AniDroid.Adapters.Base
             RecyclerView = recyclerView;
         }
 
-        public enum CardType
+        public void SetContext(BaseAniDroidActivity context)
+        {
+            Context = context;
+        }
+
+        public enum RecyclerCardType
         {
             Custom = -1,
             Vertical = 0,

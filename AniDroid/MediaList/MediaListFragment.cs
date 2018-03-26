@@ -32,12 +32,11 @@ namespace AniDroid.MediaList
         private const string MediaTypeKey = "MEDIA_TYPE";
 
         private Media.MediaType _type;
-        private View _view;
         private IList<MediaListRecyclerAdapter> _recyclerAdapters;
         private Media.MediaListCollection _collection;
 
-        private static BaseMainActivityFragment<MediaListPresenter> _animeListFragmentInstance;
-        private static BaseMainActivityFragment<MediaListPresenter> _mangaListFragmentInstance;
+        private static MediaListFragment _animeListFragmentInstance;
+        private static MediaListFragment _mangaListFragmentInstance;
 
         public override bool HasMenu => true;
         public override string FragmentName {
@@ -61,19 +60,6 @@ namespace AniDroid.MediaList
                     return _mangaListFragmentInstance;
                 default:
                     return null;
-            }
-        }
-
-        public new static void ClearInstance(string fragmentName)
-        {
-            switch (fragmentName)
-            {
-                case AnimeMediaListFragmentName:
-                    _animeListFragmentInstance = null;
-                    break;
-                case MangaMediaListFragmentName:
-                    _mangaListFragmentInstance = null;
-                    break;
             }
         }
 
@@ -112,6 +98,22 @@ namespace AniDroid.MediaList
             // TODO: show error fragment here
         }
 
+        protected override void SetInstance(BaseMainActivityFragment instance)
+        {
+        }
+
+        public override void ClearState()
+        {
+            if (_type == Media.MediaType.Anime)
+            {
+                _animeListFragmentInstance = null;
+            }
+            else if (_type == Media.MediaType.Manga)
+            {
+                _mangaListFragmentInstance = null;
+            }
+        }
+
         public override View CreateMainActivityFragmentView(ViewGroup container, Bundle savedInstanceState)
         {
             if (_collection != null)
@@ -127,7 +129,7 @@ namespace AniDroid.MediaList
             CreatePresenter(savedInstanceState).GetAwaiter().GetResult();
             Presenter.GetMediaLists();
 
-            return _view = LayoutInflater.Inflate(Resource.Layout.View_IndeterminateProgressIndicator, container, false);
+            return LayoutInflater.Inflate(Resource.Layout.View_IndeterminateProgressIndicator, container, false);
         }
 
         public Media.MediaType GetMediaType()

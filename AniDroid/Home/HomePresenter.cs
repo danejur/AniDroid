@@ -17,6 +17,7 @@ using AniDroid.AniList.Models;
 using AniDroid.AniListObject;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
+using OneOf;
 
 namespace AniDroid.Home
 {
@@ -31,10 +32,15 @@ namespace AniDroid.Home
             return Task.CompletedTask;
         }
 
-        public void GetAniListActivity(bool isFollowingOnly)
+        public IAsyncEnumerable<OneOf<IPagedData<AniListActivity>, IAniListError>> GetAniListActivity(bool isFollowingOnly)
         {
             AniDroidSettings.ShowAllAniListActivity = !isFollowingOnly;
-            View.ShowUserActivity(AniListService.GetAniListActivity(new AniListActivityDto { IsFollowing = isFollowingOnly }, 20), AniDroidSettings.LoggedInUser?.Id ?? 0);
+            return AniListService.GetAniListActivity(new AniListActivityDto {IsFollowing = isFollowingOnly}, 20);
+        }
+
+        public int GetUserId()
+        {
+            return AniDroidSettings.LoggedInUser?.Id ?? 0;
         }
 
         public async Task ToggleActivityLike(AniListActivity activity, int activityPosition)

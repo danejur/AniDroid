@@ -35,7 +35,7 @@ namespace AniDroid.Settings
             await Init();
         }
 
-        public void SetCardType(BaseRecyclerAdapter.CardType cardType)
+        public void SetCardType(BaseRecyclerAdapter.RecyclerCardType cardType)
         {
             AniDroidSettings.CardType = cardType;
         }

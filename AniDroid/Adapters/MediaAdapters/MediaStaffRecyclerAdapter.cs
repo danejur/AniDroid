@@ -21,7 +21,7 @@ namespace AniDroid.Adapters.MediaAdapters
 {
     public class MediaStaffRecyclerAdapter : LazyLoadingRecyclerViewAdapter<Staff.Edge>
     {
-        public MediaStaffRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Staff.Edge>, IAniListError>> enumerable, CardType cardType, int verticalCardColumns = 3) : base(context, enumerable, cardType, verticalCardColumns)
+        public MediaStaffRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Staff.Edge>, IAniListError>> enumerable, RecyclerCardType cardType, int verticalCardColumns = 3) : base(context, enumerable, cardType, verticalCardColumns)
         {
         }
 

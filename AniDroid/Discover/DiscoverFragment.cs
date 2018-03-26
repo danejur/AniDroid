@@ -23,17 +23,28 @@ using OneOf;
 
 namespace AniDroid.Discover
 {
-    public class DiscoverFragment : BaseAniDroidFragment<DiscoverPresenter>, IDiscoverView
+    public class DiscoverFragment : BaseMainActivityFragment<DiscoverPresenter>, IDiscoverView
     {
         private DiscoverMediaRecyclerAdapter _trendingRecyclerAdapter;
         private DiscoverMediaRecyclerAdapter _newAnimeRecyclerAdapter;
         private DiscoverMediaRecyclerAdapter _newMangaRecyclerAdapter;
+        private static DiscoverFragment _instance;
 
         public override bool HasMenu => true;
         public override string FragmentName => "DISCOVER_FRAGMENT";
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IDiscoverView, DiscoverFragment>(this));
 
-        public override View CreateView(ViewGroup container, Bundle savedInstanceState)
+        protected override void SetInstance(BaseMainActivityFragment instance)
+        {
+            _instance = instance as DiscoverFragment;
+        }
+
+        public override void ClearState()
+        {
+            _instance = null;
+        }
+
+        public override View CreateMainActivityFragmentView(ViewGroup container, Bundle savedInstanceState)
         {
             CreatePresenter(savedInstanceState).GetAwaiter().GetResult();
 

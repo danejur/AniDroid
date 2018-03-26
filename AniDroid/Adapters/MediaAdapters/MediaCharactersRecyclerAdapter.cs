@@ -14,7 +14,7 @@ namespace AniDroid.Adapters.MediaAdapters
 {
     public class MediaCharactersRecyclerAdapter : LazyLoadingRecyclerViewAdapter<Character.Edge>
     {
-        public MediaCharactersRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Character.Edge>, IAniListError>> enumerable, CardType cardType, int verticalCardColumns = 3) : base(context, enumerable, cardType, verticalCardColumns)
+        public MediaCharactersRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Character.Edge>, IAniListError>> enumerable, RecyclerCardType cardType, int verticalCardColumns = 3) : base(context, enumerable, cardType, verticalCardColumns)
         {
         }
 

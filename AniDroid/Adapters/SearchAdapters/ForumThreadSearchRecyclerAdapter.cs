@@ -11,7 +11,7 @@ namespace AniDroid.Adapters.SearchAdapters
 {
     public class ForumThreadSearchRecyclerAdapter : LazyLoadingRecyclerViewAdapter<ForumThread>
     {
-        public ForumThreadSearchRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<ForumThread>, IAniListError>> enumerable) : base(context, enumerable, CardType.Horizontal)
+        public ForumThreadSearchRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<ForumThread>, IAniListError>> enumerable) : base(context, enumerable, RecyclerCardType.Horizontal)
         {
         }
 

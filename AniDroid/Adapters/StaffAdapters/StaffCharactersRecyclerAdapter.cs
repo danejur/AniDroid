@@ -12,7 +12,7 @@ namespace AniDroid.Adapters.StaffAdapters
 {
     public class StaffCharactersRecyclerAdapter : LazyLoadingRecyclerViewAdapter<Character.Edge>
     {
-        public StaffCharactersRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Character.Edge>, IAniListError>> enumerable, CardType cardType, int verticalCardColumns = 3) : base(context, enumerable, cardType, verticalCardColumns)
+        public StaffCharactersRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Character.Edge>, IAniListError>> enumerable, RecyclerCardType cardType, int verticalCardColumns = 3) : base(context, enumerable, cardType, verticalCardColumns)
         {
         }
 

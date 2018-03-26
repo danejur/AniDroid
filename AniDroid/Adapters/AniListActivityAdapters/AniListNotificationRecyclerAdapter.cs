@@ -23,7 +23,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
     {
         private readonly string _accentColorHex;
 
-        public AniListNotificationRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<AniListNotification>, IAniListError>> enumerable) : base(context, enumerable, CardType.Custom)
+        public AniListNotificationRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<AniListNotification>, IAniListError>> enumerable) : base(context, enumerable, RecyclerCardType.Custom)
         {
             _accentColorHex = $"#{Context.GetThemedColor(Resource.Attribute.Primary) & 0xffffff:X6}";
             CustomCardUseItemDecoration = true;

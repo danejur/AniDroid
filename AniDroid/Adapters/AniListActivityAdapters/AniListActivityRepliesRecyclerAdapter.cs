@@ -23,7 +23,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
     {
         private readonly Color _userNameColor;
 
-        public AniListActivityRepliesRecyclerAdapter(BaseAniDroidActivity context, List<AniListActivity.ActivityReply> items) : base(context, items, CardType.FlatHorizontal)
+        public AniListActivityRepliesRecyclerAdapter(BaseAniDroidActivity context, List<AniListActivity.ActivityReply> items) : base(context, items, RecyclerCardType.FlatHorizontal)
         {
             _userNameColor = new Color(Context.GetThemedColor(Resource.Attribute.Primary));
         }

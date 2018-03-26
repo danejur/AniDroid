@@ -26,12 +26,26 @@ namespace AniDroid.Home
     {
         public const string HomeFragmentName = "HOME_FRAGMENT";
 
+        private RecyclerView _recyclerView;
         private AniListActivityRecyclerAdapter _recyclerAdapter;
         private bool _isFollowingOnly;
+        private static HomeFragment _instance;
 
         public override bool HasMenu => true;
         public override string FragmentName => HomeFragmentName;
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IHomeView, HomeFragment>(this));
+
+        public static HomeFragment GetInstance() => _instance;
+
+        protected override void SetInstance(BaseMainActivityFragment instance)
+        {
+            _instance = instance as HomeFragment;
+        }
+
+        public override void ClearState()
+        {
+            _instance = null;
+        }
 
         public override View CreateMainActivityFragmentView(ViewGroup container, Bundle savedInstanceState)
         {
@@ -39,17 +53,17 @@ namespace AniDroid.Home
 
             CreatePresenter(savedInstanceState).GetAwaiter().GetResult();
 
-            return LayoutInflater.Inflate(Resource.Layout.View_List, container, false);
-        }
+            var listView = LayoutInflater.Inflate(Resource.Layout.View_List, container, false);
+            _recyclerView = listView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
 
-        public override void OnViewCreated(View view, Bundle savedInstanceState)
-        {
-            base.OnViewCreated(view, savedInstanceState);
+            _recyclerAdapter = _recyclerAdapter != null
+                ? new AniListActivityRecyclerAdapter(Activity, _recyclerAdapter)
+                : new AniListActivityRecyclerAdapter(Activity, Presenter,
+                    Presenter.GetAniListActivity(_isFollowingOnly), Presenter.GetUserId());
 
-            if (_recyclerAdapter == null)
-            {
-                Presenter.GetAniListActivity(_isFollowingOnly);
-            }
+            _recyclerView.SetAdapter(_recyclerAdapter);
+
+            return listView;
         }
 
         public override void SetupMenu(IMenu menu)
@@ -73,7 +87,9 @@ namespace AniDroid.Home
                     return true;
                 case Resource.Id.Menu_Home_ToggleActivityType:
                     _isFollowingOnly = !_isFollowingOnly;
-                    Presenter.GetAniListActivity(_isFollowingOnly);
+                    _recyclerAdapter = new AniListActivityRecyclerAdapter(Activity, Presenter,
+                        Presenter.GetAniListActivity(_isFollowingOnly), Presenter.GetUserId());
+                    _recyclerView.SetAdapter(_recyclerAdapter);
                     SetActivityIcon(item);
                     return true;
             }

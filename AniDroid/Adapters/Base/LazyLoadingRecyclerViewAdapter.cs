@@ -37,18 +37,25 @@ namespace AniDroid.Adapters.Base
 
         public Color? LoadingItemBackgroundColor { get; set; }
 
-        protected LazyLoadingRecyclerViewAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<T>, IAniListError>> enumerable, CardType cardType, int verticalCardColumns = 3) : base(context, new List<T> { null }, cardType, verticalCardColumns)
+        protected LazyLoadingRecyclerViewAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<T>, IAniListError>> enumerable, RecyclerCardType cardType, int verticalCardColumns = 3) : base(context, new List<T> { null }, cardType, verticalCardColumns)
         {
             _asyncEnumerable = enumerable;
             _asyncEnumerator = enumerable.GetEnumerator();
         }
 
+        protected LazyLoadingRecyclerViewAdapter(BaseAniDroidActivity context,
+            LazyLoadingRecyclerViewAdapter<T> adapter) : base(context, adapter.Items, adapter.CardType, adapter.CardColumns)
+        {
+            _asyncEnumerable = adapter._asyncEnumerable;
+            _asyncEnumerator = adapter._asyncEnumerator;
+        }
+
         public void ResetAdapter()
         {
+            _asyncEnumerator = _asyncEnumerable.GetEnumerator();
             Items.Clear();
             Items.Add(null);
             NotifyDataSetChanged();
-            _asyncEnumerator = _asyncEnumerable.GetEnumerator();
         }
 
         public sealed override async void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
