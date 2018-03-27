@@ -264,6 +264,6 @@ __pycache__/
 
 # AniDroid Config
 AniDroid/Resources/values/AppConfig.xml
-AniDroid/Properties/AndroidManifest.xml
 AniDroid/google-services.json
 AniDroid/Resources/Resource.Designer.cs
+AniDroid/Properties/AndroidManifestRelease.xml

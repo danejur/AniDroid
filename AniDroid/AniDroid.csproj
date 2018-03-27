@@ -26,7 +26,7 @@
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <AndroidManifest>Properties\AndroidManifestDebug.xml</AndroidManifest>
+    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <DebugSymbols>True</DebugSymbols>
     <DebugType>Full</DebugType>
     <Optimize>False</Optimize>
@@ -43,7 +43,7 @@
     <AndroidSupportedAbis />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
+    <AndroidManifest>Properties\AndroidManifestRelease.xml</AndroidManifest>
     <DebugSymbols>True</DebugSymbols>
     <DebugType>PdbOnly</DebugType>
     <Optimize>True</Optimize>
@@ -286,7 +286,7 @@
     <None Include="app.config" />
     <GoogleServicesJson Include="google-services.json" Condition=" '$(Configuration)' == 'Release' " />
     <None Include="packages.config" />
-    <None Include="Properties\AndroidManifest.xml" />
+    <None Include="Properties\AndroidManifestRelease.xml" />
     <AndroidResource Include="Resources\layout\Activity_Login.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
@@ -699,7 +699,7 @@
     <AndroidResource Include="Resources\drawable\svg_check_circle_outline.xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\AndroidManifestDebug.xml" />
+    <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
