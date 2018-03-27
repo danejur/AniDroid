@@ -169,6 +169,8 @@ namespace AniDroid.Main
 
             if (data?.GetBooleanExtra(RecreateActivityIntentKey, false) == true)
             {
+                _selectedItem = null;
+                
                 // TODO: probably a better way to do this, but this works for now
                 SetTheme(GetThemeResource());
 
@@ -334,12 +336,12 @@ namespace AniDroid.Main
                 return;
             }
 
-            var selectedItem = _selectedItem ?? _navigationView.Menu.FindItem(Presenter.GetIsUserAuthenticated()
+            _selectedItem = _selectedItem ?? _navigationView.Menu.FindItem(Presenter.GetIsUserAuthenticated()
                                    ? Resource.Id.Menu_Navigation_Anime
                                    : Resource.Id.Menu_Navigation_Discover);
 
-            OnNavigationItemSelected(selectedItem);
-            _navigationView.SetCheckedItem(selectedItem.ItemId);
+            OnNavigationItemSelected(_selectedItem);
+            _navigationView.SetCheckedItem(_selectedItem.ItemId);
 
             ReplaceFragment();
         }

@@ -19,5 +19,8 @@ namespace AniDroid.Settings
         void CreateCardTypeSettingItem(BaseRecyclerAdapter.RecyclerCardType cardType);
         void CreateAniDroidThemeSettingItem(BaseAniDroidActivity.AniDroidTheme theme);
         void CreateDisplayBannersSettingItem(bool displayBanners);
+        
+        // Auth settings
+        void CreateGroupCompletedSettingItem(bool groupCompleted);
     }
 }

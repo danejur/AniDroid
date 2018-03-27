@@ -27,5 +27,6 @@ namespace AniDroid.Utils.Interfaces
         bool ShowAllAniListActivity { get; set; }
         List<KeyValuePair<string, bool>> AnimeListOrder { get; set; }
         List<KeyValuePair<string, bool>> MangaListOrder { get; set; }
+        bool GroupCompletedLists { get; set; }
     }
 }

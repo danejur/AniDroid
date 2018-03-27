@@ -11,6 +11,7 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.AniList.Interfaces;
+using AniDroid.AniList.Models;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
 
@@ -27,6 +28,12 @@ namespace AniDroid.Settings
             View.CreateCardTypeSettingItem(AniDroidSettings.CardType);
             View.CreateAniDroidThemeSettingItem(AniDroidSettings.Theme);
             View.CreateDisplayBannersSettingItem(AniDroidSettings.DisplayBanners);
+
+            if (AniDroidSettings.IsUserAuthenticated)
+            {
+               View.CreateGroupCompletedSettingItem(AniDroidSettings.GroupCompletedLists);
+            }
+            
             return Task.CompletedTask;
         }
 
@@ -48,6 +55,11 @@ namespace AniDroid.Settings
         public void SetDisplayBanners(bool displayBanners)
         {
             AniDroidSettings.DisplayBanners = displayBanners;
+        }
+
+        public void SetGroupCompleted(bool groupCompleted)
+        {
+            AniDroidSettings.GroupCompletedLists = groupCompleted;
         }
     }
 }

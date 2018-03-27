@@ -93,6 +93,14 @@ namespace AniDroid.Settings
             _settingsContainer.AddView(CreateSettingDivider(this));
         }
 
+        public void CreateGroupCompletedSettingItem(bool groupCompleted)
+        {
+            _settingsContainer.AddView(
+                CreateSwitchSettingRow(this, "Group Completed Items", "Choose whether you'd like to group all completed lists together under one list, regardless of how you have it set on AniList", groupCompleted, (sender, args) =>
+                    Presenter.SetGroupCompleted(args.IsChecked)));
+            _settingsContainer.AddView(CreateSettingDivider(this));
+        }
+
         public static void StartActivity(Activity context)
         {
             var intent = new Intent(context, typeof(SettingsActivity));

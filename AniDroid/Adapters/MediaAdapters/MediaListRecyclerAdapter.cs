@@ -25,6 +25,7 @@ namespace AniDroid.Adapters.MediaAdapters
         private readonly User.UserMediaListOptions _mediaListOptions;
         private readonly bool _isCustomList;
         private readonly string _listName;
+        private readonly Media.MediaListStatus _listStatus;
 
         public MediaListRecyclerAdapter(BaseAniDroidActivity context, Media.MediaListGroup mediaListGroup,
             User.UserMediaListOptions mediaListOptions, MediaListPresenter presenter, RecyclerCardType cardType,
@@ -34,6 +35,7 @@ namespace AniDroid.Adapters.MediaAdapters
             _mediaListOptions = mediaListOptions;
             _isCustomList = mediaListGroup.IsCustomList;
             _listName = mediaListGroup.Name;
+            _listStatus = mediaListGroup.Status;
         }
 
         public void UpdateMediaListItem(int mediaId, Media.MediaList updatedMediaList)
@@ -42,10 +44,9 @@ namespace AniDroid.Adapters.MediaAdapters
 
             if (position >= 0)
             {
-                var oldItem = Items[position];
-
                 if (updatedMediaList.HiddenFromStatusLists && !_isCustomList ||
-                    _isCustomList && !updatedMediaList.CustomLists.Any(x => x.Enabled && x.Name == _listName))
+                    _isCustomList && !updatedMediaList.CustomLists.Any(x => x.Enabled && x.Name == _listName) ||
+                    !_isCustomList && _listStatus != updatedMediaList.Status)
                 {
                     Items.RemoveAt(position);
                     NotifyDataSetChanged();
@@ -55,17 +56,14 @@ namespace AniDroid.Adapters.MediaAdapters
                     Items[position] = updatedMediaList;
                     NotifyItemChanged(position);
                 }
-
-                // TODO: implement rest of list cleaning (status lists, etc.)
             }
-            else
+            else if (_isCustomList && updatedMediaList.CustomLists.Any(x => x.Enabled && x.Name == _listName) ||
+                     !_isCustomList && _listStatus == updatedMediaList.Status)
             {
-                if (_isCustomList && updatedMediaList.CustomLists.Any(x => x.Enabled && x.Name == _listName))
-                {
-                    Items.Insert(0, updatedMediaList);
-                    NotifyDataSetChanged();
-                }
+                Items.Insert(0, updatedMediaList);
+                NotifyDataSetChanged();
             }
+
         }
 
         public override void BindCardViewHolder(CardItem holder, int position)

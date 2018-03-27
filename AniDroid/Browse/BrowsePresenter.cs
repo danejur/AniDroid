@@ -7,6 +7,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Dto;
@@ -25,6 +26,7 @@ namespace AniDroid.Browse
         public void BrowseAniListMedia(BrowseMediaDto browseDto)
         {
             View.ShowMediaSearchResults(AniListService.BrowseMedia(browseDto, 20));
+            View.DisplaySnackbarMessage("Browse filtering not yet implemented", Snackbar.LengthShort);
         }
 
         public override Task Init()

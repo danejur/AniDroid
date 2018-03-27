@@ -272,6 +272,7 @@
     <Compile Include="Utils\Integration\AniDroidAniListServiceConfig.cs" />
     <Compile Include="Utils\Integration\AniDroidAuthCodeResolver.cs" />
     <Compile Include="Utils\Interfaces\IAniDroidSettings.cs" />
+    <Compile Include="Utils\Storage\AuthSettingsStorage.cs" />
     <Compile Include="Utils\Storage\SettingsStorage.cs" />
     <Compile Include="Widgets\BadgeDrawerArrowDrawable.cs" />
     <Compile Include="Widgets\BadgeDrawerToggle.cs" />
@@ -283,7 +284,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <GoogleServicesJson Include="google-services.json" Condition=" '$(Configuration)' == 'Release' "/>
+    <GoogleServicesJson Include="google-services.json" Condition=" '$(Configuration)' == 'Release' " />
     <None Include="packages.config" />
     <None Include="Properties\AndroidManifest.xml" />
     <AndroidResource Include="Resources\layout\Activity_Login.axml">
