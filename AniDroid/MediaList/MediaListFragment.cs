@@ -180,7 +180,8 @@ namespace AniDroid.MediaList
             var listOrder = GetListOrder();
             var orderedLists = !listOrder.Any()
                 ? _collection.Lists
-                : _collection.Lists.Where(x => listOrder.FirstOrDefault(y => y.Key == x.Name).Value).OrderBy(x => listOrder.FindIndex(y=> y.Key == x.Name)).ToList();
+                : _collection.Lists.Where(x => listOrder.All(y => y.Key != x.Name) || listOrder.FirstOrDefault(y => y.Key == x.Name).Value)
+                    .OrderBy(x => listOrder.FindIndex(y=> y.Key == x.Name)).ToList();
 
             foreach (var statusList in orderedLists)
             {
@@ -211,15 +212,17 @@ namespace AniDroid.MediaList
 
             if (_type == Media.MediaType.Anime)
             {
-                retList = settings.AnimeListOrder ?? _collection.User.MediaListOptions?.AnimeList?.SectionOrder
-                              ?.Select(x => new KeyValuePair<string, bool>(x, true)).ToList() ??
-                          new List<KeyValuePair<string, bool>>();
+                var lists = _collection.User.MediaListOptions?.AnimeList?.SectionOrder?
+                                .Union(_collection.User.MediaListOptions.AnimeList.CustomLists ?? new List<string>()) ?? new List<string>();
+
+                retList = settings.AnimeListOrder ?? lists.Select(x => new KeyValuePair<string, bool>(x, true)).ToList();
             }
             else if (_type == Media.MediaType.Manga)
             {
-                retList = settings.MangaListOrder ?? _collection.User.MediaListOptions?.MangaList?.SectionOrder
-                              ?.Select(x => new KeyValuePair<string, bool>(x, true)).ToList() ??
-                          new List<KeyValuePair<string, bool>>();
+                var lists = _collection.User.MediaListOptions?.MangaList?.SectionOrder?
+                                .Union(_collection.User.MediaListOptions.MangaList.CustomLists ?? new List<string>()) ?? new List<string>();
+
+                retList = settings.MangaListOrder ?? lists.Select(x => new KeyValuePair<string, bool>(x, true)).ToList();
             }
 
             return retList;

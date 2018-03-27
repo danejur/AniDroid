@@ -30,11 +30,13 @@ namespace AniDroid.Dialogs
     {
         public static void Create(BaseAniDroidActivity context, IAniListMediaListEditPresenter presenter, Media media, Media.MediaList mediaList, User.UserMediaListOptions mediaListOptions)
         {
-            new EditMediaListItemDialogFragment(presenter, media, mediaList, mediaListOptions).Show(context.SupportFragmentManager, "EditMediaDialog");
+            var dialog = new EditMediaListItemDialogFragment(presenter, media, mediaList, mediaListOptions) {Cancelable = true};
 
-            //var transaction = context.SupportFragmentManager.BeginTransaction();
-            //transaction.SetTransition((int)FragmentTransit.FragmentOpen);
-            //transaction.Add(Android.Resource.Id.Content, new EditMediaListItemDialogFragment(media, mediaListOptions)).AddToBackStack(null).Commit();
+//            dialog.Show(context.SupportFragmentManager, "EditMediaDialog");
+
+            var transaction = context.SupportFragmentManager.BeginTransaction();
+            transaction.SetTransition((int)FragmentTransit.FragmentOpen);
+            transaction.Add(Android.Resource.Id.Content, dialog).AddToBackStack(null).Commit();
         }
 
         public class EditMediaListItemDialogFragment : AppCompatDialogFragment
