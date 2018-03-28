@@ -15,8 +15,10 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.Base;
+using AniDroid.Adapters.MediaAdapters;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
+using AniDroid.Dialogs;
 using AniDroid.Main;
 using AniDroid.Utils;
 using Ninject;
@@ -93,11 +95,36 @@ namespace AniDroid.Settings
             _settingsContainer.AddView(CreateSettingDivider(this));
         }
 
+        public void CreateWhatsNewSettingItem()
+        {
+            _settingsContainer.AddView(
+                CreateSettingRow(this, "Show What's New", null, (sender, args) =>
+                    WhatsNewDialog.Create(this)));
+            _settingsContainer.AddView(CreateSettingDivider(this));
+        }
+
         public void CreateGroupCompletedSettingItem(bool groupCompleted)
         {
             _settingsContainer.AddView(
                 CreateSwitchSettingRow(this, "Group Completed Items", "Choose whether you'd like to group all completed lists together under one list, regardless of how you have it set on AniList", groupCompleted, (sender, args) =>
                     Presenter.SetGroupCompleted(args.IsChecked)));
+            _settingsContainer.AddView(CreateSettingDivider(this));
+        }
+
+        public void CreateMediaListViewTypeSettingItem(MediaListRecyclerAdapter.MediaListItemViewType viewType)
+        {
+            var options = new List<string> { "Normal", "Compact", "Title Only" };
+            _settingsContainer.AddView(
+                CreateSpinnerSettingRow(this, "Media List View", "Choose how you'd like to show media list items", options, (int)viewType, (sender, args) =>
+                {
+                    Presenter.SetMediaListViewType((MediaListRecyclerAdapter.MediaListItemViewType)args.Position);
+
+                    if (viewType != (MediaListRecyclerAdapter.MediaListItemViewType)args.Position)
+                    {
+                        _recreateActivity = true;
+                        Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
+                    }
+                }));
             _settingsContainer.AddView(CreateSettingDivider(this));
         }
 
@@ -153,9 +180,9 @@ namespace AniDroid.Settings
 
         #region Settings Views
 
-        private View CreateSettingRow(string name, string description, EventHandler tapEvent)
+        private static View CreateSettingRow(BaseAniDroidActivity context, string name, string description, EventHandler tapEvent)
         {
-            var view = LayoutInflater.Inflate(Resource.Layout.View_SettingItem, null);
+            var view = context.LayoutInflater.Inflate(Resource.Layout.View_SettingItem, null);
             var nameView = view.FindViewById<TextView>(Resource.Id.SettingItem_Name);
             var textTwoView = view.FindViewById<TextView>(Resource.Id.SettingItem_Details);
 
@@ -176,6 +203,8 @@ namespace AniDroid.Settings
             {
                 textTwoView.Visibility = ViewStates.Gone;
             }
+
+            view.Click += tapEvent;
 
             return view;
         }

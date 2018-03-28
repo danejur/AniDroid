@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.Base;
+using AniDroid.Adapters.MediaAdapters;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
 
@@ -17,9 +18,13 @@ namespace AniDroid.Utils.Interfaces
 {
     public interface IAniDroidSettings
     {
+        int HighestVersionUsed { get; set; }
         BaseRecyclerAdapter.RecyclerCardType CardType { get; set; }
         BaseAniDroidActivity.AniDroidTheme Theme { get; set; }
         bool DisplayBanners { get; set; }
+
+        // Authenticated Settings
+
         string UserAccessCode { get; set; }
         bool IsUserAuthenticated { get; }
         void ClearUserAuthentication();
@@ -28,5 +33,6 @@ namespace AniDroid.Utils.Interfaces
         List<KeyValuePair<string, bool>> AnimeListOrder { get; set; }
         List<KeyValuePair<string, bool>> MangaListOrder { get; set; }
         bool GroupCompletedLists { get; set; }
+        MediaListRecyclerAdapter.MediaListItemViewType MediaViewType { get; set; }
     }
 }

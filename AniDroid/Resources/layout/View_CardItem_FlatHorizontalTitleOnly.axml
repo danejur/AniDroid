@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?Background"
+    android:id="@+id/CardItem_Container">
+    <android.support.v7.widget.CardView
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardBackgroundColor="?Background"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardPreventCornerOverlap="false"
+        android:id="@+id/CardItem_Card">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="6dp">
+            <AniDroid.Widgets.ScalingImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                app:WidthToHeightRatio=".625"
+                android:id="@+id/CardItem_Image"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                app:srcCompat="@android:drawable/ic_menu_gallery"
+                android:visibility="gone" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?Background_Text"
+                android:id="@+id/CardItem_Name"
+                android:layout_toRightOf="@+id/CardItem_Image"
+                android:layout_alignParentTop="true"
+                android:textSize="18dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="Name"
+                android:layout_marginLeft="1dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?Background_Text_Alternate"
+                android:id="@+id/CardItem_DetailPrimary"
+                android:textSize="-99dp"
+                android:layout_toRightOf="@+id/CardItem_Image"
+                android:text="Detail Primary"
+                android:layout_marginLeft="1dp"
+                android:visibility="gone" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?Background_Text_Alternate"
+                android:id="@+id/CardItem_DetailSecondary"
+                android:layout_toRightOf="@+id/CardItem_Image"
+                android:textSize="-99dp"
+                android:text="Detail Secondary"
+                android:layout_marginLeft="1dp"
+                android:visibility="gone" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:visibility="visible"
+                android:orientation="horizontal"
+                android:id="@+id/CardItem_Button"
+                android:background="?selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:layout_margin="0dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true">
+                <ImageView
+                    app:srcCompat="@drawable/ic_favorite_white_24px"
+                    android:id="@+id/CardItem_ButtonIcon"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:tint="?Secondary_Dark"
+                    android:padding="5dp" />
+            </LinearLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

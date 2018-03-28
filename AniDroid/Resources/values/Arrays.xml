@@ -12,4 +12,85 @@
     <item>#8BC34A</item>
     <item>#46529a</item>
   </array>
+
+  <array name="Application_WhatsNew">
+    <item>11-06-2016|Added this dialog</item>
+    <item>11-06-2016|Added list tab reordering (check the settings)</item>
+    <item>11-06-2016|Custom lists now display list items like they would appear on their non-custom lists</item>
+    <item>11-07-2016|Fixed massive bug that caused crashes on devices before 6.0 whenever viewing pretty much anything. Someday I will be a real developer.</item>
+    <item>11-07-2016|Added ability to mark Anime as Priority and/or Private</item>
+    <item>11-07-2016|Items marked as Priority have the option to be shown with a green highlight (check the settings)</item>
+    <item>11-07-2016|Added ability to edit custom list assignments for Anime</item>
+    <item>11-10-2016|Added ability to mark Manga as Priority and/or Private</item>
+    <item>11-10-2016|Added ability to edit custom list assignments for Manga</item>
+    <item>11-10-2016|Added option to display list items in a compact format (check the settings)</item>
+    <item>11-19-2016|Added ability to filter anime and manga lists by type</item>
+    <item>11-21-2016|Added ability to sort anime and manga lists by completion progress (both percentage and chapter/episode number)</item>
+    <item>12-15-2016|Added user-selected scoring method for Anime.</item>
+    <item>12-15-2016|Fixed the "Search All" function</item>
+    <item>12-20-2016|Added user-selected scoring method for Manga.</item>
+    <item>12-20-2016|Disabled data-refresh service for now.</item>
+    <item>12-22-2016|Adding AniList notifiations. PROTIP: The floating button will pulse when you have new ones!</item>
+    <item>12-22-2016|Adding Home screen. Find it in the navigation drawer.</item>
+    <item>12-24-2016|Home screen activity list now shows user replies, and allows you to reply as well!</item>
+    <item>12-28-2016|Bug fixes</item>
+    <item>03-01-2017|Fix for authentication not working (new features soon, hopefully!)</item>
+    <item>03-20-2017|Adding more "view more" functionality. Try tapping on "Characters" or "Staff" headers when viewing an Anime or Manga. Most of these should show stuff now!</item>
+    <item>03-20-2017|Bug fixes</item>
+    <item>03-21-2017|Added ability to see likes on Activity Feed</item>
+    <item>03-21-2017|Fixed bug causing endless "timeouts"</item>
+    <item>03-22-2017|Added header for navigation drawer! Still have some changes in the works for the nav drawer in general.</item>
+    <item>03-23-2017|Added option in settings to disable auto refresh of data</item>
+    <item>03-23-2017|Refreshing data will no longer change to the default screen</item>
+    <item>03-24-2017|Added ability to view other users Anime and Manga lists! Still somewhat buggy, and it does not look pretty yet, but work is ongoing</item>
+    <item>03-26-2017|Added ability to logout (finally, right?)</item>
+    <item>03-26-2017|Added ability to set anime, character, etc. as favorite</item>
+    <item>03-26-2017|Various bug fixes, including one that caused users with smiley face or star ratings to not be able to add things to their lists</item>
+    <item>04-08-2017|Added ability to sort lists by airing/publishing status</item>
+    <item>04-08-2017|Bug fixes</item>
+    <item>04-09-2017|Added ability to post activity from the Home screen</item>
+    <item>04-09-2017|Refactored a few things, including how the app authorizes with AniList. If it starts crashing on you (more frequently than normal), please let me know!</item>
+    <item>04-09-2017|Long standing bug related to adding manga when you use the 5-star rating system has finally been fixed</item>
+    <item>04-12-2017|Bug fixes</item>
+    <item>04-14-2017|More bug fixes</item>
+    <item>04-15-2017|More more bug fixes</item>
+    <item>04-27-2017|Improved crash detection and reporting</item>
+    <item>05-02-2017|Bug fix for auth problem</item>
+    <item>05-05-2017|It is a sad day, but NyaaTorrents has been shutdown for good. Until a suitable replacement is created, torrent searching now uses the Nyaa backup at https://nyaa.pantsu.cat/</item>
+    <item>05-10-2017|Airing items in your "watching" list now show the number of episodes aired. Try turning on "Highlight airing/publishing items" in the settings!</item>
+    <item>08-06-2017|Slightly reworked Anime page! More updates coming!</item>
+    <item>08-06-2017|Rewrote some networking stuff. Let me know if anything is slow or crashing!</item>
+    <item>08-07-2017|Added tags to Anime page</item>
+    <item>08-07-2017|Added review summaries to Anime page</item>
+    <item>08-07-2017|Fixed bug that caused manga list to crash app</item>
+    <item>08-10-2017|Revamped Manga page! Anime and Manga now look and feel the same. Let me know if anything seems off!</item>
+    <item>08-10-2017|Substantial behind the scenes changes to improve network speed and get app ready for AniList API v2 switch</item>
+    <item>08-10-2017|Fixed a few outstanding bugs</item>
+    <item>08-12-2017|Clicking on certain AniList links can now open them in the app! Anime, Manga, Characters, Staff, and Users are now supported. More to come later!</item>
+    <item>08-12-2017|Added series ranking information</item>
+    <item>08-12-2017|Added series score distribution chart</item>
+    <item>08-12-2017|Many bug fixes</item>
+    <item>08-15-2017|Started reworking of User page! Added a few data points and the genre overview. More to come!</item>
+    <item>08-15-2017|A couple small bug fixes</item>
+    <item>08-16-2017|Added a couple more charts to the user page! Still more in the pipeline!</item>
+    <item>08-16-2017|Overhauled how images are being loaded. They should be much quicker now! And cause fewer crashes!</item>
+    <item>08-16-2017|A couple bug fixes and stability improvements</item>
+    <item>08-17-2017|Fixed Nyaa.si torrent searching</item>
+    <item>08-17-2017|Bug fixes and stability enhancements</item>
+    <item>08-28-2017|More bug fixes. New features coming Soon™</item>
+    <item>08-30-2017|Added score progression chart to Series</item>
+    <item>08-30-2017|Another attempt at fixing the "crash when opening after a while" bug. Maybe I\'ll finally get it right this time?</item>
+    <item>09-03-2017|Added Score Distribution and Anime Type Distribution charts to user page</item>
+    <item>10-23-2017|Fixed a few bugs that were causing crashes. More features coming soon!</item>
+    <item>11-06-2017|Added new dark them! Still very much in development, and only a few screens will be themed properly right now. If you see any bugs (like screens with a black background and black text), please let me know!</item>
+    <item>11-07-2017|More updates to the dark theme (and some updates to the regular one as well).</item>
+    <item>11-08-2017|Continuing to refine dark theme. App may look a little wonky for the time being, but it should still be functional!</item>
+    <item>11-08-2017|Small bug fix when saving changes to manga score</item>
+    <item>12-13-2017|Small fix for crash when accessing user page</item>
+    <item>12-13-2017|More updates to dark theme</item>
+    <item>02-03-2018|More updates to theming. The dark theme is almost complete!</item>
+    <item>02-03-2018|A couple bug fixes. Overall app stability work will begin soon</item>
+    <item>02-05-2018|Fixed crash related to faulty custom list data</item>
+    <item>03-27-2018|Welcome to the rewrite of AniDroid! Most of the functionality from the original version of the app should be in place, and it should all-around be much faster, smoother, and more crash-free!\n\nIf you find something out of place or missing, or just have general questions or thoughts, feel free to email me at verydanejuras@gmail.com, or leave a comment in the thread on AniList!\n\n(Note: You\'ll have to log in again. Sorry for the inconvenience!)</item>
+  </array>
 </resources>

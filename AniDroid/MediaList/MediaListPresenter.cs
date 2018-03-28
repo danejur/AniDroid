@@ -11,6 +11,8 @@ using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
+using AniDroid.Adapters.Base;
+using AniDroid.Adapters.MediaAdapters;
 using AniDroid.AniList.Dto;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
@@ -107,6 +109,16 @@ namespace AniDroid.MediaList
                 {
                     View.DisplaySnackbarMessage("Error occurred while saving list entry", Snackbar.LengthLong);
                 });
+        }
+
+        public BaseRecyclerAdapter.RecyclerCardType GetCardType()
+        {
+            return AniDroidSettings.CardType;
+        }
+
+        public MediaListRecyclerAdapter.MediaListItemViewType GetMediaListItemViewType()
+        {
+            return AniDroidSettings.MediaViewType;
         }
     }
 }

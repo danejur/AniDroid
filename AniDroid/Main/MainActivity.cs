@@ -71,6 +71,16 @@ namespace AniDroid.Main
             throw new NotImplementedException();
         }
 
+        public int GetVersionCode()
+        {
+            return PackageManager.GetPackageInfo(PackageName, 0).VersionCode;
+        }
+
+        public void DisplayWhatsNewDialog()
+        {
+            WhatsNewDialog.Create(this);
+        }
+
         public void SetAuthenticatedNavigationVisibility(bool isAuthenticated)
         {
             _navigationView?.Menu?.SetGroupVisible(Resource.Id.Menu_NavigationGroup_AuthenticatedUser, isAuthenticated);
@@ -151,6 +161,13 @@ namespace AniDroid.Main
 
         public override void OnBackPressed()
         {
+            // detect if there is a dialog fragment being shown and exit out of it
+            if (SupportFragmentManager.Fragments.Any(x => x is AppCompatDialogFragment))
+            {
+                base.OnBackPressed();
+                return;
+            }
+
             if (_exitToast == null || _exitToast.View.WindowVisibility != ViewStates.Visible)
             {
                 _exitToast = Toast.MakeText(this, "Press back again to exit", ToastLength.Short);
@@ -304,7 +321,6 @@ namespace AniDroid.Main
         private void ChangeFragment(BaseAniDroidFragment fragment)
         {
             var drawer = FindViewById<DrawerLayout>(Resource.Id.Main_DrawerLayout);
-            drawer.CloseDrawer(GravityCompat.Start);
 
             if (fragment.FragmentName == _currentFragment?.FragmentName)
             {
@@ -313,6 +329,15 @@ namespace AniDroid.Main
 
             _currentFragment = fragment;
             _fragmentBeingReplaced = true;
+
+            if (drawer.IsDrawerOpen(GravityCompat.Start))
+            {
+                drawer.CloseDrawer(GravityCompat.Start);
+            }
+            else
+            {
+                ReplaceFragment();
+            }
         }
 
         private void ReplaceFragment()
@@ -331,19 +356,14 @@ namespace AniDroid.Main
 
         private void SelectDefaultFragment()
         {
-            if (_currentFragment != null)
+            if (_currentFragment != null && _selectedItem != null)
             {
                 return;
             }
 
-            _selectedItem = _selectedItem ?? _navigationView.Menu.FindItem(Presenter.GetIsUserAuthenticated()
-                                   ? Resource.Id.Menu_Navigation_Anime
-                                   : Resource.Id.Menu_Navigation_Discover);
-
-            OnNavigationItemSelected(_selectedItem);
-            _navigationView.SetCheckedItem(_selectedItem.ItemId);
-
-            ReplaceFragment();
+            _navigationView.Menu.PerformIdentifierAction(Presenter.GetIsUserAuthenticated()
+                ? Resource.Id.Menu_Navigation_Anime
+                : Resource.Id.Menu_Navigation_Discover, MenuPerformFlags.None);
         }
 
         public bool OnNavigationItemSelected(IMenuItem menuItem)
@@ -356,6 +376,7 @@ namespace AniDroid.Main
             }
 
             _selectedItem = menuItem;
+            _selectedItem.SetChecked(true);
 
             switch (_selectedItem.ItemId)
             {

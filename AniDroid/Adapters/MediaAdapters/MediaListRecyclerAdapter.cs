@@ -8,6 +8,7 @@ using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
+using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.Base;
@@ -26,16 +27,25 @@ namespace AniDroid.Adapters.MediaAdapters
         private readonly bool _isCustomList;
         private readonly string _listName;
         private readonly Media.MediaListStatus _listStatus;
+        private readonly MediaListItemViewType _viewType;
 
         public MediaListRecyclerAdapter(BaseAniDroidActivity context, Media.MediaListGroup mediaListGroup,
             User.UserMediaListOptions mediaListOptions, MediaListPresenter presenter, RecyclerCardType cardType,
-            int verticalCardColumns = 2) : base(context, mediaListGroup.Entries, cardType, verticalCardColumns)
+            MediaListItemViewType viewType, int verticalCardColumns = 2) : base(context, mediaListGroup.Entries,
+            cardType, verticalCardColumns)
         {
             _presenter = presenter;
             _mediaListOptions = mediaListOptions;
             _isCustomList = mediaListGroup.IsCustomList;
             _listName = mediaListGroup.Name;
             _listStatus = mediaListGroup.Status;
+            _viewType = viewType;
+
+            if (_viewType != MediaListItemViewType.Normal)
+            {
+                CardType = RecyclerCardType.Custom;
+                CustomCardUseItemDecoration = true;
+            }
         }
 
         public void UpdateMediaListItem(int mediaId, Media.MediaList updatedMediaList)
@@ -82,17 +92,17 @@ namespace AniDroid.Adapters.MediaAdapters
             holder.ContainerCard.LongClick -= RowLongClick;
             holder.ContainerCard.LongClick += RowLongClick;
 
-            if (item.Status == Media.MediaListStatus.Current)
+            if (item.Status != Media.MediaListStatus.Current || _viewType == MediaListItemViewType.TitleOnly)
+            {
+                holder.Button.Visibility = ViewStates.Gone;
+            }
+            else
             {
                 holder.Button.Visibility = ViewStates.Visible;
 
                 holder.ButtonIcon.SetImageResource(item.Progress + 1 >= (item.Media.Episodes ?? item.Media.Chapters)
                     ? Resource.Drawable.svg_check_circle_outline
                     : Resource.Drawable.svg_plus_circle_outline);
-            }
-            else
-            {
-                holder.Button.Visibility = ViewStates.Gone;
             }
         }
 
@@ -178,6 +188,34 @@ namespace AniDroid.Adapters.MediaAdapters
         private string GetDetailTwo(Media.MediaList mediaList)
         {
             return $"{mediaList.Media.Format?.DisplayValue}{(mediaList.Media.IsAdult ? " (Hentai)" : "")}";
+        }
+
+        public enum MediaListItemViewType
+        {
+            Normal = 0,
+            Compact = 1,
+            TitleOnly = 2
+        }
+
+        public override RecyclerView.ViewHolder CreateCustomViewHolder(ViewGroup parent, int viewType)
+        {
+            if (_viewType == MediaListItemViewType.Compact)
+            {
+                return SetupCardItemViewHolder(new CardItem(Context.LayoutInflater.Inflate(Resource.Layout.View_CardItem_FlatHorizontalCompact,
+                    parent, false)));
+            }
+            if (_viewType == MediaListItemViewType.TitleOnly)
+            {
+                return SetupCardItemViewHolder(new CardItem(Context.LayoutInflater.Inflate(Resource.Layout.View_CardItem_FlatHorizontalTitleOnly,
+                    parent, false)));
+            }
+
+            return base.CreateCustomViewHolder(parent, viewType);
+        }
+
+        public override void BindCustomViewHolder(RecyclerView.ViewHolder holder, int position)
+        {
+            BindCardViewHolder(holder as CardItem, position);
         }
     }
 }

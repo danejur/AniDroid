@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.Base;
+using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Base;
 
 namespace AniDroid.Settings
@@ -19,8 +20,10 @@ namespace AniDroid.Settings
         void CreateCardTypeSettingItem(BaseRecyclerAdapter.RecyclerCardType cardType);
         void CreateAniDroidThemeSettingItem(BaseAniDroidActivity.AniDroidTheme theme);
         void CreateDisplayBannersSettingItem(bool displayBanners);
+        void CreateWhatsNewSettingItem();
         
         // Auth settings
         void CreateGroupCompletedSettingItem(bool groupCompleted);
+        void CreateMediaListViewTypeSettingItem(MediaListRecyclerAdapter.MediaListItemViewType viewType);
     }
 }

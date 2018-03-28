@@ -31,6 +31,12 @@ namespace AniDroid.Main
             View.SetAuthenticatedNavigationVisibility(AniDroidSettings.IsUserAuthenticated);
             View.OnMainViewSetup();
 
+            if (View.GetVersionCode() > AniDroidSettings.HighestVersionUsed)
+            {
+                View.DisplayWhatsNewDialog();
+                AniDroidSettings.HighestVersionUsed = View.GetVersionCode();
+            }
+
             return Task.CompletedTask;
         }
 

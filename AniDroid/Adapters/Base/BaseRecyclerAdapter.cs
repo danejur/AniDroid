@@ -162,7 +162,7 @@ namespace AniDroid.Adapters.Base
 
         public virtual RecyclerView.ViewHolder CreateCustomViewHolder(ViewGroup parent, int viewType)
         {
-            return null;
+            return SetupCardItemViewHolder(new CardItem(Context.LayoutInflater.Inflate(Resource.Layout.View_CardItem_Horizontal, parent, false)));
         }
 
         public virtual void BindCustomViewHolder(RecyclerView.ViewHolder holder, int position)

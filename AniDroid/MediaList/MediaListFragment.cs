@@ -50,7 +50,7 @@ namespace AniDroid.MediaList
             }
         }
 
-        public new static BaseMainActivityFragment<MediaListPresenter> GetInstance(string fragmentName)
+        public static BaseMainActivityFragment<MediaListPresenter> GetInstance(string fragmentName)
         {
             switch (fragmentName)
             {
@@ -191,7 +191,7 @@ namespace AniDroid.MediaList
                 }
 
                 var adapter = new MediaListRecyclerAdapter(Activity, statusList,
-                    _collection.User.MediaListOptions, Presenter, Kernel.Get<IAniDroidSettings>().CardType);
+                    _collection.User.MediaListOptions, Presenter, Presenter.GetCardType(), Presenter.GetMediaListItemViewType());
                 _recyclerAdapters.Add(adapter);
                 var listView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
                 listView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView).SetAdapter(adapter);

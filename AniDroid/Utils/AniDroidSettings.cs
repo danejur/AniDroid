@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.Base;
+using AniDroid.Adapters.MediaAdapters;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
@@ -26,6 +27,12 @@ namespace AniDroid.Utils
         {
             _settingStorage = settingsStorage;
             _authSettingStorage = authSettingsStorage;
+        }
+
+        public int HighestVersionUsed
+        {
+            get => _settingStorage.Get(StorageKeys.HighestVersionUsed, 0);
+            set => _settingStorage.Put(StorageKeys.HighestVersionUsed, value);
         }
 
         public BaseRecyclerAdapter.RecyclerCardType CardType
@@ -90,10 +97,17 @@ namespace AniDroid.Utils
             set => _authSettingStorage.Put(StorageKeys.GroupCompletedLists, value);
         }
 
+        public MediaListRecyclerAdapter.MediaListItemViewType MediaViewType
+        {
+            get => _authSettingStorage.Get(StorageKeys.MediaViewType, MediaListRecyclerAdapter.MediaListItemViewType.Normal);
+            set => _authSettingStorage.Put(StorageKeys.MediaViewType, value);
+        }
+
         #region Constants
 
         private static class StorageKeys
         {
+            public const string HighestVersionUsed = "HIGHEST_VERSION_USED";
             public const string CardTypeKey = "CARD_TYPE";
             public const string ThemeKey = "THEME";
             public const string DisplayBannersKey = "DISPLAY_BANNERS";
@@ -103,6 +117,7 @@ namespace AniDroid.Utils
             public const string AnimeListOrderKey = "ANIME_LIST_ORDER_KEY";
             public const string MangaListOrderKey = "MANGA_LIST_ORDER_KEY";
             public const string GroupCompletedLists = "GROUP_COMPLETED_LISTS";
+            public const string MediaViewType = "MEDIA_VIEW_TYPE";
 
             public const string ShowAllActivityKey = "SHOW_ALL_ACTIVITY";
         }

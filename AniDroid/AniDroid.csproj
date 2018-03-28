@@ -229,6 +229,7 @@
     <Compile Include="Dialogs\MediaTitlesDialog.cs" />
     <Compile Include="Dialogs\SearchDialog.cs" />
     <Compile Include="Dialogs\StaffListDialog.cs" />
+    <Compile Include="Dialogs\WhatsNewDialog.cs" />
     <Compile Include="Discover\DiscoverFragment.cs" />
     <Compile Include="Discover\DiscoverPresenter.cs" />
     <Compile Include="Discover\IDiscoverView.cs" />
@@ -411,6 +412,8 @@
     <AndroidResource Include="Resources\layout\Fragment_MediaLists.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+    <AndroidResource Include="Resources\layout\View_CardItem_FlatHorizontalCompact.axml" />
+    <AndroidResource Include="Resources\layout\View_CardItem_FlatHorizontalTitleOnly.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />

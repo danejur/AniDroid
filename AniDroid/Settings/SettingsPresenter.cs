@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.Base;
+using AniDroid.Adapters.MediaAdapters;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
@@ -31,9 +32,12 @@ namespace AniDroid.Settings
 
             if (AniDroidSettings.IsUserAuthenticated)
             {
-               View.CreateGroupCompletedSettingItem(AniDroidSettings.GroupCompletedLists);
+                View.CreateGroupCompletedSettingItem(AniDroidSettings.GroupCompletedLists);
+                View.CreateMediaListViewTypeSettingItem(AniDroidSettings.MediaViewType);
             }
-            
+
+            View.CreateWhatsNewSettingItem();
+
             return Task.CompletedTask;
         }
 
@@ -60,6 +64,11 @@ namespace AniDroid.Settings
         public void SetGroupCompleted(bool groupCompleted)
         {
             AniDroidSettings.GroupCompletedLists = groupCompleted;
+        }
+
+        public void SetMediaListViewType(MediaListRecyclerAdapter.MediaListItemViewType viewType)
+        {
+            AniDroidSettings.MediaViewType = viewType;
         }
     }
 }
