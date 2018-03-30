@@ -110,11 +110,6 @@ namespace AniDroid.AniListObject.Media
             _canEditListItem = true;
         }
 
-        public void SetMediaListSaving()
-        {
-            _editItem?.SetEnabled(false);
-        }
-
         public void SetupMediaView(AniList.Models.Media media)
         {
             _media = media;

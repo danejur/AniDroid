@@ -42,29 +42,19 @@ namespace AniDroid.MediaList
                 .Switch(mediaLists => View.SetCollection(mediaLists));
         }
 
-        public async Task SaveMediaListEntry(MediaListEditDto editDto)
+        public async Task SaveMediaListEntry(MediaListEditDto editDto, Action onSuccess, Action onError)
         {
-            //View.SetMediaListSaving();
-
             var mediaUpdateResp = await AniListService.UpdateMediaListEntry(editDto, default(CancellationToken));
 
             mediaUpdateResp.Switch(mediaList =>
                 {
+                    onSuccess();
                     View.DisplaySnackbarMessage("Saved", Snackbar.LengthShort);
                     View.UpdateMediaListItem(mediaList);
                 })
                 .Switch(error =>
                 {
-                    View.DisplaySnackbarMessage("Error occurred while saving list entry", Snackbar.LengthLong);
-                    //View.ShowMediaListEditDialog(new AniList.Models.Media.MediaList
-                    //{
-                    //    Score = editDto.Score ?? 0,
-                    //    Progress = editDto.Progress,
-                    //    ProgressVolumes = editDto.ProgressVolumes,
-                    //    Status = editDto.Status,
-                    //    Notes = editDto.Notes,
-                    //    Repeat = editDto.Repeat
-                    //});
+                    onError();
                 });
         }
 

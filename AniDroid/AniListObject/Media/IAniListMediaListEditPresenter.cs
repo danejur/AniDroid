@@ -15,6 +15,6 @@ namespace AniDroid.AniListObject.Media
 {
     public interface IAniListMediaListEditPresenter
     {
-        Task SaveMediaListEntry(MediaListEditDto editDto);
+        Task SaveMediaListEntry(MediaListEditDto editDto, Action onSuccess, Action onError);
     }
 }

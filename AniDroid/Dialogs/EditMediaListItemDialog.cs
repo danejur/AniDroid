@@ -10,6 +10,8 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.Design.Widget;
+using Android.Support.Transitions;
 using Android.Support.V7.App;
 using Android.Support.V7.Widget;
 using Android.Views;
@@ -36,11 +38,13 @@ namespace AniDroid.Dialogs
 
             var transaction = context.SupportFragmentManager.BeginTransaction();
             transaction.SetTransition((int)FragmentTransit.FragmentOpen);
-            transaction.Add(Android.Resource.Id.Content, dialog).AddToBackStack(null).Commit();
+            transaction.Add(Android.Resource.Id.Content, dialog).AddToBackStack(EditMediaListItemDialogFragment.BackstackTag).Commit();
         }
 
         public class EditMediaListItemDialogFragment : AppCompatDialogFragment
         {
+            public const string BackstackTag = "EDIT_MEDIA_DIALOG";
+
             private const int DefaultMaxPickerValue = 9999;
 
             private readonly IAniListMediaListEditPresenter _presenter;
@@ -53,6 +57,7 @@ namespace AniDroid.Dialogs
             private bool _isPrivate;
             private bool _hideFromStatusLists;
 
+            private CoordinatorLayout _coordLayout;
             private Picker _scorePicker;
             private AppCompatSpinner _statusSpinner;
             private Picker _progressPicker;
@@ -79,6 +84,8 @@ namespace AniDroid.Dialogs
             {
                 var view = Activity.LayoutInflater.Inflate(Resource.Layout.Fragment_EditMediaListItem, container,
                     false);
+
+                _coordLayout = view.FindViewById<CoordinatorLayout>(Resource.Id.EditMediaListItem_CoordLayout);
 
                 SetupToolbar(view.FindViewById<Toolbar>(Resource.Id.EditMediaListItem_Toolbar));
                 SetupScore(_scorePicker = view.FindViewById<Picker>(Resource.Id.EditMediaListItem_ScorePicker));
@@ -108,7 +115,7 @@ namespace AniDroid.Dialogs
                 {
                     if (args.Item.ItemId == Resource.Id.Menu_EditMediaListItem_Save)
                     {
-                        await SaveMediaListItem();
+                        await SaveMediaListItem(args.Item);
                     }
                     else if (args.Item.ItemId == Resource.Id.Menu_EditMediaListItem_MarkPrivate)
                     {
@@ -241,7 +248,8 @@ namespace AniDroid.Dialogs
                             if (eventArgs.IsChecked && _customLists.Count == 0)
                             {
                                 (sender as SwitchCompat).Checked = false;
-                                Toast.MakeText(Activity, "Must be on at least one list!", ToastLength.Short).Show();
+                                Snackbar.Make(_coordLayout, "Must be on at least one list!", Snackbar.LengthShort)
+                                    .Show();
                                 return;
                             }
 
@@ -273,8 +281,10 @@ namespace AniDroid.Dialogs
                 customLists.AddView(hideSwitchRow);
             }
 
-            private async Task SaveMediaListItem()
+            private async Task SaveMediaListItem(IMenuItem menuItem)
             {
+                menuItem.SetEnabled(false);
+                menuItem.SetActionView(new ProgressBar(Activity) {Indeterminate = true});
 
                 var editDto = new MediaListEditDto
                 {
@@ -282,8 +292,9 @@ namespace AniDroid.Dialogs
                     Status = AniListEnum.GetEnum<Media.MediaListStatus>(_statusSpinner.SelectedItemPosition),
                     Score = _scorePicker.GetValue(),
                     Progress = (int?) _progressPicker.GetValue(),
-                    ProgressVolumes = _media.Type == Media.MediaType.Manga ? (int?)_progressVolumesPicker.GetValue() : null,
-                    Repeat = (int?)_repeatPicker.GetValue(),
+                    ProgressVolumes =
+                        _media.Type == Media.MediaType.Manga ? (int?) _progressVolumesPicker.GetValue() : null,
+                    Repeat = (int?) _repeatPicker.GetValue(),
                     Notes = _notesView.Text,
                     Private = _isPrivate,
                     CustomLists = _customLists.ToList(),
@@ -292,13 +303,27 @@ namespace AniDroid.Dialogs
                 };
 
                 if ((_mediaListOptions.ScoreFormat == User.ScoreFormat.FiveStars ||
-                    _mediaListOptions.ScoreFormat == User.ScoreFormat.ThreeSmileys) && editDto.Score.HasValue)
+                     _mediaListOptions.ScoreFormat == User.ScoreFormat.ThreeSmileys) && editDto.Score.HasValue)
                 {
                     editDto.Score += 1;
                 }
 
-                Dismiss();
-                await _presenter.SaveMediaListEntry(editDto);
+                var transition = new Fade(Visibility.ModeOut);
+                transition.SetDuration(300);
+                ExitTransition = transition;
+
+                await _presenter.SaveMediaListEntry(editDto, () =>
+                {
+                    menuItem.SetActionView(null);
+                    DismissAllowingStateLoss();
+                    Activity.SupportFragmentManager.PopBackStack(BackstackTag, (int) PopBackStackFlags.Inclusive);
+                }, () =>
+                {
+                    Snackbar.Make(_coordLayout, "Error occurred while saving list entry", Snackbar.LengthShort)
+                        .Show();
+                    menuItem.SetEnabled(true);
+                    menuItem.SetActionView(null);
+                });
             }
         }
     }
