@@ -86,6 +86,7 @@ namespace AniDroid.MediaList
                 .Switch(error =>
                 {
                     View.DisplaySnackbarMessage("Error occurred while saving list entry", Snackbar.LengthLong);
+                    View.ResetMediaListItem(mediaListToUpdate.Media.Id);
                 });
         }
 
@@ -108,6 +109,7 @@ namespace AniDroid.MediaList
                 .Switch(error =>
                 {
                     View.DisplaySnackbarMessage("Error occurred while saving list entry", Snackbar.LengthLong);
+                    View.ResetMediaListItem(mediaListToComplete.Media.Id);
                 });
         }
 

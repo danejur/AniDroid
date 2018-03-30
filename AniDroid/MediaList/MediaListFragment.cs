@@ -151,6 +151,14 @@ namespace AniDroid.MediaList
             }
         }
 
+        public void ResetMediaListItem(int mediaId)
+        {
+            foreach (var adapter in _recyclerAdapters)
+            {
+                adapter.ResetMediaListItem(mediaId);
+            }
+        }
+
         public override void SetupMenu(IMenu menu)
         {
             menu.Clear();

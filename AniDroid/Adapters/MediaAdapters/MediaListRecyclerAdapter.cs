@@ -8,8 +8,10 @@ using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
+using Android.Support.V4.Content;
 using Android.Support.V7.Widget;
 using Android.Views;
+using Android.Views.Animations;
 using Android.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.AniList.Models;
@@ -17,6 +19,7 @@ using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 using AniDroid.Dialogs;
 using AniDroid.MediaList;
+using Java.Lang;
 
 namespace AniDroid.Adapters.MediaAdapters
 {
@@ -76,6 +79,12 @@ namespace AniDroid.Adapters.MediaAdapters
 
         }
 
+        public void ResetMediaListItem(int mediaId)
+        {
+            var position = Items.FindIndex(x => x.Media.Id == mediaId);
+            NotifyItemChanged(position);
+        }
+
         public override void BindCardViewHolder(CardItem holder, int position)
         {
             var item = Items[position];
@@ -98,6 +107,12 @@ namespace AniDroid.Adapters.MediaAdapters
             }
             else
             {
+                holder.Button.Enabled = true;
+                //holder.Button.Rotation = 0;
+                //holder.Button.ScaleX = holder.Button.ScaleY = 1;
+                //holder.Button.Alpha = 1;
+                //holder.Button.Animation?.Cancel();
+                //holder.Button.ClearAnimation();
                 holder.Button.Visibility = ViewStates.Visible;
 
                 holder.ButtonIcon.SetImageResource(item.Progress + 1 >= (item.Media.Episodes ?? item.Media.Chapters)
@@ -135,15 +150,23 @@ namespace AniDroid.Adapters.MediaAdapters
         private async void ButtonClick(object sender, EventArgs eventArgs)
         {
             var senderView = sender as View;
+            var iconView = senderView.FindViewById(Resource.Id.CardItem_ButtonIcon);
             var mediaListPos = (int)senderView.GetTag(Resource.Id.Object_Position);
             var mediaList = Items[mediaListPos];
 
             if (mediaList.Progress + 1 == (mediaList.Media.Episodes ?? mediaList.Media.Chapters))
             {
+                senderView.Enabled = false;
+                iconView?.StartAnimation(AnimationUtils.LoadAnimation(Context,
+                    Resource.Animation.Button_Animation_FinishProgress));
                 await _presenter.CompleteMedia(mediaList);
             }
             else
             {
+                senderView.Enabled = false;
+                iconView?.StartAnimation(AnimationUtils.LoadAnimation(Context,
+                    Resource.Animation.Button_Animation_AddProgress));
+
                 await _presenter.IncreaseMediaProgress(mediaList);
             }
         }
@@ -216,6 +239,25 @@ namespace AniDroid.Adapters.MediaAdapters
         public override void BindCustomViewHolder(RecyclerView.ViewHolder holder, int position)
         {
             BindCardViewHolder(holder as CardItem, position);
+        }
+
+        private class AfterAnimationRunnable : Java.Lang.Object, IRunnable
+        {
+            private readonly View _view;
+
+            public AfterAnimationRunnable(View view)
+            {
+                _view = view;
+            }
+
+            public void Run()
+            {
+                _view.Enabled = true;
+                _view.Animation?.Reset();
+                _view.Animation?.Cancel();
+
+                var asdf = _view.Rotation;
+            }
         }
     }
 }

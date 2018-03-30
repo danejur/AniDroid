@@ -21,5 +21,6 @@ namespace AniDroid.MediaList
         Media.MediaType GetMediaType();
         void SetCollection(Media.MediaListCollection collection);
         void UpdateMediaListItem(Media.MediaList mediaList);
+        void ResetMediaListItem(int mediaId);
     }
 }
