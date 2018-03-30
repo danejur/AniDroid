@@ -92,5 +92,7 @@
     <item>02-03-2018|A couple bug fixes. Overall app stability work will begin soon</item>
     <item>02-05-2018|Fixed crash related to faulty custom list data</item>
     <item>03-27-2018|Welcome to the rewrite of AniDroid! Most of the functionality from the original version of the app should be in place, and it should all-around be much faster, smoother, and more crash-free!\n\nIf you find something out of place or missing, or just have general questions or thoughts, feel free to email me at verydanejuras@gmail.com, or leave a comment in the thread on AniList!\n\n(Note: You\'ll have to log in again. Sorry for the inconvenience!)</item>
+    <item>03-30-2018|Added animations back to media list buttons. It should be easier to see when you are adding an episode now.</item>
+    <item>03-30-2018|Media edit screen shows the save progress now.</item>
   </array>
 </resources>
