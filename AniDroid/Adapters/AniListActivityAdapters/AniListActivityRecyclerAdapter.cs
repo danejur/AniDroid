@@ -33,14 +33,14 @@ namespace AniDroid.Adapters.AniListActivityAdapters
         private readonly IAniListActivityPresenter _presenter;
         private readonly string _userNameColorHex;
         private readonly string _actionColorHex;
-        private readonly int _userId;
+        private readonly int? _userId;
         private readonly Color _defaultIconColor;
 
         public AniListActivityRecyclerAdapter(BaseAniDroidActivity context, IAniListActivityPresenter presenter,
-            IAsyncEnumerable<OneOf<IPagedData<AniListActivity>, IAniListError>> enumerable, int userId) : base(context, enumerable, RecyclerCardType.Custom)
+            IAsyncEnumerable<OneOf<IPagedData<AniListActivity>, IAniListError>> enumerable, int? currentUserId) : base(context, enumerable, RecyclerCardType.Custom)
         {
             _presenter = presenter;
-            _userId = userId;
+            _userId = currentUserId;
             _userNameColorHex = $"#{Context.GetThemedColor(Resource.Attribute.Primary) & 0xffffff:X6}";
             _actionColorHex = $"#{Context.GetThemedColor(Resource.Attribute.Primary_Dark) & 0xffffff:X6}";
             _defaultIconColor = new Color(context.GetThemedColor(Resource.Attribute.Secondary_Dark));
@@ -106,8 +106,15 @@ namespace AniDroid.Adapters.AniListActivityAdapters
 
         public override RecyclerView.ViewHolder CreateCustomViewHolder(ViewGroup parent, int viewType)
         {
-            return new AniListActivityViewHolder(
+            var holder = new AniListActivityViewHolder(
                 Context.LayoutInflater.Inflate(Resource.Layout.View_AniListActivityItem, parent, false));
+
+            if (!_userId.HasValue)
+            {
+                holder.ReplyButton.Visibility = ViewStates.Gone;
+            }
+
+            return holder;
         }
 
 
@@ -183,7 +190,10 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             var activityPosition = (int)senderView.GetTag(Resource.Id.Object_Position);
             var activity = Items[activityPosition];
 
-            AniListActivityRepliesDialog.Create(Context, activity, _userId, PostReply, ToggleLikeActivity);
+            if (_userId.HasValue || activity.Likes?.Any() == true || activity.Replies?.Any() == true)
+            {
+                AniListActivityRepliesDialog.Create(Context, activity, _userId, PostReply, ToggleLikeActivity);
+            }
         }
 
         private async void ToggleLikeActivity(int activityId)
@@ -220,6 +230,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             public View ReplyLikeContainer { get; set; }
             public TextView LikeCount { get; set; }
             public ImageView LikeIcon { get; set; }
+            public View ReplyButton { get; set; }
 
             public AniListActivityViewHolder(View view) : base(view)
             {
@@ -235,6 +246,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
                 ReplyLikeContainer = view.FindViewById(Resource.Id.AniListActivity_ReplyLikeContainer);
                 LikeCount = view.FindViewById<TextView>(Resource.Id.AniListActivity_LikeCount);
                 LikeIcon = view.FindViewById<ImageView>(Resource.Id.AniListActivity_LikeIcon);
+                ReplyButton = view.FindViewById(Resource.Id.AniListActivity_ReplyButton);
             }
         }
     }

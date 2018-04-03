@@ -177,12 +177,12 @@ namespace AniDroid.Adapters.MediaAdapters
             {
                 if (mediaList.Media.Type == Media.MediaType.Anime)
                 {
-                    return $"{mediaList.Media.Episodes?.ToString() ?? "?"} episode(s)";
+                    return $"{((mediaList.Media.Episodes ?? 0) > 0 ? mediaList.Media.Episodes?.ToString() : "?")} episode(s)";
                 }
 
                 if (mediaList.Media.Type == Media.MediaType.Manga)
                 {
-                    return $"{mediaList.Media.Chapters?.ToString() ?? "?"} chapter(s)";
+                    return $"{((mediaList.Media.Chapters ?? 0) > 0 ? mediaList.Media.Chapters?.ToString() : "?")} chapter(s)";
                 }
             }
 
@@ -196,12 +196,12 @@ namespace AniDroid.Adapters.MediaAdapters
 
                 if (mediaList.Media.Type == Media.MediaType.Anime)
                 {
-                    return $"Watched {mediaList.Progress ?? 0} out of {mediaList.Media.Episodes?.ToString() ?? "?"}";
+                    return $"Watched {mediaList.Progress ?? 0} out of {((mediaList.Media.Episodes ?? 0) > 0 ? mediaList.Media.Episodes?.ToString() : "?")}";
                 }
 
                 if (mediaList.Media.Type == Media.MediaType.Manga)
                 {
-                    return $"Read {mediaList.Progress ?? 0} out of {mediaList.Media.Chapters?.ToString() ?? "?"}";
+                    return $"Read {mediaList.Progress ?? 0} out of {((mediaList.Media.Chapters ?? 0) > 0 ? mediaList.Media.Chapters?.ToString() : "?")}";
                 }
             }
 

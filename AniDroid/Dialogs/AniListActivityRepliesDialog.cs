@@ -22,7 +22,7 @@ namespace AniDroid.Dialogs
 {
     public class AniListActivityRepliesDialog
     {
-        public static void Create(BaseAniDroidActivity context, AniListActivity activity, int userId, Action<int, string> replyAction, Action<int> likeAction)
+        public static void Create(BaseAniDroidActivity context, AniListActivity activity, int? currentUserId, Action<int, string> replyAction, Action<int> likeAction)
         {
             var view = context.LayoutInflater.Inflate(Resource.Layout.Dialog_AniListActivityReply, null);
             var recycler = view.FindViewById<RecyclerView>(Resource.Id.AniListActivityReply_Recycler);
@@ -30,7 +30,6 @@ namespace AniDroid.Dialogs
             var adapter = new AniListActivityRepliesRecyclerAdapter(context, activity.Replies);
 
             PopulateLikesContainer(context, activity, likesContainer);
-            var likeButtonText = activity.Likes?.Any(x => x.Id == userId) == true ? "Unlike" : "Like";
 
             recycler.SetAdapter(adapter);
 
@@ -40,8 +39,20 @@ namespace AniDroid.Dialogs
             var a = alert.Create();
 
             a.SetButton((int)DialogButtonType.Negative, "Close", (send, args) => a.Dismiss());
-            a.SetButton((int)DialogButtonType.Positive, "Submit", (send, args) => replyAction(activity.Id, view.FindViewById<EditText>(Resource.Id.AniListActivityReply_Reply).Text));
-            a.SetButton((int)DialogButtonType.Neutral, likeButtonText, (send, args) => likeAction(activity.Id));
+
+            if (currentUserId.HasValue)
+            {
+                var likeButtonText = activity.Likes?.Any(x => x.Id == currentUserId) == true ? "Unlike" : "Like";
+                a.SetButton((int)DialogButtonType.Neutral, likeButtonText, (send, args) => likeAction(activity.Id));
+
+                a.SetButton((int) DialogButtonType.Positive, "Submit",
+                    (send, args) => replyAction(activity.Id,
+                        view.FindViewById<EditText>(Resource.Id.AniListActivityReply_Reply).Text));
+            }
+            else
+            {
+                view.FindViewById<EditText>(Resource.Id.AniListActivityReply_Reply).Visibility = ViewStates.Gone;
+            }
 
             a.Show();
         }
