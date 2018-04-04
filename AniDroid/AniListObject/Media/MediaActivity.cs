@@ -143,7 +143,7 @@ namespace AniDroid.AniListObject.Media
                 adapter.AddView(CreateMediaTagsView(media.Tags, media.Type), "Tags");
             }
 
-            if (media.Stats != null)
+            if (media.Rankings?.Any() == true || media.Stats?.AreStatsValid() == true)
             {
                 adapter.AddView(CreateMediaUserDataView(media), "User Data");
             }
@@ -300,7 +300,7 @@ namespace AniDroid.AniListObject.Media
                 episodesView.TextOne = media.Episodes > 0 ? (media.Episodes > 1 ? $"{media.Episodes} episodes" : "Single episode") : "";
                 episodesView.TextTwo = media.Duration > 0 ? $"{media.Duration} minutes" : "";
 
-                if (media.Episodes == 0 && media.Duration == 0)
+                if ((media.Episodes ?? 0) == 0 && (media.Duration ?? 0) == 0)
                 {
                     episodesView.Visibility = ViewStates.Gone;
                 }
@@ -319,7 +319,7 @@ namespace AniDroid.AniListObject.Media
                 episodesView.TextOne = media.Volumes > 0 ? $"{media.Volumes} Volumes" : "";
                 episodesView.TextTwo = media.Chapters > 0 ? $"{media.Chapters} Chapters" : "";
 
-                if (media.Volumes == 0 && media.Chapters == 0)
+                if ((media.Volumes ?? 0) == 0 && (media.Chapters ?? 0) == 0)
                 {
                     episodesView.Visibility = ViewStates.Gone;
                 }
@@ -423,12 +423,12 @@ namespace AniDroid.AniListObject.Media
                 containerView.AddView(CreateUserRankingView(media.Rankings));
             }
 
-            if (media.Stats?.ScoreDistribution?.Any() == true && !AniList.Models.Media.MediaStatus.NotYetReleased.Equals(media.Status))
+            if (media.Stats?.ScoreDistribution?.Count(x => x.Amount > 0) >= 3 && !AniList.Models.Media.MediaStatus.NotYetReleased.Equals(media.Status))
             {
                 containerView.AddView(CreateUserScoresView(media.Stats.ScoreDistribution));
             }
 
-            if (media.Stats?.AiringProgression?.Count > 3)
+            if (media.Stats?.AiringProgression?.Count >= 3)
             {
                 containerView.AddView(CreateUserScoreProgressionView(media.Stats.AiringProgression.TakeLast(15)));
             }
