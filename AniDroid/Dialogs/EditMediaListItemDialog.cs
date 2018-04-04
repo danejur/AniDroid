@@ -84,6 +84,14 @@ namespace AniDroid.Dialogs
 
             public override View OnCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
             {
+                // if the presenter is null, we are probably trying to recreate the fragment after it has been removed from memory.
+                // don't allow that to happen
+                if (_presenter == null)
+                {
+                    DismissAllowingStateLoss();
+                    return null;
+                }
+
                 var view = Activity.LayoutInflater.Inflate(Resource.Layout.Fragment_EditMediaListItem, container,
                     false);
 
