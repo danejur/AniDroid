@@ -90,8 +90,8 @@ namespace AniDroid.AniListObject.User
         {
             _isFollowing = isFollowing;
             _menu?.FindItem(Resource.Id.Menu_User_Follow)?.SetIcon(_isFollowing
-                ? Resource.Drawable.ic_star_white_24px
-                : Resource.Drawable.ic_star_outline_white_24px);
+                ? Resource.Drawable.svg_star
+                : Resource.Drawable.svg_star_outline);
 
             if (showNotification)
             {
@@ -148,8 +148,8 @@ namespace AniDroid.AniListObject.User
             MenuInflater.Inflate(Resource.Menu.User_ActionBar, _menu = menu);
             menu?.FindItem(Resource.Id.Menu_User_Message)?.SetVisible(_canMessage);
             menu?.FindItem(Resource.Id.Menu_User_Follow)?.SetIcon(_isFollowing
-                ? Resource.Drawable.ic_star_white_24px
-                : Resource.Drawable.ic_star_outline_white_24px);
+                ? Resource.Drawable.svg_star
+                : Resource.Drawable.svg_star_outline);
             menu?.FindItem(Resource.Id.Menu_User_Follow)?.SetVisible(_canFollow);
             return true;
         }

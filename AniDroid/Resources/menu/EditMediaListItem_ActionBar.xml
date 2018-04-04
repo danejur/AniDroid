@@ -3,6 +3,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
   <item
+      android:id="@+id/Menu_EditMediaListItem_MarkPriority"
+      android:title="Prioritize"
+      app:showAsAction="always"
+      android:icon="@drawable/svg_star_outline"/>
+  <item
       android:id="@+id/Menu_EditMediaListItem_MarkPrivate"
       android:title="Mark as Private"
       app:showAsAction="always"

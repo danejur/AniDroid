@@ -9,7 +9,7 @@
   <item
     android:id="@+id/Menu_User_Follow"
     android:title="Follow"
-    android:icon="@drawable/ic_star_outline_white_24px"
+    android:icon="@drawable/svg_star_outline"
     app:showAsAction="always"/>
   <item
     android:id="@+id/Menu_User_Share"

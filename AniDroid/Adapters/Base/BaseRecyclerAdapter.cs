@@ -219,6 +219,8 @@ namespace AniDroid.Adapters.Base
             public View Button { get; set; }
             public ImageView ButtonIcon { get; set; }
 
+            public ColorStateList DefaultBackgroundColor { get; }
+
             public CardItem(View itemView) : base(itemView)
             {
                 Container = itemView.FindViewById<LinearLayout>(Resource.Id.CardItem_Container);
@@ -229,6 +231,8 @@ namespace AniDroid.Adapters.Base
                 ContainerCard = itemView.FindViewById<CardView>(Resource.Id.CardItem_Card);
                 Button = itemView.FindViewById(Resource.Id.CardItem_Button);
                 ButtonIcon = itemView.FindViewById<ImageView>(Resource.Id.CardItem_ButtonIcon);
+
+                DefaultBackgroundColor = itemView.FindViewById<CardView>(Resource.Id.CardItem_Card).CardBackgroundColor;
             }
         }
 

@@ -5,6 +5,8 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Content.Res;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
@@ -31,10 +33,12 @@ namespace AniDroid.Adapters.MediaAdapters
         private readonly string _listName;
         private readonly Media.MediaListStatus _listStatus;
         private readonly MediaListItemViewType _viewType;
+        private readonly bool _highlightPriorityItems;
+        private readonly ColorStateList _priorityBackgroundColor;
 
         public MediaListRecyclerAdapter(BaseAniDroidActivity context, Media.MediaListGroup mediaListGroup,
             User.UserMediaListOptions mediaListOptions, MediaListPresenter presenter, RecyclerCardType cardType,
-            MediaListItemViewType viewType, int verticalCardColumns = 2) : base(context, mediaListGroup.Entries,
+            MediaListItemViewType viewType, bool highlightPriorityItems, int verticalCardColumns = 2) : base(context, mediaListGroup.Entries,
             cardType, verticalCardColumns)
         {
             _presenter = presenter;
@@ -43,6 +47,9 @@ namespace AniDroid.Adapters.MediaAdapters
             _listName = mediaListGroup.Name;
             _listStatus = mediaListGroup.Status;
             _viewType = viewType;
+            _highlightPriorityItems = highlightPriorityItems;
+            _priorityBackgroundColor =
+                ColorStateList.ValueOf(new Color(Context.GetThemedColor(Resource.Attribute.ListItem_Priority)));
 
             if (_viewType != MediaListItemViewType.Normal)
             {
@@ -94,6 +101,7 @@ namespace AniDroid.Adapters.MediaAdapters
             holder.DetailSecondary.Text = GetDetailTwo(item);
             holder.Button.SetTag(Resource.Id.Object_Position, position);
             Context.LoadImage(holder.Image, item.Media.CoverImage.Large);
+            holder.ContainerCard.CardBackgroundColor = _highlightPriorityItems && item.Priority > 0 ? _priorityBackgroundColor : holder.DefaultBackgroundColor;
 
             holder.ContainerCard.SetTag(Resource.Id.Object_Position, position);
             holder.ContainerCard.Click -= RowClick;
@@ -239,25 +247,6 @@ namespace AniDroid.Adapters.MediaAdapters
         public override void BindCustomViewHolder(RecyclerView.ViewHolder holder, int position)
         {
             BindCardViewHolder(holder as CardItem, position);
-        }
-
-        private class AfterAnimationRunnable : Java.Lang.Object, IRunnable
-        {
-            private readonly View _view;
-
-            public AfterAnimationRunnable(View view)
-            {
-                _view = view;
-            }
-
-            public void Run()
-            {
-                _view.Enabled = true;
-                _view.Animation?.Reset();
-                _view.Animation?.Cancel();
-
-                var asdf = _view.Rotation;
-            }
         }
     }
 }

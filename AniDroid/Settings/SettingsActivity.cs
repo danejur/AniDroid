@@ -103,6 +103,8 @@ namespace AniDroid.Settings
             _settingsContainer.AddView(CreateSettingDivider(this));
         }
 
+        #region Auth Settings
+
         public void CreateGroupCompletedSettingItem(bool groupCompleted)
         {
             _settingsContainer.AddView(
@@ -127,6 +129,23 @@ namespace AniDroid.Settings
                 }));
             _settingsContainer.AddView(CreateSettingDivider(this));
         }
+
+        public void CreateHighlightPriorityMediaListItemsItem(bool highlightPriorityItems)
+        {
+            _settingsContainer.AddView(
+                CreateSwitchSettingRow(this, "Highlight Priority Media List Items",
+                    "Choose whether you'd like to show a highlighted background on all media list items that you've marked as Priority",
+                    highlightPriorityItems,
+                    (sender, args) =>
+                    {
+                        Presenter.SetHighlightPriorityMediaListItems(args.IsChecked);
+                        _recreateActivity = true;
+                        Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
+                    }));
+            _settingsContainer.AddView(CreateSettingDivider(this));
+        }
+
+        #endregion
 
         public static void StartActivity(Activity context)
         {
@@ -204,6 +223,7 @@ namespace AniDroid.Settings
                 textTwoView.Visibility = ViewStates.Gone;
             }
 
+            view.Id = (int)DateTime.Now.Ticks;
             view.Click += tapEvent;
 
             return view;
@@ -235,6 +255,7 @@ namespace AniDroid.Settings
             }
 
             var switchView = view.FindViewById<SwitchCompat>(Resource.Id.SettingItem_Switch);
+            switchView.Id = (int)DateTime.Now.Ticks;
             switchView.Checked = switchState;
             switchView.CheckedChange += switchEvent;
 
@@ -268,6 +289,7 @@ namespace AniDroid.Settings
             }
 
             var checkboxView = view.FindViewById<AppCompatCheckBox>(Resource.Id.SettingItem_Checkbox);
+            checkboxView.Id = (int)DateTime.Now.Ticks;
             checkboxView.Checked = isChecked;
             checkboxView.CheckedChange += checkEvent;
 

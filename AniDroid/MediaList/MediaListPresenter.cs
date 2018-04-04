@@ -112,5 +112,10 @@ namespace AniDroid.MediaList
         {
             return AniDroidSettings.MediaViewType;
         }
+
+        public bool GetHighlightPriorityItems()
+        {
+            return AniDroidSettings.HighlightPriorityMediaListItems;
+        }
     }
 }

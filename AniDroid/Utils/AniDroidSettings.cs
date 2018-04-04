@@ -103,6 +103,12 @@ namespace AniDroid.Utils
             set => _authSettingStorage.Put(StorageKeys.MediaViewType, value);
         }
 
+        public bool HighlightPriorityMediaListItems
+        {
+            get => _authSettingStorage.Get(StorageKeys.HighlightPriorityMediaListItems, true);
+            set => _authSettingStorage.Put(StorageKeys.HighlightPriorityMediaListItems, value);
+        }
+
         #region Constants
 
         private static class StorageKeys
@@ -118,6 +124,7 @@ namespace AniDroid.Utils
             public const string MangaListOrderKey = "MANGA_LIST_ORDER_KEY";
             public const string GroupCompletedLists = "GROUP_COMPLETED_LISTS";
             public const string MediaViewType = "MEDIA_VIEW_TYPE";
+            public const string HighlightPriorityMediaListItems = "HIGHLIGHT_PRIORITY_MEDIA_LIST_ITEMS";
 
             public const string ShowAllActivityKey = "SHOW_ALL_ACTIVITY";
         }

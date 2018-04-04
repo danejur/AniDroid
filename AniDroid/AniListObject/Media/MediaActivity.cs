@@ -674,7 +674,7 @@ namespace AniDroid.AniListObject.Media
                 if (AniList.Models.Media.MediaRankType.Rated.Equals(ranking.Type))
                 {
                     sortType = AniList.Models.Media.MediaSort.ScoreDesc;
-                    rankingIcon.SetImageResource(Resource.Drawable.ic_star_white_24px);
+                    rankingIcon.SetImageResource(Resource.Drawable.svg_star);
                     rankingIcon.SetColorFilter(new Color(ContextCompat.GetColor(this, Resource.Color.Favorite_Yellow)), PorterDuff.Mode.SrcIn);
                 }
                 else if (AniList.Models.Media.MediaRankType.Popular.Equals(ranking.Type))

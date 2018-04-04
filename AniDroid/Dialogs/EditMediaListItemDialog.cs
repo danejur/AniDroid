@@ -56,6 +56,7 @@ namespace AniDroid.Dialogs
             private new BaseAniDroidActivity Activity => base.Activity as BaseAniDroidActivity;
             private bool _isPrivate;
             private bool _hideFromStatusLists;
+            private int _priority;
 
             private CoordinatorLayout _coordLayout;
             private Picker _scorePicker;
@@ -72,6 +73,7 @@ namespace AniDroid.Dialogs
                 _mediaList = mediaList;
                 _mediaListOptions = mediaListOptions;
                 _isPrivate = mediaList?.Private ?? false;
+                _priority = mediaList?.Priority ?? 0;
                 _hideFromStatusLists = mediaList?.HiddenFromStatusLists ?? false;
                 _customLists = (mediaList?.CustomLists?.Where(x => x.Enabled).Select(x => x.Name).ToList() ??
                                new List<string>()).ToHashSet();
@@ -111,6 +113,9 @@ namespace AniDroid.Dialogs
                 var privateItem = toolbar.Menu.FindItem(Resource.Id.Menu_EditMediaListItem_MarkPrivate);
                 SetupIsPrivate(privateItem);
 
+                var priorityItem = toolbar.Menu.FindItem(Resource.Id.Menu_EditMediaListItem_MarkPriority);
+                SetupPriority(priorityItem);
+
                 toolbar.MenuItemClick += async (sender, args) =>
                 {
                     if (args.Item.ItemId == Resource.Id.Menu_EditMediaListItem_Save)
@@ -122,6 +127,11 @@ namespace AniDroid.Dialogs
                         _isPrivate = !_isPrivate;
                         SetupIsPrivate(privateItem);
                     }
+                    else if (args.Item.ItemId == Resource.Id.Menu_EditMediaListItem_MarkPriority)
+                    {
+                        _priority = _priority > 0 ? 0 : 1;
+                        SetupPriority(priorityItem);
+                    }
                 };
             }
 
@@ -129,6 +139,12 @@ namespace AniDroid.Dialogs
             {
                 isPrivateItem.SetIcon(_isPrivate ? Resource.Drawable.svg_eye_off : Resource.Drawable.svg_eye);
                 isPrivateItem.SetTitle(_isPrivate ? "Mark as Public" : "Mark as Private");
+            }
+
+            private void SetupPriority(IMenuItem isPriorityItem)
+            {
+                isPriorityItem.SetIcon(_priority > 0 ? Resource.Drawable.svg_star : Resource.Drawable.svg_star_outline);
+                isPriorityItem.SetTitle(_priority > 0 ? "Unprioritize" : "Prioritize");
             }
 
             private void SetupScore(Picker scorePicker)
@@ -297,6 +313,7 @@ namespace AniDroid.Dialogs
                     Repeat = (int?) _repeatPicker.GetValue(),
                     Notes = _notesView.Text,
                     Private = _isPrivate,
+                    Priority = _priority,
                     CustomLists = _customLists.ToList(),
                     HiddenFromStatusLists = _hideFromStatusLists
 

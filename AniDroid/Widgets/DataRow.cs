@@ -78,9 +78,9 @@ namespace AniDroid.Widgets
             try
             {
                 icon = attributes.GetResourceId(Resource.Styleable.DataRow_Icon,
-                    Resource.Drawable.ic_star_white_24px);
+                    Resource.Drawable.svg_star);
                 buttonIcon = attributes.GetResourceId(Resource.Styleable.DataRow_ButtonIcon,
-                    Resource.Drawable.ic_star_white_24px);
+                    Resource.Drawable.svg_star);
                 textOne = attributes.GetString(Resource.Styleable.DataRow_TextOne) ?? "";
                 textTwo = attributes.GetString(Resource.Styleable.DataRow_TextTwo) ?? "";
                 textOneColor = attributes.GetResourceId(Resource.Styleable.DataRow_TextOneColor,

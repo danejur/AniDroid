@@ -9,7 +9,7 @@
         android:id="@+id/DataRow_Icon"
         android:layout_width="36dp"
         android:layout_height="36dp"
-        app:srcCompat="@drawable/ic_star_white_24px"
+        app:srcCompat="@drawable/svg_star"
         android:tint="?Background_Text"
         android:layout_gravity="center_vertical"
         android:layout_centerVertical="true"
@@ -28,7 +28,7 @@
         android:layout_centerVertical="true"
         android:layout_alignParentRight="true">
         <ImageView
-            app:srcCompat="@drawable/ic_star_white_24px"
+            app:srcCompat="@drawable/svg_star"
             android:id="@+id/DataRow_ButtonIcon"
             android:layout_gravity="center"
             android:layout_width="36dp"

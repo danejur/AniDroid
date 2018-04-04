@@ -25,5 +25,6 @@ namespace AniDroid.Settings
         // Auth settings
         void CreateGroupCompletedSettingItem(bool groupCompleted);
         void CreateMediaListViewTypeSettingItem(MediaListRecyclerAdapter.MediaListItemViewType viewType);
+        void CreateHighlightPriorityMediaListItemsItem(bool highlightPriorityItems);
     }
 }
