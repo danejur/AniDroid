@@ -167,6 +167,9 @@ namespace AniDroid.AniListObject.Media
 
         public void UpdateMediaListItem(AniList.Models.Media.MediaList mediaList)
         {
+            // this whole method is predicated on the fact that deletions from media lists are currently not possible throught he app
+            // this logic will need to be updated once that functionality has been added
+
             _media.MediaListEntry = _mediaList = mediaList;
 
             if (_mediaDetailsView == null)
@@ -178,6 +181,25 @@ namespace AniDroid.AniListObject.Media
             var statusView = _mediaDetailsView.FindViewById<TextView>(Resource.Id.Media_ListStatus);
             statusView.Visibility = ViewStates.Visible;
             statusView.Text = _mediaList.Status.DisplayValue;
+
+            var mediaListSummaryView = _mediaDetailsView.FindViewById<DataRow>(Resource.Id.Media_MediaListSummary);
+            if (mediaList != null && _mediaListOptions != null)
+            {
+                mediaListSummaryView.Visibility = ViewStates.Visible;
+                mediaListSummaryView.TextOne = $"Rating:  {mediaList.GetScoreString(_mediaListOptions.ScoreFormat)}";
+
+                if (_media?.Type == AniList.Models.Media.MediaType.Anime)
+                {
+                    mediaListSummaryView.TextTwo =
+                        mediaList.GetFormattedProgressString(_media.Type, _media.Episodes);
+                }
+                else if (_media?.Type == AniList.Models.Media.MediaType.Manga)
+                {
+
+                    mediaListSummaryView.TextTwo =
+                        mediaList.GetFormattedProgressString(_media.Type, _media.Chapters);
+                }
+            }
 
             InvalidateOptionsMenu();
 
@@ -259,6 +281,26 @@ namespace AniDroid.AniListObject.Media
                 genreView.Clickable = true;
                 genreView.Click += (sender, eventArgs) => BrowseActivity.StartActivity(this, new BrowseMediaDto { Type = media.Type, IncludedGenres = new List<string> { genre }}, ObjectBrowseRequestCode);
                 genreContainer.AddView(genreView);
+            }
+
+            // media list summary
+            var mediaListSummaryView = retView.FindViewById<DataRow>(Resource.Id.Media_MediaListSummary);
+            if (media.MediaListEntry != null && _mediaListOptions != null)
+            {
+                mediaListSummaryView.Visibility = ViewStates.Visible;
+                mediaListSummaryView.TextOne = $"Rating:  {media.MediaListEntry.GetScoreString(_mediaListOptions.ScoreFormat)}";
+
+                if (media.Type == AniList.Models.Media.MediaType.Anime)
+                {
+                    mediaListSummaryView.TextTwo =
+                        media.MediaListEntry.GetFormattedProgressString(media.Type, media.Episodes);
+                }
+                else if (media.Type == AniList.Models.Media.MediaType.Manga)
+                {
+
+                    mediaListSummaryView.TextTwo =
+                        media.MediaListEntry.GetFormattedProgressString(media.Type, media.Chapters);
+                }
             }
 
             var dateRangeView = retView.FindViewById<DataRow>(Resource.Id.Media_DateRange);

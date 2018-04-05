@@ -31,6 +31,14 @@ namespace AniDroid.AniListObject.Media
 
             await Task.WhenAll(mediaResp, userResp);
 
+            userResp.Result.Switch(user => View.SetCurrentUserMediaListOptions(user.MediaListOptions))
+                .Switch(error => {
+                    if (AniDroidSettings.IsUserAuthenticated)
+                    {
+                        View.DisplaySnackbarMessage("Error occurred while getting user settings", Snackbar.LengthLong);
+                    }
+                });
+
             mediaResp.Result.Switch(media =>
                 {
                     View.SetIsFavorite(media.IsFavourite);
@@ -40,14 +48,6 @@ namespace AniDroid.AniListObject.Media
                     View.SetupMediaView(media);
                 })
                 .Switch(error => View.OnError(error));
-
-            userResp.Result.Switch(user => View.SetCurrentUserMediaListOptions(user.MediaListOptions))
-                .Switch(error => {
-                    if (AniDroidSettings.IsUserAuthenticated)
-                    {
-                        View.DisplaySnackbarMessage("Error occurred while getting user settings", Snackbar.LengthLong);
-                    }
-                });
         }
 
         public IAsyncEnumerable<OneOf<IPagedData<AniList.Models.Character.Edge>, IAniListError>> GetMediaCharactersEnumerable(int mediaId, int perPage)

@@ -135,13 +135,29 @@
             app:justifyContent="center"
             app:showDividerHorizontal="middle"
             app:showDividerVertical="middle" />
+        <AniDroid.Widgets.DataRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Media_MediaListSummary"
+            android:background="@drawable/Background_Alternate_Ripple"
+            app:Icon="@drawable/svg_person"
+            app:TextOneColor="?Primary"
+            app:TextTwoColor="?Background_Text"
+            app:ButtonVisible="false"
+            app:ButtonIcon="@drawable/ic_chevron_right_white_24px"
+            app:ButtonColor="?Background_Text"
+            android:visibility="gone"
+            android:layout_marginTop="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/Media_Genres"
+            android:gravity="center_vertical|left" />
         <LinearLayout
             android:orientation="horizontal"
             android:minWidth="25px"
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/Media_Genres"
+            android:layout_below="@id/Media_MediaListSummary"
             android:id="@+id/Media_ScoresContainer"
             android:layout_marginTop="30dp"
             android:background="?Background_Special">

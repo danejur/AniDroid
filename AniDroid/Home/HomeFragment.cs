@@ -128,7 +128,7 @@ namespace AniDroid.Home
         {
             if (_isFollowingOnly)
             {
-                menuItem.SetIcon(Resource.Drawable.ic_person_white_24px);
+                menuItem.SetIcon(Resource.Drawable.svg_person);
                 menuItem.SetTitle("Show Public Activity");
             }
             else
