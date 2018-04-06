@@ -145,6 +145,21 @@ namespace AniDroid.Settings
             _settingsContainer.AddView(CreateSettingDivider(this));
         }
 
+        public void CreateDisplayProgressColorsItem(bool displayProgressColors)
+        {
+            _settingsContainer.AddView(
+                CreateSwitchSettingRow(this, "Show Airing Progress Colors",
+                    "Turn this on to change the color of the titles of items on your anime lists as they correspond to the current number of aired episodes",
+                    displayProgressColors,
+                    (sender, args) =>
+                    {
+                        Presenter.SetDisplayProgressColorsItem(args.IsChecked);
+                        _recreateActivity = true;
+                        Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
+                    }));
+            _settingsContainer.AddView(CreateSettingDivider(this));
+        }
+
         #endregion
 
         public static void StartActivity(Activity context)

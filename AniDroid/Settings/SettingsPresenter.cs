@@ -35,6 +35,7 @@ namespace AniDroid.Settings
                 View.CreateGroupCompletedSettingItem(AniDroidSettings.GroupCompletedLists);
                 View.CreateMediaListViewTypeSettingItem(AniDroidSettings.MediaViewType);
                 View.CreateHighlightPriorityMediaListItemsItem(AniDroidSettings.HighlightPriorityMediaListItems);
+                View.CreateDisplayProgressColorsItem(AniDroidSettings.DisplayMediaListItemProgressColors);
             }
 
             View.CreateWhatsNewSettingItem();
@@ -77,6 +78,11 @@ namespace AniDroid.Settings
         public void SetHighlightPriorityMediaListItems(bool highlightListItems)
         {
             AniDroidSettings.HighlightPriorityMediaListItems = highlightListItems;
+        }
+
+        public void SetDisplayProgressColorsItem(bool displayProgressColors)
+        {
+            AniDroidSettings.DisplayMediaListItemProgressColors = displayProgressColors;
         }
     }
 }

@@ -56,6 +56,8 @@
   -->
   <attr name="ListItem_Divider" format="reference|color" />
   <attr name="ListItem_Priority" format="reference|color" />
+  <attr name="ListItem_UpToDate" format="reference|color" />
+  <attr name="ListItem_Behind" format="reference|color" />
 
   <attr name="Primary" format="reference|color" />
   <attr name="Primary_Text" format="reference|color" />

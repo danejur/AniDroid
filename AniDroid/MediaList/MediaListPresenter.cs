@@ -117,5 +117,10 @@ namespace AniDroid.MediaList
         {
             return AniDroidSettings.HighlightPriorityMediaListItems;
         }
+
+        public bool GetDisplayProgressColors()
+        {
+            return AniDroidSettings.DisplayMediaListItemProgressColors;
+        }
     }
 }

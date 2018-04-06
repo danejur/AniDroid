@@ -1,27 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.Content.Res;
+﻿using Android.Content.Res;
 using Android.Graphics;
-using Android.OS;
-using Android.Runtime;
-using Android.Support.Design.Widget;
-using Android.Support.V4.Content;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Views.Animations;
-using Android.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.AniList.Models;
 using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 using AniDroid.Dialogs;
 using AniDroid.MediaList;
-using Java.Lang;
+using System;
+using System.Linq;
 
 namespace AniDroid.Adapters.MediaAdapters
 {
@@ -34,11 +23,14 @@ namespace AniDroid.Adapters.MediaAdapters
         private readonly Media.MediaListStatus _listStatus;
         private readonly MediaListItemViewType _viewType;
         private readonly bool _highlightPriorityItems;
+        private readonly bool _displayProgressColors;
         private readonly ColorStateList _priorityBackgroundColor;
+        private readonly ColorStateList _upToDateTitleColor;
+        private readonly ColorStateList _behindTitleColor;
 
         public MediaListRecyclerAdapter(BaseAniDroidActivity context, Media.MediaListGroup mediaListGroup,
             User.UserMediaListOptions mediaListOptions, MediaListPresenter presenter, RecyclerCardType cardType,
-            MediaListItemViewType viewType, bool highlightPriorityItems, int verticalCardColumns = 2) : base(context, mediaListGroup.Entries,
+            MediaListItemViewType viewType, bool highlightPriorityItems, bool displayProgressColors, int verticalCardColumns = 2) : base(context, mediaListGroup.Entries,
             cardType, verticalCardColumns)
         {
             _presenter = presenter;
@@ -48,8 +40,13 @@ namespace AniDroid.Adapters.MediaAdapters
             _listStatus = mediaListGroup.Status;
             _viewType = viewType;
             _highlightPriorityItems = highlightPriorityItems;
+            _displayProgressColors = displayProgressColors;
             _priorityBackgroundColor =
                 ColorStateList.ValueOf(new Color(Context.GetThemedColor(Resource.Attribute.ListItem_Priority)));
+            _upToDateTitleColor =
+                ColorStateList.ValueOf(new Color(Context.GetThemedColor(Resource.Attribute.ListItem_UpToDate)));
+            _behindTitleColor =
+                ColorStateList.ValueOf(new Color(Context.GetThemedColor(Resource.Attribute.ListItem_Behind)));
 
             if (_viewType != MediaListItemViewType.Normal)
             {
@@ -73,7 +70,9 @@ namespace AniDroid.Adapters.MediaAdapters
                 }
                 else
                 {
+                    var oldMedia = Items[position].Media;
                     Items[position] = updatedMediaList;
+                    Items[position].Media = oldMedia;
                     NotifyItemChanged(position);
                 }
             }
@@ -108,6 +107,17 @@ namespace AniDroid.Adapters.MediaAdapters
             holder.ContainerCard.Click += RowClick;
             holder.ContainerCard.LongClick -= RowLongClick;
             holder.ContainerCard.LongClick += RowLongClick;
+
+            if (_displayProgressColors && item.Media.Type == Media.MediaType.Anime && item.Status == Media.MediaListStatus.Current && item.Media.Status == Media.MediaStatus.Releasing && item.Media.NextAiringEpisode?.Episode  > 0)
+            {
+                holder.Name.SetTextColor(item.Media.NextAiringEpisode.Episode - 1 <= item.Progress
+                    ? _upToDateTitleColor
+                    : _behindTitleColor);
+            }
+            else
+            {
+                holder.Name.SetTextColor(holder.DefaultNameColor);
+            }
 
             if (item.Status != Media.MediaListStatus.Current || _viewType == MediaListItemViewType.TitleOnly)
             {

@@ -35,5 +35,6 @@ namespace AniDroid.Utils.Interfaces
         bool GroupCompletedLists { get; set; }
         MediaListRecyclerAdapter.MediaListItemViewType MediaViewType { get; set; }
         bool HighlightPriorityMediaListItems { get; set; }
+        bool DisplayMediaListItemProgressColors { get; set; }
     }
 }
