@@ -143,7 +143,7 @@ namespace AniDroid.AniListObject.Media
                 adapter.AddView(CreateMediaTagsView(media.Tags, media.Type), "Tags");
             }
 
-            if (media.Stats != null)
+            if (media.Rankings?.Any() == true || media.Stats?.AreStatsValid() == true)
             {
                 adapter.AddView(CreateMediaUserDataView(media), "User Data");
             }
@@ -167,6 +167,9 @@ namespace AniDroid.AniListObject.Media
 
         public void UpdateMediaListItem(AniList.Models.Media.MediaList mediaList)
         {
+            // this whole method is predicated on the fact that deletions from media lists are currently not possible throught he app
+            // this logic will need to be updated once that functionality has been added
+
             _media.MediaListEntry = _mediaList = mediaList;
 
             if (_mediaDetailsView == null)
@@ -178,6 +181,25 @@ namespace AniDroid.AniListObject.Media
             var statusView = _mediaDetailsView.FindViewById<TextView>(Resource.Id.Media_ListStatus);
             statusView.Visibility = ViewStates.Visible;
             statusView.Text = _mediaList.Status.DisplayValue;
+
+            var mediaListSummaryView = _mediaDetailsView.FindViewById<DataRow>(Resource.Id.Media_MediaListSummary);
+            if (mediaList != null && _mediaListOptions != null)
+            {
+                mediaListSummaryView.Visibility = ViewStates.Visible;
+                mediaListSummaryView.TextOne = $"Rating:  {mediaList.GetScoreString(_mediaListOptions.ScoreFormat)}";
+
+                if (_media?.Type == AniList.Models.Media.MediaType.Anime)
+                {
+                    mediaListSummaryView.TextTwo =
+                        mediaList.GetFormattedProgressString(_media.Type, _media.Episodes);
+                }
+                else if (_media?.Type == AniList.Models.Media.MediaType.Manga)
+                {
+
+                    mediaListSummaryView.TextTwo =
+                        mediaList.GetFormattedProgressString(_media.Type, _media.Chapters);
+                }
+            }
 
             InvalidateOptionsMenu();
 
@@ -261,6 +283,26 @@ namespace AniDroid.AniListObject.Media
                 genreContainer.AddView(genreView);
             }
 
+            // media list summary
+            var mediaListSummaryView = retView.FindViewById<DataRow>(Resource.Id.Media_MediaListSummary);
+            if (media.MediaListEntry != null && _mediaListOptions != null)
+            {
+                mediaListSummaryView.Visibility = ViewStates.Visible;
+                mediaListSummaryView.TextOne = $"Rating:  {media.MediaListEntry.GetScoreString(_mediaListOptions.ScoreFormat)}";
+
+                if (media.Type == AniList.Models.Media.MediaType.Anime)
+                {
+                    mediaListSummaryView.TextTwo =
+                        media.MediaListEntry.GetFormattedProgressString(media.Type, media.Episodes);
+                }
+                else if (media.Type == AniList.Models.Media.MediaType.Manga)
+                {
+
+                    mediaListSummaryView.TextTwo =
+                        media.MediaListEntry.GetFormattedProgressString(media.Type, media.Chapters);
+                }
+            }
+
             var dateRangeView = retView.FindViewById<DataRow>(Resource.Id.Media_DateRange);
             if (media.StartDate?.IsValid() == true || media.EndDate?.IsValid() == true)
             {
@@ -300,7 +342,7 @@ namespace AniDroid.AniListObject.Media
                 episodesView.TextOne = media.Episodes > 0 ? (media.Episodes > 1 ? $"{media.Episodes} episodes" : "Single episode") : "";
                 episodesView.TextTwo = media.Duration > 0 ? $"{media.Duration} minutes" : "";
 
-                if (media.Episodes == 0 && media.Duration == 0)
+                if ((media.Episodes ?? 0) == 0 && (media.Duration ?? 0) == 0)
                 {
                     episodesView.Visibility = ViewStates.Gone;
                 }
@@ -319,7 +361,7 @@ namespace AniDroid.AniListObject.Media
                 episodesView.TextOne = media.Volumes > 0 ? $"{media.Volumes} Volumes" : "";
                 episodesView.TextTwo = media.Chapters > 0 ? $"{media.Chapters} Chapters" : "";
 
-                if (media.Volumes == 0 && media.Chapters == 0)
+                if ((media.Volumes ?? 0) == 0 && (media.Chapters ?? 0) == 0)
                 {
                     episodesView.Visibility = ViewStates.Gone;
                 }
@@ -423,12 +465,12 @@ namespace AniDroid.AniListObject.Media
                 containerView.AddView(CreateUserRankingView(media.Rankings));
             }
 
-            if (media.Stats?.ScoreDistribution?.Any() == true && !AniList.Models.Media.MediaStatus.NotYetReleased.Equals(media.Status))
+            if (media.Stats?.ScoreDistribution?.Count(x => x.Amount > 0) >= 3 && !AniList.Models.Media.MediaStatus.NotYetReleased.Equals(media.Status))
             {
                 containerView.AddView(CreateUserScoresView(media.Stats.ScoreDistribution));
             }
 
-            if (media.Stats?.AiringProgression?.Count > 3)
+            if (media.Stats?.AiringProgression?.Count >= 3)
             {
                 containerView.AddView(CreateUserScoreProgressionView(media.Stats.AiringProgression.TakeLast(15)));
             }
@@ -674,7 +716,7 @@ namespace AniDroid.AniListObject.Media
                 if (AniList.Models.Media.MediaRankType.Rated.Equals(ranking.Type))
                 {
                     sortType = AniList.Models.Media.MediaSort.ScoreDesc;
-                    rankingIcon.SetImageResource(Resource.Drawable.ic_star_white_24px);
+                    rankingIcon.SetImageResource(Resource.Drawable.svg_star);
                     rankingIcon.SetColorFilter(new Color(ContextCompat.GetColor(this, Resource.Color.Favorite_Yellow)), PorterDuff.Mode.SrcIn);
                 }
                 else if (AniList.Models.Media.MediaRankType.Popular.Equals(ranking.Type))

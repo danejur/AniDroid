@@ -1,25 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Support.Design.Widget;
-using Android.Support.V4.Content;
+﻿using Android.Content.Res;
+using Android.Graphics;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Views.Animations;
-using Android.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.AniList.Models;
 using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 using AniDroid.Dialogs;
 using AniDroid.MediaList;
-using Java.Lang;
+using System;
+using System.Linq;
 
 namespace AniDroid.Adapters.MediaAdapters
 {
@@ -31,10 +22,15 @@ namespace AniDroid.Adapters.MediaAdapters
         private readonly string _listName;
         private readonly Media.MediaListStatus _listStatus;
         private readonly MediaListItemViewType _viewType;
+        private readonly bool _highlightPriorityItems;
+        private readonly bool _displayProgressColors;
+        private readonly ColorStateList _priorityBackgroundColor;
+        private readonly ColorStateList _upToDateTitleColor;
+        private readonly ColorStateList _behindTitleColor;
 
         public MediaListRecyclerAdapter(BaseAniDroidActivity context, Media.MediaListGroup mediaListGroup,
             User.UserMediaListOptions mediaListOptions, MediaListPresenter presenter, RecyclerCardType cardType,
-            MediaListItemViewType viewType, int verticalCardColumns = 2) : base(context, mediaListGroup.Entries,
+            MediaListItemViewType viewType, bool highlightPriorityItems, bool displayProgressColors, int verticalCardColumns = 2) : base(context, mediaListGroup.Entries,
             cardType, verticalCardColumns)
         {
             _presenter = presenter;
@@ -43,6 +39,14 @@ namespace AniDroid.Adapters.MediaAdapters
             _listName = mediaListGroup.Name;
             _listStatus = mediaListGroup.Status;
             _viewType = viewType;
+            _highlightPriorityItems = highlightPriorityItems;
+            _displayProgressColors = displayProgressColors;
+            _priorityBackgroundColor =
+                ColorStateList.ValueOf(new Color(Context.GetThemedColor(Resource.Attribute.ListItem_Priority)));
+            _upToDateTitleColor =
+                ColorStateList.ValueOf(new Color(Context.GetThemedColor(Resource.Attribute.ListItem_UpToDate)));
+            _behindTitleColor =
+                ColorStateList.ValueOf(new Color(Context.GetThemedColor(Resource.Attribute.ListItem_Behind)));
 
             if (_viewType != MediaListItemViewType.Normal)
             {
@@ -66,7 +70,9 @@ namespace AniDroid.Adapters.MediaAdapters
                 }
                 else
                 {
+                    var oldMedia = Items[position].Media;
                     Items[position] = updatedMediaList;
+                    Items[position].Media = oldMedia;
                     NotifyItemChanged(position);
                 }
             }
@@ -94,12 +100,24 @@ namespace AniDroid.Adapters.MediaAdapters
             holder.DetailSecondary.Text = GetDetailTwo(item);
             holder.Button.SetTag(Resource.Id.Object_Position, position);
             Context.LoadImage(holder.Image, item.Media.CoverImage.Large);
+            holder.ContainerCard.CardBackgroundColor = _highlightPriorityItems && item.Priority > 0 ? _priorityBackgroundColor : holder.DefaultBackgroundColor;
 
             holder.ContainerCard.SetTag(Resource.Id.Object_Position, position);
             holder.ContainerCard.Click -= RowClick;
             holder.ContainerCard.Click += RowClick;
             holder.ContainerCard.LongClick -= RowLongClick;
             holder.ContainerCard.LongClick += RowLongClick;
+
+            if (_displayProgressColors && item.Media.Type == Media.MediaType.Anime && item.Status == Media.MediaListStatus.Current && item.Media.Status == Media.MediaStatus.Releasing && item.Media.NextAiringEpisode?.Episode  > 0)
+            {
+                holder.Name.SetTextColor(item.Media.NextAiringEpisode.Episode - 1 <= item.Progress
+                    ? _upToDateTitleColor
+                    : _behindTitleColor);
+            }
+            else
+            {
+                holder.Name.SetTextColor(holder.DefaultNameColor);
+            }
 
             if (item.Status != Media.MediaListStatus.Current || _viewType == MediaListItemViewType.TitleOnly)
             {
@@ -177,12 +195,12 @@ namespace AniDroid.Adapters.MediaAdapters
             {
                 if (mediaList.Media.Type == Media.MediaType.Anime)
                 {
-                    return $"{mediaList.Media.Episodes?.ToString() ?? "?"} episode(s)";
+                    return $"{((mediaList.Media.Episodes ?? 0) > 0 ? mediaList.Media.Episodes?.ToString() : "?")} episode(s)";
                 }
 
                 if (mediaList.Media.Type == Media.MediaType.Manga)
                 {
-                    return $"{mediaList.Media.Chapters?.ToString() ?? "?"} chapter(s)";
+                    return $"{((mediaList.Media.Chapters ?? 0) > 0 ? mediaList.Media.Chapters?.ToString() : "?")} chapter(s)";
                 }
             }
 
@@ -196,12 +214,12 @@ namespace AniDroid.Adapters.MediaAdapters
 
                 if (mediaList.Media.Type == Media.MediaType.Anime)
                 {
-                    return $"Watched {mediaList.Progress ?? 0} out of {mediaList.Media.Episodes?.ToString() ?? "?"}";
+                    return $"Watched {mediaList.Progress ?? 0} out of {((mediaList.Media.Episodes ?? 0) > 0 ? mediaList.Media.Episodes?.ToString() : "?")}";
                 }
 
                 if (mediaList.Media.Type == Media.MediaType.Manga)
                 {
-                    return $"Read {mediaList.Progress ?? 0} out of {mediaList.Media.Chapters?.ToString() ?? "?"}";
+                    return $"Read {mediaList.Progress ?? 0} out of {((mediaList.Media.Chapters ?? 0) > 0 ? mediaList.Media.Chapters?.ToString() : "?")}";
                 }
             }
 
@@ -239,25 +257,6 @@ namespace AniDroid.Adapters.MediaAdapters
         public override void BindCustomViewHolder(RecyclerView.ViewHolder holder, int position)
         {
             BindCardViewHolder(holder as CardItem, position);
-        }
-
-        private class AfterAnimationRunnable : Java.Lang.Object, IRunnable
-        {
-            private readonly View _view;
-
-            public AfterAnimationRunnable(View view)
-            {
-                _view = view;
-            }
-
-            public void Run()
-            {
-                _view.Enabled = true;
-                _view.Animation?.Reset();
-                _view.Animation?.Cancel();
-
-                var asdf = _view.Rotation;
-            }
         }
     }
 }

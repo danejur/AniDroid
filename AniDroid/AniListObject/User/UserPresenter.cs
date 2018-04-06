@@ -51,6 +51,11 @@ namespace AniDroid.AniListObject.User
                 .Switch(error => View.OnError(error));
         }
 
+        public int? GetCurrentUserId()
+        {
+            return AniDroidSettings.LoggedInUser?.Id;
+        }
+
         public IAsyncEnumerable<OneOf<IPagedData<AniListActivity>, IAniListError>> GetUserActivityEnumrable(int userId, int count)
         {
             return AniListService.GetAniListActivity(new AniListActivityDto {UserId = userId}, count);

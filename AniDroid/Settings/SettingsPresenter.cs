@@ -34,6 +34,8 @@ namespace AniDroid.Settings
             {
                 View.CreateGroupCompletedSettingItem(AniDroidSettings.GroupCompletedLists);
                 View.CreateMediaListViewTypeSettingItem(AniDroidSettings.MediaViewType);
+                View.CreateHighlightPriorityMediaListItemsItem(AniDroidSettings.HighlightPriorityMediaListItems);
+                View.CreateDisplayProgressColorsItem(AniDroidSettings.DisplayMediaListItemProgressColors);
             }
 
             View.CreateWhatsNewSettingItem();
@@ -61,6 +63,8 @@ namespace AniDroid.Settings
             AniDroidSettings.DisplayBanners = displayBanners;
         }
 
+        // Auth Settings
+
         public void SetGroupCompleted(bool groupCompleted)
         {
             AniDroidSettings.GroupCompletedLists = groupCompleted;
@@ -69,6 +73,16 @@ namespace AniDroid.Settings
         public void SetMediaListViewType(MediaListRecyclerAdapter.MediaListItemViewType viewType)
         {
             AniDroidSettings.MediaViewType = viewType;
+        }
+
+        public void SetHighlightPriorityMediaListItems(bool highlightListItems)
+        {
+            AniDroidSettings.HighlightPriorityMediaListItems = highlightListItems;
+        }
+
+        public void SetDisplayProgressColorsItem(bool displayProgressColors)
+        {
+            AniDroidSettings.DisplayMediaListItemProgressColors = displayProgressColors;
         }
     }
 }

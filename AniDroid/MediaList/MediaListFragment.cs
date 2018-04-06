@@ -199,7 +199,9 @@ namespace AniDroid.MediaList
                 }
 
                 var adapter = new MediaListRecyclerAdapter(Activity, statusList,
-                    _collection.User.MediaListOptions, Presenter, Presenter.GetCardType(), Presenter.GetMediaListItemViewType());
+                    _collection.User.MediaListOptions, Presenter, Presenter.GetCardType(),
+                    Presenter.GetMediaListItemViewType(), Presenter.GetHighlightPriorityItems(),
+                    Presenter.GetDisplayProgressColors());
                 _recyclerAdapters.Add(adapter);
                 var listView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
                 listView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView).SetAdapter(adapter);

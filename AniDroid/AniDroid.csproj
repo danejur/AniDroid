@@ -603,7 +603,7 @@
     <AndroidResource Include="Resources\drawable\ic_record_voice_over_white_24px.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ic_star_white_24px.xml" />
+    <AndroidResource Include="Resources\drawable\svg_star.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_alarm_white_24px.xml" />
@@ -651,7 +651,7 @@
     <AndroidResource Include="Resources\drawable\ic_comment_plus_outline_white_24px.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ic_person_white_24px.xml" />
+    <AndroidResource Include="Resources\drawable\svg_person.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_group_white_24px.xml" />
@@ -660,7 +660,7 @@
     <AndroidResource Include="Resources\menu\AniListObject_ActionBar.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ic_star_outline_white_24px.xml" />
+    <AndroidResource Include="Resources\drawable\svg_star_outline.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\svg_pencil.xml" />
@@ -715,6 +715,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\svg_chevron_up.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\svg_priority_low.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\svg_priority_high.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
