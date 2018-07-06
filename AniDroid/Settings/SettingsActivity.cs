@@ -90,7 +90,7 @@ namespace AniDroid.Settings
         public void CreateDisplayBannersSettingItem(bool displayBanners)
         {
             _settingsContainer.AddView(
-                CreateSwitchSettingRow(this, "Display Banners", "Choose whether you'd like to display banner images for Media and Users", displayBanners, (sender, args) =>
+                CreateSwitchSettingRow(this, "Display Banners", "Choose whether you'd like to display banner images for Media and Users", displayBanners, true, (sender, args) =>
                     Presenter.SetDisplayBanners(args.IsChecked)));
             _settingsContainer.AddView(CreateSettingDivider(this));
         }
@@ -108,7 +108,7 @@ namespace AniDroid.Settings
         public void CreateGroupCompletedSettingItem(bool groupCompleted)
         {
             _settingsContainer.AddView(
-                CreateSwitchSettingRow(this, "Group Completed Items", "Choose whether you'd like to group all completed lists together under one list, regardless of how you have it set on AniList", groupCompleted, (sender, args) =>
+                CreateSwitchSettingRow(this, "Group Completed Items", "Choose whether you'd like to group all completed lists together under one list, regardless of how you have it set on AniList", groupCompleted, true, (sender, args) =>
                     Presenter.SetGroupCompleted(args.IsChecked)));
             _settingsContainer.AddView(CreateSettingDivider(this));
         }
@@ -135,7 +135,7 @@ namespace AniDroid.Settings
             _settingsContainer.AddView(
                 CreateSwitchSettingRow(this, "Highlight Priority Media List Items",
                     "Choose whether you'd like to show a highlighted background on all media list items that you've marked as Priority",
-                    highlightPriorityItems,
+                    highlightPriorityItems, true,
                     (sender, args) =>
                     {
                         Presenter.SetHighlightPriorityMediaListItems(args.IsChecked);
@@ -150,7 +150,7 @@ namespace AniDroid.Settings
             _settingsContainer.AddView(
                 CreateSwitchSettingRow(this, "Show Airing Progress Colors",
                     "Turn this on to change the color of the titles of items on your anime lists as they correspond to the current number of aired episodes",
-                    displayProgressColors,
+                    displayProgressColors, true,
                     (sender, args) =>
                     {
                         Presenter.SetDisplayProgressColorsItem(args.IsChecked);
@@ -244,7 +244,7 @@ namespace AniDroid.Settings
             return view;
         }
 
-        public static View CreateSwitchSettingRow(BaseAniDroidActivity context, string name, string description, bool switchState, EventHandler<CompoundButton.CheckedChangeEventArgs> switchEvent)
+        public static View CreateSwitchSettingRow(BaseAniDroidActivity context, string name, string description, bool switchState, bool useUniqueControlId, EventHandler<CompoundButton.CheckedChangeEventArgs> switchEvent)
         {
             var view = context.LayoutInflater.Inflate(Resource.Layout.View_SettingItem_Switch, null);
             var nameView = view.FindViewById<TextView>(Resource.Id.SettingItem_Name);
@@ -270,7 +270,12 @@ namespace AniDroid.Settings
             }
 
             var switchView = view.FindViewById<SwitchCompat>(Resource.Id.SettingItem_Switch);
-            switchView.Id = (int)DateTime.Now.Ticks;
+
+            if (useUniqueControlId)
+            {
+                switchView.Id = (int) DateTime.Now.Ticks;
+            }
+
             switchView.Checked = switchState;
             switchView.CheckedChange += switchEvent;
 

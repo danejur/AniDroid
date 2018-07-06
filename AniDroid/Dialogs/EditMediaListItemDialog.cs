@@ -267,7 +267,7 @@ namespace AniDroid.Dialogs
                 }
 
                 var hideSwitchRow =
-                    SettingsActivity.CreateSwitchSettingRow(Activity, null, "Hide from status lists", _hideFromStatusLists,
+                    SettingsActivity.CreateSwitchSettingRow(Activity, null, "Hide from status lists", _hideFromStatusLists, false,
                         (sender, eventArgs) => {
                             if (eventArgs.IsChecked && _customLists.Count == 0)
                             {
