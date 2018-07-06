@@ -223,20 +223,20 @@ namespace AniDroid.Dialogs
                 else if (_media.Type == Media.MediaType.Manga)
                 {
                     progressLabel.Text = "Chapters";
-                    progressPicker.SetMaxValue(_media.Chapters ?? DefaultMaxPickerValue, 0, false, _mediaList?.Progress);
+                    progressPicker.SetMaxValue(_media.Chapters > 0 ? _media.Chapters.Value : DefaultMaxPickerValue, 0, false, _mediaList?.Progress);
                 }
             }
 
             private void SetupVolumeProgress(View volumeProgressContainer, Picker volumeProgressPicker)
             {
-                if (_media.Type != Media.MediaType.Manga || _media.Volumes == 0)
+                if (_media.Type != Media.MediaType.Manga)
                 {
                     volumeProgressContainer.Visibility = ViewStates.Gone;
                     return;
                 }
 
                 volumeProgressContainer.Visibility = ViewStates.Visible;
-                volumeProgressPicker.SetMaxValue(_media.Volumes ?? DefaultMaxPickerValue, 0, false, _mediaList?.ProgressVolumes);
+                volumeProgressPicker.SetMaxValue(_media.Volumes > 0 ? _media.Volumes.Value : DefaultMaxPickerValue, 0, false, _mediaList?.ProgressVolumes);
             }
 
             private void SetupRepeat(Picker rewatchedPicker, TextView rewatchedLabel)
