@@ -98,5 +98,7 @@
     <item>04-05-2018|Added new section to media view that shows user\'s progress (if its on a list)</item>
     <item>04-05-2018|Added priority back to media list items (check the settings!)</item>
     <item>04-05-2018|Various bug fixes and stability improvements</item>
+    <item>07-05-2018|Fixed crash that occured when editing a list item\'s custom lists</item>
+    <item>07-05-2018|Development has started again! Check back soon for new features and improvements!</item>
   </array>
 </resources>
