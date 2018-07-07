@@ -32,6 +32,23 @@ namespace AniDroid.Settings
 
             if (AniDroidSettings.IsUserAuthenticated)
             {
+                var animeListOrder = AniDroidSettings.AnimeListOrder ?? AniDroidSettings.LoggedInUser.MediaListOptions
+                                         .AnimeList?.SectionOrder?.Select(x => new KeyValuePair<string, bool>(x, true))
+                                         .ToList();
+                var mangaListOrder = AniDroidSettings.MangaListOrder ?? AniDroidSettings.LoggedInUser.MediaListOptions
+                                         .MangaList?.SectionOrder?.Select(x => new KeyValuePair<string, bool>(x, true))
+                                         .ToList();
+
+                if (animeListOrder != null)
+                {
+                    View.CreateAnimeListTabOrderItem(animeListOrder);
+                }
+
+                if (mangaListOrder != null)
+                {
+                    View.CreateMangaListTabOrderItem(mangaListOrder);
+                }
+
                 View.CreateGroupCompletedSettingItem(AniDroidSettings.GroupCompletedLists);
                 View.CreateMediaListViewTypeSettingItem(AniDroidSettings.MediaViewType);
                 View.CreateHighlightPriorityMediaListItemsItem(AniDroidSettings.HighlightPriorityMediaListItems);
@@ -83,6 +100,16 @@ namespace AniDroid.Settings
         public void SetDisplayProgressColorsItem(bool displayProgressColors)
         {
             AniDroidSettings.DisplayMediaListItemProgressColors = displayProgressColors;
+        }
+
+        public void SetAnimeListTabOrder(List<KeyValuePair<string, bool>> animeLists)
+        {
+            AniDroidSettings.AnimeListOrder = animeLists;
+        }
+
+        public void SetMangaListTabOrder(List<KeyValuePair<string, bool>> mangaLists)
+        {
+            AniDroidSettings.MangaListOrder = mangaLists;
         }
     }
 }

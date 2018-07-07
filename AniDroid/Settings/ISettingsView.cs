@@ -27,5 +27,7 @@ namespace AniDroid.Settings
         void CreateMediaListViewTypeSettingItem(MediaListRecyclerAdapter.MediaListItemViewType viewType);
         void CreateHighlightPriorityMediaListItemsItem(bool highlightPriorityItems);
         void CreateDisplayProgressColorsItem(bool displayProgressColors);
+        void CreateAnimeListTabOrderItem(List<KeyValuePair<string, bool>> animeLists);
+        void CreateMangaListTabOrderItem(List<KeyValuePair<string, bool>> mangaLists);
     }
 }
