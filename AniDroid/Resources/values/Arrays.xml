@@ -100,5 +100,6 @@
     <item>04-05-2018|Various bug fixes and stability improvements</item>
     <item>07-05-2018|Fixed crash that occured when editing a list item\'s custom lists</item>
     <item>07-05-2018|Development has started again! Check back soon for new features and improvements!</item>
+    <item>07-07-2018|Fix for editing literature list item chapters and volumes</item>
   </array>
 </resources>
