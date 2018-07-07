@@ -250,9 +250,6 @@
     <Compile Include="SearchResults\ISearchResultsView.cs" />
     <Compile Include="SearchResults\SearchResultsActivity.cs" />
     <Compile Include="SearchResults\SearchResultsPresenter.cs" />
-    <Compile Include="Settings\MediaSettings\IMediaSettingsView.cs" />
-    <Compile Include="Settings\MediaSettings\MediaSettingsActivity.cs" />
-    <Compile Include="Settings\MediaSettings\MediaSettingsPresenter.cs" />
     <Compile Include="Settings\SettingsPresenter.cs" />
     <Compile Include="Settings\ISettingsView.cs" />
     <Compile Include="Settings\SettingsActivity.cs" />
