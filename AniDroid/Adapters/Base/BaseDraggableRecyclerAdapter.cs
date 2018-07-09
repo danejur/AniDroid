@@ -17,9 +17,9 @@ using Object = Java.Lang.Object;
 
 namespace AniDroid.Adapters.Base
 {
-    public abstract class BaseDraggableRecyclerAdapter<T> : BaseRecyclerAdapter<T>, IDraggableItemAdapter
+    public abstract class BaseDraggableRecyclerAdapter<T> : BaseRecyclerAdapter<T>, IDraggableItemAdapter where T : BaseRecyclerAdapter.IStableIdItem
     {
-        protected BaseDraggableRecyclerAdapter(BaseAniDroidActivity context, List<T> items) : base(context, items, RecyclerCardType.FlatHorizontal)
+        protected BaseDraggableRecyclerAdapter(BaseAniDroidActivity context, List<T> items) : base(context, items, RecyclerCardType.Custom)
         {
             HasStableIds = true;
         }
@@ -31,7 +31,17 @@ namespace AniDroid.Adapters.Base
 
         public bool OnCheckCanStartDrag(Object p0, int p1, int p2, int p3)
         {
-            return true;
+            var holder = p0 as DraggableCardItemViewHolder;
+
+            var dragHandle = holder?.DragHandle;
+
+            var handleWidth = dragHandle.Width;
+            var handleHeight = dragHandle.Height;
+            var handleLeft = dragHandle.Left;
+            var handleTop = dragHandle.Top;
+
+            return (p2 >= handleLeft) && (p2 < handleLeft + handleWidth) &&
+                   (p3 >= handleTop) && (p3 < handleTop + handleHeight);
         }
 
         public ItemDraggableRange OnGetItemDraggableRange(Object p0, int p1)
@@ -41,17 +51,40 @@ namespace AniDroid.Adapters.Base
 
         public void OnItemDragFinished(int p0, int p1, bool p2)
         {
-            NotifyDataSetChanged();
         }
 
         public void OnItemDragStarted(int p0)
         {
-            NotifyDataSetChanged();
         }
 
         public void OnMoveItem(int p0, int p1)
         {
-            NotifyDataSetChanged();
+            MoveItem(p0, p1);
+        }
+
+        public override long GetItemId(int position)
+        {
+            return Items[position].StableId;
+        }
+
+        public sealed override RecyclerView.ViewHolder CreateCustomViewHolder(ViewGroup parent, int viewType)
+        {
+            return new DraggableCardItemViewHolder(
+                Context.LayoutInflater.Inflate(Resource.Layout.View_DraggableCardItem, parent, false));
+        }
+
+        public class DraggableCardItemViewHolder : AbstractDraggableItemViewHolder
+        {
+            public TextView Name { get; set; }
+            public AppCompatCheckBox Checkbox { get; set; }
+            public View DragHandle { get; set; }
+
+            public DraggableCardItemViewHolder(View itemView) : base(itemView)
+            {
+                DragHandle = itemView.FindViewById(Resource.Id.DraggableCardItem_Handle);
+                Name = itemView.FindViewById<TextView>(Resource.Id.DraggableCardItem_Name);
+                Checkbox = itemView.FindViewById<AppCompatCheckBox>(Resource.Id.DraggableCardItem_Checkbox);
+            }
         }
     }
 }

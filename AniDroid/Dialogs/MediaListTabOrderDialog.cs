@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using AniDroid.Adapters.Base;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Base;
 using Com.H6ah4i.Android.Widget.Advrecyclerview.Animator;
@@ -24,61 +25,23 @@ namespace AniDroid.Dialogs
 
             var view = context.LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recyclerView = view.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
-            var layoutManager = new LinearLayoutManager(context, LinearLayoutManager.Vertical, false);
-
             var dragDropManager = new RecyclerViewDragDropManager();
 
-            var adapter = new MediaListTabOrderRecyclerAdapter(context, mediaListTabs);
+            var adapter =
+                dragDropManager.CreateWrappedAdapter(new MediaListTabOrderRecyclerAdapter(context,
+                    mediaListTabs.Select(x => new BaseRecyclerAdapter.StableIdItem<KeyValuePair<string, bool>>(x))
+                        .ToList()));
+            recyclerView.SetAdapter(adapter);
+            recyclerView.SetLayoutManager(new LinearLayoutManager(context));
 
-
-            recyclerView.SetLayoutManager(layoutManager);
-            recyclerView.SetAdapter(dragDropManager.CreateWrappedAdapter(adapter));
-            recyclerView.SetItemAnimator(new DraggableItemAnimator());
-
-            dragDropManager.AttachRecyclerView(recyclerView);
-
-            //var listView = view.FindViewById<Com.Woxthebox.Draglistview.DragListView>(Resource.Id.OrderedList_ListView);
-            //listView.SetLayoutManager(new LinearLayoutManager(this));
-
-            //var items = Globals.UserSettings.AnimeTabOrder.Select((x, i) => new OrderedSettingDragItemAdapter.OrderedSettingModel
-            //{
-            //    SettingName = x.TabName,
-            //    SettingDescription = x.IsCustom ? "Custom list" : "",
-            //    SettingActive = x.IsDisplayed,
-            //    SettingValue = x.ListStatus,
-            //    SettingObject = x,
-            //    ItemId = i
-            //}).ToList();
-
-            //var adapter = new OrderedSettingDragItemAdapter(this, items) { DisplayCheckbox = true };
-
-            //var typedValue = new TypedValue();
-            //Theme.ResolveAttribute(Resource.Attribute.Background_Alternate, typedValue, true);
-            //adapter.BackgroundColorResource = typedValue.ResourceId;
-            //listView.SetAdapter(adapter, false);
-            //listView.SetCanDragHorizontally(false);
-            //listView.VerticalScrollBarEnabled = true;
-            //listView.HorizontalScrollBarEnabled = false;
+            //recyclerView.SetItemAnimator(new DraggableItemAnimator());
 
             var dialog = new Android.Support.V7.App.AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme)).Create();
             dialog.SetView(view);
             dialog.SetCancelable(true);
             dialog.Show();
 
-            //shownDialog.SetButton((int)DialogButtonType.Positive, "Save", (send, args) =>
-            //{
-            //    var settings = Globals.UserSettings;
-            //    settings.AnimeTabOrder = new List<UserObjectListTab>();
-            //    adapter.ItemList.ForEach(x =>
-            //    {
-            //        ((UserObjectListTab)x.SettingObject).IsDisplayed = x.SettingActive;
-            //        settings.AnimeTabOrder.Add((UserObjectListTab)x.SettingObject);
-            //    });
-            //    Globals.UserSettings = settings;
-            //    shownDialog.Dismiss();
-            //});
-
-            //shownDialog.Show();
+            dragDropManager.AttachRecyclerView(recyclerView);
         }
     }
 }
