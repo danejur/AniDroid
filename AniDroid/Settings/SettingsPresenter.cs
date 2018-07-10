@@ -32,21 +32,14 @@ namespace AniDroid.Settings
 
             if (AniDroidSettings.IsUserAuthenticated)
             {
-                var animeListOrder = AniDroidSettings.AnimeListOrder ?? AniDroidSettings.LoggedInUser.MediaListOptions
-                                         .AnimeList?.SectionOrder?.Select(x => new KeyValuePair<string, bool>(x, true))
-                                         .ToList();
-                var mangaListOrder = AniDroidSettings.MangaListOrder ?? AniDroidSettings.LoggedInUser.MediaListOptions
-                                         .MangaList?.SectionOrder?.Select(x => new KeyValuePair<string, bool>(x, true))
-                                         .ToList();
-
-                if (animeListOrder != null)
+                if (AniDroidSettings.AnimeListOrder?.Any() == true)
                 {
-                    View.CreateAnimeListTabOrderItem(animeListOrder);
+                    View.CreateAnimeListTabOrderItem(() => AniDroidSettings.AnimeListOrder);
                 }
 
-                if (mangaListOrder != null)
+                if (AniDroidSettings.MangaListOrder?.Any() == true)
                 {
-                    View.CreateMangaListTabOrderItem(mangaListOrder);
+                    View.CreateMangaListTabOrderItem(() => AniDroidSettings.MangaListOrder);
                 }
 
                 View.CreateGroupCompletedSettingItem(AniDroidSettings.GroupCompletedLists);

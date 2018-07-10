@@ -159,20 +159,29 @@ namespace AniDroid.Settings
             _settingsContainer.AddView(CreateSettingDivider(this));
         }
 
-        public void CreateAnimeListTabOrderItem(List<KeyValuePair<string, bool>> animeLists)
+        public void CreateAnimeListTabOrderItem(Func<List<KeyValuePair<string, bool>>> getAnimeLists)
         {
             _settingsContainer.AddView(
-                CreateChevronSettingRow(this, "Set Anime List Tab Order", null, (sender, args) =>
+                CreateChevronSettingRow(this, "Set Anime List Tab Order", null,
+                    (sender, args) =>
                     {
-                        MediaListTabOrderDialog.Create(this, animeLists);
+                        MediaListTabOrderDialog.Create(this, getAnimeLists.Invoke(), Presenter.SetAnimeListTabOrder);
+                        _recreateActivity = true;
+                        Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
                     }));
             _settingsContainer.AddView(CreateSettingDivider(this));
         }
 
-        public void CreateMangaListTabOrderItem(List<KeyValuePair<string, bool>> mangaLists)
+        public void CreateMangaListTabOrderItem(Func<List<KeyValuePair<string, bool>>> getMangaLists)
         {
             _settingsContainer.AddView(
-                CreateChevronSettingRow(this, "Set Media List Tab Order", null, (sender, args) => { }));
+                CreateChevronSettingRow(this, "Set Media List Tab Order", null,
+                    (sender, args) =>
+                    {
+                        MediaListTabOrderDialog.Create(this, getMangaLists.Invoke(), Presenter.SetMangaListTabOrder);
+                        _recreateActivity = true;
+                        Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
+                    }));
             _settingsContainer.AddView(CreateSettingDivider(this));
         }
 

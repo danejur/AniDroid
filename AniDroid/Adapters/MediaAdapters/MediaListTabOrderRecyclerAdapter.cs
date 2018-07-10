@@ -27,6 +27,21 @@ namespace AniDroid.Adapters.MediaAdapters
             var item = Items[position];
 
             cardItem.Name.Text = item.Item.Key;
+            cardItem.Checkbox.Checked = item.Item.Value;
+
+            cardItem.Checkbox.CheckedChange -= CheckChanged;
+            cardItem.Checkbox.CheckedChange += CheckChanged;
+            cardItem.Checkbox.SetTag(Resource.Id.Object_Position, position);
+        }
+
+        private void CheckChanged(object sender, CompoundButton.CheckedChangeEventArgs checkedChangeEventArgs)
+        {
+            var senderView = sender as View;
+            var position = (int)senderView.GetTag(Resource.Id.Object_Position);
+            var item = Items[position];
+
+            item.Item = new KeyValuePair<string, bool>(item.Item.Key, checkedChangeEventArgs.IsChecked);
+            NotifyDataSetChanged();
         }
     }
 }

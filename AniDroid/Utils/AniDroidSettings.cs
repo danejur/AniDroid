@@ -115,6 +115,41 @@ namespace AniDroid.Utils
             set => _authSettingStorage.Put(StorageKeys.DisplayMediaListItemProgressColors, value);
         }
 
+        #region Methods
+
+        public void UpdateLoggedInUser(User user)
+        {
+            LoggedInUser = user;
+            UpdateUserMediaListTabs(user.MediaListOptions);
+        }
+
+        public void UpdateUserMediaListTabs(User.UserMediaListOptions mediaListOptions)
+        {
+            if (AnimeListOrder?.Any() == true)
+            {
+                // if we already have a list order, just update it
+                // otherwise, ignore for now
+
+                var lists = AnimeListOrder.ToList();
+                lists.RemoveAll(x => !mediaListOptions.AnimeList.SectionOrder.Contains(x.Key));
+
+                // add any missing lists with the default value of visible
+                lists.AddRange(mediaListOptions.AnimeList.SectionOrder.Where(y => !lists.Select(z => z.Key).Contains(y)).Select(x => new KeyValuePair<string, bool>(x, true)));
+                AnimeListOrder = lists;
+            }
+
+            if (MangaListOrder?.Any() == true)
+            {
+                var lists = MangaListOrder.ToList();
+                lists.RemoveAll(x => !mediaListOptions.MangaList.SectionOrder.Contains(x.Key));
+
+                lists.AddRange(mediaListOptions.MangaList.SectionOrder.Where(y => !lists.Select(z => z.Key).Contains(y)).Select(x => new KeyValuePair<string, bool>(x, true)));
+                MangaListOrder = lists;
+            }
+        }
+
+        #endregion
+
         #region Constants
 
         private static class StorageKeys

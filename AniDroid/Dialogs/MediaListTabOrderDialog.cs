@@ -20,18 +20,17 @@ namespace AniDroid.Dialogs
 {
     public class MediaListTabOrderDialog
     {
-        public static void Create(BaseAniDroidActivity context, List<KeyValuePair<string, bool>> mediaListTabs)
+        public static void Create(BaseAniDroidActivity context, List<KeyValuePair<string, bool>> mediaListTabs, Action<List<KeyValuePair<string, bool>>> onDismissAction)
         {
-
             var view = context.LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recyclerView = view.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
             var dragDropManager = new RecyclerViewDragDropManager();
+            var adapter = new MediaListTabOrderRecyclerAdapter(context,
+                mediaListTabs.Select(x => new BaseRecyclerAdapter.StableIdItem<KeyValuePair<string, bool>>(x))
+                    .ToList());
 
-            var adapter =
-                dragDropManager.CreateWrappedAdapter(new MediaListTabOrderRecyclerAdapter(context,
-                    mediaListTabs.Select(x => new BaseRecyclerAdapter.StableIdItem<KeyValuePair<string, bool>>(x))
-                        .ToList()));
-            recyclerView.SetAdapter(adapter);
+            var wrappedAdapter = dragDropManager.CreateWrappedAdapter(adapter);
+            recyclerView.SetAdapter(wrappedAdapter);
             recyclerView.SetLayoutManager(new LinearLayoutManager(context));
 
             //recyclerView.SetItemAnimator(new DraggableItemAnimator());
@@ -41,7 +40,10 @@ namespace AniDroid.Dialogs
             dialog.SetCancelable(true);
             dialog.Show();
 
+            dialog.DismissEvent += (sender, e) => { onDismissAction.Invoke(adapter.Items.Select(x => x.Item).ToList()); };
+
             dragDropManager.AttachRecyclerView(recyclerView);
         }
+
     }
 }
