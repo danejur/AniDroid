@@ -206,7 +206,7 @@ namespace AniDroid.Adapters.MediaAdapters
 
             if (mediaList.Status == Media.MediaListStatus.Current || mediaList.Status == Media.MediaListStatus.Paused || mediaList.Status == Media.MediaListStatus.Dropped || mediaList.Status == Media.MediaListStatus.Repeating)
             {
-                if (mediaList.Progress.HasValue &&
+                if (mediaList.Progress.HasValue && mediaList.Progress > 0 &&
                     mediaList.Progress == (mediaList.Media.Episodes ?? mediaList.Media.Chapters))
                 {
                     return "Status needs to be marked as Completed";
