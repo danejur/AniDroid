@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -17,6 +18,7 @@ using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList;
+using AniDroid.AniList.DataTypes;
 using AniDroid.AniList.Dto;
 using AniDroid.AniList.Models;
 using AniDroid.AniListObject.Media;
@@ -65,6 +67,9 @@ namespace AniDroid.Dialogs
             private Picker _progressVolumesPicker;
             private Picker _repeatPicker;
             private EditText _notesView;
+            private DatePickerTextView _startDateView;
+            private DatePickerTextView _finishDateView;
+
 
             public EditMediaListItemDialogFragment(IAniListMediaListEditPresenter presenter, Media media, Media.MediaList mediaList, User.UserMediaListOptions mediaListOptions)
             {
@@ -109,6 +114,8 @@ namespace AniDroid.Dialogs
                 SetupNotes(_notesView = view.FindViewById<EditText>(Resource.Id.EditMediaListItem_Notes));
                 SetupCustomLists(view.FindViewById(Resource.Id.EditMediaListItem_CustomListsContainer),
                     view.FindViewById<LinearLayout>(Resource.Id.EditMediaListItem_CustomLists));
+                SetupStartDate(_startDateView = view.FindViewById<DatePickerTextView>(Resource.Id.EditMediaListItem_StartDate));
+                SetupFinishDate(_finishDateView = view.FindViewById<DatePickerTextView>(Resource.Id.EditMediaListItem_FinishDate));
 
                 return view;
             }
@@ -201,11 +208,27 @@ namespace AniDroid.Dialogs
                     statusSpinner.SetSelection(Media.MediaListStatus.Completed.Index);
                 }
 
-                statusSpinner.ItemSelected += (sender, args) => {
-                    if (AniListEnum.GetEnum<Media.MediaListStatus>(args.Position) == Media.MediaListStatus.Completed && _media.Episodes > 0)
+                statusSpinner.ItemSelected += (sender, args) =>
+                {
+                    var statusEnum = AniListEnum.GetEnum<Media.MediaListStatus>(args.Position);
+
+                    if (statusEnum == Media.MediaListStatus.Completed)
                     {
+                        if (!_finishDateView.SelectedDate.HasValue)
+                        {
+                            _finishDateView.SelectedDate = DateTime.Now;
+                        }
+
                         // TODO: replace this after altering Picker
                         // _progressPicker.SetValue(_media.Episodes);
+                    }
+                    else if (statusEnum == Media.MediaListStatus.Current)
+                    {
+                        if (!_startDateView.SelectedDate.HasValue)
+                        {
+                            _startDateView.SelectedDate = DateTime.Now;
+                            _finishDateView.SelectedDate = null;
+                        }
                     }
                 };
             }
@@ -252,6 +275,34 @@ namespace AniDroid.Dialogs
             private void SetupNotes(TextView notesView)
             {
                 notesView.Text = _mediaList?.Notes;
+            }
+
+            private void SetupStartDate(DatePickerTextView startDateView)
+            {
+                startDateView.SelectedDate = _mediaList?.StartedAt?.GetDate();
+                startDateView.DateChanged += (sender, args) => {
+                    if (_finishDateView.SelectedDate < args.Date)
+                    {
+                        Snackbar.Make(_coordLayout, "Start date must be on or before Finish date!", Snackbar.LengthShort)
+                            .Show();
+                        _startDateView.SelectedDate = null;
+                    }
+
+                };
+            }
+
+            private void SetupFinishDate(DatePickerTextView finishDateView)
+            {
+                finishDateView.SelectedDate = _mediaList?.CompletedAt?.GetDate();
+                finishDateView.DateChanged += (sender, args) => {
+                    if (_startDateView.SelectedDate > args.Date)
+                    {
+                        Snackbar.Make(_coordLayout, "Finish date must be on or after Start date!", Snackbar.LengthShort)
+                            .Show();
+                        _finishDateView.SelectedDate = null;
+                    }
+
+                };
             }
 
             private void SetupCustomLists(View customListsContainer, LinearLayout customLists)
@@ -323,7 +374,9 @@ namespace AniDroid.Dialogs
                     Private = _isPrivate,
                     Priority = _priority,
                     CustomLists = _customLists.ToList(),
-                    HiddenFromStatusLists = _hideFromStatusLists
+                    HiddenFromStatusLists = _hideFromStatusLists,
+                    StartDate = new FuzzyDate(_startDateView.SelectedDate),
+                    FinishDate = new FuzzyDate(_finishDateView.SelectedDate)
 
                 };
 
