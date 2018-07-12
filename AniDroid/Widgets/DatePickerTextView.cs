@@ -64,18 +64,13 @@ namespace AniDroid.Widgets
 
         private void EditTextClick(object sender, EventArgs eventArgs)
         {
+            var defaultDate = _selectedDate ?? DateTime.Now;
+
             // TODO: fix themeing
             var dateDialog = new DatePickerDialog(Context);
 
-            dateDialog.UpdateDate(_selectedDate ?? DateTime.Now);
-
-            dateDialog.DatePicker.DateChanged += (dateSender, dateE) =>
-            {
-                var date = new DateTime(dateE.Year, dateE.MonthOfYear + 1, dateE.DayOfMonth);
-                SelectedDate = date;
-                dateDialog.Dismiss();
-                DateChanged?.Invoke(dateDialog.DatePicker, new DateChangedEventArgs(date));
-            };
+            dateDialog.DatePicker.Init(defaultDate.Year, defaultDate.Month + 1, defaultDate.Day,
+                new DatePickerTextViewOnDateChangedListener(dateDialog, DateChanged, (date) => SelectedDate = date));
 
             dateDialog.Show();
         }
@@ -92,6 +87,28 @@ namespace AniDroid.Widgets
             public DateChangedEventArgs(DateTime date)
             {
                 Date = date;
+            }
+        }
+
+        private class DatePickerTextViewOnDateChangedListener : Java.Lang.Object, DatePicker.IOnDateChangedListener
+        {
+            private readonly DatePickerDialog _dialog;
+            private readonly EventHandler<DateChangedEventArgs> _dateChangedEventHandler;
+            private readonly Action<DateTime> _dateSelectedAction;
+
+            public DatePickerTextViewOnDateChangedListener(DatePickerDialog dialog, EventHandler<DateChangedEventArgs> dateChangedEventHandler, Action<DateTime> dateSelectedAction)
+            {
+                _dialog = dialog;
+                _dateChangedEventHandler = dateChangedEventHandler;
+                _dateSelectedAction = dateSelectedAction;
+            }
+
+            public void OnDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth)
+            {
+                var date = new DateTime(year, monthOfYear, dayOfMonth);
+                _dateSelectedAction?.Invoke(date);
+                _dialog.Dismiss();
+                _dateChangedEventHandler?.Invoke(_dialog.DatePicker, new DateChangedEventArgs(date));
             }
         }
     }
