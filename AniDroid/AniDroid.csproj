@@ -279,6 +279,7 @@
     <Compile Include="Widgets\BadgeDrawerToggle.cs" />
     <Compile Include="Widgets\BadgeImageView.cs" />
     <Compile Include="Widgets\DataRow.cs" />
+    <Compile Include="Widgets\DatePickerTextView.cs" />
     <Compile Include="Widgets\ExpandableText.cs" />
     <Compile Include="Widgets\Picker.cs" />
     <Compile Include="Widgets\ScalingImageView.cs" />
@@ -727,6 +728,19 @@
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Fragment_BrowseDialog.axml">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Widget_DatePickerTextView.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\svg_close.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\svg_close_circle.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

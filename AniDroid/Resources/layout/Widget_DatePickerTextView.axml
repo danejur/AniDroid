@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="RelativeLayout"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical">
+    <ImageView
+        android:tint="?Secondary_Dark"
+        android:src="@drawable/svg_close_circle"
+        android:layout_height="match_parent"
+        android:background="?selectableItemBackgroundBorderless"
+        android:id="@+id/DatePickerTextView_ClearButton"
+        android:layout_width="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true" />
+    <EditText
+        android:inputType="none"
+        android:layout_width="match_parent"
+        android:theme="?TextInput_Theme"
+        android:textSize="14dp"
+        android:clickable="true"
+        android:focusable="false"
+        android:id="@+id/DatePickerTextView_EditText"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:layout_toLeftOf="@id/DatePickerTextView_ClearButton"
+        android:layout_centerVertical="true" />
+</merge>

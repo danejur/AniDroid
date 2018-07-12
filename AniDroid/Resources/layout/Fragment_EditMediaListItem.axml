@@ -140,7 +140,7 @@
                             android:background="@android:color/transparent" />
                     </LinearLayout>
                 </LinearLayout>
-              <LinearLayout
+                <LinearLayout
                     android:layout_weight="1"
                     android:layout_marginTop="20dp"
                     android:paddingLeft="10dp"
@@ -170,22 +170,69 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_marginTop="20dp">
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/EditMediaListItem_StartDateLabel"
+                        android:text="Start Date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="?Primary_Dark"
+                        android:layout_gravity="top" />
+                    <AniDroid.Widgets.DatePickerTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/EditMediaListItem_StartDate" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/EditMediaListItem_FinishDateLabel"
+                        android:text="Finish Date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="?Primary_Dark"
+                        android:layout_gravity="top" />
+                    <AniDroid.Widgets.DatePickerTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/EditMediaListItem_FinishDate" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:gravity="center_vertical"
                 android:layout_marginTop="20dp">
-              <android.support.design.widget.TextInputLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:theme="?TextInput_Theme">
-                <EditText
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="14dp"
-                    android:inputType="textMultiLine"
-                    android:id="@+id/EditMediaListItem_Notes"
-                    android:hint="Notes" />
-              </android.support.design.widget.TextInputLayout>
+                    android:theme="?TextInput_Theme">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:inputType="textMultiLine"
+                        android:id="@+id/EditMediaListItem_Notes"
+                        android:hint="Notes" />
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/EditMediaListItem_CustomListsContainer"
@@ -196,13 +243,13 @@
                 android:paddingRight="15dp"
                 android:gravity="center_vertical"
                 android:layout_marginTop="20dp">
-              <TextView
-                  android:text="Custom Lists"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:textSize="14dp"
-                  android:textColor="?Primary_Dark"
-                  android:layout_gravity="top" />
+                <TextView
+                    android:text="Custom Lists"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:textColor="?Primary_Dark"
+                    android:layout_gravity="top" />
                 <LinearLayout
                     android:id="@+id/EditMediaListItem_CustomLists"
                     android:orientation="vertical"
