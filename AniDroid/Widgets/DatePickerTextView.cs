@@ -105,7 +105,7 @@ namespace AniDroid.Widgets
 
             public void OnDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth)
             {
-                var date = new DateTime(year, monthOfYear, dayOfMonth);
+                var date = new DateTime(year, monthOfYear + 1, dayOfMonth);
                 _dateSelectedAction?.Invoke(date);
                 _dialog.Dismiss();
                 _dateChangedEventHandler?.Invoke(_dialog.DatePicker, new DateChangedEventArgs(date));
