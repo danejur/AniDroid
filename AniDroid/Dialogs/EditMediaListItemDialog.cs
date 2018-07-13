@@ -35,9 +35,6 @@ namespace AniDroid.Dialogs
         public static void Create(BaseAniDroidActivity context, IAniListMediaListEditPresenter presenter, Media media, Media.MediaList mediaList, User.UserMediaListOptions mediaListOptions)
         {
             var dialog = new EditMediaListItemDialogFragment(presenter, media, mediaList, mediaListOptions) {Cancelable = true};
-
-//            dialog.Show(context.SupportFragmentManager, "EditMediaDialog");
-
             var transaction = context.SupportFragmentManager.BeginTransaction();
             transaction.SetTransition((int)FragmentTransit.FragmentOpen);
             transaction.Add(Android.Resource.Id.Content, dialog).AddToBackStack(EditMediaListItemDialogFragment.BackstackTag).Commit();
@@ -394,7 +391,9 @@ namespace AniDroid.Dialogs
                 {
                     menuItem.SetActionView(null);
                     DismissAllowingStateLoss();
-                    Activity.SupportFragmentManager.PopBackStack(BackstackTag, (int) PopBackStackFlags.Inclusive);
+
+                    // TODO: figure out if this is actually necessary
+                    // Activity.SupportFragmentManager.PopBackStack(BackstackTag, (int)PopBackStackFlags.Inclusive);
                 }, () =>
                 {
                     Snackbar.Make(_coordLayout, "Error occurred while saving list entry", Snackbar.LengthShort)
