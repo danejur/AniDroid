@@ -104,5 +104,6 @@
     <item>07-09-2018|Minor bug fix</item>
     <item>07-12-2018|Added ability to set start and finish dates for media</item>
     <item>07-12-2018|Small crash fix for start and finish date setting</item>
+    <item>07-13-2018|Another small crash fix for start and finish date setting</item>
   </array>
 </resources>
