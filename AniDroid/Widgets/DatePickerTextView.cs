@@ -69,7 +69,7 @@ namespace AniDroid.Widgets
             // TODO: fix themeing
             var dateDialog = new DatePickerDialog(Context);
 
-            dateDialog.DatePicker.Init(defaultDate.Year, defaultDate.Month + 1, defaultDate.Day,
+            dateDialog.DatePicker.Init(defaultDate.Year, defaultDate.Month - 1, defaultDate.Day,
                 new DatePickerTextViewOnDateChangedListener(dateDialog, DateChanged, (date) => SelectedDate = date));
 
             dateDialog.Show();
