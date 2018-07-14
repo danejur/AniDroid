@@ -32,6 +32,8 @@ namespace AniDroid.Base
 
     public abstract class BaseAniDroidFragment : Android.Support.V4.App.Fragment, IAniDroidView
     {
+        private bool _pendingRecreate;
+
         protected new BaseAniDroidActivity Activity => base.Activity as BaseAniDroidActivity;
         protected new LayoutInflater LayoutInflater => Activity.LayoutInflater;
 
@@ -56,6 +58,17 @@ namespace AniDroid.Base
             HasOptionsMenu = HasMenu;
         }
 
+        public override void OnResume()
+        {
+            base.OnResume();
+
+            if (_pendingRecreate)
+            {
+                _pendingRecreate = false;
+                RecreateFragment();
+            }
+        }
+
         public virtual bool HasMenu => false;
 
         public sealed override void OnPrepareOptionsMenu(IMenu menu)
@@ -72,6 +85,12 @@ namespace AniDroid.Base
         {
             if (IsDetached)
             {
+                return;
+            }
+
+            if (IsStateSaved)
+            {
+                _pendingRecreate = true;
                 return;
             }
 

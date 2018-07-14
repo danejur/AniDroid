@@ -19,7 +19,9 @@ using AniDroid.AniList;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
+using AniDroid.Dialogs;
 using AniDroid.Utils;
+using AniDroid.Utils.Comparers;
 using AniDroid.Utils.Interfaces;
 using Ninject;
 
@@ -30,10 +32,13 @@ namespace AniDroid.MediaList
         public const string AnimeMediaListFragmentName = "ANIME_MEDIA_LIST_FRAGMENT";
         public const string MangaMediaListFragmentName = "MANGA_MEDIA_LIST_FRAGMENT";
         private const string MediaTypeKey = "MEDIA_TYPE";
+        private const string MediaSortKey = "MEDIA_SORT";
 
         private Media.MediaType _type;
         private IList<MediaListRecyclerAdapter> _recyclerAdapters;
         private Media.MediaListCollection _collection;
+        private MediaListSortComparer.MediaListSortType _currentSort;
+        private MediaListSortComparer.MediaListSortDirection _currentSortDirection;
 
         private static MediaListFragment _animeListFragmentInstance;
         private static MediaListFragment _mangaListFragmentInstance;
@@ -83,7 +88,7 @@ namespace AniDroid.MediaList
         protected override IReadOnlyKernel Kernel =>
             new StandardKernel(new ApplicationModule<IMediaListView, MediaListFragment>(this));
 
-        public static MediaListFragment CreateMediaListFragment(Media.MediaType type)
+        public static MediaListFragment CreateMediaListFragment(Media.MediaType type, Media.MediaSort sort = null)
         {
             var frag = new MediaListFragment();
             var bundle = new Bundle(6);
@@ -149,6 +154,8 @@ namespace AniDroid.MediaList
             {
                 adapter.UpdateMediaListItem(mediaList.Media.Id, mediaList);
             }
+
+            RecreateFragment();
         }
 
         public void ResetMediaListItem(int mediaId)
@@ -157,6 +164,24 @@ namespace AniDroid.MediaList
             {
                 adapter.ResetMediaListItem(mediaId);
             }
+        }
+
+        public void RemoveMediaListItem(int mediaListId)
+        {
+            foreach (var adapter in _recyclerAdapters)
+            {
+                adapter.RemoveMediaListItem(mediaListId);
+            }
+        }
+
+        public void SetMediaListSort(MediaListSortComparer.MediaListSortType sort, MediaListSortComparer.MediaListSortDirection direction)
+        {
+            _currentSort = sort;
+            _currentSortDirection = direction;
+
+            Presenter.SetMediaListSortSettings(_type, _currentSort, _currentSortDirection);
+
+            RecreateFragment();
         }
 
         public override void SetupMenu(IMenu menu)
@@ -174,6 +199,9 @@ namespace AniDroid.MediaList
                     _collection = null;
                     RecreateFragment();
                     return true;
+                case Resource.Id.Menu_MediaLists_Sort:
+                    MediaListSortDialog.Create(Activity, _currentSort, _currentSortDirection, SetMediaListSort);
+                    return true;
             }
 
             return base.OnOptionsItemSelected(item);
@@ -190,6 +218,14 @@ namespace AniDroid.MediaList
                 ? _collection.Lists
                 : _collection.Lists.Where(x => listOrder.All(y => y.Key != x.Name) || listOrder.FirstOrDefault(y => y.Key == x.Name).Value)
                     .OrderBy(x => listOrder.FindIndex(y=> y.Key == x.Name)).ToList();
+
+            _currentSort = Presenter.GetMediaListSortType(_type);
+            _currentSortDirection = Presenter.GetMediaListSortDirection(_type);
+
+            if (_currentSort != MediaListSortComparer.MediaListSortType.NoSort)
+            {
+                _collection.Lists.ForEach(list => list.Entries.Sort(new MediaListSortComparer(_currentSort, _currentSortDirection)));
+            }
 
             foreach (var statusList in orderedLists)
             {

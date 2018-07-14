@@ -216,6 +216,12 @@ namespace AniDroid.AniListObject.Media
             }
         }
 
+        public void RemoveMediaListItem()
+        {
+            _media.MediaListEntry = _mediaList = null;
+            Recreate();
+        }
+
         protected override Func<Task> ToggleFavorite => () => Presenter.ToggleFavorite();
 
         public override bool SetupMenu(IMenu menu)

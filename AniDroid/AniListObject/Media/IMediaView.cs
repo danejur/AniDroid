@@ -11,5 +11,6 @@ namespace AniDroid.AniListObject.Media
         void SetCurrentUserMediaListOptions(AniList.Models.User.UserMediaListOptions mediaListOptions);
         void ShowMediaListEditDialog(AniList.Models.Media.MediaList mediaList);
         void UpdateMediaListItem(AniList.Models.Media.MediaList mediaList);
+        void RemoveMediaListItem();
     }
 }

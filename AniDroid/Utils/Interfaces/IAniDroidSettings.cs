@@ -13,6 +13,7 @@ using AniDroid.Adapters.Base;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
+using AniDroid.Utils.Comparers;
 
 namespace AniDroid.Utils.Interfaces
 {
@@ -36,5 +37,9 @@ namespace AniDroid.Utils.Interfaces
         MediaListRecyclerAdapter.MediaListItemViewType MediaViewType { get; set; }
         bool HighlightPriorityMediaListItems { get; set; }
         bool DisplayMediaListItemProgressColors { get; set; }
+        MediaListSortComparer.MediaListSortType AnimeListSortType { get; set; }
+        MediaListSortComparer.MediaListSortDirection AnimeListSortDirection { get; set; }
+        MediaListSortComparer.MediaListSortType MangaListSortType { get; set; }
+        MediaListSortComparer.MediaListSortDirection MangaListSortDirection { get; set; }
     }
 }

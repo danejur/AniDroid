@@ -21,6 +21,7 @@ using AniDroid.Base;
 using AniDroid.Dialogs;
 using AniDroid.Main;
 using AniDroid.Utils;
+using AniDroid.Utils.Comparers;
 using Ninject;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 
@@ -157,6 +158,22 @@ namespace AniDroid.Settings
                         _recreateActivity = true;
                         Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
                     }));
+            _settingsContainer.AddView(CreateSettingDivider(this));
+        }
+
+        public void CreateAnimeListSortItem(MediaListSortComparer.MediaListSortType sort, MediaListSortComparer.MediaListSortDirection direction)
+        {
+            _settingsContainer.AddView(
+                CreateSettingRow(this, "Set Anime List Sort Type", "Set how you want to sort items on your Anime lists", (sender, args) =>
+                    MediaListSortDialog.Create(this, sort, direction, Presenter.SetAnimeListSort)));
+            _settingsContainer.AddView(CreateSettingDivider(this));
+        }
+
+        public void CreateMangaListSortItem(MediaListSortComparer.MediaListSortType sort, MediaListSortComparer.MediaListSortDirection direction)
+        {
+            _settingsContainer.AddView(
+                CreateSettingRow(this, "Set Manga List Sort Type", "Set how you want to sort items on your Manga lists", (sender, args) =>
+                    MediaListSortDialog.Create(this, sort, direction, Presenter.SetMangaListSort)));
             _settingsContainer.AddView(CreateSettingDivider(this));
         }
 

@@ -13,6 +13,7 @@ using AniDroid.Adapters.Base;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
+using AniDroid.Utils.Comparers;
 using AniDroid.Utils.Interfaces;
 using AniDroid.Utils.Storage;
 
@@ -115,6 +116,30 @@ namespace AniDroid.Utils
             set => _authSettingStorage.Put(StorageKeys.DisplayMediaListItemProgressColors, value);
         }
 
+        public MediaListSortComparer.MediaListSortType AnimeListSortType
+        {
+            get => _authSettingStorage.Get(StorageKeys.AnimeListSortTypeKey, MediaListSortComparer.MediaListSortType.NoSort);
+            set => _authSettingStorage.Put(StorageKeys.AnimeListSortTypeKey, value);
+        }
+
+        public MediaListSortComparer.MediaListSortDirection AnimeListSortDirection
+        {
+            get => _authSettingStorage.Get(StorageKeys.AnimeListSortDirectionKey, MediaListSortComparer.MediaListSortDirection.Descending);
+            set => _authSettingStorage.Put(StorageKeys.AnimeListSortDirectionKey, value);
+        }
+
+        public MediaListSortComparer.MediaListSortType MangaListSortType
+        {
+            get => _authSettingStorage.Get(StorageKeys.MangaListSortTypeKey, MediaListSortComparer.MediaListSortType.NoSort);
+            set => _authSettingStorage.Put(StorageKeys.MangaListSortTypeKey, value);
+        }
+
+        public MediaListSortComparer.MediaListSortDirection MangaListSortDirection
+        {
+            get => _authSettingStorage.Get(StorageKeys.MangaListSortDirectionKey, MediaListSortComparer.MediaListSortDirection.Descending);
+            set => _authSettingStorage.Put(StorageKeys.MangaListSortDirectionKey, value);
+        }
+
         #region Constants
 
         private static class StorageKeys
@@ -132,6 +157,10 @@ namespace AniDroid.Utils
             public const string MediaViewType = "MEDIA_VIEW_TYPE";
             public const string HighlightPriorityMediaListItems = "HIGHLIGHT_PRIORITY_MEDIA_LIST_ITEMS";
             public const string DisplayMediaListItemProgressColors = "DISPLAY_MEDIA_LIST_ITEM_PROGRESS_COLORS";
+            public const string AnimeListSortTypeKey = "ANIME_LIST_SORT_TYPE";
+            public const string AnimeListSortDirectionKey = "ANIME_LIST_SORT_DIRECTION";
+            public const string MangaListSortTypeKey = "MANGA_LIST_SORT_TYPE";
+            public const string MangaListSortDirectionKey = "MANGA_LIST_SORT_DIRECTION";
 
             public const string ShowAllActivityKey = "SHOW_ALL_ACTIVITY";
         }

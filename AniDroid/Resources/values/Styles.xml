@@ -98,8 +98,9 @@
 
   <style name="Dark_Radio" parent="Theme.AppCompat">
     <item name="colorControlNormal">@color/Dark_Inactive</item>
-    <item name="colorControlActivated">@color/Dark_Primary</item>
+    <item name="colorControlActivated">@color/Dark_Primary_Dark</item>
     <item name="android:textColor">@color/Dark_Background_Text</item>
+    <item name="android:textSize">14dp</item>
   </style>
 
   <style name="Dark_Button" parent="@style/Widget.AppCompat.Button.Borderless.Colored">
@@ -247,9 +248,10 @@
   </style>
 
   <style name="AniList_Radio" parent="Theme.AppCompat.Light">
-    <item name="colorControlNormal">@color/AniList_RadioInactive</item>
-    <item name="colorControlActivated">@color/AniList_RadioActive</item>
-    <item name="android:textColor">@color/AniList_RadioText</item>
+    <item name="android:textColorSecondary">@color/AniList_Inactive</item>
+    <item name="colorAccent">@color/AniList_Primary_Dark</item>
+    <item name="android:textColor">@color/AniList_Background_Text</item>
+    <item name="android:textSize">14dp</item>
   </style>
 
   <style name="AniList_Button" parent="@style/Widget.AppCompat.Button.Borderless.Colored">

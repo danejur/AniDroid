@@ -56,6 +56,7 @@ namespace AniDroid.Dialogs
             private bool _isPrivate;
             private bool _hideFromStatusLists;
             private int _priority;
+            private bool _pendingDismiss;
 
             private CoordinatorLayout _coordLayout;
             private Picker _scorePicker;
@@ -113,8 +114,20 @@ namespace AniDroid.Dialogs
                     view.FindViewById<LinearLayout>(Resource.Id.EditMediaListItem_CustomLists));
                 SetupStartDate(_startDateView = view.FindViewById<DatePickerTextView>(Resource.Id.EditMediaListItem_StartDate));
                 SetupFinishDate(_finishDateView = view.FindViewById<DatePickerTextView>(Resource.Id.EditMediaListItem_FinishDate));
+                SetupDeleteButton(view.FindViewById(Resource.Id.EditMediaListItem_DeleteButton));
 
                 return view;
+            }
+
+            public override void OnResume()
+            {
+                base.OnResume();
+
+                if (_pendingDismiss)
+                {
+                    Activity.SupportFragmentManager.PopBackStack(BackstackTag, (int)PopBackStackFlags.Inclusive);
+                    DismissAllowingStateLoss();
+                }
             }
 
             private void SetupToolbar(Toolbar toolbar)
@@ -353,6 +366,29 @@ namespace AniDroid.Dialogs
                 customLists.AddView(hideSwitchRow);
             }
 
+            private void SetupDeleteButton(View deleteButton)
+            {
+                if (_mediaList == null)
+                {
+                    deleteButton.Visibility = ViewStates.Gone;
+                    return;
+                }
+
+                deleteButton.Click += (sender, args) =>
+                {
+                    var confirmation = new AlertDialog.Builder(Activity,
+                        Activity.GetThemedResourceId(Resource.Attribute.Dialog_Theme));
+
+                    confirmation.SetMessage(
+                        "Do you really wish to delete this item from you lists? This action CAN NOT be undone!");
+                    confirmation.SetTitle($"Delete {_media.Title.UserPreferred}");
+                    confirmation.SetNegativeButton("Cancel", (cancelSender, cancelArgs) => { });
+                    confirmation.SetPositiveButton("Delete", async (delSender, delArgs) => await DeleteMediaListItem());
+
+                    confirmation.Show();
+                };
+            }
+
             private async Task SaveMediaListItem(IMenuItem menuItem)
             {
                 menuItem.SetEnabled(false);
@@ -390,16 +426,47 @@ namespace AniDroid.Dialogs
                 await _presenter.SaveMediaListEntry(editDto, () =>
                 {
                     menuItem.SetActionView(null);
-                    DismissAllowingStateLoss();
 
-                    // TODO: figure out if this is actually necessary
-                    // Activity.SupportFragmentManager.PopBackStack(BackstackTag, (int)PopBackStackFlags.Inclusive);
+                    // TODO: there has to be a better way to do this (crashing on this line when minimizing app during save)
+                    try
+                    {
+                        Activity.SupportFragmentManager.PopBackStack(BackstackTag, (int) PopBackStackFlags.Inclusive);
+                        DismissAllowingStateLoss();
+                    }
+                    catch
+                    {
+                        _pendingDismiss = true;
+                    }
                 }, () =>
                 {
                     Snackbar.Make(_coordLayout, "Error occurred while saving list entry", Snackbar.LengthShort)
                         .Show();
                     menuItem.SetEnabled(true);
                     menuItem.SetActionView(null);
+                });
+            }
+
+            private async Task DeleteMediaListItem()
+            {
+                var transition = new Fade(Visibility.ModeOut);
+                transition.SetDuration(300);
+                ExitTransition = transition;
+
+                await _presenter.DeleteMediaListEntry(_mediaList.Id, () =>
+                {
+                    try
+                    {
+                        Activity.SupportFragmentManager.PopBackStack(BackstackTag, (int) PopBackStackFlags.Inclusive);
+                        DismissAllowingStateLoss();
+                    }
+                    catch
+                    {
+                        _pendingDismiss = true;
+                    }
+                }, () =>
+                {
+                    Snackbar.Make(_coordLayout, "Error occurred while deleting list entry", Snackbar.LengthShort)
+                        .Show();
                 });
             }
         }
