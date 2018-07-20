@@ -17,8 +17,10 @@ using AniDroid.Adapters.AniListActivityAdapters;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
 using AniDroid.Dialogs;
+using AniDroid.MediaList;
 using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
+using AniDroid.Widgets;
 using Ninject;
 
 namespace AniDroid.AniListObject.User
@@ -112,6 +114,9 @@ namespace AniDroid.AniListObject.User
         public void SetupUserView(AniList.Models.User user)
         {
             var adapter = new FragmentlessViewPagerAdapter();
+
+            adapter.AddView(CreateUserDetailsView(user), "Details");
+
             adapter.AddView(CreateUserActivityView(user.Id), "Activity");
 
             ViewPager.OffscreenPageLimit = adapter.Count - 1;
@@ -133,7 +138,7 @@ namespace AniDroid.AniListObject.User
 
         private View CreateUserActivityView(int userId)
         {
-            var userActivityEnumerable = Presenter.GetUserActivityEnumrable(userId, PageLength);
+            var userActivityEnumerable = Presenter.GetUserActivityEnumerable(userId, PageLength);
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
             _userActivityRecyclerAdapter = new AniListActivityRecyclerAdapter(this, Presenter, userActivityEnumerable, Presenter.GetCurrentUserId());
@@ -141,6 +146,28 @@ namespace AniDroid.AniListObject.User
 
             return retView;
         }
+
+        private View CreateUserDetailsView(AniList.Models.User user)
+        {
+            var retView = LayoutInflater.Inflate(Resource.Layout.View_UserDetails, null);
+            LoadImage(retView.FindViewById<ImageView>(Resource.Id.User_Image), user.Avatar.Large);
+            retView.FindViewById<TextView>(Resource.Id.User_Name).Text = user.Name;
+
+            var userAnimeView = retView.FindViewById<DataRow>(Resource.Id.User_AnimeSummary);
+            var userAnimeListCount = user.Stats.AnimeStatusDistribution.Sum(x => x.Amount);
+            if (userAnimeListCount > 0)
+            {
+                userAnimeView.Visibility = ViewStates.Visible;
+                userAnimeView.TextOne = $"{userAnimeListCount} anime on lists";
+                userAnimeView.TextTwo = $"{user.Stats.WatchedTime} minutes watched";
+                userAnimeView.Click += (sender, args) =>
+                    MediaListActivity.StartActivity(this, user.Id, AniList.Models.Media.MediaType.Anime);
+            }
+
+            return retView;
+        }
+
+        #region Menu
 
         public override bool SetupMenu(IMenu menu)
         {
@@ -171,5 +198,8 @@ namespace AniDroid.AniListObject.User
 
             return base.MenuItemSelected(item);
         }
+
+        #endregion
+
     }
 }

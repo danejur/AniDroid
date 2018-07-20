@@ -33,7 +33,9 @@ namespace AniDroid.MediaList
         public const string MangaMediaListFragmentName = "MANGA_MEDIA_LIST_FRAGMENT";
         private const string MediaTypeKey = "MEDIA_TYPE";
         private const string MediaSortKey = "MEDIA_SORT";
+        private const string UserIdKey = "USER_ID";
 
+        private int _userId;
         private Media.MediaType _type;
         private IList<MediaListRecyclerAdapter> _recyclerAdapters;
         private Media.MediaListCollection _collection;
@@ -74,6 +76,7 @@ namespace AniDroid.MediaList
 
             var typeString = Arguments.GetString(MediaTypeKey);
             _type = AniListEnum.GetEnum<Media.MediaType>(typeString);
+            _userId = Arguments.GetInt(UserIdKey);
 
             if (_type == Media.MediaType.Anime)
             {
@@ -88,11 +91,12 @@ namespace AniDroid.MediaList
         protected override IReadOnlyKernel Kernel =>
             new StandardKernel(new ApplicationModule<IMediaListView, MediaListFragment>(this));
 
-        public static MediaListFragment CreateMediaListFragment(Media.MediaType type, Media.MediaSort sort = null)
+        public static MediaListFragment CreateMediaListFragment(int userId, Media.MediaType type, Media.MediaSort sort = null)
         {
             var frag = new MediaListFragment();
             var bundle = new Bundle(6);
             bundle.PutString(MediaTypeKey, type.Value);
+            bundle.PutInt(UserIdKey, userId);
             frag.Arguments = bundle;
 
             return frag;
@@ -132,7 +136,7 @@ namespace AniDroid.MediaList
             }
 
             CreatePresenter(savedInstanceState).GetAwaiter().GetResult();
-            Presenter.GetMediaLists();
+            Presenter.GetMediaLists(_userId);
 
             return LayoutInflater.Inflate(Resource.Layout.View_IndeterminateProgressIndicator, container, false);
         }

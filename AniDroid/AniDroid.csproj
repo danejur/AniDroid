@@ -237,6 +237,7 @@
     <Compile Include="Home\HomeFragment.cs" />
     <Compile Include="Home\HomePresenter.cs" />
     <Compile Include="Home\IHomeView.cs" />
+    <Compile Include="MediaList\MediaListActivity.cs" />
     <Compile Include="MediaList\MediaListFragment.cs" />
     <Compile Include="MediaList\IMediaListView.cs" />
     <Compile Include="MediaList\MediaListPresenter.cs" />
@@ -617,7 +618,7 @@
     <AndroidResource Include="Resources\drawable\ic_book_white_24px.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ic_movie_white_24px.xml" />
+    <AndroidResource Include="Resources\drawable\svg_movie.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_chevron_right_white_24px.xml" />
@@ -751,6 +752,18 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Dialog_MediaListSort.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\View_UserDetails.axml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Activity_MediaLists.axml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

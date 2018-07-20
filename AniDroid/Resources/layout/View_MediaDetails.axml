@@ -257,7 +257,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/Media_Episodes"
             android:background="@drawable/Background_Alternate_Ripple"
-            app:Icon="@drawable/ic_movie_white_24px"
+            app:Icon="@drawable/svg_movie"
             app:TextOneColor="?Background_Text"
             app:TextTwoColor="?Background_Text"
             app:ButtonVisible="false"

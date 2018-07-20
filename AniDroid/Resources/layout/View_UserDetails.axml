@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:paddingBottom="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:id="@+id/User_GeneralInfo"
+            android:adjustViewBounds="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                app:srcCompat="@android:drawable/ic_menu_gallery"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/User_Image"
+                android:adjustViewBounds="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp" />
+            <TextView
+                android:text="Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/User_Image"
+                android:layout_alignParentTop="true"
+                android:id="@+id/User_Name"
+                android:layout_marginRight="5dp"
+                android:textColor="?Background_Text"
+                android:textSize="16dp"
+                android:maxLines="3"
+                android:ellipsize="end"
+                android:textStyle="bold"
+                android:layout_weight="1" />
+            <TextView
+                android:text="Format"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/User_Name"
+                android:id="@+id/User_Format"
+                android:layout_toRightOf="@id/User_Image"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="10dp"
+                android:textSize="16dp"
+                android:textColor="?Background_Text" />
+        </RelativeLayout>
+        <AniDroid.Widgets.ExpandableText
+            app:Text="Description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_below="@id/User_GeneralInfo"
+            android:layout_marginTop="30dp"
+            android:id="@+id/User_Description"
+            app:TextSize="14dp"
+            app:TextColor="?Background_Text"
+            app:ButtonColor="?Primary_Dark" />
+        <AniDroid.Widgets.DataRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/User_AnimeSummary"
+            android:background="@drawable/Background_Alternate_Ripple"
+            app:Icon="@drawable/svg_movie"
+            app:TextOneColor="?Primary"
+            app:TextTwoColor="?Background_Text"
+            app:ButtonVisible="false"
+            app:ButtonIcon="@drawable/ic_chevron_right_white_24px"
+            app:ButtonColor="?Background_Text"
+            android:visibility="gone"
+            android:layout_marginTop="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/User_Description"
+            android:gravity="center_vertical|left" />
+    </RelativeLayout>
+</android.support.v4.widget.NestedScrollView>
