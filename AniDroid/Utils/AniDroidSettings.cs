@@ -115,8 +115,8 @@ namespace AniDroid.Utils
             get => _authSettingStorage.Get(StorageKeys.DisplayMediaListItemProgressColors, true);
             set => _authSettingStorage.Put(StorageKeys.DisplayMediaListItemProgressColors, value);
         }
-
-        public MediaListSortComparer.MediaListSortType AnimeListSortType
+		
+		public MediaListSortComparer.MediaListSortType AnimeListSortType
         {
             get => _authSettingStorage.Get(StorageKeys.AnimeListSortTypeKey, MediaListSortComparer.MediaListSortType.NoSort);
             set => _authSettingStorage.Put(StorageKeys.AnimeListSortTypeKey, value);
@@ -139,6 +139,45 @@ namespace AniDroid.Utils
             get => _authSettingStorage.Get(StorageKeys.MangaListSortDirectionKey, MediaListSortComparer.MediaListSortDirection.Descending);
             set => _authSettingStorage.Put(StorageKeys.MangaListSortDirectionKey, value);
         }
+
+        #region Methods
+
+        public void UpdateLoggedInUser(User user)
+        {
+            LoggedInUser = user;
+            UpdateUserMediaListTabs(user.MediaListOptions);
+        }
+
+        public void UpdateUserMediaListTabs(User.UserMediaListOptions mediaListOptions)
+        {
+            if (AnimeListOrder == null)
+            {
+                AnimeListOrder = new List<KeyValuePair<string, bool>>();
+            }
+
+            var animeLists = AnimeListOrder.ToList();
+            animeLists.RemoveAll(x => !mediaListOptions.AnimeList.SectionOrder.Contains(x.Key));
+
+            // add any missing lists with the default value of visible
+            animeLists.AddRange(mediaListOptions.AnimeList.SectionOrder
+                .Where(y => !animeLists.Select(z => z.Key).Contains(y))
+                .Select(x => new KeyValuePair<string, bool>(x, true)));
+            AnimeListOrder = animeLists;
+
+            if (MangaListOrder == null)
+            {
+                MangaListOrder = new List<KeyValuePair<string, bool>>();
+            }
+
+            var mangaLists = MangaListOrder.ToList();
+            mangaLists.RemoveAll(x => !mediaListOptions.MangaList.SectionOrder.Contains(x.Key));
+
+            mangaLists.AddRange(mediaListOptions.MangaList.SectionOrder.Where(y => !mangaLists.Select(z => z.Key).Contains(y))
+                .Select(x => new KeyValuePair<string, bool>(x, true)));
+            MangaListOrder = mangaLists;
+        }
+
+        #endregion
 
         #region Constants
 

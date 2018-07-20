@@ -214,9 +214,7 @@ namespace AniDroid.MediaList
             _recyclerAdapters = new List<MediaListRecyclerAdapter>();
 
             var listOrder = GetListOrder();
-            var orderedLists = !listOrder.Any()
-                ? _collection.Lists
-                : _collection.Lists.Where(x => listOrder.All(y => y.Key != x.Name) || listOrder.FirstOrDefault(y => y.Key == x.Name).Value)
+            var orderedLists = _collection.Lists.Where(x => listOrder.All(y => y.Key != x.Name) || listOrder.FirstOrDefault(y => y.Key == x.Name).Value)
                     .OrderBy(x => listOrder.FindIndex(y=> y.Key == x.Name)).ToList();
 
             _currentSort = Presenter.GetMediaListSortType(_type);
@@ -261,14 +259,25 @@ namespace AniDroid.MediaList
                 var lists = _collection.User.MediaListOptions?.AnimeList?.SectionOrder?
                                 .Union(_collection.User.MediaListOptions.AnimeList.CustomLists ?? new List<string>()) ?? new List<string>();
 
-                retList = settings.AnimeListOrder ?? lists.Select(x => new KeyValuePair<string, bool>(x, true)).ToList();
+                if (settings.AnimeListOrder?.Any() != true)
+                {
+                    // if we don't have the list order yet, go ahead and store it
+                    settings.AnimeListOrder = lists.Select(x => new KeyValuePair<string, bool>(x, true)).ToList();
+                }
+
+                retList = settings.AnimeListOrder;
             }
             else if (_type == Media.MediaType.Manga)
             {
                 var lists = _collection.User.MediaListOptions?.MangaList?.SectionOrder?
                                 .Union(_collection.User.MediaListOptions.MangaList.CustomLists ?? new List<string>()) ?? new List<string>();
 
-                retList = settings.MangaListOrder ?? lists.Select(x => new KeyValuePair<string, bool>(x, true)).ToList();
+                if (settings.MangaListOrder?.Any() != true)
+                {
+                    settings.MangaListOrder = lists.Select(x => new KeyValuePair<string, bool>(x, true)).ToList();
+                }
+
+                retList = settings.AnimeListOrder;
             }
 
             return retList;

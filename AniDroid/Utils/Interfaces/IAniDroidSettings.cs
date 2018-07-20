@@ -37,9 +37,17 @@ namespace AniDroid.Utils.Interfaces
         MediaListRecyclerAdapter.MediaListItemViewType MediaViewType { get; set; }
         bool HighlightPriorityMediaListItems { get; set; }
         bool DisplayMediaListItemProgressColors { get; set; }
-        MediaListSortComparer.MediaListSortType AnimeListSortType { get; set; }
+		MediaListSortComparer.MediaListSortType AnimeListSortType { get; set; }
         MediaListSortComparer.MediaListSortDirection AnimeListSortDirection { get; set; }
         MediaListSortComparer.MediaListSortType MangaListSortType { get; set; }
         MediaListSortComparer.MediaListSortDirection MangaListSortDirection { get; set; }
+
+        #region Methods
+
+        void UpdateLoggedInUser(User user);
+        void UpdateUserMediaListTabs(User.UserMediaListOptions mediaListOptions);
+
+        #endregion
+        
     }
 }

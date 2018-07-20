@@ -30,7 +30,6 @@ namespace AniDroid.Settings
     [Activity(Label = "Settings")]
     public class SettingsActivity : BaseAniDroidActivity<SettingsPresenter>, ISettingsView
     {
-
         [InjectView(Resource.Id.Settings_CoordLayout)]
         private CoordinatorLayout _coordLayout;
         [InjectView(Resource.Id.Settings_Toolbar)]
@@ -161,6 +160,32 @@ namespace AniDroid.Settings
             _settingsContainer.AddView(CreateSettingDivider(this));
         }
 
+        public void CreateAnimeListTabOrderItem(Func<List<KeyValuePair<string, bool>>> getAnimeLists)
+        {
+            _settingsContainer.AddView(
+                CreateChevronSettingRow(this, "Set Anime List Tab Order", null,
+                    (sender, args) =>
+                    {
+                        MediaListTabOrderDialog.Create(this, getAnimeLists.Invoke(), Presenter.SetAnimeListTabOrder);
+                        _recreateActivity = true;
+                        Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
+                    }));
+            _settingsContainer.AddView(CreateSettingDivider(this));
+        }
+
+        public void CreateMangaListTabOrderItem(Func<List<KeyValuePair<string, bool>>> getMangaLists)
+        {
+            _settingsContainer.AddView(
+                CreateChevronSettingRow(this, "Set Manga List Tab Order", null,
+                    (sender, args) =>
+                    {
+                        MediaListTabOrderDialog.Create(this, getMangaLists.Invoke(), Presenter.SetMangaListTabOrder);
+                        _recreateActivity = true;
+                        Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
+                    }));
+			_settingsContainer.AddView(CreateSettingDivider(this));
+		}
+					
         public void CreateAnimeListSortItem(MediaListSortComparer.MediaListSortType sort, MediaListSortComparer.MediaListSortDirection direction)
         {
             _settingsContainer.AddView(
@@ -365,6 +390,36 @@ namespace AniDroid.Settings
             spinner.SetSelection(selectedPosition);
             spinner.ItemSelected -= selectedEvent;
             spinner.ItemSelected += selectedEvent;
+
+            return view;
+        }
+
+        private static View CreateChevronSettingRow(BaseAniDroidActivity context, string name, string description, EventHandler tapEvent)
+        {
+            var view = context.LayoutInflater.Inflate(Resource.Layout.View_SettingItem_Chevron, null);
+            var nameView = view.FindViewById<TextView>(Resource.Id.SettingItem_Name);
+            var textTwoView = view.FindViewById<TextView>(Resource.Id.SettingItem_Details);
+
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                nameView.Text = name;
+            }
+            else
+            {
+                nameView.Visibility = ViewStates.Gone;
+            }
+
+            if (!string.IsNullOrWhiteSpace(description))
+            {
+                textTwoView.Text = description;
+            }
+            else
+            {
+                textTwoView.Visibility = ViewStates.Gone;
+            }
+
+            view.Id = (int)DateTime.Now.Ticks;
+            view.Click += tapEvent;
 
             return view;
         }

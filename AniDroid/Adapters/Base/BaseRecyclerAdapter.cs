@@ -51,6 +51,21 @@ namespace AniDroid.Adapters.Base
             NotifyDataSetChanged();
         }
 
+        public void MoveItem(int positionFrom, int positionTo)
+        {
+            var item = Items[positionFrom];
+            Items.RemoveAt(positionFrom);
+
+            if (positionTo >= ItemCount)
+            {
+                AddItems(item);
+            }
+            else
+            {
+                InsertItem(positionTo, item);
+            }
+        }
+
         public void RemoveItem(int position)
         {
             Items.RemoveAt(position);
@@ -269,6 +284,23 @@ namespace AniDroid.Adapters.Base
                     _divider.Draw(cValue);
                 }
             }
+        }
+
+        public class StableIdItem<T> : IStableIdItem
+        {
+            public StableIdItem(T item)
+            {
+                Item = item;
+                StableId = (long)new Random().NextDouble();
+            }
+
+            public T Item { get; set; }
+            public long StableId { get; }
+        }
+
+        public interface IStableIdItem
+        {
+            long StableId { get; }
         }
     }
 }

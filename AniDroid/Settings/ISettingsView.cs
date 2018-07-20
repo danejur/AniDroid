@@ -28,6 +28,8 @@ namespace AniDroid.Settings
         void CreateMediaListViewTypeSettingItem(MediaListRecyclerAdapter.MediaListItemViewType viewType);
         void CreateHighlightPriorityMediaListItemsItem(bool highlightPriorityItems);
         void CreateDisplayProgressColorsItem(bool displayProgressColors);
+        void CreateAnimeListTabOrderItem(Func<List<KeyValuePair<string, bool>>> getAnimeLists);
+        void CreateMangaListTabOrderItem(Func<List<KeyValuePair<string, bool>>> getMangaLists);
         void CreateAnimeListSortItem(MediaListSortComparer.MediaListSortType sort, MediaListSortComparer.MediaListSortDirection direction);
         void CreateMangaListSortItem(MediaListSortComparer.MediaListSortType sort, MediaListSortComparer.MediaListSortDirection direction);
     }

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:minWidth="25px"
+    android:minHeight="40dp"
+    android:layout_width="match_parent"
+    android:background="?android:attr/selectableItemBackground"
+    android:clickable="true"
+    android:id="@+id/SettingItem_Container"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:padding="12dp">
+    <LinearLayout
+        android:clickable="false"
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout1"
+        android:layout_weight="1"
+        android:paddingRight="12dp">
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/SettingItem_Name"
+            android:textSize="18dp"
+            android:text="Setting Name"
+            android:marqueeRepeatLimit="2"
+            android:textColor="?Background_Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/SettingItem_Details"
+            android:textSize="14dp"
+            android:marqueeRepeatLimit="2"
+            android:textColor="?Background_Text_Alternate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <LinearLayout
+        android:clickable="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true">
+        <ImageView
+            app:srcCompat="@drawable/svg_chevron_right"
+            android:layout_gravity="center"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:tint="?Background_Text_Alternate"
+            android:clickable="false" />
+    </LinearLayout>
+</LinearLayout>

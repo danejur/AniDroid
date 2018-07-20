@@ -33,6 +33,16 @@ namespace AniDroid.Settings
 
             if (AniDroidSettings.IsUserAuthenticated)
             {
+                if (AniDroidSettings.AnimeListOrder?.Any() == true)
+                {
+                    View.CreateAnimeListTabOrderItem(() => AniDroidSettings.AnimeListOrder);
+                }
+
+                if (AniDroidSettings.MangaListOrder?.Any() == true)
+                {
+                    View.CreateMangaListTabOrderItem(() => AniDroidSettings.MangaListOrder);
+                }
+
                 View.CreateGroupCompletedSettingItem(AniDroidSettings.GroupCompletedLists);
                 View.CreateMediaListViewTypeSettingItem(AniDroidSettings.MediaViewType);
                 View.CreateAnimeListSortItem(AniDroidSettings.AnimeListSortType,
@@ -90,6 +100,16 @@ namespace AniDroid.Settings
             AniDroidSettings.DisplayMediaListItemProgressColors = displayProgressColors;
         }
 
+        public void SetAnimeListTabOrder(List<KeyValuePair<string, bool>> animeLists)
+        {
+            AniDroidSettings.AnimeListOrder = animeLists;
+        }
+
+        public void SetMangaListTabOrder(List<KeyValuePair<string, bool>> mangaLists)
+        {
+            AniDroidSettings.MangaListOrder = mangaLists;
+		}
+		
         public void SetAnimeListSort(MediaListSortComparer.MediaListSortType sort,
             MediaListSortComparer.MediaListSortDirection direction)
         {
