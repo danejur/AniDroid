@@ -176,7 +176,7 @@ namespace AniDroid.Settings
         public void CreateMangaListTabOrderItem(Func<List<KeyValuePair<string, bool>>> getMangaLists)
         {
             _settingsContainer.AddView(
-                CreateChevronSettingRow(this, "Set Media List Tab Order", null,
+                CreateChevronSettingRow(this, "Set Manga List Tab Order", null,
                     (sender, args) =>
                     {
                         MediaListTabOrderDialog.Create(this, getMangaLists.Invoke(), Presenter.SetMangaListTabOrder);

@@ -59,7 +59,7 @@
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:theme="?Checkbox_Theme"
+            android:theme="?Radio_Theme"
             android:layout_marginTop="30dp"
             android:id="@+id/MediaListSort_DirectionRadioGroup">
             <RadioButton
