@@ -257,6 +257,13 @@
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent" />
             </LinearLayout>
+            <Button
+                android:text="Delete From Lists"
+                android:layout_margin="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/EditMediaListItem_DeleteButton"
+                android:layout_gravity="center_horizontal" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>

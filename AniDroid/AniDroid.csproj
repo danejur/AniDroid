@@ -232,6 +232,7 @@
     <Compile Include="Dialogs\AniListNotificationsDialog.cs" />
     <Compile Include="Dialogs\EditMediaListItemDialog.cs" />
     <Compile Include="Dialogs\MediaListTabOrderDialog.cs" />
+    <Compile Include="Dialogs\MediaListSortDialog.cs" />
     <Compile Include="Dialogs\MediaStreamingEpisodeListDialog.cs" />
     <Compile Include="Dialogs\MediaTitlesDialog.cs" />
     <Compile Include="Dialogs\SearchDialog.cs" />
@@ -258,6 +259,7 @@
     <Compile Include="TorrentSearch\TorrentSearchPresenter.cs" />
     <Compile Include="Utils\AniDroidSettings.cs" />
     <Compile Include="Utils\ChartUtils.cs" />
+    <Compile Include="Utils\Comparers\MediaListSortComparer.cs" />
     <Compile Include="Utils\Formatting\NumberFormatters.cs" />
     <Compile Include="Utils\Integration\AniDroidAniListAuthConfig.cs" />
     <Compile Include="Utils\Listeners\InterceptClickListener.cs" />
@@ -754,6 +756,14 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\svg_close_circle.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\svg_sort_variant.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Dialog_MediaListSort.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

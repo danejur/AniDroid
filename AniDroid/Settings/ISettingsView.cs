@@ -12,6 +12,7 @@ using Android.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Base;
+using AniDroid.Utils.Comparers;
 
 namespace AniDroid.Settings
 {
@@ -29,5 +30,7 @@ namespace AniDroid.Settings
         void CreateDisplayProgressColorsItem(bool displayProgressColors);
         void CreateAnimeListTabOrderItem(Func<List<KeyValuePair<string, bool>>> getAnimeLists);
         void CreateMangaListTabOrderItem(Func<List<KeyValuePair<string, bool>>> getMangaLists);
+        void CreateAnimeListSortItem(MediaListSortComparer.MediaListSortType sort, MediaListSortComparer.MediaListSortDirection direction);
+        void CreateMangaListSortItem(MediaListSortComparer.MediaListSortType sort, MediaListSortComparer.MediaListSortDirection direction);
     }
 }

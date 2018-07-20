@@ -18,6 +18,7 @@ using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.AniListObject.Media;
 using AniDroid.Base;
+using AniDroid.Utils.Comparers;
 using AniDroid.Utils.Interfaces;
 
 namespace AniDroid.MediaList
@@ -56,11 +57,20 @@ namespace AniDroid.MediaList
                     onSuccess();
                     View.DisplaySnackbarMessage("Saved", Snackbar.LengthShort);
                     View.UpdateMediaListItem(mediaList);
-                })
-                .Switch(error =>
-                {
-                    onError();
-                });
+                }).Switch(error => onError());
+        }
+
+        public async Task DeleteMediaListEntry(int mediaListId, Action onSuccess, Action onError)
+        {
+            var mediaDeleteResp = await AniListService.DeleteMediaListEntry(mediaListId, default(CancellationToken));
+
+            mediaDeleteResp.Switch((bool success) =>
+            {
+                onSuccess();
+                View.DisplaySnackbarMessage("Deleted", Snackbar.LengthShort);
+                View.RemoveMediaListItem(mediaListId);
+            }).Switch(error => 
+                onError());
         }
 
         public async Task IncreaseMediaProgress(Media.MediaList mediaListToUpdate)
@@ -126,6 +136,49 @@ namespace AniDroid.MediaList
         public bool GetDisplayProgressColors()
         {
             return AniDroidSettings.DisplayMediaListItemProgressColors;
+        }
+
+        public MediaListSortComparer.MediaListSortDirection GetMediaListSortDirection(Media.MediaType mediaType)
+        {
+            if (Media.MediaType.Anime.Equals(mediaType))
+            {
+                return AniDroidSettings.AnimeListSortDirection;
+            }
+            else if (Media.MediaType.Manga.Equals(mediaType))
+            {
+                return AniDroidSettings.MangaListSortDirection;
+            }
+
+            return MediaListSortComparer.MediaListSortDirection.Ascending;
+        }
+
+        public MediaListSortComparer.MediaListSortType GetMediaListSortType(Media.MediaType mediaType)
+        {
+            if (Media.MediaType.Anime.Equals(mediaType))
+            {
+                return AniDroidSettings.AnimeListSortType;
+            }
+            else if (Media.MediaType.Manga.Equals(mediaType))
+            {
+                return AniDroidSettings.MangaListSortType;
+            }
+
+            return MediaListSortComparer.MediaListSortType.NoSort;
+        }
+
+        public void SetMediaListSortSettings(Media.MediaType mediaType, MediaListSortComparer.MediaListSortType sort,
+            MediaListSortComparer.MediaListSortDirection direction)
+        {
+            if (Media.MediaType.Anime.Equals(mediaType))
+            {
+                AniDroidSettings.AnimeListSortType = sort;
+                AniDroidSettings.AnimeListSortDirection = direction;
+            }
+            else if (Media.MediaType.Manga.Equals(mediaType))
+            {
+                AniDroidSettings.MangaListSortType = sort;
+                AniDroidSettings.MangaListSortDirection = direction;
+            }
         }
     }
 }

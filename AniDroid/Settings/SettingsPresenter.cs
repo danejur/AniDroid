@@ -14,6 +14,7 @@ using AniDroid.Adapters.MediaAdapters;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
+using AniDroid.Utils.Comparers;
 using AniDroid.Utils.Interfaces;
 
 namespace AniDroid.Settings
@@ -44,6 +45,10 @@ namespace AniDroid.Settings
 
                 View.CreateGroupCompletedSettingItem(AniDroidSettings.GroupCompletedLists);
                 View.CreateMediaListViewTypeSettingItem(AniDroidSettings.MediaViewType);
+                View.CreateAnimeListSortItem(AniDroidSettings.AnimeListSortType,
+                    AniDroidSettings.AnimeListSortDirection);
+                View.CreateMangaListSortItem(AniDroidSettings.MangaListSortType,
+                    AniDroidSettings.MangaListSortDirection);
                 View.CreateHighlightPriorityMediaListItemsItem(AniDroidSettings.HighlightPriorityMediaListItems);
                 View.CreateDisplayProgressColorsItem(AniDroidSettings.DisplayMediaListItemProgressColors);
             }
@@ -103,6 +108,20 @@ namespace AniDroid.Settings
         public void SetMangaListTabOrder(List<KeyValuePair<string, bool>> mangaLists)
         {
             AniDroidSettings.MangaListOrder = mangaLists;
+		}
+		
+        public void SetAnimeListSort(MediaListSortComparer.MediaListSortType sort,
+            MediaListSortComparer.MediaListSortDirection direction)
+        {
+            AniDroidSettings.AnimeListSortType = sort;
+            AniDroidSettings.AnimeListSortDirection = direction;
+        }
+
+        public void SetMangaListSort(MediaListSortComparer.MediaListSortType sort,
+            MediaListSortComparer.MediaListSortDirection direction)
+        {
+            AniDroidSettings.MangaListSortType = sort;
+            AniDroidSettings.MangaListSortDirection = direction;
         }
     }
 }

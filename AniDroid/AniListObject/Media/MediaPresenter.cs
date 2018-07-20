@@ -102,5 +102,17 @@ namespace AniDroid.AniListObject.Media
                     onError();
                 });
         }
+
+        public async Task DeleteMediaListEntry(int mediaListId, Action onSuccess, Action onError)
+        {
+            var mediaDeleteResp = await AniListService.DeleteMediaListEntry(mediaListId, default(CancellationToken));
+
+            mediaDeleteResp.Switch((bool success) =>
+            {
+                onSuccess();
+                View.DisplaySnackbarMessage("Deleted", Snackbar.LengthShort);
+                View.RemoveMediaListItem();
+            }).Switch(error => onError());
+        }
     }
 }

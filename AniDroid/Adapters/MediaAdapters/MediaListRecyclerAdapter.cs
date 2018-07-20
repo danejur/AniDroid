@@ -82,13 +82,18 @@ namespace AniDroid.Adapters.MediaAdapters
                 Items.Insert(0, updatedMediaList);
                 NotifyDataSetChanged();
             }
-
         }
 
         public void ResetMediaListItem(int mediaId)
         {
             var position = Items.FindIndex(x => x.Media.Id == mediaId);
             NotifyItemChanged(position);
+        }
+
+        public void RemoveMediaListItem(int mediaListId)
+        {
+            Items.RemoveAll(x => x.Id == mediaListId);
+            NotifyDataSetChanged();
         }
 
         public override void BindCardViewHolder(CardItem holder, int position)
