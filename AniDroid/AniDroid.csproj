@@ -615,7 +615,7 @@
     <AndroidResource Include="Resources\drawable\ic_alarm_white_24px.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ic_book_white_24px.xml" />
+    <AndroidResource Include="Resources\drawable\svg_book.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\svg_movie.xml" />

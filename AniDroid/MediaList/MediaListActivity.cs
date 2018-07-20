@@ -18,6 +18,7 @@ using AniDroid.AniList;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
+using AniDroid.Dialogs;
 using AniDroid.Utils;
 using AniDroid.Utils.Comparers;
 using AniDroid.Utils.Interfaces;
@@ -47,6 +48,8 @@ namespace AniDroid.MediaList
         private Media.MediaType _mediaType;
         private Media.MediaListCollection _collection;
         private IList<MediaListRecyclerAdapter> _recyclerAdapters;
+        private MediaListSortComparer.MediaListSortType _currentSort;
+        private MediaListSortComparer.MediaListSortDirection _currentSortDirection;
 
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IMediaListView, MediaListActivity>(this));
 
@@ -62,7 +65,7 @@ namespace AniDroid.MediaList
 
         public override async Task OnCreateExtended(Bundle savedInstanceState)
         {
-            SetContentView(Resource.Layout.Activity_MediaLists);
+            SetLoadingShown();
 
             _userId = Intent.GetIntExtra(UserIdIntentKey, 0);
             _mediaType = AniListEnum.GetEnum<Media.MediaType>(Intent.GetStringExtra(MediaTypeIntentKey));
@@ -79,6 +82,8 @@ namespace AniDroid.MediaList
 
         public void SetCollection(Media.MediaListCollection collection)
         {
+            SetContentView(Resource.Layout.Activity_MediaLists);
+
             _collection = collection;
 
             var pagerAdapter = new FragmentlessViewPagerAdapter();
@@ -90,13 +95,13 @@ namespace AniDroid.MediaList
                 : _collection.Lists.Where(x => listOrder.All(y => y.Key != x.Name) || listOrder.FirstOrDefault(y => y.Key == x.Name).Value)
                     .OrderBy(x => listOrder.FindIndex(y => y.Key == x.Name)).ToList();
 
-            //_currentSort = Presenter.GetMediaListSortType(_type);
-            //_currentSortDirection = Presenter.GetMediaListSortDirection(_type);
+            _currentSort = Presenter.GetMediaListSortType(_mediaType);
+            _currentSortDirection = Presenter.GetMediaListSortDirection(_mediaType);
 
-            //if (_currentSort != MediaListSortComparer.MediaListSortType.NoSort)
-            //{
-            //    _collection.Lists.ForEach(list => list.Entries.Sort(new MediaListSortComparer(_currentSort, _currentSortDirection)));
-            //}
+            if (_currentSort != MediaListSortComparer.MediaListSortType.NoSort)
+            {
+                _collection.Lists.ForEach(list => list.Entries.Sort(new MediaListSortComparer(_currentSort, _currentSortDirection)));
+            }
 
             foreach (var statusList in orderedLists)
             {
@@ -107,7 +112,7 @@ namespace AniDroid.MediaList
 
                 var adapter = new MediaListRecyclerAdapter(this, statusList,
                     _collection.User.MediaListOptions, Presenter, Presenter.GetCardType(),
-                    Presenter.GetMediaListItemViewType(), false, false);
+                    Presenter.GetMediaListItemViewType(), false, false, false);
                 _recyclerAdapters.Add(adapter);
                 var listView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
                 listView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView).SetAdapter(adapter);
@@ -116,6 +121,8 @@ namespace AniDroid.MediaList
 
             _viewPager.Adapter = pagerAdapter;
             _tabLayout.SetupWithViewPager(_viewPager);
+
+            SetupToolbar(_collection.User.Name);
         }
 
         public void UpdateMediaListItem(Media.MediaList mediaList)
@@ -160,5 +167,59 @@ namespace AniDroid.MediaList
 
             return retList;
         }
+
+        private void SetLoadingShown()
+        {
+            SetContentView(Resource.Layout.Activity_Loading);
+            _coordLayout = FindViewById<CoordinatorLayout>(Resource.Id.Loading_CoordLayout);
+            _toolbar = FindViewById<Toolbar>(Resource.Id.Loading_Toolbar);
+            _toolbar.Title = "Loading";
+            SetSupportActionBar(_toolbar);
+            SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+        }
+
+        #region Toolbar
+
+        private void SetupToolbar(string userName)
+        {
+            SetSupportActionBar(_toolbar);
+            SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+            _toolbar.Title = $"{userName}'s {_mediaType.DisplayValue}";
+        }
+
+        public override bool SetupMenu(IMenu menu)
+        {
+            menu.Clear();
+            var inflater = new MenuInflater(this);
+            inflater.Inflate(Resource.Menu.MediaLists_ActionBar, menu);
+            return true;
+        }
+
+        public override bool MenuItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Android.Resource.Id.Home:
+                    SetResult(Result.Ok);
+                    Finish();
+                    break;
+                case Resource.Id.Menu_MediaLists_Sort:
+                    MediaListSortDialog.Create(this, _currentSort, _currentSortDirection,
+                        (sort, direction) =>
+                        {
+                            Presenter.SetMediaListSortSettings(_mediaType, sort, direction);
+                            SetCollection(_collection);
+                        });
+                    break;
+                case Resource.Id.Menu_MediaLists_Refresh:
+                    Recreate();
+                    break;
+            }
+
+            return true;
+        }
+
+        #endregion
+
     }
 }

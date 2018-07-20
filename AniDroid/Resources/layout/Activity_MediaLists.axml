@@ -19,15 +19,16 @@
             app:theme="?Toolbar_Theme"
             style="?Toolbar_Style"
             app:layout_scrollFlags="enterAlways" />
+        <android.support.design.widget.TabLayout
+            app:tabMode="scrollable"
+            android:id="@+id/MediaLists_Tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="?TabLayout_Style" />
     </android.support.design.widget.AppBarLayout>
-    <android.support.design.widget.TabLayout
-        app:tabMode="scrollable"
-        android:id="@+id/MediaLists_Tabs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="?TabLayout_Style" />
     <android.support.v4.view.ViewPager
         android:id="@+id/MediaLists_ViewPager"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?Background" />

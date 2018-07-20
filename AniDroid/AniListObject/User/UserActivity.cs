@@ -159,9 +159,20 @@ namespace AniDroid.AniListObject.User
             {
                 userAnimeView.Visibility = ViewStates.Visible;
                 userAnimeView.TextOne = $"{userAnimeListCount} anime on lists";
-                userAnimeView.TextTwo = $"{user.Stats.WatchedTime} minutes watched";
+                userAnimeView.TextTwo = $"{user.GetDurationString(user.Stats.WatchedTime * 60, 1)} watched";
                 userAnimeView.Click += (sender, args) =>
                     MediaListActivity.StartActivity(this, user.Id, AniList.Models.Media.MediaType.Anime);
+            }
+
+            var userMangaView = retView.FindViewById<DataRow>(Resource.Id.User_MangaSummary);
+            var userMangaListCount = user.Stats.MangaStatusDistribution.Sum(x => x.Amount);
+            if (userMangaListCount > 0)
+            {
+                userMangaView.Visibility = ViewStates.Visible;
+                userMangaView.TextOne = $"{userMangaListCount} manga on lists";
+                userMangaView.TextTwo = $"{user.Stats.ChaptersRead} chapters read";
+                userMangaView.Click += (sender, args) =>
+                    MediaListActivity.StartActivity(this, user.Id, AniList.Models.Media.MediaType.Manga);
             }
 
             return retView;

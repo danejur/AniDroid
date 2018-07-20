@@ -130,7 +130,7 @@ namespace AniDroid.Adapters.MediaAdapters
                 holder.Name.SetTextColor(holder.DefaultNameColor);
             }
 
-            if (item.Status != Media.MediaListStatus.Current || _viewType == MediaListItemViewType.TitleOnly)
+            if (item.Status != Media.MediaListStatus.Current || _viewType == MediaListItemViewType.TitleOnly || !_interactive)
             {
                 holder.Button.Visibility = ViewStates.Gone;
             }
@@ -152,15 +152,8 @@ namespace AniDroid.Adapters.MediaAdapters
 
         public override CardItem SetupCardItemViewHolder(CardItem item)
         {
-            if (_interactive)
-            {
-                item.Button.Click -= ButtonClick;
-                item.Button.Click += ButtonClick;
-            }
-            else
-            {
-                item.Button.Visibility = ViewStates.Gone;
-            }
+            item.Button.Click -= ButtonClick;
+            item.Button.Click += ButtonClick;
 
             return item;
         }
