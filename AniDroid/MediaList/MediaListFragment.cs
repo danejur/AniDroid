@@ -154,8 +154,6 @@ namespace AniDroid.MediaList
             {
                 adapter.UpdateMediaListItem(mediaList.Media.Id, mediaList);
             }
-
-            RecreateFragment();
         }
 
         public void ResetMediaListItem(int mediaId)
