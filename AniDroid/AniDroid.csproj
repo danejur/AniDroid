@@ -64,6 +64,7 @@
     <Reference Include="DiscU, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DiscU.1.0.0.9\lib\netstandard1.3\DiscU.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Android.Export" />
     <Reference Include="MPAndroidChart, Version=3.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MPAndroidChart.3.0.2\lib\MonoAndroid\MPAndroidChart.dll</HintPath>
     </Reference>
@@ -148,6 +149,9 @@
     <Reference Include="Xamarin.Android.Support.Vector.Drawable, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Xamarin.Android.Support.Vector.Drawable.27.0.2.1\lib\MonoAndroid81\Xamarin.Android.Support.Vector.Drawable.dll</HintPath>
     </Reference>
+    <Reference Include="Xamarin.Bindings.AdvancedRecyclerView, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Xamarin.Bindings.AdvancedRecyclerView.1.11.0.0\lib\MonoAndroid\Xamarin.Bindings.AdvancedRecyclerView.dll</HintPath>
+    </Reference>
     <Reference Include="Xamarin.Firebase.Analytics, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Xamarin.Firebase.Analytics.60.1142.1\lib\MonoAndroid80\Xamarin.Firebase.Analytics.dll</HintPath>
     </Reference>
@@ -174,6 +178,7 @@
     <Compile Include="Adapters\AniListActivityAdapters\AniListActivityRecyclerAdapter.cs" />
     <Compile Include="Adapters\AniListActivityAdapters\AniListActivityRepliesRecyclerAdapter.cs" />
     <Compile Include="Adapters\AniListActivityAdapters\AniListNotificationRecyclerAdapter.cs" />
+    <Compile Include="Adapters\Base\BaseDraggableRecyclerAdapter.cs" />
     <Compile Include="Adapters\Base\LazyLoadingRecyclerViewAdapter.cs" />
     <Compile Include="Adapters\CharacterAdapters\CharacterMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\FragmentlessViewPagerAdapter.cs" />
@@ -181,6 +186,7 @@
     <Compile Include="Adapters\MediaAdapters\DiscoverMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaCharactersRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaListRecyclerAdapter.cs" />
+    <Compile Include="Adapters\MediaAdapters\MediaListTabOrderRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaRelationsRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaStaffRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaStreamingEpisodesRecyclerAdapter.cs" />
@@ -225,6 +231,7 @@
     <Compile Include="Dialogs\AniListActivityCreateDialog.cs" />
     <Compile Include="Dialogs\AniListNotificationsDialog.cs" />
     <Compile Include="Dialogs\EditMediaListItemDialog.cs" />
+    <Compile Include="Dialogs\MediaListTabOrderDialog.cs" />
     <Compile Include="Dialogs\MediaListSortDialog.cs" />
     <Compile Include="Dialogs\MediaStreamingEpisodeListDialog.cs" />
     <Compile Include="Dialogs\MediaTitlesDialog.cs" />
@@ -621,7 +628,7 @@
     <AndroidResource Include="Resources\drawable\svg_movie.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ic_chevron_right_white_24px.xml" />
+    <AndroidResource Include="Resources\drawable\svg_chevron_right.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_public_white_24px.xml" />
@@ -735,11 +742,17 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
+    <AndroidResource Include="Resources\layout\View_SettingItem_Chevron.axml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+	</AndroidResource>
     <AndroidResource Include="Resources\layout\Widget_DatePickerTextView.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
+    <AndroidResource Include="Resources\layout\View_DraggableCardItem.axml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+	</AndroidResource>
     <AndroidResource Include="Resources\drawable\svg_close.xml" />
   </ItemGroup>
   <ItemGroup>
