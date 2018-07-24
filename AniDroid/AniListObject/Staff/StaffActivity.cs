@@ -24,6 +24,7 @@ using Ninject;
 namespace AniDroid.AniListObject.Staff
 {
     [Activity(Label = "Staff")]
+    [IntentFilter(new[] { Intent.ActionView }, Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable }, DataHost = "anilist.co", DataSchemes = new[] { "http", "https" }, DataPathPattern = "/staff/.*", Label = "AniDroid")]
     public class StaffActivity : BaseAniListObjectActivity<StaffPresenter>, IStaffView
     {
         public const string StaffIdIntentKey = "STAFF_ID";
