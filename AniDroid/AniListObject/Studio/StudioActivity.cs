@@ -22,6 +22,7 @@ using Ninject;
 namespace AniDroid.AniListObject.Studio
 {
     [Activity(Label = "Studio")]
+    [IntentFilter(new[] { Intent.ActionView }, Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable }, DataHost = "anilist.co", DataSchemes = new[] { "http", "https" }, DataPathPattern = "/studio/.*", Label = "AniDroid")]
     public class StudioActivity : BaseAniListObjectActivity<StudioPresenter>, IStudioView
     {
         public const string StudioIdIntentKey = "STUDIO_ID";
