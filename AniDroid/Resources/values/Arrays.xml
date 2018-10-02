@@ -111,5 +111,5 @@
     <item>07-20-2018|Added list reordering! Check out the settings page. You can now change the order of lists, and even choose to hide them!</item>
     <item>07-22-2018|Fix for media list item updates causing lists to scroll to top</item>
     <item>07-24-2018|AniDroid can now open automatically when tapping certain links from AniList. (I forgot I hadn\'t enabled this feature. Sorry about that!)</item>
-  </array>
+  </array> 
 </resources>
