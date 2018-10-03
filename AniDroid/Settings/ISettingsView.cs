@@ -22,6 +22,7 @@ namespace AniDroid.Settings
         void CreateAniDroidThemeSettingItem(BaseAniDroidActivity.AniDroidTheme theme);
         void CreateDisplayBannersSettingItem(bool displayBanners);
         void CreateWhatsNewSettingItem();
+        void CreatePrivacyPolicyLinkItem();
         
         // Auth settings
         void CreateGroupCompletedSettingItem(bool groupCompleted);
