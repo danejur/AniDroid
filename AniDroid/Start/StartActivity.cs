@@ -37,6 +37,9 @@ namespace AniDroid.Start
 
             //Settings.ClearUserAuthentication();
 
+            Fabric.Fabric.With(this, new Crashlytics.Crashlytics());
+            Crashlytics.Crashlytics.HandleManagedExceptions();
+
             MainActivity.StartActivityForResult(this, 0);
             Finish();
 
