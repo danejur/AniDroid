@@ -53,6 +53,7 @@ namespace AniDroid.Settings
                 View.CreateDisplayProgressColorsItem(AniDroidSettings.DisplayMediaListItemProgressColors);
             }
 
+            View.CreatePrivacyPolicyLinkItem();
             View.CreateWhatsNewSettingItem();
 
             return Task.CompletedTask;
