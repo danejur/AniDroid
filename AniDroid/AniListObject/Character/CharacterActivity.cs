@@ -19,6 +19,7 @@ using Ninject;
 namespace AniDroid.AniListObject.Character
 {
     [Activity(Label = "Character")]
+    [IntentFilter(new[] { Intent.ActionView }, Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable }, DataHost = "anilist.co", DataSchemes = new[] { "http", "https" }, DataPathPattern = "/character/.*", Label = "AniDroid")]
     public class CharacterActivity : BaseAniListObjectActivity<CharacterPresenter>, ICharacterView
     {
         public const string CharacterIdIntentKey = "CHARACTER_ID";

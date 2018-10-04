@@ -103,6 +103,19 @@ namespace AniDroid.Settings
             _settingsContainer.AddView(CreateSettingDivider(this));
         }
 
+        public void CreatePrivacyPolicyLinkItem()
+        {
+            _settingsContainer.AddView(
+                CreateSettingRow(this, "Privacy Policy", null, (sender, args) =>
+                {
+                    var privacyPolicyUrl = Resources.GetString(Resource.Config.AppPrivacyPolicyUrl);
+                    var intent = new Intent(Intent.ActionView);
+                    intent.SetData(Android.Net.Uri.Parse(privacyPolicyUrl));
+                    StartActivity(intent);
+                }));
+            _settingsContainer.AddView(CreateSettingDivider(this));
+        }
+
         #region Auth Settings
 
         public void CreateGroupCompletedSettingItem(bool groupCompleted)

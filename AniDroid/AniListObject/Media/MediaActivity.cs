@@ -41,6 +41,7 @@ namespace AniDroid.AniListObject.Media
 {
 
     [Activity(Label = "Media")]
+    [IntentFilter(new[] { Intent.ActionView }, Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable }, DataHost = "anilist.co", DataSchemes = new[] { "http", "https" }, DataPathPatterns = new[] { "/anime/.*", "/manga/.*" }, Label = "AniDroid")]
     public class MediaActivity : BaseAniListObjectActivity<MediaPresenter>, IMediaView
     {
         public const string MediaIdIntentKey = "MEDIA_ID";
