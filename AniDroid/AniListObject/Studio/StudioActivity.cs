@@ -53,6 +53,8 @@ namespace AniDroid.AniListObject.Studio
                 _studioId = Intent.GetIntExtra(StudioIdIntentKey, 0);
             }
 
+            Logger.Debug("StudioActivity", $"Starting activity with studioId: {_studioId}");
+
             await CreatePresenter(savedInstanceState);
         }
 

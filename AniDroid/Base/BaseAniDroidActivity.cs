@@ -20,6 +20,7 @@ using AniDroid.Adapters.Base;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
+using AniDroid.Utils.Logging;
 using Ninject;
 using Square.Picasso;
 
@@ -105,6 +106,7 @@ namespace AniDroid.Base
 
         private static AniDroidTheme _theme;
         protected IAniDroidSettings Settings { get; private set; }
+        protected IAniDroidLogger Logger { get; private set; }
         protected bool HasError { get; set; }
         public sealed override LayoutInflater LayoutInflater => ThemedInflater;
         public BaseRecyclerAdapter.RecyclerCardType CardType { get; private set; }
@@ -115,6 +117,7 @@ namespace AniDroid.Base
         {
             base.OnCreate(savedInstanceState);
 
+            Logger = Kernel.Get<IAniDroidLogger>();
             Settings = Kernel.Get<IAniDroidSettings>();
             _theme = Settings.Theme;
             CardType = Settings.CardType;
@@ -207,7 +210,7 @@ namespace AniDroid.Base
             var obj = new object();
             lock (obj)
             {
-                PicassoInstance = PicassoInstance ?? Picasso.With(ApplicationContext);
+                PicassoInstance = PicassoInstance ?? Picasso.With(this);
             }
 
             var req = PicassoInstance.Load(url);

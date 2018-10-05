@@ -277,6 +277,8 @@
     <Compile Include="Utils\Formatting\NumberFormatters.cs" />
     <Compile Include="Utils\Integration\AniDroidAniListAuthConfig.cs" />
     <Compile Include="Utils\Listeners\InterceptClickListener.cs" />
+    <Compile Include="Utils\Logging\CrashlyticsLogger.cs" />
+    <Compile Include="Utils\Logging\IAniDroidLogger.cs" />
     <Compile Include="Utils\Storage\AniDroidStorage.cs" />
     <Compile Include="Utils\ApplicationModule.cs" />
     <Compile Include="Base\BaseAniDroidActivity.cs" />
