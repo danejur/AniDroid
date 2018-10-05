@@ -24,13 +24,14 @@ namespace AniDroid.Adapters.MediaAdapters
         private readonly MediaListItemViewType _viewType;
         private readonly bool _highlightPriorityItems;
         private readonly bool _displayProgressColors;
+        private readonly bool _interactive;
         private readonly ColorStateList _priorityBackgroundColor;
         private readonly ColorStateList _upToDateTitleColor;
         private readonly ColorStateList _behindTitleColor;
 
         public MediaListRecyclerAdapter(BaseAniDroidActivity context, Media.MediaListGroup mediaListGroup,
             User.UserMediaListOptions mediaListOptions, MediaListPresenter presenter, RecyclerCardType cardType,
-            MediaListItemViewType viewType, bool highlightPriorityItems, bool displayProgressColors, int verticalCardColumns = 2) : base(context, mediaListGroup.Entries,
+            MediaListItemViewType viewType, bool highlightPriorityItems, bool displayProgressColors, bool interactive = true, int verticalCardColumns = 2) : base(context, mediaListGroup.Entries,
             cardType, verticalCardColumns)
         {
             _presenter = presenter;
@@ -41,6 +42,7 @@ namespace AniDroid.Adapters.MediaAdapters
             _viewType = viewType;
             _highlightPriorityItems = highlightPriorityItems;
             _displayProgressColors = displayProgressColors;
+            _interactive = interactive;
             _priorityBackgroundColor =
                 ColorStateList.ValueOf(new Color(Context.GetThemedColor(Resource.Attribute.ListItem_Priority)));
             _upToDateTitleColor =
@@ -110,8 +112,12 @@ namespace AniDroid.Adapters.MediaAdapters
             holder.ContainerCard.SetTag(Resource.Id.Object_Position, position);
             holder.ContainerCard.Click -= RowClick;
             holder.ContainerCard.Click += RowClick;
-            holder.ContainerCard.LongClick -= RowLongClick;
-            holder.ContainerCard.LongClick += RowLongClick;
+
+            if (_interactive)
+            {
+                holder.ContainerCard.LongClick -= RowLongClick;
+                holder.ContainerCard.LongClick += RowLongClick;
+            }
 
             if (_displayProgressColors && item.Media.Type == Media.MediaType.Anime && item.Status == Media.MediaListStatus.Current && item.Media.Status == Media.MediaStatus.Releasing && item.Media.NextAiringEpisode?.Episode  > 0)
             {
@@ -124,7 +130,7 @@ namespace AniDroid.Adapters.MediaAdapters
                 holder.Name.SetTextColor(holder.DefaultNameColor);
             }
 
-            if (item.Status != Media.MediaListStatus.Current || _viewType == MediaListItemViewType.TitleOnly)
+            if (item.Status != Media.MediaListStatus.Current || _viewType == MediaListItemViewType.TitleOnly || !_interactive)
             {
                 holder.Button.Visibility = ViewStates.Gone;
             }

@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
@@ -14,11 +15,18 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters;
 using AniDroid.Adapters.AniListActivityAdapters;
+using AniDroid.Adapters.UserAdapters;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
 using AniDroid.Dialogs;
+using AniDroid.MediaList;
 using AniDroid.Utils;
+using AniDroid.Utils.Formatting;
 using AniDroid.Utils.Interfaces;
+using AniDroid.Widgets;
+using MikePhil.Charting.Charts;
+using MikePhil.Charting.Components;
+using MikePhil.Charting.Data;
 using Ninject;
 
 namespace AniDroid.AniListObject.User
@@ -112,7 +120,16 @@ namespace AniDroid.AniListObject.User
         public void SetupUserView(AniList.Models.User user)
         {
             var adapter = new FragmentlessViewPagerAdapter();
+
+            adapter.AddView(CreateUserDetailsView(user), "Details");
+
             adapter.AddView(CreateUserActivityView(user.Id), "Activity");
+
+            adapter.AddView(CreateUserStatsView(user), "Stats");
+
+            adapter.AddView(CreateUserFollowingView(user.Id), "Following");
+
+            adapter.AddView(CreateUserFollowersView(user.Id), "Followers");
 
             ViewPager.OffscreenPageLimit = adapter.Count - 1;
             ViewPager.Adapter = adapter;
@@ -133,7 +150,7 @@ namespace AniDroid.AniListObject.User
 
         private View CreateUserActivityView(int userId)
         {
-            var userActivityEnumerable = Presenter.GetUserActivityEnumrable(userId, PageLength);
+            var userActivityEnumerable = Presenter.GetUserActivityEnumerable(userId, PageLength);
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
             _userActivityRecyclerAdapter = new AniListActivityRecyclerAdapter(this, Presenter, userActivityEnumerable, Presenter.GetCurrentUserId());
@@ -141,6 +158,219 @@ namespace AniDroid.AniListObject.User
 
             return retView;
         }
+
+        private View CreateUserDetailsView(AniList.Models.User user)
+        {
+            var retView = LayoutInflater.Inflate(Resource.Layout.View_UserDetails, null);
+            LoadImage(retView.FindViewById<ImageView>(Resource.Id.User_Image), user.Avatar.Large);
+            retView.FindViewById<TextView>(Resource.Id.User_Name).Text = user.Name;
+
+            var aboutView = retView.FindViewById<ExpandableText>(Resource.Id.User_Description);
+            if (!string.IsNullOrWhiteSpace(user.About))
+            {
+                aboutView.TextFormatted = FromHtml(user.About);
+            }
+            else
+            {
+                aboutView.Visibility = ViewStates.Gone;
+            }
+
+            var followerView = retView.FindViewById<TextView>(Resource.Id.User_Donator);
+            followerView.Visibility = user.DonatorTier > 0 ? ViewStates.Visible : ViewStates.Gone;
+
+            var userAnimeView = retView.FindViewById<DataRow>(Resource.Id.User_AnimeSummary);
+            var userAnimeListCount = user.Stats.AnimeStatusDistribution.Sum(x => x.Amount);
+            if (userAnimeListCount > 0)
+            {
+                userAnimeView.Visibility = ViewStates.Visible;
+                userAnimeView.TextOne = $"{userAnimeListCount} anime on lists";
+                userAnimeView.TextTwo = $"{user.GetDurationString(user.Stats.WatchedTime * 60, 1)} watched";
+                userAnimeView.SetButtonIcon(Resource.Drawable.svg_chevron_right);
+                userAnimeView.ButtonClickable = false;
+                userAnimeView.ButtonVisible = true;
+                userAnimeView.Click += (sender, args) =>
+                    MediaListActivity.StartActivity(this, user.Id, AniList.Models.Media.MediaType.Anime);
+            }
+
+            var userMangaView = retView.FindViewById<DataRow>(Resource.Id.User_MangaSummary);
+            var userMangaListCount = user.Stats.MangaStatusDistribution.Sum(x => x.Amount);
+            if (userMangaListCount > 0)
+            {
+                userMangaView.Visibility = ViewStates.Visible;
+                userMangaView.TextOne = $"{userMangaListCount} manga on lists";
+                userMangaView.TextTwo = $"{user.Stats.ChaptersRead} chapters read";
+                userMangaView.SetButtonIcon(Resource.Drawable.svg_chevron_right);
+                userMangaView.ButtonClickable = false;
+                userMangaView.ButtonVisible = true;
+                userMangaView.Click += (sender, args) =>
+                    MediaListActivity.StartActivity(this, user.Id, AniList.Models.Media.MediaType.Manga);
+            }
+
+            return retView;
+        }
+
+        private View CreateUserFollowingView(int userId)
+        {
+            var userFollowingEnumerable = Presenter.GetUserFollowingEnumerable(userId, PageLength);
+            var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
+            var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
+            var recyclerAdapter = new UserFollowerRecyclerAdapter(this, userFollowingEnumerable, CardType);
+            recycler.SetAdapter(recyclerAdapter);
+
+            return retView;
+        }
+
+        private View CreateUserFollowersView(int userId)
+        {
+            var userFollowersEnumerable = Presenter.GetUserFollowersEnumerable(userId, PageLength);
+            var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
+            var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
+            var recyclerAdapter = new UserFollowerRecyclerAdapter(this, userFollowersEnumerable, CardType);
+            recycler.SetAdapter(recyclerAdapter);
+
+            return retView;
+        }
+
+        private View CreateUserStatsView(AniList.Models.User user)
+        {
+            var retView = LayoutInflater.Inflate(Resource.Layout.View_NestedScrollLayout, null);
+            var containerView = retView.FindViewById<LinearLayout>(Resource.Id.Scroll_Container);
+
+            if (user.Stats?.AnimeStatusDistribution?.Any(x => x.Amount > 0) == true ||
+                user.Stats?.MangaStatusDistribution?.Any(x => x.Amount > 0) == true)
+            {
+                containerView.AddView(CreateStatusDistributionView(user.Stats.AnimeStatusDistribution,
+                    user.Stats.MangaStatusDistribution));
+            }
+
+            if (user.Stats?.AnimeScoreDistribution?.Any(x => x.Amount > 0) == true ||
+                user.Stats?.MangaScoreDistribution?.Any(x => x.Amount > 0) == true)
+            {
+                containerView.AddView(CreateScoreDistributionView(user.Stats.AnimeScoreDistribution,
+                    user.Stats.MangaScoreDistribution));
+            }
+
+            return retView;
+        }
+
+        private View CreateStatusDistributionView(
+            IReadOnlyList<AniList.Models.AniListObject.AniListStatusDistribution> animeStatusDistributions,
+            IReadOnlyList<AniList.Models.AniListObject.AniListStatusDistribution> mangaStatusDistributions)
+        {
+            var chartHeight = Resources.GetDimensionPixelSize(Resource.Dimension.Details_ChartHeight);
+            var textColor = GetThemedColor(Resource.Attribute.Background_Text);
+            var margin = Resources.GetDimensionPixelSize(Resource.Dimension.Details_MarginSmall);
+
+            var detailView = LayoutInflater.Inflate(Resource.Layout.View_AniListObjectDetail, null);
+            var detailContainer = detailView.FindViewById<LinearLayout>(Resource.Id.AniListObjectDetail_InnerContainer);
+            detailView.FindViewById<TextView>(Resource.Id.AniListObjectDetail_Name).Text = "Status Distribution";
+            detailContainer.Orientation = Orientation.Horizontal;
+            detailContainer.SetPadding(margin, 0, margin, 0);
+
+            var typedColorArray = Resources.ObtainTypedArray(Resource.Array.Chart_Colors);
+            var colorList = new List<int>();
+
+            for (var i = 0; i < typedColorArray.Length(); i++)
+            {
+                colorList.Add(typedColorArray.GetColor(i, 0));
+            }
+
+            var statusDistChart = new BarChart(this)
+            {
+                LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, chartHeight),
+            };
+
+            var data = new BarData() { BarWidth = .45F };
+
+            var animeStatusEntries = animeStatusDistributions.Select(x => new BarEntry(x.Status.Index, x.Amount, x.Status.DisplayValue)).ToList();
+            var animeDataSet = new BarDataSet(animeStatusEntries, "Anime") { Color = colorList[0] };
+            data.AddDataSet(animeDataSet);
+
+            var mangaStatusEntries = mangaStatusDistributions.Select(x => new BarEntry(x.Status.Index, x.Amount, x.Status.DisplayValue)).ToList();
+            var mangaDataSet = new BarDataSet(mangaStatusEntries, "Manga") { Color = colorList[1] };
+            data.AddDataSet(mangaDataSet);
+
+            data.SetValueFormatter(new ChartUtils.IntegerValueFormatter());
+
+            statusDistChart.Data = data;
+            statusDistChart.SetTouchEnabled(false);
+            statusDistChart.SetScaleEnabled(false);
+            statusDistChart.GroupBars(-.5F, .12F, .04F);
+            statusDistChart.AxisLeft.Enabled = false;
+            statusDistChart.AxisRight.Enabled = false;
+            statusDistChart.Description.Enabled = false;
+            statusDistChart.XAxis.SetDrawGridLines(false);
+            statusDistChart.XAxis.SetDrawAxisLine(false);
+            statusDistChart.XAxis.Position = XAxis.XAxisPosition.BottomInside;
+            statusDistChart.XAxis.Granularity = 1;
+            statusDistChart.XAxis.LabelCount = 5;
+            statusDistChart.XAxis.ValueFormatter = new ChartUtils.AxisAniListEnumFormatter<AniList.Models.Media.MediaListStatus>();
+            statusDistChart.XAxis.TextColor = animeDataSet.ValueTextColor = mangaDataSet.ValueTextColor = statusDistChart.Legend.TextColor = textColor;
+
+            detailContainer.AddView(statusDistChart);
+
+            return detailView;
+        }
+
+        private View CreateScoreDistributionView(
+            IReadOnlyList<AniList.Models.AniListObject.AniListScoreDistribution> animeScoreDistributions,
+            IReadOnlyList<AniList.Models.AniListObject.AniListScoreDistribution> mangaScoreDistributions)
+        {
+            var chartHeight = Resources.GetDimensionPixelSize(Resource.Dimension.Details_ChartHeight);
+            var textColor = GetThemedColor(Resource.Attribute.Background_Text);
+            var margin = Resources.GetDimensionPixelSize(Resource.Dimension.Details_MarginSmall);
+
+            var detailView = LayoutInflater.Inflate(Resource.Layout.View_AniListObjectDetail, null);
+            var detailContainer = detailView.FindViewById<LinearLayout>(Resource.Id.AniListObjectDetail_InnerContainer);
+            detailView.FindViewById<TextView>(Resource.Id.AniListObjectDetail_Name).Text = "Score Distribution";
+            detailContainer.Orientation = Orientation.Horizontal;
+            detailContainer.SetPadding(margin, 0, margin, 0);
+
+            var typedColorArray = Resources.ObtainTypedArray(Resource.Array.Chart_Colors);
+            var colorList = new List<int>();
+
+            for (var i = 0; i < typedColorArray.Length(); i++)
+            {
+                colorList.Add(typedColorArray.GetColor(i, 0));
+            }
+
+            var scoreDistChart = new BarChart(this)
+            {
+                LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, chartHeight),
+            };
+
+            var data = new BarData() { BarWidth = 4.5F };
+
+            var animeEntries = Enumerable.Range(1, 10).Select(x => new BarEntry(x * 10, animeScoreDistributions.Any(y => y.Score == (x * 10)) ? animeScoreDistributions.First(y => y.Score == (x * 10)).Amount : 0, (x * 10).ToString())).ToList();
+            var animeDataSet = new BarDataSet(animeEntries, "Anime") { Color = colorList[4] };
+            data.AddDataSet(animeDataSet);
+
+            var mangaEntries = Enumerable.Range(1, 10).Select(x => new BarEntry(x * 10, mangaScoreDistributions.Any(y => y.Score == (x * 10)) ? mangaScoreDistributions.First(y => y.Score == (x * 10)).Amount : 0, (x * 10).ToString())).ToList();
+            var mangaDataSet = new BarDataSet(mangaEntries, "Manga") { Color = colorList[5] };
+            data.AddDataSet(mangaDataSet);
+
+            data.SetValueFormatter(new ChartUtils.IntegerValueFormatter());
+
+            scoreDistChart.Data = data;
+            scoreDistChart.SetTouchEnabled(false);
+            scoreDistChart.SetScaleEnabled(false);
+            scoreDistChart.GroupBars(5F, .6F, .2F);
+            scoreDistChart.AxisLeft.Enabled = false;
+            scoreDistChart.AxisRight.Enabled = false;
+            scoreDistChart.Description.Enabled = false;
+            scoreDistChart.XAxis.SetDrawGridLines(false);
+            scoreDistChart.XAxis.SetDrawAxisLine(false);
+            scoreDistChart.XAxis.Position = XAxis.XAxisPosition.BottomInside;
+            scoreDistChart.XAxis.Granularity = 1;
+            scoreDistChart.XAxis.LabelCount = 10;
+            scoreDistChart.XAxis.TextColor = animeDataSet.ValueTextColor = mangaDataSet.ValueTextColor = scoreDistChart.Legend.TextColor = textColor;
+
+            detailContainer.AddView(scoreDistChart);
+
+            return detailView;
+        }
+
+        #region Menu
 
         public override bool SetupMenu(IMenu menu)
         {
@@ -171,5 +401,8 @@ namespace AniDroid.AniListObject.User
 
             return base.MenuItemSelected(item);
         }
+
+        #endregion
+
     }
 }

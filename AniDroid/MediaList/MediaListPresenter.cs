@@ -34,9 +34,9 @@ namespace AniDroid.MediaList
             return Task.CompletedTask;
         }
 
-        public async Task GetMediaLists()
+        public async Task GetMediaLists(int userId)
         {
-            var mediaListResp = await AniListService.GetUserMediaList(AniDroidSettings.LoggedInUser?.Id ?? 0,
+            var mediaListResp = await AniListService.GetUserMediaList(userId,
                 View.GetMediaType(), AniDroidSettings.GroupCompletedLists, default(CancellationToken));
 
 

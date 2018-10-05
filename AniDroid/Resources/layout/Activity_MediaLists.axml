@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/MediaLists_CoordLayout"
+    android:theme="?Dialog_Theme"
+    android:background="?Background_Alternate"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/MediaLists_AppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?AppBarLayout_Style">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/MediaLists_Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            app:popupTheme="?Toolbar_PopupTheme"
+            app:theme="?Toolbar_Theme"
+            style="?Toolbar_Style"
+            app:layout_scrollFlags="enterAlways" />
+        <android.support.design.widget.TabLayout
+            app:tabMode="scrollable"
+            android:id="@+id/MediaLists_Tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="?TabLayout_Style" />
+    </android.support.design.widget.AppBarLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/MediaLists_ViewPager"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?Background" />
+</android.support.design.widget.CoordinatorLayout>

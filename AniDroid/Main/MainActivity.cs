@@ -385,11 +385,11 @@ namespace AniDroid.Main
                     break;
                 case Resource.Id.Menu_Navigation_Anime:
                     ChangeFragment(MediaListFragment.GetInstance(MediaListFragment.AnimeMediaListFragmentName) ??
-                                   MediaListFragment.CreateMediaListFragment(Media.MediaType.Anime));
+                                   MediaListFragment.CreateMediaListFragment(Settings.LoggedInUser?.Id ?? 0, Media.MediaType.Anime));
                     break;
                 case Resource.Id.Menu_Navigation_Manga:
                     ChangeFragment(MediaListFragment.GetInstance(MediaListFragment.MangaMediaListFragmentName) ??
-                                   MediaListFragment.CreateMediaListFragment(Media.MediaType.Manga));
+                                   MediaListFragment.CreateMediaListFragment(Settings.LoggedInUser?.Id ?? 0, Media.MediaType.Manga));
                     break;
                 case Resource.Id.Menu_Navigation_Discover:
                     ChangeFragment(new DiscoverFragment());
