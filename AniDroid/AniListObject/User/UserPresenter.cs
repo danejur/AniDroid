@@ -61,6 +61,16 @@ namespace AniDroid.AniListObject.User
             return AniListService.GetAniListActivity(new AniListActivityDto {UserId = userId}, count);
         }
 
+        public IAsyncEnumerable<OneOf<IPagedData<AniList.Models.User>, IAniListError>> GetUserFollowersEnumerable(int userId, int count)
+        {
+            return AniListService.GetUserFollowers(userId, AniList.Models.User.UserSort.Username, count);
+        }
+
+        public IAsyncEnumerable<OneOf<IPagedData<AniList.Models.User>, IAniListError>> GetUserFollowingEnumerable(int userId, int count)
+        {
+            return AniListService.GetUserFollowing(userId, AniList.Models.User.UserSort.Username, count);
+        }
+
         public async Task ToggleFollowUser(int userId)
         {
             var toggleResp = await AniListService.ToggleFollowUser(userId, default(CancellationToken));

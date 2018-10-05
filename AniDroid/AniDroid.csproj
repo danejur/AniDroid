@@ -214,6 +214,7 @@
     <Compile Include="Adapters\StaffAdapters\StaffMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\StaffAdapters\StaffRecyclerAdapter.cs" />
     <Compile Include="Adapters\StudioAdapters\StudioMediaRecyclerAdapter.cs" />
+    <Compile Include="Adapters\UserAdapters\UserFollowerRecyclerAdapter.cs" />
     <Compile Include="AniListObject\IAniListActivityPresenter.cs" />
     <Compile Include="AniListObject\Media\IAniListMediaListEditPresenter.cs" />
     <Compile Include="AniListObject\Media\IMediaView.cs" />
