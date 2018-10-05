@@ -112,6 +112,8 @@
     <item>07-22-2018|Fix for media list item updates causing lists to scroll to top</item>
     <item>07-24-2018|AniDroid can now open automatically when tapping certain links from AniList. (I forgot I hadn\'t enabled this feature. Sorry about that!)</item>
     <item>10-03-2018|Added analytics back to app (so i can fix crashes better)</item>
-    <item>10-03-2018|Added privacy policy (because your privacy is important)</item> 
+    <item>10-03-2018|Added privacy policy (because your privacy is important)</item>
+    <item>10-05-2018|Added following and follower lists to the User view</item>
+    <item>10-05-2018|Added some charts and other stuff to the User view</item>
   </array> 
 </resources>
