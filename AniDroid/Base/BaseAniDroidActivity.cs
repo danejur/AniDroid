@@ -21,8 +21,8 @@ using AniDroid.AniList.Interfaces;
 using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
 using AniDroid.Utils.Logging;
+using Com.Bumptech.Glide;
 using Ninject;
-using Square.Picasso;
 
 namespace AniDroid.Base
 {
@@ -203,23 +203,9 @@ namespace AniDroid.Base
 
         #region Context Utils
 
-        private static Picasso PicassoInstance { get; set; }
-
         public void LoadImage(ImageView imageView, string url, bool showLoading = true)
         {
-            var obj = new object();
-            lock (obj)
-            {
-                PicassoInstance = PicassoInstance ?? Picasso.With(this);
-            }
-
-            var req = PicassoInstance.Load(url);
-            if (showLoading)
-            {
-                req = req.Placeholder(Android.Resource.Drawable.IcMenuGallery);
-            }
-
-            req.Into(imageView);
+            Glide.With(this).Load(url).Into(imageView).OnLoadStarted(GetDrawable(Android.Resource.Drawable.IcMenuGallery));
         }
 
         public static ISpanned FromHtml(string source)
