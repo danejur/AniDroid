@@ -63,9 +63,6 @@
     <Reference Include="DiscU, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DiscU.1.0.0.9\lib\netstandard1.3\DiscU.dll</HintPath>
     </Reference>
-    <Reference Include="Glide, Version=4.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Glide.Xamarin.4.1.1\lib\MonoAndroid10\Glide.dll</HintPath>
-    </Reference>
     <Reference Include="Java.Interop" />
     <Reference Include="Mono.Android.Export" />
     <Reference Include="MPAndroidChart, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
@@ -82,6 +79,15 @@
     </Reference>
     <Reference Include="RestSharp, Version=106.4.2.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.106.4.2\lib\netstandard2.0\RestSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Square.OkHttp, Version=2.7.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Square.OkHttp.2.7.5.0\lib\MonoAndroid\Square.OkHttp.dll</HintPath>
+    </Reference>
+    <Reference Include="Square.OkIO, Version=1.13.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Square.OkIO.1.13.0\lib\MonoAndroid\Square.OkIO.dll</HintPath>
+    </Reference>
+    <Reference Include="Square.Picasso, Version=2.5.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Square.Picasso.2.5.2.1\lib\MonoAndroid\Square.Picasso.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.IO.Compression" />
@@ -234,6 +240,9 @@
     <Compile Include="AniListObject\Character\CharacterActivity.cs" />
     <Compile Include="AniListObject\Character\CharacterPresenter.cs" />
     <Compile Include="AniListObject\Character\ICharacterView.cs" />
+    <Compile Include="CurrentSeason\CurrentSeasonFragment.cs" />
+    <Compile Include="CurrentSeason\CurrentSeasonPresenter.cs" />
+    <Compile Include="CurrentSeason\ICurrentSeasonView.cs" />
     <Compile Include="Dialogs\AniListActivityRepliesDialog.cs" />
     <Compile Include="Dialogs\AniListActivityCreateDialog.cs" />
     <Compile Include="Dialogs\AniListNotificationsDialog.cs" />
@@ -302,6 +311,7 @@
     <Compile Include="Widgets\ExpandableText.cs" />
     <Compile Include="Widgets\Picker.cs" />
     <Compile Include="Widgets\ScalingImageView.cs" />
+    <Compile Include="Widgets\SideScrollingList.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -786,6 +796,14 @@
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Activity_MediaLists.axml">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\svg_calendar_star.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Widget_SideScrollingList.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

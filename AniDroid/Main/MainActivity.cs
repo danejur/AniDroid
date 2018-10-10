@@ -22,6 +22,7 @@ using AniDroid.AniList.Models;
 using AniDroid.AniListObject.User;
 using AniDroid.Base;
 using AniDroid.Browse;
+using AniDroid.CurrentSeason;
 using AniDroid.Dialogs;
 using AniDroid.Discover;
 using AniDroid.Home;
@@ -393,6 +394,9 @@ namespace AniDroid.Main
                     break;
                 case Resource.Id.Menu_Navigation_Discover:
                     ChangeFragment(new DiscoverFragment());
+                    break;
+                case Resource.Id.Menu_Navigation_CurrentSeason:
+                    ChangeFragment(new CurrentSeasonFragment());
                     break;
                 case Resource.Id.Menu_Navigation_TorrentSearch:
                     ChangeFragment(new TorrentSearchFragment());

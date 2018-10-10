@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="RelativeLayout"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipChildren="false"
+    android:clipToPadding="false">
+	<TextView
+		android:text="Label"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/SideScrollingList_Label"
+		android:textColor="?Background_Text"
+		android:textSize="20dp"
+		android:layout_margin="10dp" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/SideScrollingList_Recycler"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/SideScrollingList_Label"
+        android:layout_marginBottom="20dp" />
+</merge>

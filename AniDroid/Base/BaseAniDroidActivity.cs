@@ -21,8 +21,8 @@ using AniDroid.AniList.Interfaces;
 using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
 using AniDroid.Utils.Logging;
-using Com.Bumptech.Glide;
 using Ninject;
+using Square.Picasso;
 
 namespace AniDroid.Base
 {
@@ -205,7 +205,14 @@ namespace AniDroid.Base
 
         public void LoadImage(ImageView imageView, string url, bool showLoading = true)
         {
-            Glide.With(this).Load(url).Into(imageView).OnLoadStarted(GetDrawable(Android.Resource.Drawable.IcMenuGallery));
+            var req = Picasso.With(this).Load(url);
+
+            if (showLoading)
+            {
+                req = req.Placeholder(Android.Resource.Drawable.IcMenuGallery);
+            }
+
+            req.Into(imageView);
         }
 
         public static ISpanned FromHtml(string source)
