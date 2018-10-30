@@ -131,7 +131,15 @@ namespace AniDroid.Main
 
         public override void DisplaySnackbarMessage(string message, int length = Snackbar.LengthShort)
         {
-            Snackbar.Make(_coordLayout, message, length).Show();
+            if (_coordLayout != null)
+            {
+                Snackbar.Make(_coordLayout, message, length).Show();
+            }
+            else
+            {
+                // as a fallback (if the coord layout is null for some reason), show a toast
+                Toast.MakeText(this, message, ToastLength.Long);
+            }
         }
 
         public override async Task OnCreateExtended(Bundle savedInstanceState)
