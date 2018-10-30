@@ -156,6 +156,12 @@ namespace AniDroid.MediaList
         {
             foreach (var adapter in _recyclerAdapters)
             {
+                if (mediaList?.Media?.Id == null)
+                {
+                    Activity.Logger.Error("UpdateMediaListItem", "A media list item update was attempted with a null reference.");
+                    continue;
+                }
+
                 adapter.UpdateMediaListItem(mediaList.Media.Id, mediaList);
             }
         }

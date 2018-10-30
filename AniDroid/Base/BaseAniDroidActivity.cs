@@ -105,8 +105,8 @@ namespace AniDroid.Base
         public const int ObjectBrowseRequestCode = 9;
 
         private static AniDroidTheme _theme;
-        protected IAniDroidSettings Settings { get; private set; }
-        protected IAniDroidLogger Logger { get; private set; }
+        public IAniDroidSettings Settings { get; private set; }
+        public IAniDroidLogger Logger { get; private set; }
         protected bool HasError { get; set; }
         public sealed override LayoutInflater LayoutInflater => ThemedInflater;
         public BaseRecyclerAdapter.RecyclerCardType CardType { get; private set; }
