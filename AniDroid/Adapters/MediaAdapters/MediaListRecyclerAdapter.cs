@@ -64,7 +64,7 @@ namespace AniDroid.Adapters.MediaAdapters
             if (position >= 0)
             {
                 if (updatedMediaList.HiddenFromStatusLists && !_isCustomList ||
-                    _isCustomList && !updatedMediaList.CustomLists.Any(x => x.Enabled && x.Name == _listName) ||
+                    _isCustomList && !updatedMediaList.CustomLists.Any(x => x?.Enabled == true && x.Name == _listName) ||
                     !_isCustomList && _listStatus != updatedMediaList.Status)
                 {
                     Items.RemoveAt(position);
@@ -78,7 +78,7 @@ namespace AniDroid.Adapters.MediaAdapters
                     NotifyItemChanged(position);
                 }
             }
-            else if (_isCustomList && updatedMediaList.CustomLists.Any(x => x.Enabled && x.Name == _listName) ||
+            else if (_isCustomList && updatedMediaList.CustomLists.Any(x => x?.Enabled == true && x.Name == _listName) ||
                      !_isCustomList && _listStatus == updatedMediaList.Status)
             {
                 Items.Insert(0, updatedMediaList);
