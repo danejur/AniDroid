@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:minWidth="25px"
+    android:minHeight="40dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?Background"
+    android:id="@+id/CardItem_Container">
+  <android.support.v7.widget.CardView
+        android:foreground="?android:attr/selectableItemBackground"
+        app:cardBackgroundColor="?Background"
+        android:clickable="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardPreventCornerOverlap="false"
+        android:id="@+id/CardItem_Card">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp">
+		<ImageView
+			android:src="@drawable/category_11"
+			android:layout_width="50dp"
+			android:layout_height="wrap_content"
+			android:id="@+id/CardItem_Image"
+			android:visibility="visible"
+			android:layout_alignParentTop="true"
+			android:layout_alignParentLeft="true" />
+        <TextView
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/CardItem_Name"
+            android:textSize="13dp"
+            android:text="Name"
+			android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="?Background_Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_toRightOf="@+id/CardItem_Image"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="3dp" />
+		<TextView
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:id="@+id/CardItem_DetailPrimary"
+			android:layout_below="@+id/CardItem_Name"
+			android:textSize="12dp"
+			android:layout_marginTop="5dp"
+			android:text="Detail Primary"
+			android:marqueeRepeatLimit="2"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textColor="?Background_Text_Alternate" />
+		<TextView
+			android:textAppearance="?android:attr/textAppearanceSmall"
+			android:id="@+id/CardItem_DetailSecondary"
+			android:layout_below="@+id/CardItem_DetailPrimary"
+			android:textSize="12dp"
+			android:text="Detail Secondary"
+			android:marqueeRepeatLimit="2"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:textColor="?Background_Text_Alternate" />
+    </RelativeLayout>
+	</android.support.v7.widget.CardView>
+</LinearLayout>

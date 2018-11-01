@@ -51,5 +51,7 @@ namespace AniDroid.Base
             Activity.ShowSearchButton();
             return CreateMainActivityFragmentView(container, savedInstanceState);
         }
+
+        public virtual Action GetSearchFabAction() => null;
     }
 }

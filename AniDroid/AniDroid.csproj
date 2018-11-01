@@ -257,6 +257,7 @@
     <Compile Include="Dialogs\MediaTitlesDialog.cs" />
     <Compile Include="Dialogs\SearchDialog.cs" />
     <Compile Include="Dialogs\StaffListDialog.cs" />
+    <Compile Include="Dialogs\TorrentSearchDialog.cs" />
     <Compile Include="Dialogs\WhatsNewDialog.cs" />
     <Compile Include="Discover\DiscoverFragment.cs" />
     <Compile Include="Discover\DiscoverPresenter.cs" />
@@ -808,6 +809,16 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Widget_SideScrollingList.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\View_CardItem_TorrentSearchResult.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Dialog_TorrentSearch.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

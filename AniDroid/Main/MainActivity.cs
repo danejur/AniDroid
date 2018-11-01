@@ -58,7 +58,7 @@ namespace AniDroid.Main
 
         private Toast _exitToast;
         private Action _navClosedAction;
-        private BaseAniDroidFragment _currentFragment;
+        private BaseMainActivityFragment _currentFragment;
         private bool _fragmentBeingReplaced;
         private BadgeDrawerToggle _drawerToggle;
         private BadgeImageView _notificationImageView;
@@ -119,6 +119,14 @@ namespace AniDroid.Main
 
         private void SearchButtonOnClick(object sender, EventArgs eventArgs)
         {
+            var action = _currentFragment?.GetSearchFabAction();
+
+            if (action != null)
+            {
+                action.Invoke();
+                return;
+            }
+
             SearchDialog.Create(this, (type, term) => SearchResultsActivity.StartActivity(this, type, term));
         }
 
@@ -327,7 +335,7 @@ namespace AniDroid.Main
             }
         }
 
-        private void ChangeFragment(BaseAniDroidFragment fragment)
+        private void ChangeFragment(BaseMainActivityFragment fragment)
         {
             var drawer = FindViewById<DrawerLayout>(Resource.Id.Main_DrawerLayout);
 

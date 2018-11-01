@@ -48,8 +48,8 @@ namespace AniDroid.Torrent.NyaaSi
                         .Trim('\n');
                     var link = element.Descendants("td").ElementAt(2).Descendants("a")
                         .FirstOrDefault(x => x.Attributes["href"].Value.Contains("magnet"))?.Attributes["href"].Value;
-                    var siteLink =
-                        $"{BaseAddress}{element.Descendants("td").ElementAt(1).Descendants("a").First().Attributes["href"].Value}";
+                    var siteLink = element.Descendants("td").ElementAt(1).Descendants("a").First().Attributes["href"]
+                        .Value;
                     var date = element.Descendants("td").ElementAt(4).InnerText;
                     var size = element.Descendants("td").ElementAt(3).InnerText;
                     var description = string.Empty;

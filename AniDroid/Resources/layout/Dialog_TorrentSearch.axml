@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:minWidth="25px"
+    android:minHeight="25px"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/TorrentSearch_Layout"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal">
+        <TextView
+            android:text="Search Term"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="?Primary"
+            android:textSize="16dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp" />
+        <TextView
+            android:text="Category"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="?Primary"
+            android:id="@+id/TorrentSearch_CategorySpinnerLabel"
+            android:textSize="16dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp" />
+        <TextView
+            android:text="Filter"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="?Primary"
+            android:id="@+id/TorrentSearch_FilterSpinnerLabel"
+            android:textSize="16dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="left"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/TorrentSearch_SearchText"
+            android:theme="?TextInput_Theme"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:singleLine="true" />
+        <Spinner
+            android:id="@+id/TorrentSearch_CategorySpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:theme="?Spinner_Theme"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" />
+        <Spinner
+            android:id="@+id/TorrentSearch_FilterSpinner"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:theme="?Spinner_Theme"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" />
+    </LinearLayout>
+</LinearLayout>

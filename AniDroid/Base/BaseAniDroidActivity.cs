@@ -222,6 +222,11 @@ namespace AniDroid.Base
 #pragma warning restore CS0618 // Type or member is obsolete
         }
 
+        public float GetDimensionFromDp(float dpVal)
+        {
+            return TypedValue.ApplyDimension(ComplexUnitType.Dip, dpVal, Resources.DisplayMetrics);
+        }
+
         #endregion
 
         #region Abstract
