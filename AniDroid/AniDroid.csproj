@@ -63,6 +63,9 @@
     <Reference Include="DiscU, Version=1.0.0.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DiscU.1.0.0.9\lib\netstandard1.3\DiscU.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.8.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.8.9\lib\netstandard2.0\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="Java.Interop" />
     <Reference Include="Mono.Android.Export" />
     <Reference Include="MPAndroidChart, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
@@ -214,6 +217,7 @@
     <Compile Include="Adapters\StaffAdapters\StaffMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\StaffAdapters\StaffRecyclerAdapter.cs" />
     <Compile Include="Adapters\StudioAdapters\StudioMediaRecyclerAdapter.cs" />
+    <Compile Include="Adapters\TorrentAdapters\NyaaSiSearchRecyclerAdapter.cs" />
     <Compile Include="Adapters\UserAdapters\UserFollowerRecyclerAdapter.cs" />
     <Compile Include="AniListObject\IAniListActivityPresenter.cs" />
     <Compile Include="AniListObject\Media\IAniListMediaListEditPresenter.cs" />
@@ -240,6 +244,9 @@
     <Compile Include="AniListObject\Character\CharacterActivity.cs" />
     <Compile Include="AniListObject\Character\CharacterPresenter.cs" />
     <Compile Include="AniListObject\Character\ICharacterView.cs" />
+    <Compile Include="CurrentSeason\CurrentSeasonFragment.cs" />
+    <Compile Include="CurrentSeason\CurrentSeasonPresenter.cs" />
+    <Compile Include="CurrentSeason\ICurrentSeasonView.cs" />
     <Compile Include="Dialogs\AniListActivityRepliesDialog.cs" />
     <Compile Include="Dialogs\AniListActivityCreateDialog.cs" />
     <Compile Include="Dialogs\AniListNotificationsDialog.cs" />
@@ -250,6 +257,7 @@
     <Compile Include="Dialogs\MediaTitlesDialog.cs" />
     <Compile Include="Dialogs\SearchDialog.cs" />
     <Compile Include="Dialogs\StaffListDialog.cs" />
+    <Compile Include="Dialogs\TorrentSearchDialog.cs" />
     <Compile Include="Dialogs\WhatsNewDialog.cs" />
     <Compile Include="Discover\DiscoverFragment.cs" />
     <Compile Include="Discover\DiscoverPresenter.cs" />
@@ -277,6 +285,8 @@
     <Compile Include="Utils\Formatting\NumberFormatters.cs" />
     <Compile Include="Utils\Integration\AniDroidAniListAuthConfig.cs" />
     <Compile Include="Utils\Listeners\InterceptClickListener.cs" />
+    <Compile Include="Utils\Logging\CrashlyticsLogger.cs" />
+    <Compile Include="Utils\Logging\IAniDroidLogger.cs" />
     <Compile Include="Utils\Storage\AniDroidStorage.cs" />
     <Compile Include="Utils\ApplicationModule.cs" />
     <Compile Include="Base\BaseAniDroidActivity.cs" />
@@ -306,6 +316,7 @@
     <Compile Include="Widgets\ExpandableText.cs" />
     <Compile Include="Widgets\Picker.cs" />
     <Compile Include="Widgets\ScalingImageView.cs" />
+    <Compile Include="Widgets\SideScrollingList.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -790,6 +801,24 @@
   <ItemGroup>
     <AndroidResource Include="Resources\layout\Activity_MediaLists.axml">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\svg_calendar_star.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Widget_SideScrollingList.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\View_CardItem_TorrentSearchResult.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Dialog_TorrentSearch.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

@@ -17,6 +17,7 @@ using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.AniListObject.Media;
 using AniDroid.Base;
+using AniDroid.Dialogs;
 using OneOf;
 
 namespace AniDroid.Adapters.MediaAdapters
@@ -50,6 +51,8 @@ namespace AniDroid.Adapters.MediaAdapters
             holder.ContainerCard.Click += RowClick;
             holder.ContainerCard.LongClick -= RowLongClick;
             holder.ContainerCard.LongClick += RowLongClick;
+            holder.Name.LongClick -= NameLongClick;
+            holder.Name.LongClick += NameLongClick;
         }
 
         public override CardItem SetupCardItemViewHolder(CardItem item)
@@ -78,6 +81,19 @@ namespace AniDroid.Adapters.MediaAdapters
         }
 
         private void RowLongClick(object sender, View.LongClickEventArgs longClickEventArgs)
+        {
+            var senderView = sender as View;
+            var mediaPos = (int)senderView.GetTag(Resource.Id.Object_Position);
+            var media = Items[mediaPos];
+
+            Context.DisplaySnackbarMessage(media.Title?.UserPreferred, Snackbar.LengthLong);
+
+            // TODO: add ability to add/edit media list item from here
+
+            //EditMediaListItemDialog.Create(Context, _presenter, media, null, _mediaListOptions);
+        }
+
+        private void NameLongClick(object sender, View.LongClickEventArgs longClickEventArgs)
         {
             var senderView = sender as View;
             var mediaPos = (int)senderView.GetTag(Resource.Id.Object_Position);

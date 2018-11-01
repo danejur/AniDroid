@@ -31,6 +31,13 @@ namespace AniDroid.Discover
 
         public void GetDiscoverLists()
         {
+            View.ShowCurrentlyAiringResults(AniListService.BrowseMedia(new BrowseMediaDto
+            {
+                Season = Media.MediaSeason.Fall,
+                SeasonYear = 2018,
+                Type = Media.MediaType.Anime,
+                Sort = new List<Media.MediaSort> { Media.MediaSort.PopularityDesc }
+            }, 5));
             View.ShowTrendingResults(AniListService.BrowseMedia(new BrowseMediaDto
             {
                 Sort = new List<Media.MediaSort> {Media.MediaSort.TrendingDesc}

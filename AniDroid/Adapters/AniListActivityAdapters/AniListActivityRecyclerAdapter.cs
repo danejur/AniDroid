@@ -198,7 +198,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
 
         private async void ToggleLikeActivity(int activityId)
         {
-            var activityItemPosition = Items.FindIndex(x => x.Id == activityId);
+            var activityItemPosition = Items.FindIndex(x => x?.Id == activityId);
             var activityItem = Items[activityItemPosition];
             Items[activityItemPosition] = null;
             NotifyItemChanged(activityItemPosition);
@@ -208,7 +208,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
 
         private async void PostReply(int activityId, string text)
         {
-            var activityItemPosition = Items.FindIndex(x => x.Id == activityId);
+            var activityItemPosition = Items.FindIndex(x => x?.Id == activityId);
             var activityItem = Items[activityItemPosition];
             Items[activityItemPosition] = null;
             NotifyItemChanged(activityItemPosition);

@@ -182,6 +182,12 @@ namespace AniDroid.MediaList
 
         private void SetupToolbar(string userName)
         {
+            if (_toolbar == null)
+            {
+                Logger.Warning("CheeseKnife", "CheeseKnife failed to bind _toolbar in MediaListActivity");
+                _toolbar = FindViewById<Toolbar>(Resource.Id.MediaLists_Toolbar);
+            }
+
             SetSupportActionBar(_toolbar);
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
             _toolbar.Title = $"{userName}'s {_mediaType.DisplayValue}";

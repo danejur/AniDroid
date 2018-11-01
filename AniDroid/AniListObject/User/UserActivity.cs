@@ -66,6 +66,8 @@ namespace AniDroid.AniListObject.User
                 _userId = Intent.GetIntExtra(UserIdIntentKey, 0);
             }
 
+            Logger.Debug("UserActivity", $"Starting activity with userId: {_userId}");
+
             await CreatePresenter(savedInstanceState);
         }
 

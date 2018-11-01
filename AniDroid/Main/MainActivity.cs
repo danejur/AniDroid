@@ -22,6 +22,7 @@ using AniDroid.AniList.Models;
 using AniDroid.AniListObject.User;
 using AniDroid.Base;
 using AniDroid.Browse;
+using AniDroid.CurrentSeason;
 using AniDroid.Dialogs;
 using AniDroid.Discover;
 using AniDroid.Home;
@@ -57,7 +58,7 @@ namespace AniDroid.Main
 
         private Toast _exitToast;
         private Action _navClosedAction;
-        private BaseAniDroidFragment _currentFragment;
+        private BaseMainActivityFragment _currentFragment;
         private bool _fragmentBeingReplaced;
         private BadgeDrawerToggle _drawerToggle;
         private BadgeImageView _notificationImageView;
@@ -118,6 +119,14 @@ namespace AniDroid.Main
 
         private void SearchButtonOnClick(object sender, EventArgs eventArgs)
         {
+            var action = _currentFragment?.GetSearchFabAction();
+
+            if (action != null)
+            {
+                action.Invoke();
+                return;
+            }
+
             SearchDialog.Create(this, (type, term) => SearchResultsActivity.StartActivity(this, type, term));
         }
 
@@ -130,7 +139,15 @@ namespace AniDroid.Main
 
         public override void DisplaySnackbarMessage(string message, int length = Snackbar.LengthShort)
         {
-            Snackbar.Make(_coordLayout, message, length).Show();
+            if (_coordLayout != null)
+            {
+                Snackbar.Make(_coordLayout, message, length).Show();
+            }
+            else
+            {
+                // as a fallback (if the coord layout is null for some reason), show a toast
+                Toast.MakeText(this, message, ToastLength.Long);
+            }
         }
 
         public override async Task OnCreateExtended(Bundle savedInstanceState)
@@ -318,7 +335,7 @@ namespace AniDroid.Main
             }
         }
 
-        private void ChangeFragment(BaseAniDroidFragment fragment)
+        private void ChangeFragment(BaseMainActivityFragment fragment)
         {
             var drawer = FindViewById<DrawerLayout>(Resource.Id.Main_DrawerLayout);
 
@@ -393,6 +410,9 @@ namespace AniDroid.Main
                     break;
                 case Resource.Id.Menu_Navigation_Discover:
                     ChangeFragment(new DiscoverFragment());
+                    break;
+                case Resource.Id.Menu_Navigation_CurrentSeason:
+                    ChangeFragment(new CurrentSeasonFragment());
                     break;
                 case Resource.Id.Menu_Navigation_TorrentSearch:
                     ChangeFragment(new TorrentSearchFragment());

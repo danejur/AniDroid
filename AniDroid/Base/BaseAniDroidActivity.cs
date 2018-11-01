@@ -20,6 +20,7 @@ using AniDroid.Adapters.Base;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
+using AniDroid.Utils.Logging;
 using Ninject;
 using Square.Picasso;
 
@@ -104,7 +105,8 @@ namespace AniDroid.Base
         public const int ObjectBrowseRequestCode = 9;
 
         private static AniDroidTheme _theme;
-        protected IAniDroidSettings Settings { get; private set; }
+        public IAniDroidSettings Settings { get; private set; }
+        public IAniDroidLogger Logger { get; private set; }
         protected bool HasError { get; set; }
         public sealed override LayoutInflater LayoutInflater => ThemedInflater;
         public BaseRecyclerAdapter.RecyclerCardType CardType { get; private set; }
@@ -115,6 +117,7 @@ namespace AniDroid.Base
         {
             base.OnCreate(savedInstanceState);
 
+            Logger = Kernel.Get<IAniDroidLogger>();
             Settings = Kernel.Get<IAniDroidSettings>();
             _theme = Settings.Theme;
             CardType = Settings.CardType;
@@ -200,17 +203,10 @@ namespace AniDroid.Base
 
         #region Context Utils
 
-        private static Picasso PicassoInstance { get; set; }
-
         public void LoadImage(ImageView imageView, string url, bool showLoading = true)
         {
-            var obj = new object();
-            lock (obj)
-            {
-                PicassoInstance = PicassoInstance ?? Picasso.With(ApplicationContext);
-            }
+            var req = Picasso.With(this).Load(url);
 
-            var req = PicassoInstance.Load(url);
             if (showLoading)
             {
                 req = req.Placeholder(Android.Resource.Drawable.IcMenuGallery);
@@ -224,6 +220,11 @@ namespace AniDroid.Base
 #pragma warning disable CS0618 // Type or member is obsolete
             return Build.VERSION.SdkInt >= BuildVersionCodes.N ? Html.FromHtml(source, FromHtmlOptions.ModeLegacy) : Html.FromHtml(source);
 #pragma warning restore CS0618 // Type or member is obsolete
+        }
+
+        public float GetDimensionFromDp(float dpVal)
+        {
+            return TypedValue.ApplyDimension(ComplexUnitType.Dip, dpVal, Resources.DisplayMetrics);
         }
 
         #endregion

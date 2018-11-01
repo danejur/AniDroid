@@ -69,8 +69,15 @@ namespace AniDroid.Widgets
             // TODO: fix themeing
             var dateDialog = new DatePickerDialog(Context);
 
-            dateDialog.DatePicker.Init(defaultDate.Year, defaultDate.Month - 1, defaultDate.Day,
+            dateDialog.DatePicker.UpdateDate(defaultDate.Year, defaultDate.Month - 1, defaultDate.Day);
+            dateDialog.DatePicker.SetOnDateChangedListener(
                 new DatePickerTextViewOnDateChangedListener(dateDialog, DateChanged, (date) => SelectedDate = date));
+
+            // need to test if the above method causes crashes on any other devices
+            // using "init" seemed to cause crashes on a select few, mostly on 5.x
+
+            // dateDialog.DatePicker.Init(defaultDate.Year, defaultDate.Month - 1, defaultDate.Day,
+            //    new DatePickerTextViewOnDateChangedListener(dateDialog, DateChanged, (date) => SelectedDate = date));
 
             dateDialog.Show();
         }

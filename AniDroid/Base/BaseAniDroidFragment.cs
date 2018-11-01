@@ -45,9 +45,9 @@ namespace AniDroid.Base
 
         public abstract View CreateView(ViewGroup container, Bundle savedInstanceState);
 
-        public void DisplaySnackbarMessage(string message, int length) => Activity.DisplaySnackbarMessage(message, length);
+        public void DisplaySnackbarMessage(string message, int length) => Activity?.DisplaySnackbarMessage(message, length);
 
-        public void DisplayNotYetImplemented() => Activity.DisplayNotYetImplemented();
+        public void DisplayNotYetImplemented() => Activity?.DisplayNotYetImplemented();
 
         public sealed override View OnCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) => CreateView(container, savedInstanceState);

@@ -55,6 +55,8 @@ namespace AniDroid.AniListObject.Staff
                 _staffId = Intent.GetIntExtra(StaffIdIntentKey, 0);
             }
 
+            Logger.Debug("StaffActivity", $"Starting activity with staffID: {_staffId}");
+
             await CreatePresenter(savedInstanceState);
         }
 

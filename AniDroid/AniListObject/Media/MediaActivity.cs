@@ -78,6 +78,8 @@ namespace AniDroid.AniListObject.Media
                 _mediaId = Intent.GetIntExtra(MediaIdIntentKey, 0);
             }
 
+            Logger.Debug("MediaActivity", $"Starting activity with mediaId: {_mediaId}");
+
             await CreatePresenter(savedInstanceState);
         }
 

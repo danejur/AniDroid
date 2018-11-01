@@ -11,6 +11,7 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
+using AniDroid.Torrent.NyaaSi;
 using AniDroid.Utils.Interfaces;
 
 namespace AniDroid.TorrentSearch
@@ -24,6 +25,11 @@ namespace AniDroid.TorrentSearch
         public override Task Init()
         {
             return Task.CompletedTask;
+        }
+
+        public void SearchNyaaSi(NyaaSiSearchRequest searchReq)
+        {
+            View.ShowNyaaSiSearchResults(NyaaSiService.GetSearchEnumerable(searchReq));
         }
     }
 }

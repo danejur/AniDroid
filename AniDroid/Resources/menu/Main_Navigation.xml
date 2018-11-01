@@ -22,6 +22,10 @@
       android:title="Discover"
       android:icon="@drawable/ic_public_white_24px"/>
     <item
+      android:id="@+id/Menu_Navigation_CurrentSeason"
+      android:title="Current Season"
+      android:icon="@drawable/svg_calendar_star"/>
+    <item
       android:id="@+id/Menu_Navigation_Browse"
       android:title="Browse"
       android:icon="@drawable/ic_view_carousel_white_24px"/>

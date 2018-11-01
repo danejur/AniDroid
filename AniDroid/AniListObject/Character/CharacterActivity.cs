@@ -50,6 +50,8 @@ namespace AniDroid.AniListObject.Character
                 _characterId = Intent.GetIntExtra(CharacterIdIntentKey, 0);
             }
 
+            Logger.Debug("CharacterActivity", $"Starting activity with characterId: {_characterId}");
+
             await CreatePresenter(savedInstanceState);
         }
 
