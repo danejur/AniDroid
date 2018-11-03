@@ -4,7 +4,9 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using AniDroid.AniList.DataTypes;
 using AniDroid.AniList.Interfaces;
+using AniDroid.AniList.Service;
 using HtmlAgilityPack;
 using OneOf;
 
@@ -14,31 +16,33 @@ namespace AniDroid.Torrent.NyaaSi
     {
         private const string BaseAddress = "https://nyaa.si";
 
-        public static IAsyncEnumerable<OneOf<IPagedData<NyaaSiSearchResult>, IAniListError>> GetSearchEnumerable(NyaaSiSearchRequest searchReq)
+        public static IAsyncEnumerable<OneOf<IPagedData<NyaaSiSearchResult>, IAniListError>> GetSearchEnumerable(
+            NyaaSiSearchRequest searchReq)
         {
             return new NyaaSiAsyncEnumerable(searchReq);
         }
 
-        public static async Task<ICollection<NyaaSiSearchResult>> SearchAsync(NyaaSiSearchRequest searchReq)
+        public static async Task<OneOf<IPagedData<NyaaSiSearchResult>, IAniListError>> SearchAsync(
+            NyaaSiSearchRequest searchReq)
         {
-            var searchString =
-                $"{BaseAddress}/?f={searchReq.Filter}&c={searchReq.Category}&q={(searchReq.SearchTerm ?? "").Replace(" ", "+")}&p={searchReq.PageNumber}";
-            var webReq = WebRequest.Create(searchString);
-            var webResp = await webReq.GetResponseAsync();
-            var webRespStream = webResp.GetResponseStream();
-
-            var retList = new List<NyaaSiSearchResult>();
-            var doc = new HtmlDocument();
-            doc.Load(webRespStream);
-            var torrentTable = doc.DocumentNode.Descendants()
-                .FirstOrDefault(x =>
-                    x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("torrent-list"))
-                ?.Descendants("tbody").First();
-            var torrentRows = torrentTable.Descendants("tr");
-
-            foreach (var element in torrentRows)
+            try
             {
-                try
+                var searchString =
+                    $"{BaseAddress}/?f={searchReq.Filter}&c={searchReq.Category}&q={(searchReq.SearchTerm ?? "").Replace(" ", "+")}&p={searchReq.PageNumber}";
+                var webReq = WebRequest.Create(searchString);
+                var webResp = await webReq.GetResponseAsync();
+                var webRespStream = webResp.GetResponseStream();
+
+                var retList = new List<NyaaSiSearchResult>();
+                var doc = new HtmlDocument();
+                doc.Load(webRespStream);
+                var torrentTable = doc.DocumentNode.Descendants()
+                    .FirstOrDefault(x =>
+                        x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("torrent-list"))
+                    ?.Descendants("tbody").First();
+                var torrentRows = torrentTable.Descendants("tr");
+
+                foreach (var element in torrentRows)
                 {
                     var category = element.Descendants("td").First().Descendants("a").First().Attributes["href"].Value
                         .Replace("/?c=", "");
@@ -78,13 +82,22 @@ namespace AniDroid.Torrent.NyaaSi
 
                     retList.Add(result);
                 }
-                catch
+
+                return new PagedData<NyaaSiSearchResult>
                 {
-                    //something went wrong, but we're not concerned about it
-                }
+                    Data = retList,
+                    PageInfo = new PageInfo
+                    {
+                        CurrentPage = searchReq.PageNumber,
+                        HasNextPage = retList.Count >= 75
+                    }
+                };
             }
 
-            return retList;
+            catch (Exception e)
+            {
+                return new AniListError(500, "An error occurred while searching torrents", e, null);
+            }
         }
     }
 }
