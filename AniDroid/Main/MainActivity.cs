@@ -411,9 +411,9 @@ namespace AniDroid.Main
                 case Resource.Id.Menu_Navigation_Discover:
                     ChangeFragment(new DiscoverFragment());
                     break;
-                case Resource.Id.Menu_Navigation_CurrentSeason:
-                    ChangeFragment(new CurrentSeasonFragment());
-                    break;
+                //case Resource.Id.Menu_Navigation_CurrentSeason:
+                //    ChangeFragment(new CurrentSeasonFragment());
+                //    break;
                 case Resource.Id.Menu_Navigation_TorrentSearch:
                     ChangeFragment(new TorrentSearchFragment());
                     break;
