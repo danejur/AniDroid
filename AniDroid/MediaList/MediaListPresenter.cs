@@ -43,7 +43,11 @@ namespace AniDroid.MediaList
             mediaListResp.Switch(error => View.OnError(error))
                 .Switch(mediaLists =>
                 {
-                    AniDroidSettings.UpdateLoggedInUser(mediaLists.User);
+                    if (userId == AniDroidSettings.LoggedInUser?.Id)
+                    {
+                        AniDroidSettings.UpdateLoggedInUser(mediaLists.User);
+                    }
+
                     View.SetCollection(mediaLists);
                 });
         }
