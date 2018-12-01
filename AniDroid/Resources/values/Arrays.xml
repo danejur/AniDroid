@@ -117,5 +117,6 @@
     <item>10-05-2018|Added some charts and other stuff to the User view</item>
     <item>11-01-2018|Added torrent searching! Only Nyaa.si is implemented right now, but I will add more sites to search later. (Caution: it may be a bit buggy)</item>
     <item>11-01-2018|Numerous bug and crash fixes</item>
+    <item>12-01-2018|More bug fixes, including one where other users\' lists would show up as your own (sorry about the delay in getting this fixed!)</item>
   </array> 
 </resources>
