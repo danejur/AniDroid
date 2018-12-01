@@ -40,7 +40,15 @@ namespace AniDroid.Browse
         public void ShowMediaSearchResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
         {
             var recycler = View.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
-            recycler.SetAdapter(new BrowseMediaRecyclerAdapter(Activity, mediaEnumerable, _cardType));
+
+            var adapter =
+                new MediaRecyclerAdapter(Activity, mediaEnumerable, _cardType)
+                {
+                    PrimaryDetailType = MediaRecyclerAdapter.DetailType.Format,
+                    SecondaryDetailType = MediaRecyclerAdapter.DetailType.AverageRatingPopularity
+                };
+
+            recycler.SetAdapter(adapter);
         }
 
         protected override void SetInstance(BaseMainActivityFragment instance)
