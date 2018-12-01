@@ -198,6 +198,7 @@
     <Compile Include="Adapters\Base\LazyLoadingRecyclerViewAdapter.cs" />
     <Compile Include="Adapters\CharacterAdapters\CharacterMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\FragmentlessViewPagerAdapter.cs" />
+    <Compile Include="Adapters\MediaAdapters\MediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\BrowseMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\DiscoverMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaCharactersRecyclerAdapter.cs" />

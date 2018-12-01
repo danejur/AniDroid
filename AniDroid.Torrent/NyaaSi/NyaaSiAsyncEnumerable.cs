@@ -44,16 +44,15 @@ namespace AniDroid.Torrent.NyaaSi
                     return false;
                 }
 
-                var pageResult = await NyaaSiService.SearchAsync(_request);
+                Current = await NyaaSiService.SearchAsync(_request);
+
+                if (Current.Match((IAniListError error) => true)
+                    .Match(data => data.PageInfo?.HasNextPage == false))
+                {
+                    return false;
+                }
 
                 _request.PageNumber += 1;
-                _pageInfo.HasNextPage = pageResult.Count >= 75;
-
-                Current = new PagedData<NyaaSiSearchResult>
-                {
-                    Data = pageResult,
-                    PageInfo = _pageInfo
-                };
 
                 return true;
             }
