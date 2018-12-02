@@ -26,8 +26,7 @@ namespace AniDroid.Adapters.MediaAdapters
         public User.UserMediaListOptions UserMediaListOptions { get; set; }
 
         public MediaRecyclerAdapter(BaseAniDroidActivity context,
-            IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> enumerable, RecyclerCardType cardType,
-            int verticalCardColumns = -1) : base(context, enumerable, cardType, verticalCardColumns)
+            IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> enumerable, RecyclerCardType cardType) : base(context, enumerable, cardType)
         {
         }
 

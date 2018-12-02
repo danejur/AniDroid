@@ -33,6 +33,11 @@ namespace AniDroid.Adapters.ViewModels
             Role
         }
 
+        public static StaffViewModel CreateStaffViewModel(Staff model)
+        {
+            return new StaffViewModel(model, StaffDetailType.NativeName, StaffDetailType.None);
+        }
+
         private string GetDetail(StaffDetailType detailType)
         {
             var retString = "";

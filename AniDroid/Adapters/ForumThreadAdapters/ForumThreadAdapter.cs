@@ -7,34 +7,31 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
-using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.ViewModels;
-using AniDroid.AniList;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
-using AniDroid.AniListObject.Staff;
 using AniDroid.Base;
 using OneOf;
 
-namespace AniDroid.Adapters.StaffAdapters
+namespace AniDroid.Adapters.ForumThreadAdapters
 {
-    public class StaffRecyclerAdapter : LazyLoadingAniDroidRecyclerAdapter<StaffViewModel, Staff>
+    public class ForumThreadAdapter : LazyLoadingAniDroidRecyclerAdapter<ForumThreadViewModel, ForumThread>
     {
-        public StaffRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Staff>, IAniListError>> enumerable, RecyclerCardType cardType) : base(context, enumerable, cardType)
+        public ForumThreadAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<ForumThread>, IAniListError>> enumerable) : base(context, enumerable, RecyclerCardType.Horizontal)
         {
         }
 
-        public StaffRecyclerAdapter(BaseAniDroidActivity context, List<StaffViewModel> list, RecyclerCardType cardType) : base(context, list, cardType)
+        public override Action<AniDroidAdapterViewModel<ForumThread>> ClickAction => viewModel =>
         {
-        }
+            var intent = new Intent(Intent.ActionView);
+            intent.SetData(Android.Net.Uri.Parse(viewModel.Model.SiteUrl));
+            Context.StartActivity(intent);
+        };
 
-        public override Action<AniDroidAdapterViewModel<Staff>> ClickAction => viewModel =>
-            StaffActivity.StartActivity(Context, viewModel.Model.Id, BaseAniDroidActivity.ObjectBrowseRequestCode);
-
-        public override Action<AniDroidAdapterViewModel<Staff>> LongClickAction { get; }
+        public override Action<AniDroidAdapterViewModel<ForumThread>> LongClickAction { get; }
 
         public override void BindCardViewHolder(CardItem holder, int position)
         {

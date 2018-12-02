@@ -32,15 +32,22 @@ namespace AniDroid.Adapters.Base
 
         public Color? LoadingItemBackgroundColor { get; set; }
         public event EventHandler<bool> DataLoaded;
-        public Func<TModel, AniDroidAdapterViewModel<TModel>> CreateViewModelFunc { get; set; }
+        public Func<TModel, T> CreateViewModelFunc { get; set; }
 
         protected LazyLoadingAniDroidRecyclerAdapter(BaseAniDroidActivity context,
             IAsyncEnumerable<OneOf<IPagedData<TModel>, IAniListError>> enumerable, RecyclerCardType cardType,
-            int verticalCardColumns = -1) : base(context, new List<AniDroidAdapterViewModel<TModel>> {null}, cardType,
+            int verticalCardColumns = -1) : base(context, new List<T> {null}, cardType,
             verticalCardColumns)
         {
             _asyncEnumerable = enumerable;
             _asyncEnumerator = enumerable.GetEnumerator();
+        }
+
+        protected LazyLoadingAniDroidRecyclerAdapter(BaseAniDroidActivity context,
+            List<T> list, RecyclerCardType cardType,
+            int verticalCardColumns = -1) : base(context, list, cardType, verticalCardColumns)
+        {
+            
         }
 
         protected LazyLoadingAniDroidRecyclerAdapter(BaseAniDroidActivity context,
@@ -52,9 +59,13 @@ namespace AniDroid.Adapters.Base
 
         public void ResetAdapter()
         {
-            _asyncEnumerator = _asyncEnumerable.GetEnumerator();
-            Items.Clear();
-            Items.Add(null);
+            if (_asyncEnumerable != null)
+            {
+                _asyncEnumerator = _asyncEnumerable.GetEnumerator();
+                Items.Clear();
+                Items.Add(null);
+            }
+
             NotifyDataSetChanged();
         }
 
@@ -113,17 +124,17 @@ namespace AniDroid.Adapters.Base
             return holder;
         }
 
-        public override bool InsertItem(int position, AniDroidAdapterViewModel<TModel> item, bool notify = true)
+        public override bool InsertItem(int position, T item, bool notify = true)
         {
             return !_isLazyLoading && base.InsertItem(position, item, notify);
         }
 
-        public override bool ReplaceItem(int position, AniDroidAdapterViewModel<TModel> item, bool notify = true)
+        public override bool ReplaceItem(int position, T item, bool notify = true)
         {
             return !_isLazyLoading && base.ReplaceItem(position, item, notify);
         }
 
-        public void AddItems(IEnumerable<AniDroidAdapterViewModel<TModel>> itemsToAdd, bool hasNextPage)
+        public void AddItems(IEnumerable<T> itemsToAdd, bool hasNextPage)
         {
             var initialAdd = Items.Count == 1 && Items[0] == null;
 

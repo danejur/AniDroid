@@ -30,13 +30,13 @@ namespace AniDroid.Adapters.Base
         protected bool CustomCardUseItemDecoration;
         public RecyclerCardType CardType { get; protected set; }
         public int CardColumns { get; protected set; }
-        public List<AniDroidAdapterViewModel<TModel>> Items { get; protected set; }
+        public List<T> Items { get; protected set; }
         public sealed override int ItemCount => Items.Count;
 
         public abstract Action<AniDroidAdapterViewModel<TModel>> ClickAction { get; }
         public abstract Action<AniDroidAdapterViewModel<TModel>> LongClickAction { get; }
 
-        protected AniDroidRecyclerAdapter(BaseAniDroidActivity context, List<AniDroidAdapterViewModel<TModel>> items, RecyclerCardType cardType, int verticalCardColumns = -1) : base(context)
+        protected AniDroidRecyclerAdapter(BaseAniDroidActivity context, List<T> items, RecyclerCardType cardType, int verticalCardColumns = -1) : base(context)
         {
             Items = items ?? throw new ArgumentNullException(nameof(items));
             CardType = cardType;
@@ -50,13 +50,13 @@ namespace AniDroid.Adapters.Base
             _orientation = LinearLayoutManager.Horizontal;
         }
 
-        public void AddItems(params AniDroidAdapterViewModel<TModel>[] items)
+        public void AddItems(params T[] items)
         {
             Items.AddRange(items);
             NotifyDataSetChanged();
         }
 
-        public void AddItems(IEnumerable<AniDroidAdapterViewModel<TModel>> items)
+        public void AddItems(IEnumerable<T> items)
         {
             Items.AddRange(items);
             NotifyDataSetChanged();
@@ -89,7 +89,7 @@ namespace AniDroid.Adapters.Base
             NotifyDataSetChanged();
         }
 
-        public virtual bool InsertItem(int position, AniDroidAdapterViewModel<TModel> item, bool notify = true)
+        public virtual bool InsertItem(int position, T item, bool notify = true)
         {
             if (position >= ItemCount || position < 0) return false;
             Items.Insert(position, item);
@@ -102,7 +102,7 @@ namespace AniDroid.Adapters.Base
             return true;
         }
 
-        public virtual bool ReplaceItem(int position, AniDroidAdapterViewModel<TModel> item, bool notify = true)
+        public virtual bool ReplaceItem(int position, T item, bool notify = true)
         {
             if (position >= ItemCount || position < 0) return false;
             Items[position] = item;

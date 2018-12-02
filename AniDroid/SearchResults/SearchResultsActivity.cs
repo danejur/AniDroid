@@ -9,8 +9,11 @@ using Android.Support.V7.Widget;
 using Android.Views;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.CharacterAdapters;
+using AniDroid.Adapters.ForumThreadAdapters;
 using AniDroid.Adapters.MediaAdapters;
-using AniDroid.Adapters.SearchAdapters;
+using AniDroid.Adapters.StaffAdapters;
+using AniDroid.Adapters.StudioAdapters;
+using AniDroid.Adapters.UserAdapters;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
@@ -66,22 +69,34 @@ namespace AniDroid.SearchResults
 
         public void ShowStaffSearchResults(IAsyncEnumerable<OneOf<IPagedData<Staff>, IAniListError>> staffEnumerable)
         {
-            _recyclerView.SetAdapter(_adapter = new StaffSearchRecyclerAdapter(this, staffEnumerable, _cardType));
+            _recyclerView.SetAdapter(_adapter = new StaffRecyclerAdapter(this, staffEnumerable, _cardType)
+            {
+                CreateViewModelFunc = StaffViewModel.CreateStaffViewModel
+            });
         }
 
         public void ShowUserSearchResults(IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> userEnumerable)
         {
-            _recyclerView.SetAdapter(_adapter = new UserSearchRecyclerAdapter(this, userEnumerable, _cardType));
+            _recyclerView.SetAdapter(_adapter = new UserRecyclerAdapter(this, userEnumerable, _cardType)
+            {
+                CreateViewModelFunc = UserViewModel.CreateUserViewModel
+            });
         }
 
         public void ShowForumThreadSearchResults(IAsyncEnumerable<OneOf<IPagedData<ForumThread>, IAniListError>> forumThreadEnumerable)
         {
-            _recyclerView.SetAdapter(_adapter = new ForumThreadSearchRecyclerAdapter(this, forumThreadEnumerable));
+            _recyclerView.SetAdapter(_adapter = new ForumThreadAdapter(this, forumThreadEnumerable)
+            {
+                CreateViewModelFunc = ForumThreadViewModel.CreateForumThreadViewModel
+            });
         }
 
         public void ShowStudioSearchResults(IAsyncEnumerable<OneOf<IPagedData<Studio>, IAniListError>> studioEnumerable)
         {
-            _recyclerView.SetAdapter(_adapter = new StudioSearchRecyclerAdapter(this, studioEnumerable));
+            _recyclerView.SetAdapter(_adapter = new StudioRecyclerAdapter(this, studioEnumerable)
+            {
+                CreateViewModelFunc = StudioViewModel.CreateStudioViewModel
+            });
         }
 
         public override void DisplaySnackbarMessage(string message, int length)
