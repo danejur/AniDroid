@@ -2,12 +2,16 @@
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
+using Android.Content.Res;
 using Android.OS;
 using Android.Support.Design.Widget;
 using Android.Support.V7.Widget;
 using Android.Views;
 using AniDroid.Adapters.Base;
+using AniDroid.Adapters.CharacterAdapters;
+using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Adapters.SearchAdapters;
+using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
@@ -19,12 +23,13 @@ using OneOf;
 
 namespace AniDroid.SearchResults
 {
-    [Activity(Label = "Search Results")]
+    [Activity(Label = "Search Results", ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.KeyboardHidden | Android.Content.PM.ConfigChanges.ScreenSize)]
     public class SearchResultsActivity : BaseAniDroidActivity<SearchResultsPresenter>, ISearchResultsView
     {
         private string _searchType;
         private string _searchTerm;
         private BaseRecyclerAdapter.RecyclerCardType _cardType;
+        private BaseRecyclerAdapter _adapter;
 
         [InjectView(Resource.Id.SearchResults_CoordLayout)]
         private CoordinatorLayout _coordLayout;
@@ -45,32 +50,38 @@ namespace AniDroid.SearchResults
 
         public void ShowMediaSearchResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
         {
-            _recyclerView.SetAdapter(new MediaSearchRecyclerAdapter(this, mediaEnumerable, _cardType));
+            _recyclerView.SetAdapter(_adapter = new MediaRecyclerAdapter(this, mediaEnumerable, _cardType)
+            {
+                CreateViewModelFunc = MediaViewModel.CreateMediaViewModel
+            });
         }
 
         public void ShowCharacterSearchResults(IAsyncEnumerable<OneOf<IPagedData<Character>, IAniListError>> characterEnumerable)
         {
-            _recyclerView.SetAdapter(new CharacterSearchRecyclerAdapter(this, characterEnumerable, _cardType));
+            _recyclerView.SetAdapter(_adapter = new CharacterRecyclerAdapter(this, characterEnumerable, _cardType)
+            {
+                CreateViewModelFunc = CharacterViewModel.CreateCharacterViewModel
+            });
         }
 
         public void ShowStaffSearchResults(IAsyncEnumerable<OneOf<IPagedData<Staff>, IAniListError>> staffEnumerable)
         {
-            _recyclerView.SetAdapter(new StaffSearchRecyclerAdapter(this, staffEnumerable, _cardType));
+            _recyclerView.SetAdapter(_adapter = new StaffSearchRecyclerAdapter(this, staffEnumerable, _cardType));
         }
 
         public void ShowUserSearchResults(IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> userEnumerable)
         {
-            _recyclerView.SetAdapter(new UserSearchRecyclerAdapter(this, userEnumerable, _cardType));
+            _recyclerView.SetAdapter(_adapter = new UserSearchRecyclerAdapter(this, userEnumerable, _cardType));
         }
 
         public void ShowForumThreadSearchResults(IAsyncEnumerable<OneOf<IPagedData<ForumThread>, IAniListError>> forumThreadEnumerable)
         {
-            _recyclerView.SetAdapter(new ForumThreadSearchRecyclerAdapter(this, forumThreadEnumerable));
+            _recyclerView.SetAdapter(_adapter = new ForumThreadSearchRecyclerAdapter(this, forumThreadEnumerable));
         }
 
         public void ShowStudioSearchResults(IAsyncEnumerable<OneOf<IPagedData<Studio>, IAniListError>> studioEnumerable)
         {
-            _recyclerView.SetAdapter(new StudioSearchRecyclerAdapter(this, studioEnumerable));
+            _recyclerView.SetAdapter(_adapter = new StudioSearchRecyclerAdapter(this, studioEnumerable));
         }
 
         public override void DisplaySnackbarMessage(string message, int length)
@@ -96,6 +107,13 @@ namespace AniDroid.SearchResults
             _searchButton.Click += SearchButtonOnClick;
 
             SetupToolbar();
+        }
+
+        public override void OnConfigurationChanged(Configuration newConfig)
+        {
+            base.OnConfigurationChanged(newConfig);
+
+            //_adapter.RefreshAdapter();
         }
 
         private void SearchButtonOnClick(object sender, EventArgs eventArgs)

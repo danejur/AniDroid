@@ -67,11 +67,11 @@ namespace AniDroid.Adapters.MediaAdapters
             return new MediaRecyclerAdapter(context, enumerable, cardType);
         }
 
-        //private static MediaViewModel.DetailType GetDetailType(Media.MediaSort sort)
+        //private static MediaViewModel.MediaDetailType GetDetailType(Media.MediaSort sort)
         //{
         //    if (Media.MediaSort.Popularity == sort || Media.MediaSort.PopularityDesc == sort)
         //    {
-        //        return MediaViewModel.DetailType.AverageRatingPopularity
+        //        return MediaViewModel.MediaDetailType.AverageRatingPopularity
         //    }
         //    else if (Media.MediaSort.Score == sort || Media.MediaSort.ScoreDesc == sortsortType)
         //    {

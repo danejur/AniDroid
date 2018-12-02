@@ -51,8 +51,7 @@ namespace AniDroid.Browse
         {
             _adapter = new MediaRecyclerAdapter(this, mediaEnumerable, _cardType)
             {
-                CreateViewModelFunc = model => new MediaViewModel(model, MediaViewModel.DetailType.Format,
-                    MediaViewModel.DetailType.Genres)
+                CreateViewModelFunc = MediaViewModel.CreateMediaViewModel
             };
             _recyclerView.SetAdapter(_adapter);
         }

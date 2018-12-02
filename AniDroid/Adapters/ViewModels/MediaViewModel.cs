@@ -15,15 +15,17 @@ namespace AniDroid.Adapters.ViewModels
 {
     public class MediaViewModel : AniDroidAdapterViewModel<Media>
     {
-        public MediaViewModel(Media model, DetailType primaryDetailType, DetailType secondaryDetailType) : base(model)
+        public Media.Edge ModelEdge { get; protected set; }
+
+        private MediaViewModel(Media model, MediaDetailType primaryMediaDetailType, MediaDetailType secondaryMediaDetailType) : base(model)
         {
             TitleText = Model.Title?.UserPreferred;
-            DetailPrimaryText = GetDetail(primaryDetailType);
-            DetailSecondaryText = GetDetail(secondaryDetailType);
+            DetailPrimaryText = GetDetail(primaryMediaDetailType);
+            DetailSecondaryText = GetDetail(secondaryMediaDetailType);
             ImageUri = model.CoverImage?.Large ?? model.CoverImage?.Medium;
         }
 
-        public enum DetailType
+        public enum MediaDetailType
         {
             None,
             Format,
@@ -32,21 +34,26 @@ namespace AniDroid.Adapters.ViewModels
             UserScore,
         }
 
-        private string GetDetail(DetailType detailType)
+        public static MediaViewModel CreateMediaViewModel(Media model)
+        {
+            return new MediaViewModel(model, MediaDetailType.FormatRating, MediaDetailType.Genres);
+        }
+
+        private string GetDetail(MediaDetailType mediaDetailType)
         {
             var retString = "";
 
-            if (detailType == DetailType.Format)
+            if (mediaDetailType == MediaDetailType.Format)
             {
                 retString = $"{Model.Format?.DisplayValue}{(Model.IsAdult ? " (Hentai)" : "")}";
             }
-            else if (detailType == DetailType.FormatRating)
+            else if (mediaDetailType == MediaDetailType.FormatRating)
             {
                 retString = Model.Status?.EqualsAny(Media.MediaStatus.NotYetReleased, Media.MediaStatus.Cancelled) == true
                     ? Model.Format?.DisplayValue
                     : $"{Model.Format?.DisplayValue}  ({(Model.AverageScore != 0 ? $"{Model.AverageScore}%" : "No Rating Data")})";
             }
-            else if (detailType == DetailType.Genres)
+            else if (mediaDetailType == MediaDetailType.Genres)
             {
                 retString = Model.Genres?.Any() == true ? string.Join(", ", Model.Genres) : "(No Genres)";
             }
