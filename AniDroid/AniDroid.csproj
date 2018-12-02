@@ -193,12 +193,13 @@
     <Compile Include="Adapters\AniListActivityAdapters\AniListActivityRecyclerAdapter.cs" />
     <Compile Include="Adapters\AniListActivityAdapters\AniListActivityRepliesRecyclerAdapter.cs" />
     <Compile Include="Adapters\AniListActivityAdapters\AniListNotificationRecyclerAdapter.cs" />
+    <Compile Include="Adapters\Base\AniDroidRecyclerAdapter.cs" />
     <Compile Include="Adapters\Base\BaseDraggableRecyclerAdapter.cs" />
+    <Compile Include="Adapters\Base\LazyLoadingAniDroidRecyclerAdapter.cs" />
     <Compile Include="Adapters\Base\LazyLoadingRecyclerViewAdapter.cs" />
     <Compile Include="Adapters\CharacterAdapters\CharacterMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\FragmentlessViewPagerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaRecyclerAdapter.cs" />
-    <Compile Include="Adapters\MediaAdapters\BrowseMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\DiscoverMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaCharactersRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaListRecyclerAdapter.cs" />
@@ -220,6 +221,8 @@
     <Compile Include="Adapters\StudioAdapters\StudioMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\TorrentAdapters\NyaaSiSearchRecyclerAdapter.cs" />
     <Compile Include="Adapters\UserAdapters\UserFollowerRecyclerAdapter.cs" />
+    <Compile Include="Adapters\ViewModels\AniDroidAdapterViewModel.cs" />
+    <Compile Include="Adapters\ViewModels\MediaViewModel.cs" />
     <Compile Include="AniListObject\IAniListActivityPresenter.cs" />
     <Compile Include="AniListObject\Media\IAniListMediaListEditPresenter.cs" />
     <Compile Include="AniListObject\Media\IMediaView.cs" />

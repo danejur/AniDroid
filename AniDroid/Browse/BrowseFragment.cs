@@ -5,6 +5,7 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Content.Res;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.V7.Widget;
@@ -12,6 +13,7 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.MediaAdapters;
+using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Dto;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
@@ -27,6 +29,7 @@ namespace AniDroid.Browse
     {
         public override string FragmentName => "BROWSE_FRAGMENT";
 
+        private MediaRecyclerAdapter _adapter;
         private BaseRecyclerAdapter.RecyclerCardType _cardType;
         private static BrowseFragment _instance;
 
@@ -40,15 +43,13 @@ namespace AniDroid.Browse
         public void ShowMediaSearchResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
         {
             var recycler = View.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
+            _adapter = new MediaRecyclerAdapter(Activity, mediaEnumerable, _cardType)
+            {
+                CreateViewModelFunc = model => new MediaViewModel(model, MediaViewModel.DetailType.FormatRating,
+                    MediaViewModel.DetailType.Genres)
+            };
 
-            var adapter =
-                new MediaRecyclerAdapter(Activity, mediaEnumerable, _cardType)
-                {
-                    PrimaryDetailType = MediaRecyclerAdapter.DetailType.Format,
-                    SecondaryDetailType = MediaRecyclerAdapter.DetailType.AverageRatingPopularity
-                };
-
-            recycler.SetAdapter(adapter);
+            recycler.SetAdapter(_adapter);
         }
 
         protected override void SetInstance(BaseMainActivityFragment instance)
@@ -73,6 +74,13 @@ namespace AniDroid.Browse
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
             Presenter.BrowseAniListMedia(new BrowseMediaDto());
+        }
+
+        public override void OnConfigurationChanged(Configuration newConfig)
+        {
+            base.OnConfigurationChanged(newConfig);
+
+            _adapter.RefreshAdapter();
         }
     }
 }
