@@ -9,34 +9,51 @@ using Android.Content.Res;
 using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.Design.Widget;
 using Android.Support.V4.Content;
 using Android.Support.V7.Widget;
 using Android.Util;
 using Android.Views;
+using Android.Views.Animations;
 using Android.Widget;
 using AniDroid.Adapters.ViewModels;
+using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
+using OneOf;
 
 namespace AniDroid.Adapters.Base
 {
-    public abstract class AniDroidRecyclerAdapter<T, TModel> : BaseRecyclerAdapter where T : AniDroidAdapterViewModel<TModel> where TModel : class
+    public abstract class AniDroidRecyclerAdapter<T, TModel> : BaseRecyclerAdapter<T> where T : AniDroidAdapterViewModel<TModel> where TModel : class
     {
-        // TODO: if we refactor all adapters, this class should take the place of BaseRecyclerAdapter<T>
-
         private int _orientation = LinearLayoutManager.Vertical;
         private RecyclerView.ItemDecoration _decoration;
-        protected readonly ColorStateList DefaultIconColor;
-        protected readonly ColorStateList FavoriteIconColor;
-        protected bool CustomCardUseItemDecoration;
-        public RecyclerCardType CardType { get; protected set; }
-        public int CardColumns { get; protected set; }
-        public List<T> Items { get; protected set; }
-        public sealed override int ItemCount => Items.Count;
+        private readonly IAsyncEnumerable<OneOf<IPagedData<TModel>, IAniListError>> _asyncEnumerable;
+        private IAsyncEnumerator<OneOf<IPagedData<TModel>, IAniListError>> _asyncEnumerator;
+        private bool _isLazyLoading;
+        private bool _dataLoaded;
+
+        protected int LoadingCardWidth = ViewGroup.LayoutParams.MatchParent;
+        protected int LoadingCardHeight = ViewGroup.LayoutParams.WrapContent;
+
+        public Color? LoadingItemBackgroundColor { get; set; }
+        public event EventHandler<bool> DataLoaded;
+        public Func<TModel, T> CreateViewModelFunc { get; set; }
 
         public abstract Action<AniDroidAdapterViewModel<TModel>> ClickAction { get; }
         public abstract Action<AniDroidAdapterViewModel<TModel>> LongClickAction { get; }
 
-        protected AniDroidRecyclerAdapter(BaseAniDroidActivity context, List<T> items, RecyclerCardType cardType, int verticalCardColumns = -1) : base(context)
+        protected AniDroidRecyclerAdapter(BaseAniDroidActivity context,
+            IAsyncEnumerable<OneOf<IPagedData<TModel>, IAniListError>> enumerable, RecyclerCardType cardType,
+            int verticalCardColumns = -1) : this(context, new List<T> {null}, cardType,
+            verticalCardColumns)
+        {
+            _asyncEnumerable = enumerable;
+            _asyncEnumerator = enumerable.GetEnumerator();
+        }
+
+        protected AniDroidRecyclerAdapter(BaseAniDroidActivity context,
+            List<T> items, RecyclerCardType cardType,
+            int verticalCardColumns = -1) : base(context, items, cardType, verticalCardColumns)
         {
             Items = items ?? throw new ArgumentNullException(nameof(items));
             CardType = cardType;
@@ -45,78 +62,84 @@ namespace AniDroid.Adapters.Base
             FavoriteIconColor = ColorStateList.ValueOf(new Color(ContextCompat.GetColor(context, Resource.Color.Favorite_Red)));
         }
 
-        protected void SetHorizontalOrientation()
+        protected AniDroidRecyclerAdapter(BaseAniDroidActivity context,
+            AniDroidRecyclerAdapter<T, TModel> adapter) : base(context, adapter.Items, adapter.CardType, adapter.CardColumns)
         {
-            _orientation = LinearLayoutManager.Horizontal;
+            _asyncEnumerable = adapter._asyncEnumerable;
+            _asyncEnumerator = adapter._asyncEnumerator;
         }
 
-        public void AddItems(params T[] items)
+        public void ResetAdapter()
         {
-            Items.AddRange(items);
+            if (_asyncEnumerable != null)
+            {
+                _asyncEnumerator = _asyncEnumerable.GetEnumerator();
+                Items.Clear();
+                Items.Add(null);
+            }
+
             NotifyDataSetChanged();
         }
 
-        public void AddItems(IEnumerable<T> items)
+        public override bool InsertItem(int position, T item, bool notify = true)
         {
-            Items.AddRange(items);
+            if (_asyncEnumerable != null && !_isLazyLoading)
+            {
+                return true;
+            }
+
+            return base.InsertItem(position, item, notify);
+        }
+
+        public override bool ReplaceItem(int position, T item, bool notify = true)
+        {
+            if (_asyncEnumerable != null && !_isLazyLoading)
+            {
+                return true;
+            }
+
+            return base.ReplaceItem(position, item, notify);
+        }
+
+        public void AddItems(IEnumerable<T> itemsToAdd, bool hasNextPage)
+        {
+            var initialAdd = Items.Count == 1 && Items[0] == null;
+
+            if (hasNextPage)
+            {
+                itemsToAdd = itemsToAdd.Append(null);
+            }
+
+            Items.AddRange(itemsToAdd);
+
             NotifyDataSetChanged();
-        }
 
-        public void MoveItem(int positionFrom, int positionTo)
-        {
-            var item = Items[positionFrom];
-            Items.RemoveAt(positionFrom);
-
-            if (positionTo >= ItemCount)
+            if (initialAdd)
             {
-                AddItems(item);
-            }
-            else
-            {
-                InsertItem(positionTo, item);
+                var controller = AnimationUtils.LoadLayoutAnimation(Context, Resource.Animation.Layout_Animation_Falldown);
+                RecyclerView.LayoutAnimation = controller;
+                RecyclerView.ScheduleLayoutAnimation();
             }
         }
 
-        public void RemoveItem(int position)
+        public void RefreshAdapter()
         {
-            Items.RemoveAt(position);
-            NotifyItemRemoved(position);
+            OnAttachedToRecyclerView(RecyclerView);
         }
 
-        public void RemoveAllItems()
+        public sealed override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
-            Items.Clear();
-            NotifyDataSetChanged();
-        }
-
-        public virtual bool InsertItem(int position, T item, bool notify = true)
-        {
-            if (position >= ItemCount || position < 0) return false;
-            Items.Insert(position, item);
-
-            if (notify)
+            if (viewType == ProgressBarViewType)
             {
-                NotifyDataSetChanged();
+                var view = Context.LayoutInflater.Inflate(Resource.Layout.View_IndeterminateProgressIndicator, parent,
+                    false);
+                view.LayoutParameters.Width = LoadingCardWidth;
+                view.LayoutParameters.Height = LoadingCardHeight;
+                var holder = new ProgressBarViewHolder(view, LoadingItemBackgroundColor);
+
+                return holder;
             }
 
-            return true;
-        }
-
-        public virtual bool ReplaceItem(int position, T item, bool notify = true)
-        {
-            if (position >= ItemCount || position < 0) return false;
-            Items[position] = item;
-
-            if (notify)
-            {
-                NotifyItemChanged(position);
-            }
-
-            return true;
-        }
-
-        public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
-        {
             if (CardType == RecyclerCardType.Custom)
             {
                 return CreateCustomViewHolder(parent, viewType);
@@ -137,7 +160,47 @@ namespace AniDroid.Adapters.Base
             return SetupCardItemViewHolder(new CardItem(Context.LayoutInflater.Inflate(layoutResource, parent, false)));
         }
 
-        public override void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
+        public sealed override async void OnBindViewHolder(RecyclerView.ViewHolder holder, int position)
+        {
+            if (Items[position] != null)
+            {
+                OnBindViewHolderInternal(holder, position);
+                return;
+            }
+
+            if (position < ItemCount - 1 || _isLazyLoading)
+            {
+                return;
+            }
+
+            _isLazyLoading = true;
+
+            var moveNextResult = await _asyncEnumerator.MoveNextAsync();
+
+            _asyncEnumerator.Current?.Switch((IAniListError error) =>
+                    Context.DisplaySnackbarMessage("Error occurred while getting next page of data", Snackbar.LengthLong))
+                .Switch(data =>
+                {
+                    if (!moveNextResult)
+                    {
+                        return;
+                    }
+
+                    if (!_dataLoaded)
+                    {
+                        DataLoaded?.Invoke(RecyclerView, data.PageInfo.Total > 0);
+                        _dataLoaded = true;
+                    }
+
+                    AddItems(data.Data.Select(model => CreateViewModelFunc(model)), data.PageInfo.HasNextPage);
+                });
+
+            RemoveItem(position);
+
+            _isLazyLoading = false;
+        }
+
+        private void OnBindViewHolderInternal(RecyclerView.ViewHolder holder, int position)
         {
             if (CardType == RecyclerCardType.Custom)
             {
@@ -156,52 +219,10 @@ namespace AniDroid.Adapters.Base
             }
         }
 
-        public sealed override void OnAttachedToRecyclerView(RecyclerView recyclerView)
-        {
-            base.OnAttachedToRecyclerView(recyclerView);
-
-            switch (CardType)
-            {
-                case RecyclerCardType.FlatHorizontal:
-                    _decoration = new DefaultItemDecoration(Context);
-                    recyclerView.AddItemDecoration(_decoration);
-                    recyclerView.SetLayoutManager(new LinearLayoutManager(Context, _orientation, false));
-                    break;
-                case RecyclerCardType.Horizontal:
-                    recyclerView.SetLayoutManager(new LinearLayoutManager(Context, _orientation, false));
-                    break;
-                case RecyclerCardType.Vertical:
-                    recyclerView.SetLayoutManager(new GridLayoutManager(Context, CalculateCardColumns(Context, CardColumns), _orientation, false));
-                    break;
-                case RecyclerCardType.Custom:
-                    if (CustomCardUseItemDecoration)
-                    {
-                        _decoration = new DefaultItemDecoration(Context);
-                        recyclerView.AddItemDecoration(_decoration);
-                    }
-                    recyclerView.SetLayoutManager(new LinearLayoutManager(Context));
-                    break;
-            }
-        }
-
-        public override void OnDetachedFromRecyclerView(RecyclerView recyclerView)
-        {
-            base.OnDetachedFromRecyclerView(recyclerView);
-            if (_decoration != null)
-            {
-                recyclerView.RemoveItemDecoration(_decoration);
-            }
-        }
-
-        public void RefreshAdapter()
-        {
-            OnAttachedToRecyclerView(RecyclerView);
-        }
-
         private void RowClick(object sender, EventArgs e)
         {
             var senderView = sender as View;
-            var mediaPos = (int) senderView.GetTag(Resource.Id.Object_Position);
+            var mediaPos = (int)senderView.GetTag(Resource.Id.Object_Position);
             var viewModel = Items[mediaPos];
 
             ClickAction?.Invoke(viewModel);
@@ -210,44 +231,34 @@ namespace AniDroid.Adapters.Base
         private void RowLongClick(object sender, View.LongClickEventArgs longClickEventArgs)
         {
             var senderView = sender as View;
-            var mediaPos = (int) senderView.GetTag(Resource.Id.Object_Position);
+            var mediaPos = (int)senderView.GetTag(Resource.Id.Object_Position);
             var viewModel = Items[mediaPos];
 
             LongClickAction?.Invoke(viewModel);
         }
 
-        private int CalculateCardColumns(BaseAniDroidActivity context, int columnCount)
+        
+
+        public sealed override int GetItemViewType(int position)
         {
-            if (columnCount > 0)
+            return Items[position] == null ? ProgressBarViewType : 0;
+        }
+
+        private class ProgressBarViewHolder : RecyclerView.ViewHolder
+        {
+            public ProgressBarViewHolder(View itemView, Color? backgroundColor = null) : base(itemView)
             {
-                return columnCount;
+                if (backgroundColor.HasValue)
+                {
+                    itemView.SetBackgroundColor(backgroundColor.Value);
+                }
             }
-
-            var outMetrics = new DisplayMetrics();
-            var density = context.Resources.DisplayMetrics.Density;
-
-            context.WindowManager.DefaultDisplay.GetMetrics(outMetrics);
-            var dpWidth = outMetrics.WidthPixels / density;
-
-            return (int) dpWidth / 150;
         }
 
-        public virtual RecyclerView.ViewHolder CreateCustomViewHolder(ViewGroup parent, int viewType)
-        {
-            return SetupCardItemViewHolder(new CardItem(Context.LayoutInflater.Inflate(Resource.Layout.View_CardItem_Horizontal, parent, false)));
-        }
+        #region Constants
 
-        public virtual void BindCustomViewHolder(RecyclerView.ViewHolder holder, int position)
-        {
-        }
+        private const int ProgressBarViewType = -1;
 
-        public virtual void BindCardViewHolder(CardItem holder, int position)
-        {
-        }
-
-        public virtual CardItem SetupCardItemViewHolder(CardItem item)
-        {
-            return item;
-        }
+        #endregion
     }
 }

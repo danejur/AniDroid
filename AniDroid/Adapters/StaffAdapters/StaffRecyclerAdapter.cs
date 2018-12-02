@@ -21,7 +21,7 @@ using OneOf;
 
 namespace AniDroid.Adapters.StaffAdapters
 {
-    public class StaffRecyclerAdapter : LazyLoadingAniDroidRecyclerAdapter<StaffViewModel, Staff>
+    public class StaffRecyclerAdapter : AniDroidRecyclerAdapter<StaffViewModel, Staff>
     {
         public StaffRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Staff>, IAniListError>> enumerable, RecyclerCardType cardType) : base(context, enumerable, cardType)
         {

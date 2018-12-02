@@ -19,7 +19,7 @@ using OneOf;
 
 namespace AniDroid.Adapters.UserAdapters
 {
-    public class UserRecyclerAdapter : LazyLoadingAniDroidRecyclerAdapter<UserViewModel, User>
+    public class UserRecyclerAdapter : AniDroidRecyclerAdapter<UserViewModel, User>
     {
         public UserRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> enumerable, RecyclerCardType cardType) : base(context, enumerable, cardType)
         {

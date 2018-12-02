@@ -20,7 +20,7 @@ using OneOf;
 
 namespace AniDroid.Adapters.CharacterAdapters
 {
-    public class CharacterRecyclerAdapter : LazyLoadingAniDroidRecyclerAdapter<CharacterViewModel, Character>
+    public class CharacterRecyclerAdapter : AniDroidRecyclerAdapter<CharacterViewModel, Character>
     {
         public CharacterRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Character>, IAniListError>> enumerable, RecyclerCardType cardType, int verticalCardColumns = -1) : base(context, enumerable, cardType, verticalCardColumns)
         {

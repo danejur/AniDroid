@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Android.App;
 using Android.Content;
 using Android.Content.Res;
 using Android.Graphics;
@@ -17,8 +18,8 @@ namespace AniDroid.Adapters.Base
     {
         private int _orientation = LinearLayoutManager.Vertical;
         private RecyclerView.ItemDecoration _decoration;
-        protected readonly ColorStateList DefaultIconColor;
-        protected readonly ColorStateList FavoriteIconColor;
+        protected ColorStateList DefaultIconColor;
+        protected ColorStateList FavoriteIconColor;
         protected bool CustomCardUseItemDecoration;
         public RecyclerCardType CardType { get; protected set; }
         public int CardColumns { get; protected set; }
@@ -153,7 +154,7 @@ namespace AniDroid.Adapters.Base
                     recyclerView.SetLayoutManager(new LinearLayoutManager(Context, _orientation, false));
                     break;
                 case RecyclerCardType.Vertical:
-                    recyclerView.SetLayoutManager(new GridLayoutManager(Context, (int)CardColumns, _orientation, false));
+                    recyclerView.SetLayoutManager(new GridLayoutManager(Context, CalculateCardColumns(Context, CardColumns), _orientation, false));
                     break;
                 case RecyclerCardType.Custom:
                     if (CustomCardUseItemDecoration)
@@ -191,6 +192,22 @@ namespace AniDroid.Adapters.Base
         public virtual CardItem SetupCardItemViewHolder(CardItem item)
         {
             return item;
+        }
+
+        private static int CalculateCardColumns(Activity context, int columnCount)
+        {
+            if (columnCount > 0)
+            {
+                return columnCount;
+            }
+
+            var outMetrics = new DisplayMetrics();
+            var density = context.Resources.DisplayMetrics.Density;
+
+            context.WindowManager.DefaultDisplay.GetMetrics(outMetrics);
+            var dpWidth = outMetrics.WidthPixels / density;
+
+            return (int)dpWidth / 150;
         }
     }
 

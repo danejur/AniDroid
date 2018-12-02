@@ -21,7 +21,7 @@ using OneOf;
 
 namespace AniDroid.Adapters.MediaAdapters
 {
-    public class MediaRecyclerAdapter : LazyLoadingAniDroidRecyclerAdapter<MediaViewModel, Media>
+    public class MediaRecyclerAdapter : AniDroidRecyclerAdapter<MediaViewModel, Media>
     {
         public User.UserMediaListOptions UserMediaListOptions { get; set; }
 

@@ -20,7 +20,7 @@ using OneOf;
 
 namespace AniDroid.Adapters.StudioAdapters
 {
-    public class StudioRecyclerAdapter : LazyLoadingAniDroidRecyclerAdapter<StudioViewModel, Studio>
+    public class StudioRecyclerAdapter : AniDroidRecyclerAdapter<StudioViewModel, Studio>
     {
         public StudioRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Studio>, IAniListError>> enumerable) : base(context, enumerable, RecyclerCardType.Horizontal)
         {

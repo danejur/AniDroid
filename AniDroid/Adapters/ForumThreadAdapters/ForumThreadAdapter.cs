@@ -18,7 +18,7 @@ using OneOf;
 
 namespace AniDroid.Adapters.ForumThreadAdapters
 {
-    public class ForumThreadAdapter : LazyLoadingAniDroidRecyclerAdapter<ForumThreadViewModel, ForumThread>
+    public class ForumThreadAdapter : AniDroidRecyclerAdapter<ForumThreadViewModel, ForumThread>
     {
         public ForumThreadAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<ForumThread>, IAniListError>> enumerable) : base(context, enumerable, RecyclerCardType.Horizontal)
         {

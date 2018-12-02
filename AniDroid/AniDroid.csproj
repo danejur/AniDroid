@@ -193,9 +193,8 @@
     <Compile Include="Adapters\AniListActivityAdapters\AniListActivityRecyclerAdapter.cs" />
     <Compile Include="Adapters\AniListActivityAdapters\AniListActivityRepliesRecyclerAdapter.cs" />
     <Compile Include="Adapters\AniListActivityAdapters\AniListNotificationRecyclerAdapter.cs" />
-    <Compile Include="Adapters\Base\AniDroidRecyclerAdapter.cs" />
     <Compile Include="Adapters\Base\BaseDraggableRecyclerAdapter.cs" />
-    <Compile Include="Adapters\Base\LazyLoadingAniDroidRecyclerAdapter.cs" />
+    <Compile Include="Adapters\Base\AniDroidRecyclerAdapter.cs" />
     <Compile Include="Adapters\Base\LazyLoadingRecyclerViewAdapter.cs" />
     <Compile Include="Adapters\CharacterAdapters\CharacterMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\CharacterAdapters\CharacterRecyclerAdapter.cs" />
