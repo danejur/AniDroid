@@ -39,8 +39,8 @@ namespace AniDroid.Adapters.Base
         public event EventHandler<bool> DataLoaded;
         public Func<TModel, T> CreateViewModelFunc { get; set; }
 
-        public abstract Action<AniDroidAdapterViewModel<TModel>> ClickAction { get; }
-        public abstract Action<AniDroidAdapterViewModel<TModel>> LongClickAction { get; }
+        public Action<AniDroidAdapterViewModel<TModel>> ClickAction { get; set; }
+        public Action<AniDroidAdapterViewModel<TModel>> LongClickAction { get; set; }
 
         protected AniDroidRecyclerAdapter(BaseAniDroidActivity context,
             IAsyncEnumerable<OneOf<IPagedData<TModel>, IAniListError>> enumerable, RecyclerCardType cardType,
@@ -83,7 +83,7 @@ namespace AniDroid.Adapters.Base
 
         public override bool InsertItem(int position, T item, bool notify = true)
         {
-            if (_asyncEnumerable != null && !_isLazyLoading)
+            if (_asyncEnumerable != null && _isLazyLoading)
             {
                 return true;
             }
@@ -93,7 +93,7 @@ namespace AniDroid.Adapters.Base
 
         public override bool ReplaceItem(int position, T item, bool notify = true)
         {
-            if (_asyncEnumerable != null && !_isLazyLoading)
+            if (_asyncEnumerable != null && _isLazyLoading)
             {
                 return true;
             }

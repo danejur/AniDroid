@@ -28,13 +28,12 @@ namespace AniDroid.Adapters.MediaAdapters
         public MediaRecyclerAdapter(BaseAniDroidActivity context,
             IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> enumerable, RecyclerCardType cardType) : base(context, enumerable, cardType)
         {
+            ClickAction = viewModel =>
+                MediaActivity.StartActivity(Context, viewModel.Model.Id, BaseAniDroidActivity.ObjectBrowseRequestCode);
+
+            LongClickAction = viewModel =>
+                Context.DisplaySnackbarMessage(viewModel.Model.Title?.UserPreferred, Snackbar.LengthLong);
         }
-
-        public override Action<AniDroidAdapterViewModel<Media>> ClickAction => viewModel =>
-            MediaActivity.StartActivity(Context, viewModel.Model.Id, BaseAniDroidActivity.ObjectBrowseRequestCode);
-
-        public override Action<AniDroidAdapterViewModel<Media>> LongClickAction => viewModel =>
-            Context.DisplaySnackbarMessage(viewModel.Model.Title?.UserPreferred, Snackbar.LengthLong);
 
         public override void BindCardViewHolder(CardItem holder, int position)
         {

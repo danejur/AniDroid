@@ -72,6 +72,8 @@ namespace AniDroid.Adapters.MediaAdapters
                 }
                 else
                 {
+                    // we take the media object that already exists on the list and reuse it because it has
+                    // a lot more stuff already in it from the original request
                     var oldMedia = Items[position].Media;
                     Items[position] = updatedMediaList;
                     Items[position].Media = oldMedia;

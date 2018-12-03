@@ -23,16 +23,13 @@ namespace AniDroid.Adapters.UserAdapters
     {
         public UserRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> enumerable, RecyclerCardType cardType) : base(context, enumerable, cardType)
         {
+            SetDefaultClickActions();
         }
 
         public UserRecyclerAdapter(BaseAniDroidActivity context, List<UserViewModel> list, RecyclerCardType cardType) : base(context, list, cardType)
         {
+            SetDefaultClickActions();
         }
-
-        public override Action<AniDroidAdapterViewModel<User>> ClickAction =>
-            viewModel => UserActivity.StartActivity(Context, viewModel.Model.Id);
-
-        public override Action<AniDroidAdapterViewModel<User>> LongClickAction { get; }
 
         public override void BindCardViewHolder(CardItem holder, int position)
         {
@@ -48,6 +45,12 @@ namespace AniDroid.Adapters.UserAdapters
             item.Button.Visibility = ViewStates.Gone;
             item.DetailSecondary.Visibility = ViewStates.Gone;
             return item;
+        }
+
+        private void SetDefaultClickActions()
+        {
+            ClickAction =
+                viewModel => UserActivity.StartActivity(Context, viewModel.Model.Id);
         }
     }
 }

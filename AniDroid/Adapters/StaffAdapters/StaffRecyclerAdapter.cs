@@ -23,18 +23,18 @@ namespace AniDroid.Adapters.StaffAdapters
 {
     public class StaffRecyclerAdapter : AniDroidRecyclerAdapter<StaffViewModel, Staff>
     {
-        public StaffRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Staff>, IAniListError>> enumerable, RecyclerCardType cardType) : base(context, enumerable, cardType)
+        public StaffRecyclerAdapter(BaseAniDroidActivity context,
+            IAsyncEnumerable<OneOf<IPagedData<Staff>, IAniListError>> enumerable, RecyclerCardType cardType) : base(
+            context, enumerable, cardType)
         {
+            SetDefaultClickActions();
         }
 
-        public StaffRecyclerAdapter(BaseAniDroidActivity context, List<StaffViewModel> list, RecyclerCardType cardType) : base(context, list, cardType)
+        public StaffRecyclerAdapter(BaseAniDroidActivity context, List<StaffViewModel> list, RecyclerCardType cardType)
+            : base(context, list, cardType)
         {
+            SetDefaultClickActions();
         }
-
-        public override Action<AniDroidAdapterViewModel<Staff>> ClickAction => viewModel =>
-            StaffActivity.StartActivity(Context, viewModel.Model.Id, BaseAniDroidActivity.ObjectBrowseRequestCode);
-
-        public override Action<AniDroidAdapterViewModel<Staff>> LongClickAction { get; }
 
         public override void BindCardViewHolder(CardItem holder, int position)
         {
@@ -50,6 +50,12 @@ namespace AniDroid.Adapters.StaffAdapters
         {
             item.Button.Visibility = ViewStates.Gone;
             return item;
+        }
+
+        private void SetDefaultClickActions()
+        {
+            ClickAction = viewModel =>
+                StaffActivity.StartActivity(Context, viewModel.Model.Id, BaseAniDroidActivity.ObjectBrowseRequestCode);
         }
     }
 }

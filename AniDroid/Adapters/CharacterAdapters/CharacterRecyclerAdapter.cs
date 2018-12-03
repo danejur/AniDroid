@@ -22,14 +22,14 @@ namespace AniDroid.Adapters.CharacterAdapters
 {
     public class CharacterRecyclerAdapter : AniDroidRecyclerAdapter<CharacterViewModel, Character>
     {
-        public CharacterRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Character>, IAniListError>> enumerable, RecyclerCardType cardType, int verticalCardColumns = -1) : base(context, enumerable, cardType, verticalCardColumns)
+        public CharacterRecyclerAdapter(BaseAniDroidActivity context,
+            IAsyncEnumerable<OneOf<IPagedData<Character>, IAniListError>> enumerable, RecyclerCardType cardType,
+            int verticalCardColumns = -1) : base(context, enumerable, cardType, verticalCardColumns)
         {
+            ClickAction = viewModel =>
+                CharacterActivity.StartActivity(Context, viewModel.Model.Id,
+                    BaseAniDroidActivity.ObjectBrowseRequestCode);
         }
-
-        public override Action<AniDroidAdapterViewModel<Character>> ClickAction => viewModel =>
-            CharacterActivity.StartActivity(Context, viewModel.Model.Id, BaseAniDroidActivity.ObjectBrowseRequestCode);
-
-        public override Action<AniDroidAdapterViewModel<Character>> LongClickAction { get; }
 
         public override void BindCardViewHolder(CardItem holder, int position)
         {

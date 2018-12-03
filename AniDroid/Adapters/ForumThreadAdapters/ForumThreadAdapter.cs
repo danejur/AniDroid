@@ -20,18 +20,17 @@ namespace AniDroid.Adapters.ForumThreadAdapters
 {
     public class ForumThreadAdapter : AniDroidRecyclerAdapter<ForumThreadViewModel, ForumThread>
     {
-        public ForumThreadAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<ForumThread>, IAniListError>> enumerable) : base(context, enumerable, RecyclerCardType.Horizontal)
+        public ForumThreadAdapter(BaseAniDroidActivity context,
+            IAsyncEnumerable<OneOf<IPagedData<ForumThread>, IAniListError>> enumerable) : base(context, enumerable,
+            RecyclerCardType.Horizontal)
         {
+            ClickAction = viewModel =>
+            {
+                var intent = new Intent(Intent.ActionView);
+                intent.SetData(Android.Net.Uri.Parse(viewModel.Model.SiteUrl));
+                Context.StartActivity(intent);
+            };
         }
-
-        public override Action<AniDroidAdapterViewModel<ForumThread>> ClickAction => viewModel =>
-        {
-            var intent = new Intent(Intent.ActionView);
-            intent.SetData(Android.Net.Uri.Parse(viewModel.Model.SiteUrl));
-            Context.StartActivity(intent);
-        };
-
-        public override Action<AniDroidAdapterViewModel<ForumThread>> LongClickAction { get; }
 
         public override void BindCardViewHolder(CardItem holder, int position)
         {

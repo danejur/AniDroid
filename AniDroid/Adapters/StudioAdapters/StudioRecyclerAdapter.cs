@@ -22,14 +22,13 @@ namespace AniDroid.Adapters.StudioAdapters
 {
     public class StudioRecyclerAdapter : AniDroidRecyclerAdapter<StudioViewModel, Studio>
     {
-        public StudioRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Studio>, IAniListError>> enumerable) : base(context, enumerable, RecyclerCardType.Horizontal)
+        public StudioRecyclerAdapter(BaseAniDroidActivity context,
+            IAsyncEnumerable<OneOf<IPagedData<Studio>, IAniListError>> enumerable) : base(context, enumerable,
+            RecyclerCardType.Horizontal)
         {
+            ClickAction =
+                viewModel => StudioActivity.StartActivity(Context, viewModel.Model.Id);
         }
-
-        public override Action<AniDroidAdapterViewModel<Studio>> ClickAction =>
-            viewModel => StudioActivity.StartActivity(Context, viewModel.Model.Id);
-
-        public override Action<AniDroidAdapterViewModel<Studio>> LongClickAction { get; }
 
         public override void BindCardViewHolder(CardItem holder, int position)
         {
