@@ -33,5 +33,6 @@ namespace AniDroid.Settings
         void CreateMangaListTabOrderItem(Func<List<KeyValuePair<string, bool>>> getMangaLists);
         void CreateAnimeListSortItem(MediaListSortComparer.MediaListSortType sort, MediaListSortComparer.MediaListSortDirection direction);
         void CreateMangaListSortItem(MediaListSortComparer.MediaListSortType sort, MediaListSortComparer.MediaListSortDirection direction);
+        void CreateUseLongClickForEpisodeAddItem(bool useLongClickForEpisodeAdd);
     }
 }

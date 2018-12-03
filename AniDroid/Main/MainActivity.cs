@@ -93,6 +93,7 @@ namespace AniDroid.Main
             _searchButton.Clickable = true;
             _searchButton.Click -= SearchButtonOnClick;
             _searchButton.Click += SearchButtonOnClick;
+
             SelectDefaultFragment();
         }
 

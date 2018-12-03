@@ -142,6 +142,11 @@ namespace AniDroid.MediaList
             return AniDroidSettings.DisplayMediaListItemProgressColors;
         }
 
+        public bool GetUseLongClickForEpisodeAdd()
+        {
+            return AniDroidSettings.UseLongClickForEpisodeAdd;
+        }
+
         public MediaListSortComparer.MediaListSortDirection GetMediaListSortDirection(Media.MediaType mediaType)
         {
             if (Media.MediaType.Anime.Equals(mediaType))

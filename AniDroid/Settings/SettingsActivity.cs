@@ -215,6 +215,21 @@ namespace AniDroid.Settings
             _settingsContainer.AddView(CreateSettingDivider(this));
         }
 
+        public void CreateUseLongClickForEpisodeAddItem(bool useLongClickForEpisodeAdd)
+        {
+            _settingsContainer.AddView(
+                CreateSwitchSettingRow(this, "Use Long Press When Adding Episodes/Chapters",
+                    "When this setting is enabled, tapping the plus icon on your anime/manga lists to add an episode/chapter will require you to long press on the icon instead. Use this if you accidentally add episodes when trying to hit the search button.",
+                    useLongClickForEpisodeAdd, true,
+                    (sender, args) =>
+                    {
+                        Presenter.SetUseLongClickForEpisodeAdd(args.IsChecked);
+                        _recreateActivity = true;
+                        Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
+                    }));
+            _settingsContainer.AddView(CreateSettingDivider(this));
+        }
+
         #endregion
 
         public static void StartActivity(Activity context)
