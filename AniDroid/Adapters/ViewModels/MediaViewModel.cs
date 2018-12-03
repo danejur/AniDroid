@@ -32,11 +32,13 @@ namespace AniDroid.Adapters.ViewModels
             FormatRating,
             Genres,
             UserScore,
+            ListStatus,
+            ListStatusThenGenres
         }
 
         public static MediaViewModel CreateMediaViewModel(Media model)
         {
-            return new MediaViewModel(model, MediaDetailType.FormatRating, MediaDetailType.Genres);
+            return new MediaViewModel(model, MediaDetailType.FormatRating, MediaDetailType.ListStatusThenGenres);
         }
 
         private string GetDetail(MediaDetailType mediaDetailType)
@@ -56,6 +58,10 @@ namespace AniDroid.Adapters.ViewModels
             else if (mediaDetailType == MediaDetailType.Genres)
             {
                 retString = Model.Genres?.Any() == true ? string.Join(", ", Model.Genres) : "(No Genres)";
+            }
+            else if (mediaDetailType == MediaDetailType.ListStatusThenGenres)
+            {
+                retString = Model.MediaListEntry?.Status != null ? $"On List: {Model.MediaListEntry?.Status}" : GetDetail(MediaDetailType.Genres);
             }
 
             return retString;

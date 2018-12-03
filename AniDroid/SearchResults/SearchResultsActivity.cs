@@ -66,7 +66,8 @@ namespace AniDroid.SearchResults
                                 viewModel.Model.MediaListEntry,
                                 Settings.LoggedInUser?.MediaListOptions);
                         }
-                    }
+                    },
+
             };
 
             _recyclerView.SetAdapter(_adapter);
@@ -129,7 +130,7 @@ namespace AniDroid.SearchResults
             var mediaAdapter = _adapter as MediaRecyclerAdapter;
 
             var itemPosition =
-                mediaAdapter?.Items.FindIndex(x =>+ x.Model?.Id == mediaList.Media?.Id);
+                mediaAdapter?.Items.FindIndex(x => x.Model?.Id == mediaList.Media?.Id);
 
             if (itemPosition == null || mediaList.Media == null)
             {
@@ -147,6 +148,21 @@ namespace AniDroid.SearchResults
                 ?.RemoveMediaListItem(mediaListId);
             (MediaListFragment.GetInstance(MediaListFragment.MangaMediaListFragmentName) as MediaListFragment)
                 ?.RemoveMediaListItem(mediaListId);
+
+            var mediaAdapter = _adapter as MediaRecyclerAdapter;
+
+            var itemPosition =
+                mediaAdapter?.Items.FindIndex(x => x.Model?.MediaListEntry?.Id == mediaListId);
+
+            if (itemPosition == null)
+            {
+                return;
+            }
+
+            var item = mediaAdapter.Items[itemPosition.Value];
+            item.Model.MediaListEntry = null;
+
+            mediaAdapter.ReplaceItem(itemPosition.Value, mediaAdapter.CreateViewModelFunc?.Invoke(item.Model));
         }
 
         public override void DisplaySnackbarMessage(string message, int length)

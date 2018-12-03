@@ -58,13 +58,6 @@ namespace AniDroid.Adapters.MediaAdapters
             return item;
         }
 
-        public static MediaRecyclerAdapter CreateBrowseMediaRecyclerAdapter(BaseAniDroidActivity context,
-            IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> enumerable, RecyclerCardType cardType,
-            Media.MediaSort sort)
-        {
-            return new MediaRecyclerAdapter(context, enumerable, cardType);
-        }
-
         //private static MediaViewModel.MediaDetailType GetDetailType(Media.MediaSort sort)
         //{
         //    if (Media.MediaSort.Popularity == sort || Media.MediaSort.PopularityDesc == sort)
