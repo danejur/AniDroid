@@ -44,26 +44,24 @@ namespace AniDroid.Adapters.Base
 
         protected AniDroidRecyclerAdapter(BaseAniDroidActivity context,
             IAsyncEnumerable<OneOf<IPagedData<TModel>, IAniListError>> enumerable, RecyclerCardType cardType,
-            int verticalCardColumns = -1) : this(context, new List<T> {null}, cardType,
-            verticalCardColumns)
+            Func<TModel, T> createViewModelFunc) : this(context, new List<T> {null}, cardType, createViewModelFunc)
         {
             _asyncEnumerable = enumerable;
             _asyncEnumerator = enumerable.GetEnumerator();
         }
 
         protected AniDroidRecyclerAdapter(BaseAniDroidActivity context,
-            List<T> items, RecyclerCardType cardType,
-            int verticalCardColumns = -1) : base(context, items, cardType, verticalCardColumns)
+            List<T> items, RecyclerCardType cardType, Func<TModel, T> createViewModelFunc) : base(context, items, cardType)
         {
             Items = items ?? throw new ArgumentNullException(nameof(items));
             CardType = cardType;
-            CardColumns = verticalCardColumns;
             DefaultIconColor = ColorStateList.ValueOf(new Color(context.GetThemedColor(Resource.Attribute.Secondary_Dark)));
             FavoriteIconColor = ColorStateList.ValueOf(new Color(ContextCompat.GetColor(context, Resource.Color.Favorite_Red)));
+            CreateViewModelFunc = createViewModelFunc;
         }
 
         protected AniDroidRecyclerAdapter(BaseAniDroidActivity context,
-            AniDroidRecyclerAdapter<T, TModel> adapter) : base(context, adapter.Items, adapter.CardType, adapter.CardColumns)
+            AniDroidRecyclerAdapter<T, TModel> adapter) : base(context, adapter.Items, adapter.CardType)
         {
             _asyncEnumerable = adapter._asyncEnumerable;
             _asyncEnumerator = adapter._asyncEnumerator;

@@ -21,8 +21,9 @@ namespace AniDroid.Adapters.ForumThreadAdapters
     public class ForumThreadAdapter : AniDroidRecyclerAdapter<ForumThreadViewModel, ForumThread>
     {
         public ForumThreadAdapter(BaseAniDroidActivity context,
-            IAsyncEnumerable<OneOf<IPagedData<ForumThread>, IAniListError>> enumerable) : base(context, enumerable,
-            RecyclerCardType.Horizontal)
+            IAsyncEnumerable<OneOf<IPagedData<ForumThread>, IAniListError>> enumerable,
+            Func<ForumThread, ForumThreadViewModel> createViewModelFunc) : base(context, enumerable,
+            RecyclerCardType.Horizontal, createViewModelFunc)
         {
             ClickAction = viewModel =>
             {

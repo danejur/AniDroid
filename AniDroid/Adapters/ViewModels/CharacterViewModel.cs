@@ -15,8 +15,6 @@ namespace AniDroid.Adapters.ViewModels
 {
     public class CharacterViewModel : AniDroidAdapterViewModel<Character>
     {
-        public Character.Edge ModelEdge { get; protected set; }
-
         private CharacterViewModel(Character model, CharacterDetailType primaryCharacterDetailType, CharacterDetailType secondaryCharacterDetailType) : base(model)
         {
             TitleText = $"{Model.Name?.FormattedName}";
@@ -28,21 +26,12 @@ namespace AniDroid.Adapters.ViewModels
         public enum CharacterDetailType
         {
             None,
-            NativeName,
-            Role
+            NativeName
         }
 
         public static CharacterViewModel CreateCharacterViewModel(Character model)
         {
             return new CharacterViewModel(model, CharacterDetailType.NativeName, CharacterDetailType.None);
-        }
-
-        public static CharacterViewModel CreateMediaCharacterViewModel(Character model, Character.Edge edge)
-        {
-            return new CharacterViewModel(model, CharacterDetailType.NativeName, CharacterDetailType.None)
-            {
-                ModelEdge = edge
-            };
         }
 
         private string GetDetail(CharacterDetailType detailType)
@@ -53,10 +42,10 @@ namespace AniDroid.Adapters.ViewModels
             {
                 retString = $"{Model.Name?.Native}";
             }
-            else if (detailType == CharacterDetailType.Role)
-            {
-                retString = $"{ModelEdge?.Role?.DisplayValue}";
-            }
+            //else if (detailType == CharacterDetailType.Role)
+            //{
+            //    retString = $"{ModelEdge?.Role?.DisplayValue}";
+            //}
 
             return retString;
         }

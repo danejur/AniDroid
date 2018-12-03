@@ -55,62 +55,53 @@ namespace AniDroid.SearchResults
 
         public void ShowMediaSearchResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
         {
-            _adapter = new MediaRecyclerAdapter(this, mediaEnumerable, _cardType)
+            _adapter = new MediaRecyclerAdapter(this, mediaEnumerable, _cardType, MediaViewModel.CreateMediaViewModel)
             {
-                CreateViewModelFunc = MediaViewModel.CreateMediaViewModel,
                 LongClickAction = viewModel =>
+                {
+                    if (Settings?.IsUserAuthenticated == true)
                     {
-                        if (Settings?.IsUserAuthenticated == true)
-                        {
-                            EditMediaListItemDialog.Create(this, Presenter, viewModel.Model,
-                                viewModel.Model.MediaListEntry,
-                                Settings.LoggedInUser?.MediaListOptions);
-                        }
-                    },
+                        EditMediaListItemDialog.Create(this, Presenter, viewModel.Model,
+                            viewModel.Model.MediaListEntry,
+                            Settings.LoggedInUser?.MediaListOptions);
+                    }
+                },
 
             };
 
             _recyclerView.SetAdapter(_adapter);
         }
 
-        public void ShowCharacterSearchResults(IAsyncEnumerable<OneOf<IPagedData<Character>, IAniListError>> characterEnumerable)
+        public void ShowCharacterSearchResults(
+            IAsyncEnumerable<OneOf<IPagedData<Character>, IAniListError>> characterEnumerable)
         {
-            _recyclerView.SetAdapter(_adapter = new CharacterRecyclerAdapter(this, characterEnumerable, _cardType)
-            {
-                CreateViewModelFunc = CharacterViewModel.CreateCharacterViewModel
-            });
+            _recyclerView.SetAdapter(_adapter = new CharacterRecyclerAdapter(this, characterEnumerable, _cardType,
+                CharacterViewModel.CreateCharacterViewModel));
         }
 
         public void ShowStaffSearchResults(IAsyncEnumerable<OneOf<IPagedData<Staff>, IAniListError>> staffEnumerable)
         {
-            _recyclerView.SetAdapter(_adapter = new StaffRecyclerAdapter(this, staffEnumerable, _cardType)
-            {
-                CreateViewModelFunc = StaffViewModel.CreateStaffViewModel
-            });
+            _recyclerView.SetAdapter(_adapter =
+                new StaffRecyclerAdapter(this, staffEnumerable, _cardType, StaffViewModel.CreateStaffViewModel));
         }
 
         public void ShowUserSearchResults(IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> userEnumerable)
         {
-            _recyclerView.SetAdapter(_adapter = new UserRecyclerAdapter(this, userEnumerable, _cardType)
-            {
-                CreateViewModelFunc = UserViewModel.CreateUserViewModel
-            });
+            _recyclerView.SetAdapter(
+                _adapter = new UserRecyclerAdapter(this, userEnumerable, _cardType, UserViewModel.CreateUserViewModel));
         }
 
-        public void ShowForumThreadSearchResults(IAsyncEnumerable<OneOf<IPagedData<ForumThread>, IAniListError>> forumThreadEnumerable)
+        public void ShowForumThreadSearchResults(
+            IAsyncEnumerable<OneOf<IPagedData<ForumThread>, IAniListError>> forumThreadEnumerable)
         {
-            _recyclerView.SetAdapter(_adapter = new ForumThreadAdapter(this, forumThreadEnumerable)
-            {
-                CreateViewModelFunc = ForumThreadViewModel.CreateForumThreadViewModel
-            });
+            _recyclerView.SetAdapter(_adapter = new ForumThreadAdapter(this, forumThreadEnumerable,
+                ForumThreadViewModel.CreateForumThreadViewModel));
         }
 
         public void ShowStudioSearchResults(IAsyncEnumerable<OneOf<IPagedData<Studio>, IAniListError>> studioEnumerable)
         {
-            _recyclerView.SetAdapter(_adapter = new StudioRecyclerAdapter(this, studioEnumerable)
-            {
-                CreateViewModelFunc = StudioViewModel.CreateStudioViewModel
-            });
+            _recyclerView.SetAdapter(_adapter =
+                new StudioRecyclerAdapter(this, studioEnumerable, StudioViewModel.CreateStudioViewModel));
         }
 
         public void UpdateMediaListItem(Media.MediaList mediaList)

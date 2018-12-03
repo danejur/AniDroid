@@ -27,14 +27,13 @@ namespace AniDroid.Dialogs
             dialogView.LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent,
                 ViewGroup.LayoutParams.MatchParent);
             var dialogRecycler = dialogView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
-            var recyclerAdapter = new StaffRecyclerAdapter(context, staff.Select(StaffViewModel.CreateStaffViewModel).ToList(),
-                BaseRecyclerAdapter.RecyclerCardType.FlatHorizontal)
-            {
-                CreateViewModelFunc = StaffViewModel.CreateStaffViewModel
-            };
+            var recyclerAdapter = new StaffRecyclerAdapter(context,
+                staff.Select(StaffViewModel.CreateStaffViewModel).ToList(),
+                BaseRecyclerAdapter.RecyclerCardType.FlatHorizontal, StaffViewModel.CreateStaffViewModel);
             dialogRecycler.SetAdapter(recyclerAdapter);
 
-            var dialog = new Android.Support.V7.App.AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme));
+            var dialog = new Android.Support.V7.App.AlertDialog.Builder(context,
+                context.GetThemedResourceId(Resource.Attribute.Dialog_Theme));
             dialog.SetView(dialogView);
             dialog.Show();
         }

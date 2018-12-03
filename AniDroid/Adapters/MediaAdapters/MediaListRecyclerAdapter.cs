@@ -33,8 +33,8 @@ namespace AniDroid.Adapters.MediaAdapters
 
         public MediaListRecyclerAdapter(BaseAniDroidActivity context, Media.MediaListGroup mediaListGroup,
             User.UserMediaListOptions mediaListOptions, MediaListPresenter presenter, RecyclerCardType cardType,
-            MediaListItemViewType viewType, bool highlightPriorityItems, bool displayProgressColors, bool editable = true, bool useLongClickForEpisodeAdd = false, int verticalCardColumns = 2) : base(context, mediaListGroup.Entries,
-            cardType, verticalCardColumns)
+            MediaListItemViewType viewType, bool highlightPriorityItems, bool displayProgressColors, bool editable = true, bool useLongClickForEpisodeAdd = false) : base(context, mediaListGroup.Entries,
+            cardType)
         {
             _presenter = presenter;
             _mediaListOptions = mediaListOptions;

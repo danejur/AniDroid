@@ -23,8 +23,9 @@ namespace AniDroid.Adapters.StudioAdapters
     public class StudioRecyclerAdapter : AniDroidRecyclerAdapter<StudioViewModel, Studio>
     {
         public StudioRecyclerAdapter(BaseAniDroidActivity context,
-            IAsyncEnumerable<OneOf<IPagedData<Studio>, IAniListError>> enumerable) : base(context, enumerable,
-            RecyclerCardType.Horizontal)
+            IAsyncEnumerable<OneOf<IPagedData<Studio>, IAniListError>> enumerable,
+            Func<Studio, StudioViewModel> createViewModelFunc) : base(context, enumerable, RecyclerCardType.Horizontal,
+            createViewModelFunc)
         {
             ClickAction =
                 viewModel => StudioActivity.StartActivity(Context, viewModel.Model.Id);

@@ -21,12 +21,15 @@ namespace AniDroid.Adapters.UserAdapters
 {
     public class UserRecyclerAdapter : AniDroidRecyclerAdapter<UserViewModel, User>
     {
-        public UserRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> enumerable, RecyclerCardType cardType) : base(context, enumerable, cardType)
+        public UserRecyclerAdapter(BaseAniDroidActivity context,
+            IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> enumerable, RecyclerCardType cardType,
+            Func<User, UserViewModel> createViewModelFunc) : base(context, enumerable, cardType, createViewModelFunc)
         {
             SetDefaultClickActions();
         }
 
-        public UserRecyclerAdapter(BaseAniDroidActivity context, List<UserViewModel> list, RecyclerCardType cardType) : base(context, list, cardType)
+        public UserRecyclerAdapter(BaseAniDroidActivity context, List<UserViewModel> items, RecyclerCardType cardType,
+            Func<User, UserViewModel> createViewModelFunc) : base(context, items, cardType, createViewModelFunc)
         {
             SetDefaultClickActions();
         }

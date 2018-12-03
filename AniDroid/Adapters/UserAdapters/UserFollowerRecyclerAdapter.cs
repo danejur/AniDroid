@@ -20,7 +20,7 @@ namespace AniDroid.Adapters.UserAdapters
 {
     public class UserFollowerRecyclerAdapter : LazyLoadingRecyclerViewAdapter<User>
     {
-        public UserFollowerRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> enumerable, RecyclerCardType cardType, int verticalCardColumns = 3) : base(context, enumerable, cardType, verticalCardColumns)
+        public UserFollowerRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> enumerable, RecyclerCardType cardType) : base(context, enumerable, cardType)
         {
         }
 

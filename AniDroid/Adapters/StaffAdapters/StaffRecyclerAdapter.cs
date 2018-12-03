@@ -24,14 +24,14 @@ namespace AniDroid.Adapters.StaffAdapters
     public class StaffRecyclerAdapter : AniDroidRecyclerAdapter<StaffViewModel, Staff>
     {
         public StaffRecyclerAdapter(BaseAniDroidActivity context,
-            IAsyncEnumerable<OneOf<IPagedData<Staff>, IAniListError>> enumerable, RecyclerCardType cardType) : base(
-            context, enumerable, cardType)
+            IAsyncEnumerable<OneOf<IPagedData<Staff>, IAniListError>> enumerable, RecyclerCardType cardType,
+            Func<Staff, StaffViewModel> createViewModelFunc) : base(context, enumerable, cardType, createViewModelFunc)
         {
             SetDefaultClickActions();
         }
 
-        public StaffRecyclerAdapter(BaseAniDroidActivity context, List<StaffViewModel> list, RecyclerCardType cardType)
-            : base(context, list, cardType)
+        public StaffRecyclerAdapter(BaseAniDroidActivity context, List<StaffViewModel> items, RecyclerCardType cardType,
+            Func<Staff, StaffViewModel> createViewModelFunc) : base(context, items, cardType, createViewModelFunc)
         {
             SetDefaultClickActions();
         }

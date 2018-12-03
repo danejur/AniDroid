@@ -24,7 +24,8 @@ namespace AniDroid.Adapters.CharacterAdapters
     {
         public CharacterRecyclerAdapter(BaseAniDroidActivity context,
             IAsyncEnumerable<OneOf<IPagedData<Character>, IAniListError>> enumerable, RecyclerCardType cardType,
-            int verticalCardColumns = -1) : base(context, enumerable, cardType, verticalCardColumns)
+            Func<Character, CharacterViewModel> createViewModelFunc) : base(context, enumerable, cardType,
+            createViewModelFunc)
         {
             ClickAction = viewModel =>
                 CharacterActivity.StartActivity(Context, viewModel.Model.Id,

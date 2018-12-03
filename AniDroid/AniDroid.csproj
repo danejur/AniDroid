@@ -196,6 +196,7 @@
     <Compile Include="Adapters\Base\BaseDraggableRecyclerAdapter.cs" />
     <Compile Include="Adapters\Base\AniDroidRecyclerAdapter.cs" />
     <Compile Include="Adapters\Base\LazyLoadingRecyclerViewAdapter.cs" />
+    <Compile Include="Adapters\CharacterAdapters\CharacterEdgeRecyclerAdapter.cs" />
     <Compile Include="Adapters\CharacterAdapters\CharacterMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\CharacterAdapters\CharacterRecyclerAdapter.cs" />
     <Compile Include="Adapters\ForumThreadAdapters\ForumThreadAdapter.cs" />
@@ -219,6 +220,7 @@
     <Compile Include="Adapters\UserAdapters\UserFollowerRecyclerAdapter.cs" />
     <Compile Include="Adapters\UserAdapters\UserRecyclerAdapter.cs" />
     <Compile Include="Adapters\ViewModels\AniDroidAdapterViewModel.cs" />
+    <Compile Include="Adapters\ViewModels\CharacterEdgeViewModel.cs" />
     <Compile Include="Adapters\ViewModels\CharacterViewModel.cs" />
     <Compile Include="Adapters\ViewModels\ForumThreadViewModel.cs" />
     <Compile Include="Adapters\ViewModels\MediaViewModel.cs" />

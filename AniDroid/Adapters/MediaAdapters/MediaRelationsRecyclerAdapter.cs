@@ -21,7 +21,7 @@ namespace AniDroid.Adapters.MediaAdapters
 {
     public class MediaRelationsRecyclerAdapter : BaseRecyclerAdapter<Media.Edge>
     {
-        public MediaRelationsRecyclerAdapter(BaseAniDroidActivity context, List<Media.Edge> items, RecyclerCardType cardType, int verticalCardColumns = 2) : base(context, items, cardType, verticalCardColumns)
+        public MediaRelationsRecyclerAdapter(BaseAniDroidActivity context, List<Media.Edge> items, RecyclerCardType cardType) : base(context, items, cardType)
         {
         }
 

@@ -49,11 +49,8 @@ namespace AniDroid.Browse
 
         public void ShowMediaSearchResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
         {
-            _adapter = new MediaRecyclerAdapter(this, mediaEnumerable, _cardType)
-            {
-                CreateViewModelFunc = MediaViewModel.CreateMediaViewModel
-            };
-            _recyclerView.SetAdapter(_adapter);
+            _recyclerView.SetAdapter(_adapter =
+                new MediaRecyclerAdapter(this, mediaEnumerable, _cardType, MediaViewModel.CreateMediaViewModel));
         }
 
         public override void DisplaySnackbarMessage(string message, int length)
