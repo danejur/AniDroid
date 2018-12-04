@@ -19,7 +19,7 @@ namespace AniDroid.Adapters.MediaAdapters
 {
     public class MediaStudiosRecyclerAdapter : BaseRecyclerAdapter<Studio.Edge>
     {
-        public MediaStudiosRecyclerAdapter(BaseAniDroidActivity context, List<Studio.Edge> items) : base(context, items, RecyclerCardType.Horizontal, 0)
+        public MediaStudiosRecyclerAdapter(BaseAniDroidActivity context, List<Studio.Edge> items) : base(context, items, RecyclerCardType.Horizontal)
         {
         }
 

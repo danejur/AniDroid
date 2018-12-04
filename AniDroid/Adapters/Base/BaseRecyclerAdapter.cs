@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Android.App;
 using Android.Content;
 using Android.Content.Res;
 using Android.Graphics;
@@ -17,19 +18,17 @@ namespace AniDroid.Adapters.Base
     {
         private int _orientation = LinearLayoutManager.Vertical;
         private RecyclerView.ItemDecoration _decoration;
-        protected readonly ColorStateList DefaultIconColor;
-        protected readonly ColorStateList FavoriteIconColor;
+        protected ColorStateList DefaultIconColor;
+        protected ColorStateList FavoriteIconColor;
         protected bool CustomCardUseItemDecoration;
         public RecyclerCardType CardType { get; protected set; }
-        public int CardColumns { get; protected set; }
         public List<T> Items { get; protected set; }
         public sealed override int ItemCount => Items.Count;
 
-        protected BaseRecyclerAdapter(BaseAniDroidActivity context, List<T> items, RecyclerCardType cardType, int verticalCardColumns = 2) : base(context)
+        protected BaseRecyclerAdapter(BaseAniDroidActivity context, List<T> items, RecyclerCardType cardType) : base(context)
         {
             Items = items ?? throw new ArgumentNullException(nameof(items));
             CardType = cardType;
-            CardColumns = verticalCardColumns;
             DefaultIconColor = ColorStateList.ValueOf(new Color(context.GetThemedColor(Resource.Attribute.Secondary_Dark)));
             FavoriteIconColor = ColorStateList.ValueOf(new Color(ContextCompat.GetColor(context, Resource.Color.Favorite_Red)));
         }
@@ -153,7 +152,7 @@ namespace AniDroid.Adapters.Base
                     recyclerView.SetLayoutManager(new LinearLayoutManager(Context, _orientation, false));
                     break;
                 case RecyclerCardType.Vertical:
-                    recyclerView.SetLayoutManager(new GridLayoutManager(Context, (int)CardColumns, _orientation, false));
+                    recyclerView.SetLayoutManager(new GridLayoutManager(Context, CalculateCardColumns(Context), _orientation, false));
                     break;
                 case RecyclerCardType.Custom:
                     if (CustomCardUseItemDecoration)
@@ -191,6 +190,17 @@ namespace AniDroid.Adapters.Base
         public virtual CardItem SetupCardItemViewHolder(CardItem item)
         {
             return item;
+        }
+
+        private static int CalculateCardColumns(Activity context)
+        {
+            var outMetrics = new DisplayMetrics();
+            var density = context.Resources.DisplayMetrics.Density;
+
+            context.WindowManager.DefaultDisplay.GetMetrics(outMetrics);
+            var dpWidth = outMetrics.WidthPixels / density;
+
+            return (int)dpWidth / 150;
         }
     }
 

@@ -195,11 +195,15 @@
     <Compile Include="Adapters\AniListActivityAdapters\AniListActivityRepliesRecyclerAdapter.cs" />
     <Compile Include="Adapters\AniListActivityAdapters\AniListNotificationRecyclerAdapter.cs" />
     <Compile Include="Adapters\Base\BaseDraggableRecyclerAdapter.cs" />
+    <Compile Include="Adapters\Base\AniDroidRecyclerAdapter.cs" />
     <Compile Include="Adapters\Base\LazyLoadingRecyclerViewAdapter.cs" />
+    <Compile Include="Adapters\CharacterAdapters\CharacterEdgeRecyclerAdapter.cs" />
     <Compile Include="Adapters\CharacterAdapters\CharacterMediaRecyclerAdapter.cs" />
+    <Compile Include="Adapters\CharacterAdapters\CharacterRecyclerAdapter.cs" />
+    <Compile Include="Adapters\ForumThreadAdapters\ForumThreadAdapter.cs" />
     <Compile Include="Adapters\FragmentlessViewPagerAdapter.cs" />
+    <Compile Include="Adapters\General\CheckBoxItemRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaRecyclerAdapter.cs" />
-    <Compile Include="Adapters\MediaAdapters\BrowseMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\DiscoverMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaCharactersRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaListRecyclerAdapter.cs" />
@@ -209,18 +213,22 @@
     <Compile Include="Adapters\MediaAdapters\MediaStreamingEpisodesRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaStudiosRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaTagsRecyclerAdapter.cs" />
-    <Compile Include="Adapters\SearchAdapters\CharacterSearchRecyclerAdapter.cs" />
-    <Compile Include="Adapters\SearchAdapters\ForumThreadSearchRecyclerAdapter.cs" />
-    <Compile Include="Adapters\SearchAdapters\MediaSearchRecyclerAdapter.cs" />
-    <Compile Include="Adapters\SearchAdapters\StaffSearchRecyclerAdapter.cs" />
-    <Compile Include="Adapters\SearchAdapters\StudioSearchRecyclerAdapter.cs" />
-    <Compile Include="Adapters\SearchAdapters\UserSearchRecyclerAdapter.cs" />
     <Compile Include="Adapters\StaffAdapters\StaffCharactersRecyclerAdapter.cs" />
     <Compile Include="Adapters\StaffAdapters\StaffMediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\StaffAdapters\StaffRecyclerAdapter.cs" />
     <Compile Include="Adapters\StudioAdapters\StudioMediaRecyclerAdapter.cs" />
+    <Compile Include="Adapters\StudioAdapters\StudioRecyclerAdapter.cs" />
     <Compile Include="Adapters\TorrentAdapters\NyaaSiSearchRecyclerAdapter.cs" />
     <Compile Include="Adapters\UserAdapters\UserFollowerRecyclerAdapter.cs" />
+    <Compile Include="Adapters\UserAdapters\UserRecyclerAdapter.cs" />
+    <Compile Include="Adapters\ViewModels\AniDroidAdapterViewModel.cs" />
+    <Compile Include="Adapters\ViewModels\CharacterEdgeViewModel.cs" />
+    <Compile Include="Adapters\ViewModels\CharacterViewModel.cs" />
+    <Compile Include="Adapters\ViewModels\ForumThreadViewModel.cs" />
+    <Compile Include="Adapters\ViewModels\MediaViewModel.cs" />
+    <Compile Include="Adapters\ViewModels\StaffViewModel.cs" />
+    <Compile Include="Adapters\ViewModels\StudioViewModel.cs" />
+    <Compile Include="Adapters\ViewModels\UserViewModel.cs" />
     <Compile Include="AniListObject\IAniListActivityPresenter.cs" />
     <Compile Include="AniListObject\Media\IAniListMediaListEditPresenter.cs" />
     <Compile Include="AniListObject\Media\IMediaView.cs" />
@@ -253,6 +261,7 @@
     <Compile Include="Dialogs\AniListActivityCreateDialog.cs" />
     <Compile Include="Dialogs\AniListNotificationsDialog.cs" />
     <Compile Include="Dialogs\EditMediaListItemDialog.cs" />
+    <Compile Include="Dialogs\MediaListFilterDialog.cs" />
     <Compile Include="Dialogs\MediaListTabOrderDialog.cs" />
     <Compile Include="Dialogs\MediaListSortDialog.cs" />
     <Compile Include="Dialogs\MediaStreamingEpisodeListDialog.cs" />
@@ -563,16 +572,6 @@
     <AndroidResource Include="Resources\drawable\SplashScreenBackground.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AniDroid.AniList\AniDroid.AniList\AniDroid.AniList.csproj">
-      <Project>{49fb1693-b542-4c68-82f9-19762a6afb29}</Project>
-      <Name>AniDroid.AniList</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AniDroid.Torrent\AniDroid.Torrent.csproj">
-      <Project>{6e34b7af-7e77-4f94-b56a-fdf1462edc34}</Project>
-      <Name>AniDroid.Torrent</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\menu\User_ActionBar.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -823,6 +822,27 @@
     <AndroidResource Include="Resources\layout\Dialog_TorrentSearch.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\svg_playlist_check.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\svg_filter.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Dialog_MediaListFilter.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AniDroid.AniList\AniDroid.AniList\AniDroid.AniList.csproj">
+      <Project>{49fb1693-b542-4c68-82f9-19762a6afb29}</Project>
+      <Name>AniDroid.AniList</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AniDroid.Torrent\AniDroid.Torrent.csproj">
+      <Project>{6e34b7af-7e77-4f94-b56a-fdf1462edc34}</Project>
+      <Name>AniDroid.Torrent</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

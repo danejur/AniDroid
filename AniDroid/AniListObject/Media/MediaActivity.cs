@@ -17,8 +17,10 @@ using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters;
+using AniDroid.Adapters.CharacterAdapters;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Adapters.StaffAdapters;
+using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList;
 using AniDroid.AniList.Dto;
 using AniDroid.AniList.Interfaces;
@@ -417,7 +419,12 @@ namespace AniDroid.AniListObject.Media
             var mediaCharactersEnumerable = Presenter.GetMediaCharactersEnumerable(mediaId, PageLength);
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
-            var dialogRecyclerAdapter = new MediaCharactersRecyclerAdapter(this, mediaCharactersEnumerable, CardType);
+            var dialogRecyclerAdapter = new CharacterEdgeRecyclerAdapter(this, mediaCharactersEnumerable, CardType,
+                CharacterEdgeViewModel.CreateCharacterEdgeViewModel)
+            {
+                ButtonIconResourceId = Resource.Drawable.ic_record_voice_over_white_24px,
+                ButtonClickAction = viewModel => StaffListDialog.Create(this, viewModel.Model.VoiceActors)
+            };
             recycler.SetAdapter(dialogRecyclerAdapter);
 
             return retView;

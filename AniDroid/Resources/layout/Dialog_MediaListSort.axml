@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
     <LinearLayout
@@ -75,4 +74,4 @@
                 android:id="@+id/MediaListSort_Descending" />
         </RadioGroup>
     </LinearLayout>
-</LinearLayout>
+</ScrollView>

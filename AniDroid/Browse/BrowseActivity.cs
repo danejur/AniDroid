@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
+using Android.Content.Res;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
@@ -12,6 +13,7 @@ using Android.Support.V7.Widget;
 using Android.Views;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.MediaAdapters;
+using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Dto;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
@@ -25,13 +27,14 @@ using OneOf;
 
 namespace AniDroid.Browse
 {
-    [Activity(Label = "Browse")]
+    [Activity(Label = "Browse", ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.KeyboardHidden | Android.Content.PM.ConfigChanges.ScreenSize)]
     public class BrowseActivity : BaseAniDroidActivity<BrowsePresenter>, IBrowseView
     {
         private const string BrowseDtoIntentKey = "BROWSE_DTO";
 
         private BaseRecyclerAdapter.RecyclerCardType _cardType;
         private Media.MediaSort _sortType;
+        private MediaRecyclerAdapter _adapter;
 
         [InjectView(Resource.Id.Browse_CoordLayout)]
         private CoordinatorLayout _coordLayout;
@@ -46,7 +49,8 @@ namespace AniDroid.Browse
 
         public void ShowMediaSearchResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
         {
-            _recyclerView.SetAdapter(new BrowseMediaRecyclerAdapter(this, mediaEnumerable, _cardType) { SortType = _sortType });
+            _recyclerView.SetAdapter(_adapter =
+                new MediaRecyclerAdapter(this, mediaEnumerable, _cardType, MediaViewModel.CreateMediaViewModel));
         }
 
         public override void DisplaySnackbarMessage(string message, int length)
@@ -106,6 +110,13 @@ namespace AniDroid.Browse
                 SetResult(Result.Ok);
                 Finish();
             }
+        }
+
+        public override void OnConfigurationChanged(Configuration newConfig)
+        {
+            base.OnConfigurationChanged(newConfig);
+
+            _adapter.RefreshAdapter();
         }
 
         #region Toolbar

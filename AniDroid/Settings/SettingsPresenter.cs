@@ -51,6 +51,7 @@ namespace AniDroid.Settings
                     AniDroidSettings.MangaListSortDirection);
                 View.CreateHighlightPriorityMediaListItemsItem(AniDroidSettings.HighlightPriorityMediaListItems);
                 View.CreateDisplayProgressColorsItem(AniDroidSettings.DisplayMediaListItemProgressColors);
+                View.CreateUseLongClickForEpisodeAddItem(AniDroidSettings.UseLongClickForEpisodeAdd);
             }
 
             View.CreatePrivacyPolicyLinkItem();
@@ -123,6 +124,11 @@ namespace AniDroid.Settings
         {
             AniDroidSettings.MangaListSortType = sort;
             AniDroidSettings.MangaListSortDirection = direction;
+        }
+
+        public void SetUseLongClickForEpisodeAdd(bool useLongClickForEpisodeAdd)
+        {
+            AniDroidSettings.UseLongClickForEpisodeAdd = useLongClickForEpisodeAdd;
         }
     }
 }

@@ -140,6 +140,12 @@ namespace AniDroid.Utils
             set => _authSettingStorage.Put(StorageKeys.MangaListSortDirectionKey, value);
         }
 
+        public bool UseLongClickForEpisodeAdd
+        {
+            get => _authSettingStorage.Get(StorageKeys.UseLongClickForEpisodeAddKey, false);
+            set => _authSettingStorage.Put(StorageKeys.UseLongClickForEpisodeAddKey, value);
+        }
+
         #region Methods
 
         public void UpdateLoggedInUser(User user)
@@ -200,6 +206,7 @@ namespace AniDroid.Utils
             public const string AnimeListSortDirectionKey = "ANIME_LIST_SORT_DIRECTION";
             public const string MangaListSortTypeKey = "MANGA_LIST_SORT_TYPE";
             public const string MangaListSortDirectionKey = "MANGA_LIST_SORT_DIRECTION";
+            public const string UseLongClickForEpisodeAddKey = "USE_LONG_CLICK_FOR_EPISODE_ADD";
 
             public const string ShowAllActivityKey = "SHOW_ALL_ACTIVITY";
         }

@@ -11,14 +11,16 @@ using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
+using AniDroid.AniList.Dto;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
 
 namespace AniDroid.SearchResults
 {
-    public class SearchResultsPresenter : BaseAniDroidPresenter<ISearchResultsView>
+    public class SearchResultsPresenter : BaseAniDroidPresenter<ISearchResultsView>, IAniListMediaListEditPresenter
     {
         private const int PageSize = 20;
 
@@ -60,6 +62,31 @@ namespace AniDroid.SearchResults
         {
             // TODO: determine if these are needed for this presenter
             return Task.CompletedTask;
+        }
+
+        public async Task SaveMediaListEntry(MediaListEditDto editDto, Action onSuccess, Action onError)
+        {
+            var mediaUpdateResp = await AniListService.UpdateMediaListEntry(editDto, default(CancellationToken));
+
+            mediaUpdateResp.Switch(mediaList =>
+            {
+                onSuccess();
+                View.DisplaySnackbarMessage("Saved", Snackbar.LengthShort);
+                View.UpdateMediaListItem(mediaList);
+            }).Switch(error => onError());
+        }
+
+        public async Task DeleteMediaListEntry(int mediaListId, Action onSuccess, Action onError)
+        {
+            var mediaDeleteResp = await AniListService.DeleteMediaListEntry(mediaListId, default(CancellationToken));
+
+            mediaDeleteResp.Switch((bool success) =>
+            {
+                onSuccess();
+                View.DisplaySnackbarMessage("Deleted", Snackbar.LengthShort);
+                View.RemoveMediaListItem(mediaListId);
+            }).Switch(error =>
+                onError());
         }
     }
 }

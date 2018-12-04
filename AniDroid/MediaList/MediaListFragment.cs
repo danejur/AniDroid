@@ -5,6 +5,8 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Content.Res;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
@@ -41,6 +43,11 @@ namespace AniDroid.MediaList
         private Media.MediaListCollection _collection;
         private MediaListSortComparer.MediaListSortType _currentSort;
         private MediaListSortComparer.MediaListSortDirection _currentSortDirection;
+        private IMenu _menu;
+
+        private IList<Media.MediaFormat> _filteredMediaFormats = new List<Media.MediaFormat>();
+        private IList<Media.MediaStatus> _filteredMediaStatuses = new List<Media.MediaStatus>();
+        private bool FilteringActive => _filteredMediaFormats?.Any() == true || _filteredMediaStatuses?.Any() == true;
 
         private static MediaListFragment _animeListFragmentInstance;
         private static MediaListFragment _mangaListFragmentInstance;
@@ -197,6 +204,10 @@ namespace AniDroid.MediaList
             menu.Clear();
             var inflater = new MenuInflater(Context);
             inflater.Inflate(Resource.Menu.MediaLists_ActionBar, menu);
+            _menu = menu;
+
+            _menu.FindItem(Resource.Id.Menu_MediaLists_Filter)?.Icon
+                ?.SetTintList(FilteringActive ? ColorStateList.ValueOf(Color.LightGreen) : null);
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)
@@ -210,9 +221,35 @@ namespace AniDroid.MediaList
                 case Resource.Id.Menu_MediaLists_Sort:
                     MediaListSortDialog.Create(Activity, _currentSort, _currentSortDirection, SetMediaListSort);
                     return true;
+                case Resource.Id.Menu_MediaLists_Filter:
+                    MediaListFilterDialog.Create(Activity, _type, _filteredMediaStatuses, _filteredMediaFormats, UpdateAdapterFilters);
+                    return true;
             }
 
             return base.OnOptionsItemSelected(item);
+        }
+
+        private void UpdateAdapterFilters(IList<Media.MediaStatus> statusList,
+            IList<Media.MediaFormat> formatList)
+        {
+            _filteredMediaFormats = formatList ?? new List<Media.MediaFormat>();
+            _filteredMediaStatuses = statusList ?? new List<Media.MediaStatus>();
+
+            if (_filteredMediaStatuses.Any() || _filteredMediaFormats.Any())
+            {
+                DisplaySnackbarMessage("List filtering is active", Snackbar.LengthLong);
+                _menu?.FindItem(Resource.Id.Menu_MediaLists_Filter)?.Icon?.SetTintList(ColorStateList.ValueOf(Color.LightGreen));
+            }
+            else
+            {
+                DisplaySnackbarMessage("List filtering is not active", Snackbar.LengthShort);
+                _menu?.FindItem(Resource.Id.Menu_MediaLists_Filter)?.Icon?.SetTintList(null);
+            }
+
+            foreach (var adapter in _recyclerAdapters)
+            {
+                adapter.UpdateFilters(_filteredMediaFormats, _filteredMediaStatuses);
+            }
         }
 
         private View GetMediaListCollectionView()
@@ -243,7 +280,8 @@ namespace AniDroid.MediaList
                 var adapter = new MediaListRecyclerAdapter(Activity, statusList,
                     _collection.User.MediaListOptions, Presenter, Presenter.GetCardType(),
                     Presenter.GetMediaListItemViewType(), Presenter.GetHighlightPriorityItems(),
-                    Presenter.GetDisplayProgressColors());
+                    Presenter.GetDisplayProgressColors(), true, Presenter.GetUseLongClickForEpisodeAdd());
+                adapter.UpdateFilters(_filteredMediaFormats, _filteredMediaStatuses);
                 _recyclerAdapters.Add(adapter);
                 var listView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
                 listView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView).SetAdapter(adapter);

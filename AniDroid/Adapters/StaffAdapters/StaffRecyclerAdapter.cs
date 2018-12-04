@@ -11,46 +11,41 @@ using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.Base;
+using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList;
+using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.AniListObject.Staff;
 using AniDroid.Base;
+using OneOf;
 
 namespace AniDroid.Adapters.StaffAdapters
 {
-    public class StaffRecyclerAdapter : BaseRecyclerAdapter<Staff>
+    public class StaffRecyclerAdapter : AniDroidRecyclerAdapter<StaffViewModel, Staff>
     {
-        public StaffRecyclerAdapter(BaseAniDroidActivity context, List<Staff> items, RecyclerCardType cardType) : base(context, items, cardType)
+        public StaffRecyclerAdapter(BaseAniDroidActivity context,
+            IAsyncEnumerable<OneOf<IPagedData<Staff>, IAniListError>> enumerable, RecyclerCardType cardType,
+            Func<Staff, StaffViewModel> createViewModelFunc) : base(context, enumerable, cardType, createViewModelFunc)
         {
+            SetDefaultClickActions();
         }
 
-        public override void BindCardViewHolder(CardItem holder, int position)
+        public StaffRecyclerAdapter(BaseAniDroidActivity context, List<StaffViewModel> items, RecyclerCardType cardType,
+            Func<Staff, StaffViewModel> createViewModelFunc) : base(context, items, cardType, createViewModelFunc)
         {
-            var item = Items[position];
-
-            holder.Name.Text = item.Name?.GetFormattedName(true);
-            holder.DetailPrimary.Text = item.Language?.DisplayValue ?? "(Language unknown)";
-            Context.LoadImage(holder.Image, item.Image?.Large);
-
-            holder.ContainerCard.SetTag(Resource.Id.Object_Position, position);
-            holder.ContainerCard.Click -= RowClick;
-            holder.ContainerCard.Click += RowClick;
+            SetDefaultClickActions();
         }
 
         public override CardItem SetupCardItemViewHolder(CardItem item)
         {
-            item.DetailSecondary.Visibility = ViewStates.Gone;
             item.Button.Visibility = ViewStates.Gone;
             return item;
         }
 
-        private void RowClick(object sender, EventArgs e)
+        private void SetDefaultClickActions()
         {
-            var senderView = sender as View;
-            var staffPos = (int)senderView.GetTag(Resource.Id.Object_Position);
-            var staff = Items[staffPos];
-
-            StaffActivity.StartActivity(Context, staff.Id, BaseAniDroidActivity.ObjectBrowseRequestCode);
+            ClickAction = viewModel =>
+                StaffActivity.StartActivity(Context, viewModel.Model.Id, BaseAniDroidActivity.ObjectBrowseRequestCode);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace AniDroid.Adapters.MediaAdapters
         private readonly List<bool> _spoilerTags;
         private readonly Media.MediaType _mediaType;
 
-        public MediaTagsRecyclerAdapter(BaseAniDroidActivity context, List<Media.MediaTag> items, Media.MediaType mediaType) : base(context, items, RecyclerCardType.Horizontal, 0)
+        public MediaTagsRecyclerAdapter(BaseAniDroidActivity context, List<Media.MediaTag> items, Media.MediaType mediaType) : base(context, items, RecyclerCardType.Horizontal)
         {
             _spoilerTags = items.Select(x => x.IsGeneralSpoiler || x.IsMediaSpoiler).ToList();
             _mediaType = mediaType;

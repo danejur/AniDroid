@@ -10,7 +10,9 @@ using AniDroid.Base;
 using AniDroid.Dialogs;
 using AniDroid.MediaList;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using AniDroid.Utils.Interfaces;
 
 namespace AniDroid.Adapters.MediaAdapters
 {
@@ -25,17 +27,24 @@ namespace AniDroid.Adapters.MediaAdapters
         private readonly bool _highlightPriorityItems;
         private readonly bool _displayProgressColors;
         private readonly bool _editable;
+        private readonly bool _useLongClickForEpisodeAdd;
         private readonly ColorStateList _priorityBackgroundColor;
         private readonly ColorStateList _upToDateTitleColor;
         private readonly ColorStateList _behindTitleColor;
 
+        private readonly List<Media.MediaList> _unfilteredItems;
+
+        private IList<Media.MediaFormat> _filteredFormats = new List<Media.MediaFormat>();
+        private IList<Media.MediaStatus> _filteredStatuses = new List<Media.MediaStatus>();
+
         public MediaListRecyclerAdapter(BaseAniDroidActivity context, Media.MediaListGroup mediaListGroup,
             User.UserMediaListOptions mediaListOptions, MediaListPresenter presenter, RecyclerCardType cardType,
-            MediaListItemViewType viewType, bool highlightPriorityItems, bool displayProgressColors, bool editable = true, int verticalCardColumns = 2) : base(context, mediaListGroup.Entries,
-            cardType, verticalCardColumns)
+            MediaListItemViewType viewType, bool highlightPriorityItems, bool displayProgressColors, bool editable = true, bool useLongClickForEpisodeAdd = false) : base(context, mediaListGroup.Entries,
+            cardType)
         {
             _presenter = presenter;
             _mediaListOptions = mediaListOptions;
+            _useLongClickForEpisodeAdd = useLongClickForEpisodeAdd;
             _isCustomList = mediaListGroup.IsCustomList;
             _listName = mediaListGroup.Name;
             _listStatus = mediaListGroup.Status;
@@ -55,6 +64,8 @@ namespace AniDroid.Adapters.MediaAdapters
                 CardType = RecyclerCardType.Custom;
                 CustomCardUseItemDecoration = true;
             }
+
+            _unfilteredItems = Items;
         }
 
         public void UpdateMediaListItem(int mediaId, Media.MediaList updatedMediaList)
@@ -72,6 +83,8 @@ namespace AniDroid.Adapters.MediaAdapters
                 }
                 else
                 {
+                    // we take the media object that already exists on the list and reuse it because it has
+                    // a lot more stuff already in it from the original request
                     var oldMedia = Items[position].Media;
                     Items[position] = updatedMediaList;
                     Items[position].Media = oldMedia;
@@ -95,6 +108,28 @@ namespace AniDroid.Adapters.MediaAdapters
         public void RemoveMediaListItem(int mediaListId)
         {
             Items.RemoveAll(x => x.Id == mediaListId);
+            NotifyDataSetChanged();
+        }
+
+        public void UpdateFilters(IList<Media.MediaFormat> filteredFormats, IList<Media.MediaStatus> filteredStatuses)
+        {
+            _filteredFormats = filteredFormats;
+            _filteredStatuses = filteredStatuses;
+
+            var items = _unfilteredItems.AsEnumerable();
+
+            if (_filteredFormats?.Any() == true)
+            {
+                items = items.Where(x => x.Media?.Format?.EqualsAny(_filteredFormats) == true);
+            }
+
+            if (_filteredStatuses?.Any() == true)
+            {
+                items = items.Where(x => x.Media?.Status?.EqualsAny(_filteredStatuses) == true);
+            }
+
+            Items = items.ToList();
+
             NotifyDataSetChanged();
         }
 
@@ -152,8 +187,17 @@ namespace AniDroid.Adapters.MediaAdapters
 
         public override CardItem SetupCardItemViewHolder(CardItem item)
         {
+            item.Button.LongClick -= ButtonClick;
             item.Button.Click -= ButtonClick;
-            item.Button.Click += ButtonClick;
+
+            if (_useLongClickForEpisodeAdd)
+            {
+                item.Button.LongClick += ButtonClick;
+            }
+            else
+            {
+                item.Button.Click += ButtonClick;
+            }
 
             return item;
         }

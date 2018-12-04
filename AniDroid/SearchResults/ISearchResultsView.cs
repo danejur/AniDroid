@@ -24,5 +24,7 @@ namespace AniDroid.SearchResults
         void ShowUserSearchResults(IAsyncEnumerable<OneOf<IPagedData<User>, IAniListError>> userEnumerable);
         void ShowForumThreadSearchResults(IAsyncEnumerable<OneOf<IPagedData<ForumThread>, IAniListError>> forumThreadEnumerable);
         void ShowStudioSearchResults(IAsyncEnumerable<OneOf<IPagedData<Studio>, IAniListError>> studioEnumerable);
+        void UpdateMediaListItem(Media.MediaList mediaList);
+        void RemoveMediaListItem(int mediaListId);
     }
 }
