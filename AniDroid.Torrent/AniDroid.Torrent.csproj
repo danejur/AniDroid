@@ -10,9 +10,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="AniDroid.AniList">
-      <HintPath>..\AniDroid.AniList\AniDroid.AniList\bin\Debug\netstandard2.0\AniDroid.AniList.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\AniDroid.AniList\AniDroid.AniList\AniDroid.AniList.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="DiscU">
       <HintPath>..\packages\DiscU.1.0.0.9\lib\netstandard1.3\DiscU.dll</HintPath>
     </Reference>

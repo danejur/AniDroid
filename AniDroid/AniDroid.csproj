@@ -571,16 +571,6 @@
     <AndroidResource Include="Resources\drawable\SplashScreenBackground.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AniDroid.AniList\AniDroid.AniList\AniDroid.AniList.csproj">
-      <Project>{49fb1693-b542-4c68-82f9-19762a6afb29}</Project>
-      <Name>AniDroid.AniList</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AniDroid.Torrent\AniDroid.Torrent.csproj">
-      <Project>{6e34b7af-7e77-4f94-b56a-fdf1462edc34}</Project>
-      <Name>AniDroid.Torrent</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <AndroidResource Include="Resources\menu\User_ActionBar.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -842,6 +832,16 @@
     <AndroidResource Include="Resources\layout\Dialog_MediaListFilter.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AniDroid.AniList\AniDroid.AniList\AniDroid.AniList.csproj">
+      <Project>{49fb1693-b542-4c68-82f9-19762a6afb29}</Project>
+      <Name>AniDroid.AniList</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AniDroid.Torrent\AniDroid.Torrent.csproj">
+      <Project>{6e34b7af-7e77-4f94-b56a-fdf1462edc34}</Project>
+      <Name>AniDroid.Torrent</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
