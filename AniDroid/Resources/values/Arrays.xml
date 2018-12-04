@@ -120,6 +120,8 @@
     <item>12-01-2018|More bug fixes, including one where other users\' lists would show up as your own (sorry about the delay in getting this fixed!)</item>
     <item>12-04-2018|Added ability to filter your lists (as well as the lists of other users!). Try clicking the new icon at the top of your lists</item>
     <item>12-04-2018|You can now add or edit anime and literature right from the search (or browse) results! Just long press like you normally would on your own lists</item>
+    <item>12-04-2018|Text activities (status updates) can now be edited and deleted! Just long press on the one you\'d like to change</item>
+    <item>12-04-2018|Added the initial AniList Notification service! This will allow you to get native Android notifications when you get new notifications in AniList. Feel free to turn it off in the settings</item>
     <item>12-04-2018|A few more optimizations and bug fixes</item>
   </array> 
 </resources>
