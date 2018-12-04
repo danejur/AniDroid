@@ -24,5 +24,6 @@ namespace AniDroid.AniListObject.User
         void SetupUserView(AniList.Models.User user);
         void RefreshUserActivity();
         void UpdateActivity(int activityPosition, AniListActivity activity);
+        void RemoveActivity(int activityPosition);
     }
 }

@@ -150,6 +150,11 @@ namespace AniDroid.AniListObject.User
             _userActivityRecyclerAdapter.NotifyItemChanged(activityPosition);
         }
 
+        public void RemoveActivity(int activityPosition)
+        {
+            _userActivityRecyclerAdapter.RemoveItem(activityPosition);
+        }
+
         private View CreateUserActivityView(int userId)
         {
             var userActivityEnumerable = Presenter.GetUserActivityEnumerable(userId, PageLength);
@@ -397,7 +402,7 @@ namespace AniDroid.AniListObject.User
                     Presenter.ToggleFollowUser(_userId ?? 0);
                     return true;
                 case Resource.Id.Menu_User_Message:
-                    AniListActivityCreateDialog.Create(this, (message) => Presenter?.PostUserMessage(_userId ?? 0, message));
+                    AniListActivityCreateDialog.CreateNewActivity(this, (message) => Presenter?.PostUserMessage(_userId ?? 0, message));
                     return true;
             }
 

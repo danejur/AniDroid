@@ -43,9 +43,9 @@ namespace AniDroid.Home
             return AniDroidSettings.LoggedInUser?.Id ?? 0;
         }
 
-        public async Task ToggleActivityLike(AniListActivity activity, int activityPosition)
+        public async Task ToggleActivityLikeAsync(AniListActivity activity, int activityPosition)
         {
-            var toggleResp = await AniListService.ToggleLike(activity.Id, AniList.Models.AniListObject.LikeableType.Activity, default(CancellationToken));
+            var toggleResp = await AniListService.ToggleLike(activity.Id, AniList.Models.AniListObject.LikeableType.Activity, default);
 
             toggleResp.Switch((IAniListError error) =>
                 {
@@ -59,17 +59,42 @@ namespace AniDroid.Home
                 });
         }
 
-        public async Task PostStatusActivity(string text)
+        public async Task CreateStatusActivity(string text)
         {
-            var postResp = await AniListService.PostTextActivity(text, default(CancellationToken));
+            var postResp = await AniListService.SaveTextActivity(text, null, default);
 
             postResp.Switch((IAniListError error) => View.DisplaySnackbarMessage("Error occurred while posting status", Snackbar.LengthLong))
                 .Switch(activity => View.RefreshActivity());
         }
 
-        public async Task PostActivityReply(AniListActivity activity, int activityPosition, string text)
+        public async Task EditStatusActivityAsync(AniListActivity activity, int activityPosition, string updateText)
         {
-            var postResp = await AniListService.PostActivityReply(activity.Id, text, default(CancellationToken));
+            var postResp = await AniListService.SaveTextActivity(updateText, activity.Id, default);
+
+            postResp.Switch((IAniListError error) => View.DisplaySnackbarMessage("Error occurred while saving status", Snackbar.LengthLong))
+                .Switch(updatedAct => View.UpdateActivity(activityPosition, updatedAct));
+        }
+
+        public async Task DeleteActivityAsync(int activityId, int activityPosition)
+        {
+            var deleteResp = await AniListService.DeleteActivity(activityId, default);
+
+            deleteResp.Switch((IAniListError error) => View.DisplaySnackbarMessage("Error occurred while deleting activity", Snackbar.LengthLong))
+                .Switch(deleted => {
+                    if (deleted?.Deleted == true)
+                    {
+                        View.RemoveActivity(activityPosition);
+                    }
+                    else
+                    {
+                        View.DisplaySnackbarMessage("Error occurred while deleting activity", Snackbar.LengthLong);
+                    }
+                });
+        }
+
+        public async Task PostActivityReplyAsync(AniListActivity activity, int activityPosition, string text)
+        {
+            var postResp = await AniListService.PostActivityReply(activity.Id, text, default);
 
             postResp.Switch((IAniListError error) =>
                 {
@@ -78,7 +103,7 @@ namespace AniDroid.Home
                 })
                 .Switch(async reply =>
                 {
-                    var refreshResp = await AniListService.GetAniListActivityById(activity.Id, default(CancellationToken));
+                    var refreshResp = await AniListService.GetAniListActivityById(activity.Id, default);
 
                     refreshResp.Switch((IAniListError error) =>
                         {
