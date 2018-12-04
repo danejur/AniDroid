@@ -146,6 +146,12 @@ namespace AniDroid.Utils
             set => _authSettingStorage.Put(StorageKeys.UseLongClickForEpisodeAddKey, value);
         }
 
+        public bool EnableNotificationService
+        {
+            get => _authSettingStorage.Get(StorageKeys.EnableNotificationServiceKey, true);
+            set => _authSettingStorage.Put(StorageKeys.EnableNotificationServiceKey, value);
+        }
+
         #region Methods
 
         public void UpdateLoggedInUser(User user)
@@ -207,6 +213,7 @@ namespace AniDroid.Utils
             public const string MangaListSortTypeKey = "MANGA_LIST_SORT_TYPE";
             public const string MangaListSortDirectionKey = "MANGA_LIST_SORT_DIRECTION";
             public const string UseLongClickForEpisodeAddKey = "USE_LONG_CLICK_FOR_EPISODE_ADD";
+            public const string EnableNotificationServiceKey = "ENABLE_NOTIFICATION_SERVICE";
 
             public const string ShowAllActivityKey = "SHOW_ALL_ACTIVITY";
         }

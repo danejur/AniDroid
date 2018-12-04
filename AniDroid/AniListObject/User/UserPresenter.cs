@@ -94,7 +94,7 @@ namespace AniDroid.AniListObject.User
                 });
         }
 
-        public async Task ToggleActivityLike(AniListActivity activity, int activityPosition)
+        public async Task ToggleActivityLikeAsync(AniListActivity activity, int activityPosition)
         {
             var toggleResp = await AniListService.ToggleLike(activity.Id,
                 AniList.Models.AniListObject.LikeableType.Activity, default(CancellationToken));
@@ -111,7 +111,7 @@ namespace AniDroid.AniListObject.User
                 });
         }
 
-        public async Task PostActivityReply(AniListActivity activity, int activityPosition, string text)
+        public async Task PostActivityReplyAsync(AniListActivity activity, int activityPosition, string text)
         {
             var postResp = await AniListService.PostActivityReply(activity.Id, text, default(CancellationToken));
 
@@ -136,6 +136,31 @@ namespace AniDroid.AniListObject.User
                             View.UpdateActivity(activityPosition, activityResp);
                             View.DisplaySnackbarMessage("Reply posted successfully", Snackbar.LengthShort);
                         });
+                });
+        }
+
+        public async Task EditStatusActivityAsync(AniListActivity activity, int activityPosition, string updateText)
+        {
+            var postResp = await AniListService.SaveTextActivity(updateText, activity.Id, default);
+
+            postResp.Switch((IAniListError error) => View.DisplaySnackbarMessage("Error occurred while saving status", Snackbar.LengthLong))
+                .Switch(updatedAct => View.UpdateActivity(activityPosition, updatedAct));
+        }
+
+        public async Task DeleteActivityAsync(int activityId, int activityPosition)
+        {
+            var deleteResp = await AniListService.DeleteActivity(activityId, default);
+
+            deleteResp.Switch((IAniListError error) => View.DisplaySnackbarMessage("Error occurred while deleting activity", Snackbar.LengthLong))
+                .Switch(deleted => {
+                    if (deleted?.Deleted == true)
+                    {
+                        View.RemoveActivity(activityPosition);
+                    }
+                    else
+                    {
+                        View.DisplaySnackbarMessage("Error occurred while deleting activity", Snackbar.LengthLong);
+                    }
                 });
         }
     }

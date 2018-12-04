@@ -30,6 +30,7 @@ using AniDroid.Home;
 using AniDroid.Login;
 using AniDroid.MediaList;
 using AniDroid.SearchResults;
+using AniDroid.Services;
 using AniDroid.Settings;
 using AniDroid.TorrentSearch;
 using AniDroid.Utils;
@@ -40,11 +41,12 @@ using Toolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace AniDroid.Main
 {
-    [Activity(ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.KeyboardHidden | Android.Content.PM.ConfigChanges.ScreenSize)]
+    [Activity(LaunchMode = Android.Content.PM.LaunchMode.SingleTask, ConfigurationChanges = Android.Content.PM.ConfigChanges.Orientation | Android.Content.PM.ConfigChanges.KeyboardHidden | Android.Content.PM.ConfigChanges.ScreenSize)]
     public class MainActivity : BaseAniDroidActivity<MainPresenter>, IMainView, NavigationView.IOnNavigationItemSelectedListener
     {
         public const string RecreateActivityIntentKey = "RECREATE_ACTIVITY";
         public const string NotificationTextIntentKey = "NOTIFICATION_TEXT";
+        public const string DisplayNotificationsIntentKey = "DISPLAY_NOTIFICATIONS";
 
         [InjectView(Resource.Id.Main_CoordLayout)]
         private CoordinatorLayout _coordLayout;
@@ -165,6 +167,16 @@ namespace AniDroid.Main
                 DisplaySnackbarMessage(notificationText, Snackbar.LengthLong);
             }
 
+            if (Settings.EnableNotificationService)
+            {
+                AniListNotificationService.Alarm.StartNotificationAlarm(ApplicationContext);
+            }
+            else
+            {
+                AniListNotificationService.Alarm.StopNotificationAlarm(ApplicationContext);
+
+            }
+
             await CreatePresenter(savedInstanceState);
         }
 
@@ -174,7 +186,15 @@ namespace AniDroid.Main
 
             if (Presenter != null)
             {
-                await Presenter.GetUserNotificationCount();
+                if (Intent.GetBooleanExtra(DisplayNotificationsIntentKey, false))
+                {
+                    Intent.RemoveExtra(DisplayNotificationsIntentKey);
+                    AniListNotificationsDialog.Create(this, Presenter.GetNotificationsEnumerable(), () => SetNotificationCount(0));
+                }
+                else
+                {
+                    await Presenter.GetUserNotificationCount();
+                }
             }
         }
 
@@ -229,6 +249,22 @@ namespace AniDroid.Main
             {
                 DisplaySnackbarMessage(data.GetStringExtra(NotificationTextIntentKey));
             }
+        }
+
+        protected override void OnNewIntent(Intent intent)
+        {
+            // copy intent extra from new intent to original one, since we operate in the singleTask scope
+            Intent.PutExtra(DisplayNotificationsIntentKey,
+                intent.GetBooleanExtra(DisplayNotificationsIntentKey, false));
+        }
+
+        public static PendingIntent CreatePendingIntentToOpenNotifications(Context context)
+        {
+            var intent = new Intent(context, typeof(MainActivity));
+
+            intent.PutExtra(DisplayNotificationsIntentKey, true);
+
+            return PendingIntent.GetActivity(context, 0, intent, PendingIntentFlags.UpdateCurrent);
         }
 
         #region Toolbar

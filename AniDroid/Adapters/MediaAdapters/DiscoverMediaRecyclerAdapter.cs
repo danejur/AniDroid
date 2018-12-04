@@ -90,7 +90,7 @@ namespace AniDroid.Adapters.MediaAdapters
 
             // TODO: add ability to add/edit media list item from here
 
-            //EditMediaListItemDialog.Create(Context, _presenter, media, null, _mediaListOptions);
+            //EditMediaListItemDialog.CreateNewActivity(Context, _presenter, media, null, _mediaListOptions);
         }
 
         private void NameLongClick(object sender, View.LongClickEventArgs longClickEventArgs)

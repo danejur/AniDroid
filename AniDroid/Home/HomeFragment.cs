@@ -83,7 +83,7 @@ namespace AniDroid.Home
                     RefreshActivity();
                     return true;
                 case Resource.Id.Menu_Home_PostStatus:
-                    AniListActivityCreateDialog.Create(Activity, Presenter.PostStatusActivity);
+                    AniListActivityCreateDialog.CreateNewActivity(Activity, Presenter.CreateStatusActivity);
                     return true;
                 case Resource.Id.Menu_Home_ToggleActivityType:
                     _isFollowingOnly = !_isFollowingOnly;
@@ -117,6 +117,11 @@ namespace AniDroid.Home
         {
             _recyclerAdapter.Items[activityPosition] = activity;
             _recyclerAdapter.NotifyItemChanged(activityPosition);
+        }
+
+        public void RemoveActivity(int activityPosition)
+        {
+            _recyclerAdapter.RemoveItem(activityPosition);
         }
 
         public void RefreshActivity()

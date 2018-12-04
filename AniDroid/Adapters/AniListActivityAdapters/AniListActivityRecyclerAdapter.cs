@@ -88,6 +88,8 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             viewHolder.Container.SetTag(Resource.Id.Object_Position, position);
             viewHolder.Container.Click -= RowClick;
             viewHolder.Container.Click += RowClick;
+            viewHolder.Container.LongClick -= RowLongClick;
+            viewHolder.Container.LongClick += RowLongClick;
 
             if (item.Type == AniListActivity.ActivityType.Text)
             {
@@ -103,7 +105,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
                 BindListActivityViewHolder(viewHolder, item);
             }
         }
-
+        
         public override RecyclerView.ViewHolder CreateCustomViewHolder(ViewGroup parent, int viewType)
         {
             var holder = new AniListActivityViewHolder(
@@ -116,7 +118,6 @@ namespace AniDroid.Adapters.AniListActivityAdapters
 
             return holder;
         }
-
 
         private void BindTextActivityViewHolder(AniListActivityViewHolder viewHolder, AniListActivity item)
         {
@@ -184,6 +185,20 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             }
         }
 
+        private void RowLongClick(object sender, View.LongClickEventArgs e)
+        {
+            var view = sender as View;
+            var position = (int)view.GetTag(Resource.Id.Object_Position);
+            var item = Items[position];
+
+            if (item.Type == AniListActivity.ActivityType.Text && item.UserId == _userId)
+            {
+                AniListActivityCreateDialog.CreateEditActivity(Context, item.Text,
+                    text => _presenter.EditStatusActivityAsync(item, position, text),
+                    () => _presenter.DeleteActivityAsync(item.Id, position));
+            }
+        }
+
         private void ShowReplyDialog(object sender, EventArgs e)
         {
             var senderView = sender as View;
@@ -203,7 +218,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             Items[activityItemPosition] = null;
             NotifyItemChanged(activityItemPosition);
 
-            await _presenter.ToggleActivityLike(activityItem, activityItemPosition);
+            await _presenter.ToggleActivityLikeAsync(activityItem, activityItemPosition);
         }
 
         private async void PostReply(int activityId, string text)
@@ -213,7 +228,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             Items[activityItemPosition] = null;
             NotifyItemChanged(activityItemPosition);
 
-            await _presenter.PostActivityReply(activityItem, activityItemPosition, text);
+            await _presenter.PostActivityReplyAsync(activityItem, activityItemPosition, text);
         }
 
         public class AniListActivityViewHolder : RecyclerView.ViewHolder

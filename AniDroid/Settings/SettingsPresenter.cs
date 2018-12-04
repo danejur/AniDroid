@@ -52,6 +52,7 @@ namespace AniDroid.Settings
                 View.CreateHighlightPriorityMediaListItemsItem(AniDroidSettings.HighlightPriorityMediaListItems);
                 View.CreateDisplayProgressColorsItem(AniDroidSettings.DisplayMediaListItemProgressColors);
                 View.CreateUseLongClickForEpisodeAddItem(AniDroidSettings.UseLongClickForEpisodeAdd);
+                View.CreateEnableNotificationServiceItem(AniDroidSettings.EnableNotificationService);
             }
 
             View.CreatePrivacyPolicyLinkItem();
@@ -129,6 +130,11 @@ namespace AniDroid.Settings
         public void SetUseLongClickForEpisodeAdd(bool useLongClickForEpisodeAdd)
         {
             AniDroidSettings.UseLongClickForEpisodeAdd = useLongClickForEpisodeAdd;
+        }
+
+        public void SetEnableNotificationService(bool enableNotificationService)
+        {
+            AniDroidSettings.EnableNotificationService = enableNotificationService;
         }
     }
 }

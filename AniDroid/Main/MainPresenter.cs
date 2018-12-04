@@ -42,12 +42,12 @@ namespace AniDroid.Main
 
         public IAsyncEnumerable<OneOf<IPagedData<AniListNotification>, IAniListError>> GetNotificationsEnumerable()
         {
-            return AniListService.GetAniListNotifications(20);
+            return AniListService.GetAniListNotifications(true, 20);
         }
 
         public async Task GetUserNotificationCount()
         {
-            var countResp = await AniListService.GetAniListNotificationCount(default(CancellationToken));
+            var countResp = await AniListService.GetAniListNotificationCount(default);
 
             countResp.Switch((IAniListError error) => { })
                 .Switch(user => View.SetNotificationCount(user.UnreadNotificationCount));
