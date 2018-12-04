@@ -42,6 +42,7 @@ namespace AniDroid.Utils.Interfaces
         MediaListSortComparer.MediaListSortType MangaListSortType { get; set; }
         MediaListSortComparer.MediaListSortDirection MangaListSortDirection { get; set; }
         bool UseLongClickForEpisodeAdd { get; set; }
+        bool EnableNotificationService { get; set; }
 
         #region Methods
 
