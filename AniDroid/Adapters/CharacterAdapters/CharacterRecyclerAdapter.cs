@@ -32,24 +32,10 @@ namespace AniDroid.Adapters.CharacterAdapters
                     BaseAniDroidActivity.ObjectBrowseRequestCode);
         }
 
-        public override void BindCardViewHolder(CardItem holder, int position)
-        {
-            var viewModel = Items[position];
-
-            holder.Name.Text = viewModel.TitleText;
-            holder.DetailPrimary.Text = viewModel.DetailPrimaryText;
-
-            holder.Button.Visibility = viewModel.Model.IsFavourite ? ViewStates.Visible : ViewStates.Gone;
-            Context.LoadImage(holder.Image, viewModel.ImageUri);
-        }
-
         public override CardItem SetupCardItemViewHolder(CardItem item)
         {
-            item.Button.Clickable = false;
             item.ButtonIcon.SetImageResource(Resource.Drawable.ic_favorite_white_24px);
             ImageViewCompat.SetImageTintList(item.ButtonIcon, FavoriteIconColor);
-
-            item.DetailSecondary.Visibility = ViewStates.Gone;
 
             return item;
         }

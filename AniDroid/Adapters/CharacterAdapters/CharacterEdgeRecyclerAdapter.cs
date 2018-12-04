@@ -7,6 +7,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V4.Widget;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.Base;
@@ -21,6 +22,8 @@ namespace AniDroid.Adapters.CharacterAdapters
 {
     public class CharacterEdgeRecyclerAdapter : AniDroidRecyclerAdapter<CharacterEdgeViewModel, Character.Edge>
     {
+        public int ButtonIconResourceId { get; set; }
+
         public CharacterEdgeRecyclerAdapter(BaseAniDroidActivity context,
             IAsyncEnumerable<OneOf<IPagedData<Character.Edge>, IAniListError>> enumerable, RecyclerCardType cardType,
             Func<Character.Edge, CharacterEdgeViewModel> createViewModelFunc) : base(context, enumerable, cardType,
@@ -29,6 +32,13 @@ namespace AniDroid.Adapters.CharacterAdapters
             ClickAction = viewModel =>
                 CharacterActivity.StartActivity(Context, viewModel.Model.Node.Id,
                     BaseAniDroidActivity.ObjectBrowseRequestCode);
+        }
+
+        public override CardItem SetupCardItemViewHolder(CardItem item)
+        {
+            item.ButtonIcon.SetImageResource(ButtonIconResourceId);
+
+            return item;
         }
     }
 }

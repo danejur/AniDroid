@@ -37,7 +37,7 @@ namespace AniDroid.Adapters.ViewModels
 
         private string GetDetail(UserDetailType detailType)
         {
-            var retString = "";
+            string retString = null;
 
             if (detailType == UserDetailType.Following)
             {

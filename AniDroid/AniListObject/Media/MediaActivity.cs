@@ -419,7 +419,12 @@ namespace AniDroid.AniListObject.Media
             var mediaCharactersEnumerable = Presenter.GetMediaCharactersEnumerable(mediaId, PageLength);
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
-            var dialogRecyclerAdapter = new CharacterEdgeRecyclerAdapter(this, mediaCharactersEnumerable, CardType, CharacterEdgeViewModel.CreateCharacterEdgeViewModel);
+            var dialogRecyclerAdapter = new CharacterEdgeRecyclerAdapter(this, mediaCharactersEnumerable, CardType,
+                CharacterEdgeViewModel.CreateCharacterEdgeViewModel)
+            {
+                ButtonIconResourceId = Resource.Drawable.ic_record_voice_over_white_24px,
+                ButtonClickAction = viewModel => StaffListDialog.Create(this, viewModel.Model.VoiceActors)
+            };
             recycler.SetAdapter(dialogRecyclerAdapter);
 
             return retView;

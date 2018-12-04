@@ -15,12 +15,14 @@ namespace AniDroid.Adapters.ViewModels
 {
     public class CharacterEdgeViewModel : AniDroidAdapterViewModel<Character.Edge>
     {
-        public CharacterEdgeViewModel(Character.Edge model, CharacterEdgeDetailType primaryCharacterEdgeDetailType, CharacterEdgeDetailType secondaryCharacterEdgeDetailType) : base(model)
+        public CharacterEdgeViewModel(Character.Edge model, CharacterEdgeDetailType primaryCharacterEdgeDetailType,
+            CharacterEdgeDetailType secondaryCharacterEdgeDetailType, bool isButtonVisible) : base(model)
         {
             TitleText = $"{Model.Node?.Name?.FormattedName}";
             DetailPrimaryText = GetDetail(primaryCharacterEdgeDetailType);
             DetailSecondaryText = GetDetail(secondaryCharacterEdgeDetailType);
             ImageUri = Model.Node?.Image?.Large ?? Model?.Node?.Image?.Medium;
+            IsButtonVisible = isButtonVisible;
         }
 
         public enum CharacterEdgeDetailType
@@ -32,12 +34,13 @@ namespace AniDroid.Adapters.ViewModels
 
         public static CharacterEdgeViewModel CreateCharacterEdgeViewModel(Character.Edge model)
         {
-            return new CharacterEdgeViewModel(model, CharacterEdgeDetailType.NativeName, CharacterEdgeDetailType.None);
+            return new CharacterEdgeViewModel(model, CharacterEdgeDetailType.NativeName, CharacterEdgeDetailType.Role,
+                model.VoiceActors?.Any() == true);
         }
 
         private string GetDetail(CharacterEdgeDetailType detailType)
         {
-            var retString = "";
+            string retString = null;
 
             if (detailType == CharacterEdgeDetailType.NativeName)
             {

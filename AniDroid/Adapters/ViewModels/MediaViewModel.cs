@@ -17,12 +17,13 @@ namespace AniDroid.Adapters.ViewModels
     {
         public Media.Edge ModelEdge { get; protected set; }
 
-        private MediaViewModel(Media model, MediaDetailType primaryMediaDetailType, MediaDetailType secondaryMediaDetailType) : base(model)
+        private MediaViewModel(Media model, MediaDetailType primaryMediaDetailType, MediaDetailType secondaryMediaDetailType, bool isButtonVisible) : base(model)
         {
             TitleText = Model.Title?.UserPreferred;
             DetailPrimaryText = GetDetail(primaryMediaDetailType);
             DetailSecondaryText = GetDetail(secondaryMediaDetailType);
             ImageUri = model.CoverImage?.Large ?? model.CoverImage?.Medium;
+            IsButtonVisible = isButtonVisible;
         }
 
         public enum MediaDetailType
@@ -38,12 +39,12 @@ namespace AniDroid.Adapters.ViewModels
 
         public static MediaViewModel CreateMediaViewModel(Media model)
         {
-            return new MediaViewModel(model, MediaDetailType.FormatRating, MediaDetailType.ListStatusThenGenres);
+            return new MediaViewModel(model, MediaDetailType.FormatRating, MediaDetailType.ListStatusThenGenres, model.IsFavourite);
         }
 
         private string GetDetail(MediaDetailType mediaDetailType)
         {
-            var retString = "";
+            string retString = null;
 
             if (mediaDetailType == MediaDetailType.Format)
             {

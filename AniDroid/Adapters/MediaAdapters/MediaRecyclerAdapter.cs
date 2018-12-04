@@ -36,17 +36,6 @@ namespace AniDroid.Adapters.MediaAdapters
                 Context.DisplaySnackbarMessage(viewModel.Model.Title?.UserPreferred, Snackbar.LengthLong);
         }
 
-        public override void BindCardViewHolder(CardItem holder, int position)
-        {
-            var item = Items[position];
-
-            holder.Name.Text = item.TitleText;
-            holder.DetailPrimary.Text = item.DetailPrimaryText;
-            holder.DetailSecondary.Text = item.DetailSecondaryText;
-            holder.Button.Visibility = item.Model.IsFavourite ? ViewStates.Visible : ViewStates.Gone;
-            Context.LoadImage(holder.Image, item.ImageUri);
-        }
-
         public override CardItem SetupCardItemViewHolder(CardItem item)
         {
             item.Button.Clickable = false;

@@ -15,12 +15,13 @@ namespace AniDroid.Adapters.ViewModels
 {
     public class CharacterViewModel : AniDroidAdapterViewModel<Character>
     {
-        private CharacterViewModel(Character model, CharacterDetailType primaryCharacterDetailType, CharacterDetailType secondaryCharacterDetailType) : base(model)
+        private CharacterViewModel(Character model, CharacterDetailType primaryCharacterDetailType, CharacterDetailType secondaryCharacterDetailType, bool isButtonVisible) : base(model)
         {
-            TitleText = $"{Model.Name?.FormattedName}";
+            TitleText = Model.Name?.FormattedName;
             DetailPrimaryText = GetDetail(primaryCharacterDetailType);
             DetailSecondaryText = GetDetail(secondaryCharacterDetailType);
             ImageUri = model.Image?.Large ?? model.Image?.Medium;
+            IsButtonVisible = isButtonVisible;
         }
 
         public enum CharacterDetailType
@@ -31,12 +32,12 @@ namespace AniDroid.Adapters.ViewModels
 
         public static CharacterViewModel CreateCharacterViewModel(Character model)
         {
-            return new CharacterViewModel(model, CharacterDetailType.NativeName, CharacterDetailType.None);
+            return new CharacterViewModel(model, CharacterDetailType.NativeName, CharacterDetailType.None, model.IsFavourite);
         }
 
         private string GetDetail(CharacterDetailType detailType)
         {
-            var retString = "";
+            string retString = null;
 
             if (detailType == CharacterDetailType.NativeName)
             {

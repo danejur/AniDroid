@@ -20,6 +20,13 @@ namespace AniDroid.Adapters.ViewModels
         public string DetailPrimaryText { get; protected set; }
         public string DetailSecondaryText { get; protected set; }
         public string ImageUri { get; protected set; }
+        public bool IsButtonVisible { get; protected set; }
+
+        public ViewStates TitleVisibility => TitleText != null ? ViewStates.Visible : ViewStates.Gone;
+        public ViewStates DetailPrimaryVisibility => DetailPrimaryText != null ? ViewStates.Visible : ViewStates.Gone;
+        public ViewStates DetailSecondaryVisibility => DetailSecondaryText != null ? ViewStates.Visible : ViewStates.Gone;
+        public ViewStates ImageVisibility => ImageUri != null ? ViewStates.Visible : ViewStates.Invisible;
+        public ViewStates ButtonVisibility => IsButtonVisible ? ViewStates.Visible : ViewStates.Gone;
 
         protected AniDroidAdapterViewModel(T model)
         {

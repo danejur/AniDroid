@@ -205,6 +205,11 @@ namespace AniDroid.Base
 
         public void LoadImage(ImageView imageView, string url, bool showLoading = true)
         {
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                return;
+            }
+
             var req = Picasso.With(this).Load(url);
 
             if (showLoading)

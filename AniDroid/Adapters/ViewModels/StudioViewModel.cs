@@ -17,12 +17,12 @@ namespace AniDroid.Adapters.ViewModels
     {
         public Studio.Edge StudioEdge { get; protected set; }
 
-        public StudioViewModel(Studio model, StudioDetailType primaryStudioDetailType, StudioDetailType secondaryStudioDetailType) : base(model)
+        public StudioViewModel(Studio model, StudioDetailType primaryStudioDetailType, StudioDetailType secondaryStudioDetailType, bool isButtonVisible) : base(model)
         {
             TitleText = Model.Name;
             DetailPrimaryText = GetDetail(primaryStudioDetailType);
             DetailSecondaryText = GetDetail(secondaryStudioDetailType);
-            ImageUri = "";
+            IsButtonVisible = isButtonVisible;
         }
 
         public enum StudioDetailType
@@ -33,12 +33,12 @@ namespace AniDroid.Adapters.ViewModels
 
         public static StudioViewModel CreateStudioViewModel(Studio model)
         {
-            return new StudioViewModel(model, StudioDetailType.None, StudioDetailType.None);
+            return new StudioViewModel(model, StudioDetailType.None, StudioDetailType.None, model.IsFavourite);
         }
 
         private string GetDetail(StudioDetailType detailType)
         {
-            var retString = "";
+            string retString = null;
 
             if (detailType == StudioDetailType.IsMainStudio)
             {

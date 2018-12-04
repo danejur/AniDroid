@@ -17,12 +17,13 @@ namespace AniDroid.Adapters.ViewModels
     {
         public Staff.Edge ModelEdge { get; protected set; }
 
-        public StaffViewModel(Staff model, StaffDetailType primaryStaffDetailType, StaffDetailType secondaryStaffDetailType) : base(model)
+        public StaffViewModel(Staff model, StaffDetailType primaryStaffDetailType, StaffDetailType secondaryStaffDetailType, bool isButtonVisible) : base(model)
         {
-            TitleText = $"{Model.Name?.FormattedName}";
+            TitleText = Model.Name?.FormattedName;
             DetailPrimaryText = GetDetail(primaryStaffDetailType);
             DetailSecondaryText = GetDetail(secondaryStaffDetailType);
             ImageUri = model.Image?.Large ?? model.Image?.Medium;
+            IsButtonVisible = isButtonVisible;
         }
 
         public enum StaffDetailType
@@ -35,12 +36,12 @@ namespace AniDroid.Adapters.ViewModels
 
         public static StaffViewModel CreateStaffViewModel(Staff model)
         {
-            return new StaffViewModel(model, StaffDetailType.NativeName, StaffDetailType.None);
+            return new StaffViewModel(model, StaffDetailType.NativeName, StaffDetailType.None, model.IsFavourite);
         }
 
         private string GetDetail(StaffDetailType detailType)
         {
-            var retString = "";
+            string retString = null;
 
             if (detailType == StaffDetailType.NativeName)
             {

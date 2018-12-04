@@ -37,7 +37,7 @@ namespace AniDroid.Adapters.ViewModels
 
         private string GetDetail(ForumThreadDetailType detailType)
         {
-            var retString = "";
+            string retString = null;
 
             if (detailType == ForumThreadDetailType.CreatedOn)
             {

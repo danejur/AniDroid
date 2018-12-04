@@ -33,16 +33,6 @@ namespace AniDroid.Adapters.ForumThreadAdapters
             };
         }
 
-        public override void BindCardViewHolder(CardItem holder, int position)
-        {
-            var viewModel = Items[position];
-
-            holder.Name.Text = viewModel.TitleText;
-            holder.DetailPrimary.Text = viewModel.DetailPrimaryText;
-            holder.DetailSecondary.Text = viewModel.DetailSecondaryText;
-            Context.LoadImage(holder.Image, viewModel.ImageUri);
-        }
-
         public override CardItem SetupCardItemViewHolder(CardItem item)
         {
             item.Button.Visibility = ViewStates.Gone;
