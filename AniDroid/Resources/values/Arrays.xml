@@ -118,5 +118,8 @@
     <item>11-01-2018|Added torrent searching! Only Nyaa.si is implemented right now, but I will add more sites to search later. (Caution: it may be a bit buggy)</item>
     <item>11-01-2018|Numerous bug and crash fixes</item>
     <item>12-01-2018|More bug fixes, including one where other users\' lists would show up as your own (sorry about the delay in getting this fixed!)</item>
+    <item>12-04-2018|Added ability to filter your lists (as well as the lists of other users!). Try clicking the new icon at the top of your lists</item>
+    <item>12-04-2018|You can now add or edit anime and literature right from the search (or browse) results! Just long press like you normally would on your own lists</item>
+    <item>12-04-2018|A few more optimizations and bug fixes</item>
   </array> 
 </resources>
