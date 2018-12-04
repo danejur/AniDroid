@@ -10,6 +10,7 @@ using AniDroid.Base;
 using AniDroid.Dialogs;
 using AniDroid.MediaList;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using AniDroid.Utils.Interfaces;
 
@@ -30,6 +31,11 @@ namespace AniDroid.Adapters.MediaAdapters
         private readonly ColorStateList _priorityBackgroundColor;
         private readonly ColorStateList _upToDateTitleColor;
         private readonly ColorStateList _behindTitleColor;
+
+        private readonly List<Media.MediaList> _unfilteredItems;
+
+        private IList<Media.MediaFormat> _filteredFormats = new List<Media.MediaFormat>();
+        private IList<Media.MediaStatus> _filteredStatuses = new List<Media.MediaStatus>();
 
         public MediaListRecyclerAdapter(BaseAniDroidActivity context, Media.MediaListGroup mediaListGroup,
             User.UserMediaListOptions mediaListOptions, MediaListPresenter presenter, RecyclerCardType cardType,
@@ -58,6 +64,8 @@ namespace AniDroid.Adapters.MediaAdapters
                 CardType = RecyclerCardType.Custom;
                 CustomCardUseItemDecoration = true;
             }
+
+            _unfilteredItems = Items;
         }
 
         public void UpdateMediaListItem(int mediaId, Media.MediaList updatedMediaList)
@@ -100,6 +108,28 @@ namespace AniDroid.Adapters.MediaAdapters
         public void RemoveMediaListItem(int mediaListId)
         {
             Items.RemoveAll(x => x.Id == mediaListId);
+            NotifyDataSetChanged();
+        }
+
+        public void UpdateFilters(IList<Media.MediaFormat> filteredFormats, IList<Media.MediaStatus> filteredStatuses)
+        {
+            _filteredFormats = filteredFormats;
+            _filteredStatuses = filteredStatuses;
+
+            var items = _unfilteredItems.AsEnumerable();
+
+            if (_filteredFormats?.Any() == true)
+            {
+                items = items.Where(x => x.Media?.Format?.EqualsAny(_filteredFormats) == true);
+            }
+
+            if (_filteredStatuses?.Any() == true)
+            {
+                items = items.Where(x => x.Media?.Status?.EqualsAny(_filteredStatuses) == true);
+            }
+
+            Items = items.ToList();
+
             NotifyDataSetChanged();
         }
 
