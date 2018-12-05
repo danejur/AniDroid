@@ -167,13 +167,13 @@ namespace AniDroid.Main
                 DisplaySnackbarMessage(notificationText, Snackbar.LengthLong);
             }
 
-            if (Settings.EnableNotificationService)
+            if (Settings.EnableNotificationService && Settings.IsUserAuthenticated)
             {
-                AniListNotificationService.Alarm.StartNotificationAlarm(ApplicationContext);
+                AniListNotificationService.StartNotificationAlarm(ApplicationContext);
             }
             else
             {
-                AniListNotificationService.Alarm.StopNotificationAlarm(ApplicationContext);
+                AniListNotificationService.StopNotificationAlarm(ApplicationContext);
 
             }
 

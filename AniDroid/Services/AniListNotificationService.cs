@@ -19,10 +19,11 @@ using Ninject;
 
 namespace AniDroid.Services
 {
-    [Service(Enabled = true)]
-    public class AniListNotificationService : IntentService
+    [Service(Enabled = true, Permission = "android.permission.BIND_JOB_SERVICE")]
+    public class AniListNotificationService : JobIntentService
     {
         private const int NotificationServiceRequestCode = 1;
+        private const int NotificationServiceJobId = 111;
         private const int DefaultServiceIntervalMillis = 1000 * 60 * 30; // 30 min
 
         private const string NotificationTitle = "{0} new notification{1}";
@@ -30,8 +31,10 @@ namespace AniDroid.Services
 
         protected IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule());
 
-        protected override async void OnHandleIntent(Intent intent)
+        protected override async void OnHandleWork(Intent p0)
         {
+            AniListNotificationReceiver.SetAlarm(ApplicationContext);
+
             if (!ShouldShowNotifications())
             {
                 return;
@@ -63,12 +66,6 @@ namespace AniDroid.Services
             notificationManager.Notify(1, notificationBuilder.Build());
         }
 
-        public static PendingIntent CreateNotificationCheckPendingIntent(Context context)
-        {
-            var intent = new Intent(context, typeof(AniListNotificationService));
-            return PendingIntent.GetService(context, NotificationServiceRequestCode, intent, PendingIntentFlags.UpdateCurrent);
-        }
-
         private static bool ShouldShowNotifications()
         {
             var processInfo = new ActivityManager.RunningAppProcessInfo();
@@ -76,19 +73,39 @@ namespace AniDroid.Services
             return processInfo.Importance != Importance.Foreground;
         }
 
-        public class Alarm
+        protected static void Enqueue(Context context, Intent intent)
         {
-            public static void StartNotificationAlarm(Context context)
+            EnqueueWork(context, Class.FromType(typeof(AniListNotificationService)), NotificationServiceJobId, intent);
+        }
+
+        public static void StartNotificationAlarm(Context context)
+        {
+            EnqueueWork(context, Class.FromType(typeof(AniListNotificationService)), NotificationServiceJobId, new Intent(context, typeof(AniListNotificationService)));
+        }
+
+        public static void StopNotificationAlarm(Context context)
+        {
+            var alarmManager = (AlarmManager)context.GetSystemService(AlarmService);
+            alarmManager.Cancel(CreatePendingIntent(context));
+        }
+
+        private static PendingIntent CreatePendingIntent(Context context) => PendingIntent.GetBroadcast(context, NotificationServiceRequestCode,
+            new Intent(context, typeof(AniListNotificationReceiver)), PendingIntentFlags.CancelCurrent);
+
+        [BroadcastReceiver]
+        public class AniListNotificationReceiver : BroadcastReceiver
+        {
+            public override void OnReceive(Context context, Intent intent)
             {
-                var alarmManager = (AlarmManager)context.GetSystemService(AlarmService);
-                alarmManager.SetRepeating(AlarmType.Rtc, JavaSystem.CurrentTimeMillis(), DefaultServiceIntervalMillis,
-                    CreateNotificationCheckPendingIntent(context));
+                Enqueue(context, intent);
             }
 
-            public static void StopNotificationAlarm(Context context)
+            public static void SetAlarm(Context context)
             {
                 var alarmManager = (AlarmManager)context.GetSystemService(AlarmService);
-                alarmManager.Cancel(CreateNotificationCheckPendingIntent(context));
+                alarmManager.Set(AlarmType.Rtc, JavaSystem.CurrentTimeMillis() + DefaultServiceIntervalMillis,
+                    CreatePendingIntent(context)
+                );
             }
         }
     }
