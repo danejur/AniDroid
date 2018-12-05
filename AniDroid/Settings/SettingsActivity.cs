@@ -243,11 +243,11 @@ namespace AniDroid.Settings
 
                         if (args.IsChecked)
                         {
-                            AniListNotificationService.Alarm.StartNotificationAlarm(ApplicationContext);
+                            AniListNotificationService.StartNotificationAlarm(ApplicationContext);
                         }
                         else
                         {
-                            AniListNotificationService.Alarm.StopNotificationAlarm(ApplicationContext);
+                            AniListNotificationService.StopNotificationAlarm(ApplicationContext);
                         }
                     }));
             _settingsContainer.AddView(CreateSettingDivider(this));

@@ -223,7 +223,7 @@ namespace AniDroid.Base
         public static ISpanned FromHtml(string source)
         {
 #pragma warning disable CS0618 // Type or member is obsolete
-            return Build.VERSION.SdkInt >= BuildVersionCodes.N ? Html.FromHtml(source, FromHtmlOptions.ModeLegacy) : Html.FromHtml(source);
+            return Build.VERSION.SdkInt >= BuildVersionCodes.N ? Html.FromHtml(source ?? "", FromHtmlOptions.ModeLegacy) : Html.FromHtml(source ?? "");
 #pragma warning restore CS0618 // Type or member is obsolete
         }
 

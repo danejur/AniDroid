@@ -29,6 +29,18 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             CustomCardUseItemDecoration = true;
         }
 
+        public AniListNotificationRecyclerAdapter(BaseAniDroidActivity context, LazyLoadingRecyclerViewAdapter<AniListNotification> adapter) : base(context, adapter)
+        {
+            _accentColorHex = $"#{Context.GetThemedColor(Resource.Attribute.Primary) & 0xffffff:X6}";
+            CustomCardUseItemDecoration = true;
+        }
+
+        public AniListNotificationRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<AniListNotification>, IAniListError>> enumerable, RecyclerCardType cardType) : base(context, enumerable, cardType)
+        {
+            _accentColorHex = $"#{Context.GetThemedColor(Resource.Attribute.Primary) & 0xffffff:X6}";
+            CustomCardUseItemDecoration = true;
+        }
+
         public override void BindCustomViewHolder(RecyclerView.ViewHolder holder, int position)
         {
             var viewHolder = holder as AniListNotificationViewHolder;
