@@ -18,6 +18,8 @@ using AniDroid.AniList.Dto;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
+using AniDroid.Dialogs;
+using AniDroid.MediaList;
 using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
 using Ninject;
@@ -44,7 +46,67 @@ namespace AniDroid.Browse
         {
             var recycler = View.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
             recycler.SetAdapter(_adapter = new MediaRecyclerAdapter(Activity, mediaEnumerable, _cardType,
-                MediaViewModel.CreateMediaViewModel));
+                MediaViewModel.CreateMediaViewModel)
+            {
+                LongClickAction = viewModel =>
+                {
+                    if (Presenter.GetIsUserAuthenticated())
+                    {
+                        EditMediaListItemDialog.Create(Activity, Presenter, viewModel.Model,
+                            viewModel.Model.MediaListEntry,
+                            Presenter.GetAuthenticatedUser()?.MediaListOptions);
+                    }
+                },
+
+            });
+        }
+
+        public void UpdateMediaListItem(Media.MediaList mediaList)
+        {
+            if (mediaList.Media?.Type == Media.MediaType.Anime)
+            {
+                var instance = MediaListFragment.GetInstance(MediaListFragment.AnimeMediaListFragmentName);
+
+                (instance as MediaListFragment)?.UpdateMediaListItem(mediaList);
+            }
+            else if (mediaList.Media?.Type == Media.MediaType.Manga)
+            {
+                (MediaListFragment.GetInstance(MediaListFragment.MangaMediaListFragmentName) as MediaListFragment)
+                    ?.UpdateMediaListItem(mediaList);
+            }
+
+            var itemPosition =
+                _adapter?.Items.FindIndex(x => x.Model?.Id == mediaList.Media?.Id);
+
+            if (itemPosition == null || mediaList.Media == null)
+            {
+                return;
+            }
+
+            mediaList.Media.MediaListEntry = mediaList;
+
+            _adapter.ReplaceItem(itemPosition.Value, _adapter.CreateViewModelFunc?.Invoke(mediaList.Media));
+        }
+
+        public void RemoveMediaListItem(int mediaListId)
+        {
+            (MediaListFragment.GetInstance(MediaListFragment.AnimeMediaListFragmentName) as MediaListFragment)
+                ?.RemoveMediaListItem(mediaListId);
+            (MediaListFragment.GetInstance(MediaListFragment.MangaMediaListFragmentName) as MediaListFragment)
+                ?.RemoveMediaListItem(mediaListId);
+
+            var itemPosition =
+                _adapter?.Items.FindIndex(x => x.Model?.MediaListEntry?.Id == mediaListId);
+
+            if (itemPosition == null)
+            {
+                return;
+            }
+
+            var item = _adapter.Items[itemPosition.Value];
+            item.Model.MediaListEntry = null;
+
+            _adapter.ReplaceItem(itemPosition.Value, _adapter.CreateViewModelFunc?.Invoke(item.Model));
         }
 
         protected override void SetInstance(BaseMainActivityFragment instance)
