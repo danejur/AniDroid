@@ -34,6 +34,7 @@ namespace AniDroid.Adapters.MediaAdapters
             LoadingCardWidth = _cardWidth;
             LoadingCardHeight = ViewGroup.LayoutParams.MatchParent;
             SetHorizontalOrientation();
+            CardColumnCount = 1;
         }
 
         public override void BindCardViewHolder(CardItem holder, int position)

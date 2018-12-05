@@ -19,6 +19,8 @@ using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.AniList.Utils;
 using AniDroid.Base;
+using AniDroid.Dialogs;
+using AniDroid.MediaList;
 using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
 using Newtonsoft.Json;
@@ -49,8 +51,68 @@ namespace AniDroid.Browse
 
         public void ShowMediaSearchResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
         {
-            _recyclerView.SetAdapter(_adapter =
-                new MediaRecyclerAdapter(this, mediaEnumerable, _cardType, MediaViewModel.CreateMediaViewModel));
+            _recyclerView.SetAdapter(_adapter = new MediaRecyclerAdapter(this, mediaEnumerable, _cardType,
+                MediaViewModel.CreateMediaViewModel)
+            {
+                LongClickAction = viewModel =>
+                {
+                    if (Presenter.GetIsUserAuthenticated())
+                    {
+                        EditMediaListItemDialog.Create(this, Presenter, viewModel.Model,
+                            viewModel.Model.MediaListEntry,
+                            Presenter.GetAuthenticatedUser()?.MediaListOptions);
+                    }
+                },
+
+            });
+        }
+
+        public void UpdateMediaListItem(Media.MediaList mediaList)
+        {
+            if (mediaList.Media?.Type == Media.MediaType.Anime)
+            {
+                var instance = MediaListFragment.GetInstance(MediaListFragment.AnimeMediaListFragmentName);
+
+                (instance as MediaListFragment)?.UpdateMediaListItem(mediaList);
+            }
+            else if (mediaList.Media?.Type == Media.MediaType.Manga)
+            {
+                (MediaListFragment.GetInstance(MediaListFragment.MangaMediaListFragmentName) as MediaListFragment)
+                    ?.UpdateMediaListItem(mediaList);
+            }
+
+            var itemPosition =
+                _adapter?.Items.FindIndex(x => x.Model?.Id == mediaList.Media?.Id);
+
+            if (itemPosition == null || mediaList.Media == null)
+            {
+                return;
+            }
+
+            mediaList.Media.MediaListEntry = mediaList;
+
+            _adapter.ReplaceItem(itemPosition.Value, _adapter.CreateViewModelFunc?.Invoke(mediaList.Media));
+        }
+
+        public void RemoveMediaListItem(int mediaListId)
+        {
+            (MediaListFragment.GetInstance(MediaListFragment.AnimeMediaListFragmentName) as MediaListFragment)
+                ?.RemoveMediaListItem(mediaListId);
+            (MediaListFragment.GetInstance(MediaListFragment.MangaMediaListFragmentName) as MediaListFragment)
+                ?.RemoveMediaListItem(mediaListId);
+
+            var itemPosition =
+                _adapter?.Items.FindIndex(x => x.Model?.MediaListEntry?.Id == mediaListId);
+
+            if (itemPosition == null)
+            {
+                return;
+            }
+
+            var item = _adapter.Items[itemPosition.Value];
+            item.Model.MediaListEntry = null;
+
+            _adapter.ReplaceItem(itemPosition.Value, _adapter.CreateViewModelFunc?.Invoke(item.Model));
         }
 
         public override void DisplaySnackbarMessage(string message, int length)

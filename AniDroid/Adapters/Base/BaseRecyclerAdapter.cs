@@ -21,6 +21,7 @@ namespace AniDroid.Adapters.Base
         protected ColorStateList DefaultIconColor;
         protected ColorStateList FavoriteIconColor;
         protected bool CustomCardUseItemDecoration;
+        protected int CardColumnCount;
         public RecyclerCardType CardType { get; protected set; }
         public List<T> Items { get; protected set; }
         public sealed override int ItemCount => Items.Count;
@@ -192,8 +193,13 @@ namespace AniDroid.Adapters.Base
             return item;
         }
 
-        private static int CalculateCardColumns(Activity context)
+        private int CalculateCardColumns(Activity context)
         {
+            if (CardColumnCount > 0)
+            {
+                return CardColumnCount;
+            }
+
             var outMetrics = new DisplayMetrics();
             var density = context.Resources.DisplayMetrics.Density;
 
