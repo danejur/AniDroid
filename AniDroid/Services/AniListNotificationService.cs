@@ -25,6 +25,8 @@ namespace AniDroid.Services
         private const int NotificationServiceRequestCode = 1;
         private const int NotificationServiceJobId = 111;
         private const int DefaultServiceIntervalMillis = 1000 * 60 * 30; // 30 min
+        private const string NotificationChannelId = "ANILIST_NOTIFICATION_CHANNEL";
+        private const string NotificationChannelName = "AniList Notifications";
 
         private const string NotificationTitle = "{0} new notification{1}";
         private const string NotificationBody = "Tap here to open AniDroid.";
@@ -55,12 +57,13 @@ namespace AniDroid.Services
 
         private void CreateNotification(int notificationCount)
         {
-            var notificationBuilder = new NotificationCompat.Builder(this)
+            var notificationBuilder = new NotificationCompat.Builder(ApplicationContext)
                 .SetContentTitle(string.Format(NotificationTitle, notificationCount, notificationCount > 1 ? "s" : ""))
                 .SetContentText(NotificationBody)
                 .SetSmallIcon(Resource.Drawable.IconTransparent)
                 .SetContentIntent(MainActivity.CreatePendingIntentToOpenNotifications(ApplicationContext))
-                .SetAutoCancel(true);
+                .SetAutoCancel(true)
+                .SetChannelId(NotificationChannelId);
 
             var notificationManager = (NotificationManager)GetSystemService(NotificationService);
             notificationManager.Notify(1, notificationBuilder.Build());
@@ -87,6 +90,21 @@ namespace AniDroid.Services
         {
             var alarmManager = (AlarmManager)context.GetSystemService(AlarmService);
             alarmManager.Cancel(CreatePendingIntent(context));
+        }
+
+        public static void CreateNotificationChannel(Context context)
+        {
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
+            {
+                var channel = new NotificationChannel(NotificationChannelId, NotificationChannelName,
+                    NotificationImportance.Default);
+
+                channel.EnableVibration(true);
+                channel.EnableLights(true);
+
+                var notificationManager = (NotificationManager) context.GetSystemService(NotificationService);
+                notificationManager.CreateNotificationChannel(channel);
+            }
         }
 
         private static PendingIntent CreatePendingIntent(Context context) => PendingIntent.GetBroadcast(context, NotificationServiceRequestCode,

@@ -15,6 +15,7 @@ using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 using AniDroid.Login;
 using AniDroid.Main;
+using AniDroid.Services;
 using AniDroid.Utils;
 using Ninject;
 
@@ -39,6 +40,8 @@ namespace AniDroid.Start
 
             Fabric.Fabric.With(this, new Crashlytics.Crashlytics());
             Crashlytics.Crashlytics.HandleManagedExceptions();
+
+            AniListNotificationService.CreateNotificationChannel(ApplicationContext);
 
             MainActivity.StartActivityForResult(this, 0);
             Finish();
