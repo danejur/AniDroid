@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Support.V4.Widget;
+using Android.Util;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.Base;
@@ -25,6 +26,8 @@ namespace AniDroid.Adapters.MediaAdapters
     {
         public User.UserMediaListOptions UserMediaListOptions { get; set; }
 
+        private int? _cardWidth;
+
         public MediaRecyclerAdapter(BaseAniDroidActivity context,
             IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> enumerable, RecyclerCardType cardType,
             Func<Media, MediaViewModel> createViewModelFunc) : base(context, enumerable, cardType, createViewModelFunc)
@@ -38,6 +41,11 @@ namespace AniDroid.Adapters.MediaAdapters
 
         public override CardItem SetupCardItemViewHolder(CardItem item)
         {
+            if (_cardWidth.HasValue)
+            {
+                item.Container.LayoutParameters.Width = _cardWidth.Value;
+            }
+
             item.Button.Clickable = false;
             item.ButtonIcon.SetImageResource(Resource.Drawable.ic_favorite_white_24px);
             ImageViewCompat.SetImageTintList(item.ButtonIcon, FavoriteIconColor);
@@ -46,6 +54,14 @@ namespace AniDroid.Adapters.MediaAdapters
             item.Name.SetMaxLines(2);
 
             return item;
+        }
+
+        public void SetHorizontalAdapterCardWidthDip(int dp)
+        {
+            _cardWidth = LoadingCardWidth = (int)TypedValue.ApplyDimension(ComplexUnitType.Dip, dp, Context.Resources.DisplayMetrics);
+            LoadingCardHeight = ViewGroup.LayoutParams.MatchParent;
+            CardColumnCount = 1;
+            SetHorizontalOrientation();
         }
 
         //private static MediaViewModel.MediaDetailType GetDetailType(Media.MediaSort sort)

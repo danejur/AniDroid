@@ -25,8 +25,6 @@ namespace AniDroid.Adapters.Base
 {
     public abstract class AniDroidRecyclerAdapter<T, TModel> : BaseRecyclerAdapter<T> where T : AniDroidAdapterViewModel<TModel> where TModel : class
     {
-        private int _orientation = LinearLayoutManager.Vertical;
-        private RecyclerView.ItemDecoration _decoration;
         private readonly IAsyncEnumerable<OneOf<IPagedData<TModel>, IAniListError>> _asyncEnumerable;
         private IAsyncEnumerator<OneOf<IPagedData<TModel>, IAniListError>> _asyncEnumerator;
         private bool _isLazyLoading;

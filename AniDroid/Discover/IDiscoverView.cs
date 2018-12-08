@@ -22,5 +22,7 @@ namespace AniDroid.Discover
         void ShowTrendingResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable);
         void ShowNewAnimeResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable);
         void ShowNewMangaResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable);
+        void UpdateMediaListItem(Media.MediaList mediaList);
+        void RemoveMediaListItem(int mediaListId);
     }
 }

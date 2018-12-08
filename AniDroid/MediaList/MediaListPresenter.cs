@@ -18,6 +18,7 @@ using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.AniListObject.Media;
 using AniDroid.Base;
+using AniDroid.Dialogs;
 using AniDroid.Utils.Comparers;
 using AniDroid.Utils.Interfaces;
 
@@ -37,7 +38,7 @@ namespace AniDroid.MediaList
         public async Task GetMediaLists(int userId)
         {
             var mediaListResp = await AniListService.GetUserMediaList(userId,
-                View.GetMediaType(), AniDroidSettings.GroupCompletedLists, default(CancellationToken));
+                View.GetMediaType(), AniDroidSettings.GroupCompletedLists, default);
 
 
             mediaListResp.Switch(error => View.OnError(error))
@@ -54,7 +55,7 @@ namespace AniDroid.MediaList
 
         public async Task SaveMediaListEntry(MediaListEditDto editDto, Action onSuccess, Action onError)
         {
-            var mediaUpdateResp = await AniListService.UpdateMediaListEntry(editDto, default(CancellationToken));
+            var mediaUpdateResp = await AniListService.UpdateMediaListEntry(editDto, default);
 
             mediaUpdateResp.Switch(mediaList =>
                 {
@@ -66,7 +67,7 @@ namespace AniDroid.MediaList
 
         public async Task DeleteMediaListEntry(int mediaListId, Action onSuccess, Action onError)
         {
-            var mediaDeleteResp = await AniListService.DeleteMediaListEntry(mediaListId, default(CancellationToken));
+            var mediaDeleteResp = await AniListService.DeleteMediaListEntry(mediaListId, default);
 
             mediaDeleteResp.Switch((bool success) =>
             {
@@ -85,7 +86,7 @@ namespace AniDroid.MediaList
                 Progress = (mediaListToUpdate.Progress ?? 0) + 1
             };
 
-            var mediaUpdateResp = await AniListService.UpdateMediaListEntry(editDto, default(CancellationToken));
+            var mediaUpdateResp = await AniListService.UpdateMediaListEntry(editDto, default);
 
             mediaUpdateResp.Switch(mediaList =>
                 {
@@ -101,6 +102,7 @@ namespace AniDroid.MediaList
 
         public async Task CompleteMedia(Media.MediaList mediaListToComplete)
         {
+
             var editDto = new MediaListEditDto
             {
                 MediaId = mediaListToComplete.Media.Id,
@@ -108,7 +110,7 @@ namespace AniDroid.MediaList
                 Status = Media.MediaListStatus.Completed
             };
 
-            var mediaUpdateResp = await AniListService.UpdateMediaListEntry(editDto, default(CancellationToken));
+            var mediaUpdateResp = await AniListService.UpdateMediaListEntry(editDto, default);
 
             mediaUpdateResp.Switch(mediaList =>
                 {

@@ -229,10 +229,7 @@ namespace AniDroid.Adapters.MediaAdapters
 
             if (mediaList.Progress + 1 == (mediaList.Media.Episodes ?? mediaList.Media.Chapters))
             {
-                senderView.Enabled = false;
-                iconView?.StartAnimation(AnimationUtils.LoadAnimation(Context,
-                    Resource.Animation.Button_Animation_FinishProgress));
-                await _presenter.CompleteMedia(mediaList);
+                EditMediaListItemDialog.Create(Context, _presenter, mediaList.Media, mediaList, _mediaListOptions, true);
             }
             else
             {
