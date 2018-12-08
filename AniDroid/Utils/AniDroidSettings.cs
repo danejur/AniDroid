@@ -152,6 +152,12 @@ namespace AniDroid.Utils
             set => _authSettingStorage.Put(StorageKeys.EnableNotificationServiceKey, value);
         }
 
+        public bool DisplayUpcomingEpisodeTimeAsCountdown
+        {
+            get => _authSettingStorage.Get(StorageKeys.DisplayUpcomingEpisodeTimeAsCountdownKey, false);
+            set => _authSettingStorage.Put(StorageKeys.DisplayUpcomingEpisodeTimeAsCountdownKey, value);
+        }
+
         #region Methods
 
         public void UpdateLoggedInUser(User user)
@@ -214,6 +220,7 @@ namespace AniDroid.Utils
             public const string MangaListSortDirectionKey = "MANGA_LIST_SORT_DIRECTION";
             public const string UseLongClickForEpisodeAddKey = "USE_LONG_CLICK_FOR_EPISODE_ADD";
             public const string EnableNotificationServiceKey = "ENABLE_NOTIFICATION_SERVICE";
+            public const string DisplayUpcomingEpisodeTimeAsCountdownKey = "DISPLAY_UPCOMING_EPISODE_TIME_AS_COUNTDOWN";
 
             public const string ShowAllActivityKey = "SHOW_ALL_ACTIVITY";
         }

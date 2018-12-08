@@ -30,6 +30,8 @@ namespace AniDroid.Settings
             View.CreateCardTypeSettingItem(AniDroidSettings.CardType);
             View.CreateAniDroidThemeSettingItem(AniDroidSettings.Theme);
             View.CreateDisplayBannersSettingItem(AniDroidSettings.DisplayBanners);
+            View.CreateDisplayUpcomingEpisodeTimeAsCountdownItem(AniDroidSettings
+                .DisplayUpcomingEpisodeTimeAsCountdown);
 
             if (AniDroidSettings.IsUserAuthenticated)
             {
@@ -79,6 +81,11 @@ namespace AniDroid.Settings
         public void SetDisplayBanners(bool displayBanners)
         {
             AniDroidSettings.DisplayBanners = displayBanners;
+        }
+
+        public void SetDisplayUpcomingEpisodeTimeAsCountdown(bool displayUpcomingEpisodeTimeAsCountdown)
+        {
+            AniDroidSettings.DisplayUpcomingEpisodeTimeAsCountdown = displayUpcomingEpisodeTimeAsCountdown;
         }
 
         // Auth Settings

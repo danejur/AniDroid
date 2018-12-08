@@ -149,6 +149,11 @@ namespace AniDroid.MediaList
             return AniDroidSettings.UseLongClickForEpisodeAdd;
         }
 
+        public bool GetDisplayTimeUntilAiringAsCountdown()
+        {
+            return AniDroidSettings.DisplayUpcomingEpisodeTimeAsCountdown;
+        }
+
         public MediaListSortComparer.MediaListSortDirection GetMediaListSortDirection(Media.MediaType mediaType)
         {
             if (Media.MediaType.Anime.Equals(mediaType))

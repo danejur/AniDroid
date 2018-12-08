@@ -280,7 +280,7 @@ namespace AniDroid.MediaList
                 var adapter = new MediaListRecyclerAdapter(Activity, statusList,
                     _collection.User.MediaListOptions, Presenter, Presenter.GetCardType(),
                     Presenter.GetMediaListItemViewType(), Presenter.GetHighlightPriorityItems(),
-                    Presenter.GetDisplayProgressColors(), true, Presenter.GetUseLongClickForEpisodeAdd());
+                    Presenter.GetDisplayProgressColors(), true, Presenter.GetUseLongClickForEpisodeAdd(), Presenter.GetDisplayTimeUntilAiringAsCountdown());
                 adapter.UpdateFilters(_filteredMediaFormats, _filteredMediaStatuses);
                 _recyclerAdapters.Add(adapter);
                 var listView = LayoutInflater.Inflate(Resource.Layout.View_List, null);

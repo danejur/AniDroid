@@ -96,6 +96,22 @@ namespace AniDroid.Settings
             _settingsContainer.AddView(CreateSettingDivider(this));
         }
 
+        public void CreateDisplayUpcomingEpisodeTimeAsCountdownItem(bool displayUpcomingEpisodeTimeAsCountdown)
+        {
+            _settingsContainer.AddView(
+                CreateSwitchSettingRow(this, "Display Upcoming Episode Times As Countdowns",
+                    "Upcoming episode times will appear as days and hours remaining instead of the date",
+                    displayUpcomingEpisodeTimeAsCountdown, true,
+                    (sender, args) =>
+                    {
+                        Presenter.SetDisplayUpcomingEpisodeTimeAsCountdown(args.IsChecked);
+                        _recreateActivity = true;
+                        Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
+                    }));
+                        
+            _settingsContainer.AddView(CreateSettingDivider(this));
+        }
+
         public void CreateWhatsNewSettingItem()
         {
             _settingsContainer.AddView(

@@ -43,6 +43,7 @@ namespace AniDroid.Utils.Interfaces
         MediaListSortComparer.MediaListSortDirection MangaListSortDirection { get; set; }
         bool UseLongClickForEpisodeAdd { get; set; }
         bool EnableNotificationService { get; set; }
+        bool DisplayUpcomingEpisodeTimeAsCountdown { get; set; }
 
         #region Methods
 
