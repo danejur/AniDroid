@@ -16,8 +16,7 @@ namespace AniDroid
 {
 #if DEBUG
     [Application(AllowBackup = true, Theme = "@style/AniList", Label= "@config/AppName", Icon = "@drawable/IconDebug")]
-#endif
-#if RELEASE
+#else
     [Application(AllowBackup = true, Theme = "@style/AniList", Label= "@config/AppName", Icon = "@drawable/Icon")]
 #endif
     public class AniDroidApplication : Application
