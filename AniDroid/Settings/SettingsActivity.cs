@@ -234,8 +234,8 @@ namespace AniDroid.Settings
         public void CreateEnableNotificationServiceItem(bool enableNotificationService)
         {
             _settingsContainer.AddView(
-                CreateSwitchSettingRow(this, "Enable Native Notifications (Beta)",
-                    "Turn this on to enable native notifications in Android! Right now, the app will check automatically if you have any new notifications on AniList every 30 minutes, and let you know if it finds anything.\n**This feature is in active development**",
+                CreateSwitchSettingRow(this, "Enable Notification Alerts",
+                    "Check for new AniList notifications every 30 minutes.",
                     enableNotificationService, true,
                     (sender, args) =>
                     {
