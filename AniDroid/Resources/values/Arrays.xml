@@ -124,5 +124,10 @@
     <item>12-04-2018|A few more optimizations and bug fixes</item>
     <item>12-05-2018|Added the initial AniList Notification service! This will allow you to get native Android notifications when you get new notifications in AniList. Feel free to turn it off in the settings</item>
     <item>12-05-2018|Bug and crash fixes</item>
+    <item>12-08-2018|Rewrote notifications to be more reliable and show better information</item>
+    <item>12-08-2018|Added option to sort media lists by Last Updated</item>
+    <item>12-08-2018|Tapping the "Mark as Complate" button on your media lists will now display the Complete Media dialog, allowing you to enter a rating</item>
+    <item>12-08-2018|You are now able to properly edit media list items from the Discover screen</item>
+    <item>12-08-2018|Added setting option for displaying Next Episode information as a countdown instead of a date</item>
   </array> 
 </resources>
