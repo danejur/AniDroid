@@ -85,7 +85,7 @@ namespace AniDroid.Jobs
             }
 
             new JobRequest.Builder(Tag)
-                .SetPeriodic(TimeUnit.Minutes.ToMillis(30), TimeUnit.Minutes.ToMillis(1))
+                .SetPeriodic(TimeUnit.Minutes.ToMillis(30))
                 .SetUpdateCurrent(true)
                 .SetRequiredNetworkType(JobRequest.NetworkType.Connected)
                 .SetRequirementsEnforced(true)
