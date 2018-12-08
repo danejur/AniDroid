@@ -34,7 +34,7 @@ namespace AniDroid.Utils.Interfaces
         List<KeyValuePair<string, bool>> AnimeListOrder { get; set; }
         List<KeyValuePair<string, bool>> MangaListOrder { get; set; }
         bool GroupCompletedLists { get; set; }
-        MediaListRecyclerAdapter.MediaListItemViewType MediaViewType { get; set; }
+        MediaListRecyclerAdapterOld.MediaListItemViewType MediaViewType { get; set; }
         bool HighlightPriorityMediaListItems { get; set; }
         bool DisplayMediaListItemProgressColors { get; set; }
 		MediaListSortComparer.MediaListSortType AnimeListSortType { get; set; }

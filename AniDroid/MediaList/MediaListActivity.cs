@@ -49,7 +49,7 @@ namespace AniDroid.MediaList
         private int _userId;
         private Media.MediaType _mediaType;
         private Media.MediaListCollection _collection;
-        private IList<MediaListRecyclerAdapter> _recyclerAdapters;
+        private IList<MediaListRecyclerAdapterOld> _recyclerAdapters;
         private MediaListSortComparer.MediaListSortType _currentSort;
         private MediaListSortComparer.MediaListSortDirection _currentSortDirection;
         private IMenu _menu;
@@ -94,7 +94,7 @@ namespace AniDroid.MediaList
             _collection = collection;
 
             var pagerAdapter = new FragmentlessViewPagerAdapter();
-            _recyclerAdapters = new List<MediaListRecyclerAdapter>();
+            _recyclerAdapters = new List<MediaListRecyclerAdapterOld>();
 
             var listOrder = GetListOrder();
             var orderedLists = !listOrder.Any()
@@ -117,7 +117,7 @@ namespace AniDroid.MediaList
                     continue;
                 }
 
-                var adapter = new MediaListRecyclerAdapter(this, statusList,
+                var adapter = new MediaListRecyclerAdapterOld(this, statusList,
                     _collection.User.MediaListOptions, Presenter, Presenter.GetCardType(),
                     Presenter.GetMediaListItemViewType(), false, false, false, false, Settings.DisplayUpcomingEpisodeTimeAsCountdown);
                 _recyclerAdapters.Add(adapter);

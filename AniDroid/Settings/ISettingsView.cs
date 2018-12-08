@@ -27,7 +27,7 @@ namespace AniDroid.Settings
 
         // Auth settings
         void CreateGroupCompletedSettingItem(bool groupCompleted);
-        void CreateMediaListViewTypeSettingItem(MediaListRecyclerAdapter.MediaListItemViewType viewType);
+        void CreateMediaListViewTypeSettingItem(MediaListRecyclerAdapterOld.MediaListItemViewType viewType);
         void CreateHighlightPriorityMediaListItemsItem(bool highlightPriorityItems);
         void CreateDisplayProgressColorsItem(bool displayProgressColors);
         void CreateAnimeListTabOrderItem(Func<List<KeyValuePair<string, bool>>> getAnimeLists);

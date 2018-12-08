@@ -98,9 +98,9 @@ namespace AniDroid.Utils
             set => _authSettingStorage.Put(StorageKeys.GroupCompletedLists, value);
         }
 
-        public MediaListRecyclerAdapter.MediaListItemViewType MediaViewType
+        public MediaListRecyclerAdapterOld.MediaListItemViewType MediaViewType
         {
-            get => _authSettingStorage.Get(StorageKeys.MediaViewType, MediaListRecyclerAdapter.MediaListItemViewType.Normal);
+            get => _authSettingStorage.Get(StorageKeys.MediaViewType, MediaListRecyclerAdapterOld.MediaListItemViewType.Normal);
             set => _authSettingStorage.Put(StorageKeys.MediaViewType, value);
         }
 

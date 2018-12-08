@@ -216,8 +216,9 @@
     <Compile Include="Adapters\FragmentlessViewPagerAdapter.cs" />
     <Compile Include="Adapters\General\CheckBoxItemRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaEdgeRecyclerAdapter.cs" />
-    <Compile Include="Adapters\MediaAdapters\MediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaListRecyclerAdapter.cs" />
+    <Compile Include="Adapters\MediaAdapters\MediaRecyclerAdapter.cs" />
+    <Compile Include="Adapters\MediaAdapters\MediaListRecyclerAdapterOld.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaListTabOrderRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaStreamingEpisodesRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaTagsRecyclerAdapter.cs" />
@@ -232,6 +233,7 @@
     <Compile Include="Adapters\ViewModels\CharacterViewModel.cs" />
     <Compile Include="Adapters\ViewModels\ForumThreadViewModel.cs" />
     <Compile Include="Adapters\ViewModels\MediaEdgeViewModel.cs" />
+    <Compile Include="Adapters\ViewModels\MediaListViewModel.cs" />
     <Compile Include="Adapters\ViewModels\MediaViewModel.cs" />
     <Compile Include="Adapters\ViewModels\StaffEdgeViewModel.cs" />
     <Compile Include="Adapters\ViewModels\StaffViewModel.cs" />

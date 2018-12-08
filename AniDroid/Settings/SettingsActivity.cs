@@ -143,15 +143,15 @@ namespace AniDroid.Settings
             _settingsContainer.AddView(CreateSettingDivider(this));
         }
 
-        public void CreateMediaListViewTypeSettingItem(MediaListRecyclerAdapter.MediaListItemViewType viewType)
+        public void CreateMediaListViewTypeSettingItem(MediaListRecyclerAdapterOld.MediaListItemViewType viewType)
         {
             var options = new List<string> { "Normal", "Compact", "Title Only" };
             _settingsContainer.AddView(
                 CreateSpinnerSettingRow(this, "Media List View", "Choose how you'd like to show media list items", options, (int)viewType, (sender, args) =>
                 {
-                    Presenter.SetMediaListViewType((MediaListRecyclerAdapter.MediaListItemViewType)args.Position);
+                    Presenter.SetMediaListViewType((MediaListRecyclerAdapterOld.MediaListItemViewType)args.Position);
 
-                    if (viewType != (MediaListRecyclerAdapter.MediaListItemViewType)args.Position)
+                    if (viewType != (MediaListRecyclerAdapterOld.MediaListItemViewType)args.Position)
                     {
                         _recreateActivity = true;
                         Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
