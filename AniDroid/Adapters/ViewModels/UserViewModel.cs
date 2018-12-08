@@ -35,6 +35,11 @@ namespace AniDroid.Adapters.ViewModels
             return new UserViewModel(model, UserDetailType.Following, UserDetailType.None);
         }
 
+        public static UserViewModel CreateUserFollowingViewModel(User model)
+        {
+            return new UserViewModel(model, UserDetailType.None, UserDetailType.None);
+        }
+
         private string GetDetail(UserDetailType detailType)
         {
             string retString = null;

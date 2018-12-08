@@ -28,12 +28,6 @@ namespace AniDroid.Adapters.UserAdapters
             SetDefaultClickActions();
         }
 
-        public UserRecyclerAdapter(BaseAniDroidActivity context, List<UserViewModel> items, RecyclerCardType cardType,
-            Func<User, UserViewModel> createViewModelFunc) : base(context, items, cardType, createViewModelFunc)
-        {
-            SetDefaultClickActions();
-        }
-
         public override CardItem SetupCardItemViewHolder(CardItem item)
         {
             item.Button.Visibility = ViewStates.Gone;

@@ -30,8 +30,8 @@ namespace AniDroid.Adapters.StaffAdapters
             SetDefaultClickActions();
         }
 
-        public StaffRecyclerAdapter(BaseAniDroidActivity context, List<StaffViewModel> items, RecyclerCardType cardType,
-            Func<Staff, StaffViewModel> createViewModelFunc) : base(context, items, cardType, createViewModelFunc)
+        public StaffRecyclerAdapter(BaseAniDroidActivity context, List<StaffViewModel> items, RecyclerCardType cardType)
+            : base(context, items, cardType)
         {
             SetDefaultClickActions();
         }

@@ -32,6 +32,17 @@ namespace AniDroid.Adapters.MediaAdapters
             IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> enumerable, RecyclerCardType cardType,
             Func<Media, MediaViewModel> createViewModelFunc) : base(context, enumerable, cardType, createViewModelFunc)
         {
+            SetDefaultClickActions();
+        }
+
+        public MediaRecyclerAdapter(BaseAniDroidActivity context, List<MediaViewModel> items, RecyclerCardType cardType)
+            : base(context, items, cardType)
+        {
+            SetDefaultClickActions();
+        }
+
+        private void SetDefaultClickActions()
+        {
             ClickAction = viewModel =>
                 MediaActivity.StartActivity(Context, viewModel.Model.Id, BaseAniDroidActivity.ObjectBrowseRequestCode);
 

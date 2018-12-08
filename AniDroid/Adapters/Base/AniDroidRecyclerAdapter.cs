@@ -45,20 +45,20 @@ namespace AniDroid.Adapters.Base
 
         protected AniDroidRecyclerAdapter(BaseAniDroidActivity context,
             IAsyncEnumerable<OneOf<IPagedData<TModel>, IAniListError>> enumerable, RecyclerCardType cardType,
-            Func<TModel, T> createViewModelFunc) : this(context, new List<T> {null}, cardType, createViewModelFunc)
+            Func<TModel, T> createViewModelFunc) : this(context, new List<T> {null}, cardType)
         {
+            CreateViewModelFunc = createViewModelFunc;
             _asyncEnumerable = enumerable;
             _asyncEnumerator = enumerable.GetEnumerator();
         }
 
         protected AniDroidRecyclerAdapter(BaseAniDroidActivity context,
-            List<T> items, RecyclerCardType cardType, Func<TModel, T> createViewModelFunc) : base(context, items, cardType)
+            List<T> items, RecyclerCardType cardType) : base(context, items, cardType)
         {
             Items = items ?? throw new ArgumentNullException(nameof(items));
             CardType = cardType;
             DefaultIconColor = ColorStateList.ValueOf(new Color(context.GetThemedColor(Resource.Attribute.Secondary_Dark)));
             FavoriteIconColor = ColorStateList.ValueOf(new Color(ContextCompat.GetColor(context, Resource.Color.Favorite_Red)));
-            CreateViewModelFunc = createViewModelFunc;
         }
 
         protected AniDroidRecyclerAdapter(BaseAniDroidActivity context,

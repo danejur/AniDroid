@@ -20,6 +20,7 @@ using AniDroid.Adapters;
 using AniDroid.Adapters.CharacterAdapters;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Adapters.StaffAdapters;
+using AniDroid.Adapters.StudioAdapters;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList;
 using AniDroid.AniList.Dto;
@@ -440,7 +441,7 @@ namespace AniDroid.AniListObject.Media
             var mediaStaffEnumerable = Presenter.GetMediaStaffEnumerable(mediaId, PageLength);
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
-            var dialogRecyclerAdapter = new MediaStaffRecyclerAdapter(this, mediaStaffEnumerable, CardType);
+            var dialogRecyclerAdapter = new StaffEdgeRecyclerAdapter(this, mediaStaffEnumerable, CardType, StaffEdgeViewModel.CreateStaffEdgeViewModel);
             recycler.SetAdapter(dialogRecyclerAdapter);
 
             return retView;
@@ -450,7 +451,8 @@ namespace AniDroid.AniListObject.Media
         {
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
-            var dialogRecyclerAdapter = new MediaRelationsRecyclerAdapter(this, mediaEdgeList, CardType);
+            var dialogRecyclerAdapter = new MediaEdgeRecyclerAdapter(this,
+                mediaEdgeList.Select(MediaEdgeViewModel.CreateMediaRelationViewModel).ToList(), CardType);
             recycler.SetAdapter(dialogRecyclerAdapter);
 
             return retView;
@@ -460,7 +462,7 @@ namespace AniDroid.AniListObject.Media
         {
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
-            var dialogRecyclerAdapter = new MediaStudiosRecyclerAdapter(this, studioEdgeList);
+            var dialogRecyclerAdapter = new StudioEdgeRecyclerAdapter(this, studioEdgeList.Select(StudioEdgeViewModel.CreateStudioEdgeViewModel).ToList());
             recycler.SetAdapter(dialogRecyclerAdapter);
 
             return retView;

@@ -16,6 +16,7 @@ using Android.Widget;
 using AniDroid.Adapters;
 using AniDroid.Adapters.AniListActivityAdapters;
 using AniDroid.Adapters.UserAdapters;
+using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
 using AniDroid.Dialogs;
@@ -221,7 +222,7 @@ namespace AniDroid.AniListObject.User
             var userFollowingEnumerable = Presenter.GetUserFollowingEnumerable(userId, PageLength);
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
-            var recyclerAdapter = new UserFollowerRecyclerAdapter(this, userFollowingEnumerable, CardType);
+            var recyclerAdapter = new UserRecyclerAdapter(this, userFollowingEnumerable, CardType, UserViewModel.CreateUserFollowingViewModel);
             recycler.SetAdapter(recyclerAdapter);
 
             return retView;
@@ -232,7 +233,7 @@ namespace AniDroid.AniListObject.User
             var userFollowersEnumerable = Presenter.GetUserFollowersEnumerable(userId, PageLength);
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
-            var recyclerAdapter = new UserFollowerRecyclerAdapter(this, userFollowersEnumerable, CardType);
+            var recyclerAdapter = new UserRecyclerAdapter(this, userFollowersEnumerable, CardType, UserViewModel.CreateUserViewModel);
             recycler.SetAdapter(recyclerAdapter);
 
             return retView;
