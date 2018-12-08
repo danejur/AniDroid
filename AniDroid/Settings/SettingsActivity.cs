@@ -19,8 +19,8 @@ using AniDroid.Adapters.MediaAdapters;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
 using AniDroid.Dialogs;
+using AniDroid.Jobs;
 using AniDroid.Main;
-using AniDroid.Services;
 using AniDroid.Utils;
 using AniDroid.Utils.Comparers;
 using Ninject;
@@ -93,6 +93,22 @@ namespace AniDroid.Settings
             _settingsContainer.AddView(
                 CreateSwitchSettingRow(this, "Display Banners", "Choose whether you'd like to display banner images for Media and Users", displayBanners, true, (sender, args) =>
                     Presenter.SetDisplayBanners(args.IsChecked)));
+            _settingsContainer.AddView(CreateSettingDivider(this));
+        }
+
+        public void CreateDisplayUpcomingEpisodeTimeAsCountdownItem(bool displayUpcomingEpisodeTimeAsCountdown)
+        {
+            _settingsContainer.AddView(
+                CreateSwitchSettingRow(this, "Display Upcoming Episode Times As Countdowns",
+                    "Upcoming episode times will appear as days and hours remaining instead of the date",
+                    displayUpcomingEpisodeTimeAsCountdown, true,
+                    (sender, args) =>
+                    {
+                        Presenter.SetDisplayUpcomingEpisodeTimeAsCountdown(args.IsChecked);
+                        _recreateActivity = true;
+                        Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
+                    }));
+                        
             _settingsContainer.AddView(CreateSettingDivider(this));
         }
 
@@ -234,8 +250,8 @@ namespace AniDroid.Settings
         public void CreateEnableNotificationServiceItem(bool enableNotificationService)
         {
             _settingsContainer.AddView(
-                CreateSwitchSettingRow(this, "Enable Native Notifications (Beta)",
-                    "Turn this on to enable native notifications in Android! Right now, the app will check automatically if you have any new notifications on AniList every 30 minutes, and let you know if it finds anything.\n**This feature is in active development**",
+                CreateSwitchSettingRow(this, "Enable Notification Alerts",
+                    "Check for new AniList notifications every 30 minutes.",
                     enableNotificationService, true,
                     (sender, args) =>
                     {
@@ -243,11 +259,11 @@ namespace AniDroid.Settings
 
                         if (args.IsChecked)
                         {
-                            AniListNotificationService.StartNotificationAlarm(ApplicationContext);
+                            AniListNotificationJob.EnableJob();
                         }
                         else
                         {
-                            AniListNotificationService.StopNotificationAlarm(ApplicationContext);
+                            AniListNotificationJob.DisableJob();
                         }
                     }));
             _settingsContainer.AddView(CreateSettingDivider(this));

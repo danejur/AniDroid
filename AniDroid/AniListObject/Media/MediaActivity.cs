@@ -272,7 +272,12 @@ namespace AniDroid.AniListObject.Media
             if (media.NextAiringEpisode?.AiringAt > 0)
             {
                 nextAiringView.Visibility = ViewStates.Visible;
-                nextAiringView.Text = $"Episode {media.NextAiringEpisode?.Episode}:  {DateTimeOffset.FromUnixTimeSeconds(media.NextAiringEpisode.AiringAt).DateTime.ToShortDateString()}";
+
+                var airingString = !Settings.DisplayUpcomingEpisodeTimeAsCountdown
+                    ? media.NextAiringEpisode.GetAiringAtDateTime().ToShortDateString()
+                    : media.NextAiringEpisode.GetTimeUntilAiringTimeSpan().ToString("%d'd '%h'h '%m'm'");
+
+                nextAiringView.Text = $"Episode {media.NextAiringEpisode?.Episode}:  {airingString}";
             }
 
             var listStatusView = retView.FindViewById<TextView>(Resource.Id.Media_ListStatus);

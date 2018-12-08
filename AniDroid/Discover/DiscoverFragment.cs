@@ -12,10 +12,14 @@ using Android.Support.V7.Widget;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using AniDroid.Adapters.Base;
 using AniDroid.Adapters.MediaAdapters;
+using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
+using AniDroid.Dialogs;
+using AniDroid.MediaList;
 using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
 using AniDroid.Widgets;
@@ -27,12 +31,22 @@ namespace AniDroid.Discover
     public class DiscoverFragment : BaseMainActivityFragment<DiscoverPresenter>, IDiscoverView
     {
         private LinearLayout _listContainer;
-        private DiscoverMediaRecyclerAdapter _currentlyAiringRecyclerAdapter;
-        private DiscoverMediaRecyclerAdapter _trendingRecyclerAdapter;
-        private DiscoverMediaRecyclerAdapter _newAnimeRecyclerAdapter;
-        private DiscoverMediaRecyclerAdapter _newMangaRecyclerAdapter;
+        private MediaRecyclerAdapter _currentlyAiringRecyclerAdapter;
+        private MediaRecyclerAdapter _trendingRecyclerAdapter;
+        private MediaRecyclerAdapter _newAnimeRecyclerAdapter;
+        private MediaRecyclerAdapter _newMangaRecyclerAdapter;
+
+        private List<MediaRecyclerAdapter> AdapterList => new List<MediaRecyclerAdapter>
+        {
+            _currentlyAiringRecyclerAdapter,
+            _trendingRecyclerAdapter,
+            _newAnimeRecyclerAdapter,
+            _newMangaRecyclerAdapter
+        };
 
         private static DiscoverFragment _instance;
+
+        private const int CardWidth = 150;
 
         public override bool HasMenu => true;
         public override string FragmentName => "DISCOVER_FRAGMENT";
@@ -89,44 +103,164 @@ namespace AniDroid.Discover
             throw new NotImplementedException();
         }
 
-        public void ShowCurrentlyAiringResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
+        public void ShowCurrentlyAiringResults(
+            IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
         {
-            var currentlyAiringView = new SideScrollingList(Activity);
-            currentlyAiringView.LabelText = "Currently Airing";
-            currentlyAiringView.RecyclerAdapter = _currentlyAiringRecyclerAdapter =
-                new DiscoverMediaRecyclerAdapter(Activity, mediaEnumerable);
+            var currentlyAiringView = new SideScrollingList(Activity) {LabelText = "Currently Airing"};
+
+            var adapter = new MediaRecyclerAdapter(Activity, mediaEnumerable,
+                BaseRecyclerAdapter.RecyclerCardType.Vertical, MediaViewModel.CreateMediaViewModel)
+            {
+                LongClickAction = viewModel =>
+                {
+                    if (Presenter.GetIsUserAuthenticated())
+                    {
+                        EditMediaListItemDialog.Create(Activity, Presenter, viewModel.Model,
+                            viewModel.Model.MediaListEntry,
+                            Presenter.GetLoggedInUser()?.MediaListOptions);
+                    }
+                },
+
+            };
+            adapter.SetHorizontalAdapterCardWidthDip(CardWidth);
+
+            currentlyAiringView.RecyclerAdapter = _currentlyAiringRecyclerAdapter = adapter;
 
             _listContainer.AddView(currentlyAiringView);
         }
 
         public void ShowTrendingResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
         {
-            var trendingView = new SideScrollingList(Activity);
-            trendingView.LabelText = "Trending";
-            trendingView.RecyclerAdapter = _trendingRecyclerAdapter =
-                new DiscoverMediaRecyclerAdapter(Activity, mediaEnumerable);
+            var trendingView = new SideScrollingList(Activity) {LabelText = "Trending"};
+
+            var adapter = new MediaRecyclerAdapter(Activity, mediaEnumerable,
+                BaseRecyclerAdapter.RecyclerCardType.Vertical, MediaViewModel.CreateMediaViewModel)
+            {
+                LongClickAction = viewModel =>
+                {
+                    if (Presenter.GetIsUserAuthenticated())
+                    {
+                        EditMediaListItemDialog.Create(Activity, Presenter, viewModel.Model,
+                            viewModel.Model.MediaListEntry,
+                            Presenter.GetLoggedInUser()?.MediaListOptions);
+                    }
+                },
+
+            };
+            adapter.SetHorizontalAdapterCardWidthDip(CardWidth);
+
+            trendingView.RecyclerAdapter = _trendingRecyclerAdapter = adapter;
 
             _listContainer.AddView(trendingView);
         }
 
         public void ShowNewAnimeResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
         {
-            var newAnimeView = new SideScrollingList(Activity);
-            newAnimeView.LabelText = "New Anime";
-            newAnimeView.RecyclerAdapter = _newAnimeRecyclerAdapter =
-                new DiscoverMediaRecyclerAdapter(Activity, mediaEnumerable);
+            var newAnimeView = new SideScrollingList(Activity) {LabelText = "New Anime"};
+
+            var adapter = new MediaRecyclerAdapter(Activity, mediaEnumerable,
+                BaseRecyclerAdapter.RecyclerCardType.Vertical, MediaViewModel.CreateMediaViewModel)
+            {
+                LongClickAction = viewModel =>
+                {
+                    if (Presenter.GetIsUserAuthenticated())
+                    {
+                        EditMediaListItemDialog.Create(Activity, Presenter, viewModel.Model,
+                            viewModel.Model.MediaListEntry,
+                            Presenter.GetLoggedInUser()?.MediaListOptions);
+                    }
+                },
+
+            };
+            adapter.SetHorizontalAdapterCardWidthDip(CardWidth);
+
+            newAnimeView.RecyclerAdapter = _newAnimeRecyclerAdapter = adapter;
 
             _listContainer.AddView(newAnimeView);
         }
 
         public void ShowNewMangaResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
         {
-            var newMangaView = new SideScrollingList(Activity);
-            newMangaView.LabelText = "New Manga";
-            newMangaView.RecyclerAdapter = _newMangaRecyclerAdapter =
-                new DiscoverMediaRecyclerAdapter(Activity, mediaEnumerable);
+            var newMangaView = new SideScrollingList(Activity) {LabelText = "New Manga"};
+
+            var adapter = new MediaRecyclerAdapter(Activity, mediaEnumerable,
+                BaseRecyclerAdapter.RecyclerCardType.Vertical, MediaViewModel.CreateMediaViewModel)
+            {
+                LongClickAction = viewModel =>
+                {
+                    if (Presenter.GetIsUserAuthenticated())
+                    {
+                        EditMediaListItemDialog.Create(Activity, Presenter, viewModel.Model,
+                            viewModel.Model.MediaListEntry,
+                            Presenter.GetLoggedInUser()?.MediaListOptions);
+                    }
+                },
+
+            };
+            adapter.SetHorizontalAdapterCardWidthDip(CardWidth);
+
+            newMangaView.RecyclerAdapter = _newMangaRecyclerAdapter = adapter;
 
             _listContainer.AddView(newMangaView);
+        }
+
+        public void UpdateMediaListItem(Media.MediaList mediaList)
+        {
+            if (mediaList.Media?.Type == Media.MediaType.Anime)
+            {
+                var instance = MediaListFragment.GetInstance(MediaListFragment.AnimeMediaListFragmentName);
+
+                (instance as MediaListFragment)?.UpdateMediaListItem(mediaList);
+            }
+            else if (mediaList.Media?.Type == Media.MediaType.Manga)
+            {
+                (MediaListFragment.GetInstance(MediaListFragment.MangaMediaListFragmentName) as MediaListFragment)
+                    ?.UpdateMediaListItem(mediaList);
+            }
+
+            UpdateMediaListOnAdapters(mediaList);
+        }
+
+        public void RemoveMediaListItem(int mediaListId)
+        {
+            (MediaListFragment.GetInstance(MediaListFragment.AnimeMediaListFragmentName) as MediaListFragment)
+                ?.RemoveMediaListItem(mediaListId);
+            (MediaListFragment.GetInstance(MediaListFragment.MangaMediaListFragmentName) as MediaListFragment)
+                ?.RemoveMediaListItem(mediaListId);
+
+            DeleteMediaListOnAdapters(mediaListId);
+        }
+
+        private void UpdateMediaListOnAdapters(Media.MediaList mediaList)
+        {
+            AdapterList.ForEach(adapter => {
+                var itemPosition =
+                    adapter?.Items.FindIndex(x => x?.Model?.Id == mediaList.Media?.Id);
+
+                if (itemPosition >= 0)
+                {
+                    mediaList.Media.MediaListEntry = mediaList;
+
+                    adapter.ReplaceItem(itemPosition.Value, adapter.CreateViewModelFunc?.Invoke(mediaList.Media));
+                }
+            });
+        }
+
+        private void DeleteMediaListOnAdapters(int mediaListId)
+        {
+            AdapterList.ForEach(adapter => {
+                var itemPosition =
+                    adapter?.Items?.FindIndex(x => x?.Model?.MediaListEntry?.Id == mediaListId);
+
+                if (itemPosition >= 0)
+                {
+                    var item = adapter.Items[itemPosition.Value];
+                    item.Model.MediaListEntry = null;
+
+                    adapter.ReplaceItem(itemPosition.Value, adapter.CreateViewModelFunc?.Invoke(item.Model));
+                }
+            });
+            
         }
     }
 }

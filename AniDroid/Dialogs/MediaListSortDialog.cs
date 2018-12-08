@@ -49,6 +49,9 @@ namespace AniDroid.Dialogs
                 case MediaListSortComparer.MediaListSortType.Progress:
                     selectedSort = Resource.Id.MediaListSort_Progress;
                     break;
+                case MediaListSortComparer.MediaListSortType.DateLastUpdated:
+                    selectedSort = Resource.Id.MediaListSort_DateLastUpdated;
+                    break;
             }
 
             // set current selections
@@ -84,6 +87,9 @@ namespace AniDroid.Dialogs
                         break;
                     case Resource.Id.MediaListSort_DateAdded:
                         sort = MediaListSortComparer.MediaListSortType.DateAdded;
+                        break;
+                    case Resource.Id.MediaListSort_DateLastUpdated:
+                        sort = MediaListSortComparer.MediaListSortType.DateLastUpdated;
                         break;
                 }
 

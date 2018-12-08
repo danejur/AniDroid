@@ -53,6 +53,8 @@ namespace AniDroid.Utils.Comparers
                     return SortDate(firstMedia, secondMedia, m => m.Media.StartDate?.GetFuzzyDate() ?? DateTime.MinValue);
                 case MediaListSortType.DateAdded:
                     return SortDateTime(firstMedia, secondMedia, m => m.GetDateTimeOffset(m.CreatedAt).DateTime);
+                case MediaListSortType.DateLastUpdated:
+                    return SortDateTime(firstMedia, secondMedia, m => m.GetDateTimeOffset(m.UpdatedAt).DateTime);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -119,7 +121,8 @@ namespace AniDroid.Utils.Comparers
             AverageScore = 4,
             Popularity = 5,
             DateReleased = 6,
-            DateAdded = 7
+            DateAdded = 7,
+            DateLastUpdated = 8
         }
 
         public enum MediaListSortDirection

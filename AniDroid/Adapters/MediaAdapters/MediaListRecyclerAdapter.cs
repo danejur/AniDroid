@@ -28,6 +28,7 @@ namespace AniDroid.Adapters.MediaAdapters
         private readonly bool _displayProgressColors;
         private readonly bool _editable;
         private readonly bool _useLongClickForEpisodeAdd;
+        private readonly bool _displayTimeUntilAiringCountdown;
         private readonly ColorStateList _priorityBackgroundColor;
         private readonly ColorStateList _upToDateTitleColor;
         private readonly ColorStateList _behindTitleColor;
@@ -39,7 +40,7 @@ namespace AniDroid.Adapters.MediaAdapters
 
         public MediaListRecyclerAdapter(BaseAniDroidActivity context, Media.MediaListGroup mediaListGroup,
             User.UserMediaListOptions mediaListOptions, MediaListPresenter presenter, RecyclerCardType cardType,
-            MediaListItemViewType viewType, bool highlightPriorityItems, bool displayProgressColors, bool editable = true, bool useLongClickForEpisodeAdd = false) : base(context, mediaListGroup.Entries,
+            MediaListItemViewType viewType, bool highlightPriorityItems, bool displayProgressColors, bool editable = true, bool useLongClickForEpisodeAdd = false, bool displayTimeUntilAiringAsCountdown = false) : base(context, mediaListGroup.Entries,
             cardType)
         {
             _presenter = presenter;
@@ -58,6 +59,7 @@ namespace AniDroid.Adapters.MediaAdapters
                 ColorStateList.ValueOf(new Color(Context.GetThemedColor(Resource.Attribute.ListItem_UpToDate)));
             _behindTitleColor =
                 ColorStateList.ValueOf(new Color(Context.GetThemedColor(Resource.Attribute.ListItem_Behind)));
+            _displayTimeUntilAiringCountdown = displayTimeUntilAiringAsCountdown;
 
             if (_viewType != MediaListItemViewType.Normal)
             {
@@ -229,10 +231,7 @@ namespace AniDroid.Adapters.MediaAdapters
 
             if (mediaList.Progress + 1 == (mediaList.Media.Episodes ?? mediaList.Media.Chapters))
             {
-                senderView.Enabled = false;
-                iconView?.StartAnimation(AnimationUtils.LoadAnimation(Context,
-                    Resource.Animation.Button_Animation_FinishProgress));
-                await _presenter.CompleteMedia(mediaList);
+                EditMediaListItemDialog.Create(Context, _presenter, mediaList.Media, mediaList, _mediaListOptions, true);
             }
             else
             {
@@ -285,10 +284,14 @@ namespace AniDroid.Adapters.MediaAdapters
         {
             var retDetail = $"{mediaList.Media.Format?.DisplayValue}{(mediaList.Media.IsAdult ? " (Hentai)" : "")}";
 
-            if (mediaList.Media?.NextAiringEpisode?.AiringAt > 0)
+            if (mediaList.Media?.NextAiringEpisode != null)
             {
+                var airingString = !_displayTimeUntilAiringCountdown
+                    ? mediaList.Media.NextAiringEpisode.GetAiringAtDateTime().ToShortDateString()
+                    : mediaList.Media.NextAiringEpisode.GetTimeUntilAiringTimeSpan().ToString("%d'd '%h'h '%m'm'");
+
                 retDetail =
-                    $"{retDetail}  (Episode {mediaList.Media.NextAiringEpisode.Episode}:  {DateTimeOffset.FromUnixTimeSeconds(mediaList.Media.NextAiringEpisode.AiringAt).DateTime.ToShortDateString()})";
+                    $"{retDetail}  (Episode {mediaList.Media.NextAiringEpisode.Episode}:  {airingString})";
             }
 
             return retDetail;

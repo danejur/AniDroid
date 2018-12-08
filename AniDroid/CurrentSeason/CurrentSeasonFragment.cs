@@ -23,10 +23,10 @@ namespace AniDroid.CurrentSeason
     public class CurrentSeasonFragment : BaseMainActivityFragment<CurrentSeasonPresenter>, ICurrentSeasonView
     {
         private LinearLayout _listContainer;
-        private DiscoverMediaRecyclerAdapter _currentSeasonTvRecyclerAdapter;
-        private DiscoverMediaRecyclerAdapter _currentSeasonMoviewRecyclerAdapter;
-        private DiscoverMediaRecyclerAdapter _currentSeasonOvaOnaRecyclerAdapter;
-        private DiscoverMediaRecyclerAdapter _currentSeasonLeftoversRecyclerAdapter;
+        //private DiscoverMediaRecyclerAdapter _currentSeasonTvRecyclerAdapter;
+        //private DiscoverMediaRecyclerAdapter _currentSeasonMoviewRecyclerAdapter;
+        //private DiscoverMediaRecyclerAdapter _currentSeasonOvaOnaRecyclerAdapter;
+        //private DiscoverMediaRecyclerAdapter _currentSeasonLeftoversRecyclerAdapter;
 
         private static CurrentSeasonFragment _instance;
 
@@ -74,7 +74,7 @@ namespace AniDroid.CurrentSeason
         {
             if (item.ItemId == Resource.Id.Menu_Discover_Refresh)
             {
-                _currentSeasonTvRecyclerAdapter.ResetAdapter();
+                //_currentSeasonTvRecyclerAdapter.ResetAdapter();
 
                 return true;
             }
@@ -84,12 +84,12 @@ namespace AniDroid.CurrentSeason
 
         public void ShowCurrentTv(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
         {
-            var currentTvView = new SideScrollingList(Activity);
-            currentTvView.LabelText = "TV";
-            currentTvView.RecyclerAdapter = _currentSeasonTvRecyclerAdapter =
-                new DiscoverMediaRecyclerAdapter(Activity, mediaEnumerable);
+            //var currentTvView = new SideScrollingList(Activity);
+            //currentTvView.LabelText = "TV";
+            //currentTvView.RecyclerAdapter = _currentSeasonTvRecyclerAdapter =
+            //    new DiscoverMediaRecyclerAdapter(Activity, mediaEnumerable);
 
-            _listContainer.AddView(currentTvView);
+            //_listContainer.AddView(currentTvView);
         }
 
         public void ShowCurrentMovies(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)

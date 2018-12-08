@@ -32,9 +32,9 @@ namespace AniDroid.Dialogs
 {
     public static class EditMediaListItemDialog
     {
-        public static void Create(BaseAniDroidActivity context, IAniListMediaListEditPresenter presenter, Media media, Media.MediaList mediaList, User.UserMediaListOptions mediaListOptions)
+        public static void Create(BaseAniDroidActivity context, IAniListMediaListEditPresenter presenter, Media media, Media.MediaList mediaList, User.UserMediaListOptions mediaListOptions, bool completeMedia = false)
         {
-            var dialog = new EditMediaListItemDialogFragment(presenter, media, mediaList, mediaListOptions) {Cancelable = true};
+            var dialog = new EditMediaListItemDialogFragment(presenter, media, mediaList, mediaListOptions, completeMedia) {Cancelable = true};
             var transaction = context.SupportFragmentManager.BeginTransaction();
             transaction.SetTransition((int)FragmentTransit.FragmentOpen);
             transaction.Add(Android.Resource.Id.Content, dialog).AddToBackStack(EditMediaListItemDialogFragment.BackstackTag).Commit();
@@ -57,6 +57,7 @@ namespace AniDroid.Dialogs
             private bool _hideFromStatusLists;
             private int _priority;
             private bool _pendingDismiss;
+            private bool _completeMedia;
 
             private CoordinatorLayout _coordLayout;
             private Picker _scorePicker;
@@ -69,7 +70,7 @@ namespace AniDroid.Dialogs
             private DatePickerTextView _finishDateView;
 
 
-            public EditMediaListItemDialogFragment(IAniListMediaListEditPresenter presenter, Media media, Media.MediaList mediaList, User.UserMediaListOptions mediaListOptions)
+            public EditMediaListItemDialogFragment(IAniListMediaListEditPresenter presenter, Media media, Media.MediaList mediaList, User.UserMediaListOptions mediaListOptions, bool completeMedia)
             {
                 _presenter = presenter;
                 _media = media;
@@ -78,6 +79,7 @@ namespace AniDroid.Dialogs
                 _isPrivate = mediaList?.Private ?? false;
                 _priority = mediaList?.Priority ?? 0;
                 _hideFromStatusLists = mediaList?.HiddenFromStatusLists ?? false;
+                _completeMedia = completeMedia;
                 _customLists = (mediaList?.CustomLists?.Where(x => x.Enabled).Select(x => x.Name).ToList() ??
                                new List<string>()).ToHashSet();
 
@@ -132,7 +134,7 @@ namespace AniDroid.Dialogs
 
             private void SetupToolbar(Toolbar toolbar)
             {
-                toolbar.Title = $"{(_mediaList == null ? "Adding" : "Editing")}: {_media.Title.UserPreferred}";
+                toolbar.Title = $"{(_completeMedia ? "Completing" : (_mediaList == null ? "Adding" : "Editing"))}: {_media.Title.UserPreferred}";
                 toolbar.InflateMenu(Resource.Menu.EditMediaListItem_ActionBar);
 
                 var privateItem = toolbar.Menu.FindItem(Resource.Id.Menu_EditMediaListItem_MarkPrivate);
@@ -201,7 +203,11 @@ namespace AniDroid.Dialogs
             {
                 statusSpinner.Adapter = new ArrayAdapter<string>(Activity, Resource.Layout.View_SpinnerDropDownItem, _mediaStatusList);
 
-                if (_mediaList?.Status != null)
+                if (_completeMedia)
+                {
+                    statusSpinner.SetSelection(Media.MediaListStatus.Completed.Index);
+                }
+                else if (_mediaList?.Status != null)
                 { 
                     statusSpinner.SetSelection(_mediaList.Status.Index);
                 }
@@ -222,7 +228,7 @@ namespace AniDroid.Dialogs
                 {
                     var statusEnum = AniListEnum.GetEnum<Media.MediaListStatus>(args.Position);
 
-                    if (statusEnum == Media.MediaListStatus.Completed)
+                    if (statusEnum.Equals(Media.MediaListStatus.Completed))
                     {
                         if (!_finishDateView.SelectedDate.HasValue)
                         {
@@ -232,13 +238,19 @@ namespace AniDroid.Dialogs
                         // TODO: replace this after altering Picker
                         // _progressPicker.SetValue(_media.Episodes);
                     }
-                    else if (statusEnum == Media.MediaListStatus.Current)
+                    else if (statusEnum.Equals(Media.MediaListStatus.Current))
                     {
                         if (!_startDateView.SelectedDate.HasValue)
                         {
                             _startDateView.SelectedDate = DateTime.Now;
                             _finishDateView.SelectedDate = null;
                         }
+                    }
+                    else if (statusEnum.Equals(Media.MediaListStatus.Planning) && _mediaList == null)
+                    {
+                        _startDateView.SelectedDate = null;
+                        _finishDateView.SelectedDate = null;
+                        _scorePicker.SetValue(null);
                     }
                 };
             }
@@ -251,12 +263,12 @@ namespace AniDroid.Dialogs
                         ? _media.Episodes.Value
                         : (_media?.NextAiringEpisode?.Episode > 0 ? _media.NextAiringEpisode.Episode : DefaultMaxPickerValue);
 
-                    progressPicker.SetMaxValue(episodes, 0, false, _mediaList?.Progress);
+                    progressPicker.SetMaxValue(episodes, 0, false, _completeMedia ? episodes : _mediaList?.Progress);
                 }
                 else if (_media.Type == Media.MediaType.Manga)
                 {
                     progressLabel.Text = "Chapters";
-                    progressPicker.SetMaxValue(_media.Chapters > 0 ? _media.Chapters.Value : DefaultMaxPickerValue, 0, false, _mediaList?.Progress);
+                    progressPicker.SetMaxValue(_media.Chapters > 0 ? _media.Chapters.Value : DefaultMaxPickerValue, 0, false, _completeMedia ? _media.Chapters : _mediaList?.Progress);
                 }
             }
 
@@ -303,7 +315,7 @@ namespace AniDroid.Dialogs
 
             private void SetupFinishDate(DatePickerTextView finishDateView)
             {
-                finishDateView.SelectedDate = _mediaList?.CompletedAt?.GetDate();
+                finishDateView.SelectedDate = _completeMedia ? DateTime.Now : _mediaList?.CompletedAt?.GetDate();
                 finishDateView.DateChanged += (sender, args) => {
                     if (_startDateView.SelectedDate > args.Date)
                     {

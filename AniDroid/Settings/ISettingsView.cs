@@ -21,9 +21,10 @@ namespace AniDroid.Settings
         void CreateCardTypeSettingItem(BaseRecyclerAdapter.RecyclerCardType cardType);
         void CreateAniDroidThemeSettingItem(BaseAniDroidActivity.AniDroidTheme theme);
         void CreateDisplayBannersSettingItem(bool displayBanners);
+        void CreateDisplayUpcomingEpisodeTimeAsCountdownItem(bool displayUpcomingEpisodeTimeAsCountdown);
         void CreateWhatsNewSettingItem();
         void CreatePrivacyPolicyLinkItem();
-        
+
         // Auth settings
         void CreateGroupCompletedSettingItem(bool groupCompleted);
         void CreateMediaListViewTypeSettingItem(MediaListRecyclerAdapter.MediaListItemViewType viewType);
