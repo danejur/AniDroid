@@ -278,12 +278,16 @@ namespace AniDroid.MediaList
                     continue;
                 }
 
-                var adapter = new MediaListRecyclerAdapter(Activity, statusList, Presenter.GetCardType(), MediaListViewModel.CreateViewModel);
                 //var adapter = new MediaListRecyclerAdapterOld(Activity, statusList,
                 //    _collection.User.MediaListOptions, Presenter, Presenter.GetCardType(),
                 //    Presenter.GetMediaListItemViewType(), Presenter.GetHighlightPriorityItems(),
                 //    Presenter.GetDisplayProgressColors(), true, Presenter.GetUseLongClickForEpisodeAdd(), Presenter.GetDisplayTimeUntilAiringAsCountdown());
-                //adapter.UpdateFilters(_filteredMediaFormats, _filteredMediaStatuses);
+
+                var adapter = new MediaListRecyclerAdapter(Activity, statusList, Presenter.GetCardType(),
+                    MediaListViewModel.CreateViewModel, Presenter.GetHighlightPriorityItems(),
+                    Presenter.GetDisplayProgressColors(), true, Presenter.GetUseLongClickForEpisodeAdd());
+                adapter.UpdateFilters(_filteredMediaFormats, _filteredMediaStatuses);
+                
                 _recyclerAdapters.Add(adapter);
                 var listView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
                 listView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView).SetAdapter(adapter);

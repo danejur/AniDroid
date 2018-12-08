@@ -15,7 +15,11 @@ namespace AniDroid.Adapters.ViewModels
 {
     public class MediaListViewModel : AniDroidAdapterViewModel<Media.MediaList>
     {
-        private bool _displayTimeUntilAiringCountdown;
+        public bool IsPriority { get; protected set; }
+        public bool IsBehind { get; protected set; }
+        public bool DisplayEpisodeProgressColor { get; protected set; }
+
+        private readonly bool _displayTimeUntilAiringCountdown;
 
         public MediaListViewModel(Media.MediaList model, MediaListDetailType primaryMediaListDetailType, MediaListDetailType secondaryMediaListDetailType, bool displayTimeUntilAiringCountdown) : base(model)
         {
@@ -25,6 +29,21 @@ namespace AniDroid.Adapters.ViewModels
             DetailPrimaryText = GetDetailString(model.Media?.Type, primaryMediaListDetailType);
             DetailSecondaryText = GetDetailString(model.Media?.Type, secondaryMediaListDetailType);
             ImageUri = model.Media?.CoverImage?.Large ?? model.Media?.CoverImage?.Medium;
+            IsPriority = model.Priority > 0;
+
+
+
+            if (Model.Media?.Type?.Equals(Media.MediaType.Anime) == true)
+            {
+                DisplayEpisodeProgressColor = Model.Status?.Equals(Media.MediaListStatus.Current) == true &&
+                                              Model.Media.Status?.Equals(Media.MediaStatus.Releasing) == true &&
+                                              Model.Media.NextAiringEpisode?.Episode > 1;
+
+                if (DisplayEpisodeProgressColor)
+                {
+                    IsBehind = Model.Progress < Model.Media.NextAiringEpisode?.Episode;
+                }
+            }
         }
 
         public static MediaListViewModel CreateViewModel(Media.MediaList model)
