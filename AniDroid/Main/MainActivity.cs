@@ -27,10 +27,10 @@ using AniDroid.CurrentSeason;
 using AniDroid.Dialogs;
 using AniDroid.Discover;
 using AniDroid.Home;
+using AniDroid.Jobs;
 using AniDroid.Login;
 using AniDroid.MediaList;
 using AniDroid.SearchResults;
-using AniDroid.Services;
 using AniDroid.Settings;
 using AniDroid.TorrentSearch;
 using AniDroid.Utils;
@@ -167,16 +167,6 @@ namespace AniDroid.Main
                 DisplaySnackbarMessage(notificationText, Snackbar.LengthLong);
             }
 
-            if (Settings.EnableNotificationService && Settings.IsUserAuthenticated)
-            {
-                AniListNotificationService.StartNotificationAlarm(ApplicationContext);
-            }
-            else
-            {
-                AniListNotificationService.StopNotificationAlarm(ApplicationContext);
-
-            }
-
             await CreatePresenter(savedInstanceState);
         }
 
@@ -195,6 +185,15 @@ namespace AniDroid.Main
                 {
                     await Presenter.GetUserNotificationCount();
                 }
+            }
+
+            if (Settings.EnableNotificationService && Settings.IsUserAuthenticated)
+            {
+                AniListNotificationJob.EnableJob();
+            }
+            else
+            {
+                AniListNotificationJob.DisableJob();
             }
         }
 

@@ -19,8 +19,8 @@ using AniDroid.Adapters.MediaAdapters;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
 using AniDroid.Dialogs;
+using AniDroid.Jobs;
 using AniDroid.Main;
-using AniDroid.Services;
 using AniDroid.Utils;
 using AniDroid.Utils.Comparers;
 using Ninject;
@@ -243,11 +243,11 @@ namespace AniDroid.Settings
 
                         if (args.IsChecked)
                         {
-                            AniListNotificationService.StartNotificationAlarm(ApplicationContext);
+                            AniListNotificationJob.EnableJob();
                         }
                         else
                         {
-                            AniListNotificationService.StopNotificationAlarm(ApplicationContext);
+                            AniListNotificationJob.DisableJob();
                         }
                     }));
             _settingsContainer.AddView(CreateSettingDivider(this));

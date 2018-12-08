@@ -15,7 +15,6 @@ using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 using AniDroid.Login;
 using AniDroid.Main;
-using AniDroid.Services;
 using AniDroid.Utils;
 using Ninject;
 
@@ -38,11 +37,6 @@ namespace AniDroid.Start
 
             //Settings.ClearUserAuthentication();
 
-            Fabric.Fabric.With(this, new Crashlytics.Crashlytics());
-            Crashlytics.Crashlytics.HandleManagedExceptions();
-
-            AniListNotificationService.CreateNotificationChannel(ApplicationContext);
-
             MainActivity.StartActivityForResult(this, 0);
             Finish();
 
@@ -60,5 +54,7 @@ namespace AniDroid.Start
             // will never be invoked as of now
             throw new NotImplementedException();
         }
+
+        
     }
 }
