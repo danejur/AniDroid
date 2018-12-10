@@ -261,15 +261,17 @@ namespace AniDroid.MediaList
             _recyclerAdapters = new List<MediaListRecyclerAdapter>();
 
             var listOrder = GetListOrder();
-            var orderedLists = _collection.Lists.Where(x => listOrder.All(y => y.Key != x.Name) || listOrder.FirstOrDefault(y => y.Key == x.Name).Value)
-                    .OrderBy(x => listOrder.FindIndex(y=> y.Key == x.Name)).ToList();
+            var orderedLists = _collection.Lists.Where(x =>
+                    listOrder.All(y => y.Key != x.Name) || listOrder.FirstOrDefault(y => y.Key == x.Name).Value)
+                .OrderBy(x => listOrder.FindIndex(y => y.Key == x.Name)).ToList();
 
             _currentSort = Presenter.GetMediaListSortType(_type);
             _currentSortDirection = Presenter.GetMediaListSortDirection(_type);
 
             if (_currentSort != MediaListSortComparer.MediaListSortType.NoSort)
             {
-                _collection.Lists.ForEach(list => list.Entries.Sort(new MediaListSortComparer(_currentSort, _currentSortDirection)));
+                _collection.Lists.ForEach(list =>
+                    list.Entries.Sort(new MediaListSortComparer(_currentSort, _currentSortDirection)));
             }
 
             foreach (var statusList in orderedLists)
@@ -280,7 +282,8 @@ namespace AniDroid.MediaList
                 }
 
                 var adapter = new MediaListRecyclerAdapter(Activity, statusList, Presenter.GetCardType(),
-                    item => MediaListViewModel.CreateViewModel(item, _collection.User.MediaListOptions.ScoreFormat), Presenter.GetHighlightPriorityItems(),
+                    item => MediaListViewModel.CreateViewModel(item, _collection.User.MediaListOptions.ScoreFormat),
+                    Presenter.GetMediaListItemViewType(), Presenter.GetHighlightPriorityItems(),
                     Presenter.GetDisplayProgressColors(), Presenter.GetUseLongClickForEpisodeAdd(),
                     async (viewModel, callback) =>
                     {
@@ -303,7 +306,7 @@ namespace AniDroid.MediaList
                 };
 
                 adapter.UpdateFilters(_filteredMediaFormats, _filteredMediaStatuses);
-                
+
                 _recyclerAdapters.Add(adapter);
                 var listView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
                 listView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView).SetAdapter(adapter);

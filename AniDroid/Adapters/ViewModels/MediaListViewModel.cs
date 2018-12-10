@@ -34,8 +34,6 @@ namespace AniDroid.Adapters.ViewModels
             IsPriority = model.Priority > 0;
             ButtonIcon = GetEpisodeAddIcon();
 
-            IsButtonVisible = Model.Status?.Equals(Media.MediaListStatus.Current) == true;
-
             if (Model.Media?.Type?.Equals(Media.MediaType.Anime) == true)
             {
                 DisplayEpisodeProgressColor = Model.Status?.Equals(Media.MediaListStatus.Current) == true &&
@@ -49,7 +47,8 @@ namespace AniDroid.Adapters.ViewModels
             }
         }
 
-        public static MediaListViewModel CreateViewModel(Media.MediaList model, User.ScoreFormat scoreFormat)
+        public static MediaListViewModel CreateViewModel(Media.MediaList model, User.ScoreFormat scoreFormat,
+            bool readOnly = false)
         {
             var secondaryDetail = MediaListDetailType.Progress;
 
@@ -62,7 +61,11 @@ namespace AniDroid.Adapters.ViewModels
                 secondaryDetail = MediaListDetailType.Rating;
             }
 
-            return new MediaListViewModel(model, MediaListDetailType.FormatAndAiringInfo, secondaryDetail, true, scoreFormat);
+            return new MediaListViewModel(model, MediaListDetailType.FormatAndAiringInfo, secondaryDetail, true,
+                scoreFormat)
+            {
+                IsButtonVisible = !readOnly && model.Status?.Equals(Media.MediaListStatus.Current) == true
+            };
         }
 
         public enum MediaListDetailType

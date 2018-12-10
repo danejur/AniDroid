@@ -233,6 +233,7 @@ namespace AniDroid.Adapters.Base
 
         public enum RecyclerCardType
         {
+            ProgressBar = -2,
             Custom = -1,
             Vertical = 0,
             Horizontal = 1,

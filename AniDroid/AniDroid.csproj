@@ -218,7 +218,6 @@
     <Compile Include="Adapters\MediaAdapters\MediaEdgeRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaListRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaRecyclerAdapter.cs" />
-    <Compile Include="Adapters\MediaAdapters\MediaListRecyclerAdapterOld.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaListTabOrderRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaStreamingEpisodesRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaTagsRecyclerAdapter.cs" />

@@ -30,7 +30,7 @@ namespace AniDroid.Adapters.MediaAdapters
         private readonly Media.MediaListStatus _listStatus;
         private readonly bool _highlightPriorityItems;
         private readonly bool _displayProgressColors;
-        private readonly bool _useLongClickForEpisodeAdd;
+        private readonly MediaListItemViewType _viewType;
 
         private readonly ColorStateList _priorityBackgroundColor;
         private readonly ColorStateList _upToDateTitleColor;
@@ -41,8 +41,15 @@ namespace AniDroid.Adapters.MediaAdapters
         private IList<Media.MediaFormat> _filteredFormats = new List<Media.MediaFormat>();
         private IList<Media.MediaStatus> _filteredStatuses = new List<Media.MediaStatus>();
 
+        public enum MediaListItemViewType
+        {
+            Normal = 0,
+            Compact = 1,
+            TitleOnly = 2
+        }
+
         public MediaListRecyclerAdapter(BaseAniDroidActivity context, Media.MediaListGroup mediaListGroup,
-            RecyclerCardType cardType, Func<Media.MediaList, MediaListViewModel> createViewModelFunc, bool highlightPriorityItems, bool displayProgressColors, bool useLongClickForEpisodeAdd, Action<MediaListViewModel, Action> episodeAddAction = null) : base(context,
+            RecyclerCardType cardType, Func<Media.MediaList, MediaListViewModel> createViewModelFunc, MediaListItemViewType viewType, bool highlightPriorityItems, bool displayProgressColors, bool useLongClickForEpisodeAdd, Action<MediaListViewModel, Action> episodeAddAction = null) : base(context,
             mediaListGroup.Entries.Select(createViewModelFunc).ToList(), cardType)
         {
             CreateViewModelFunc = createViewModelFunc;
@@ -50,9 +57,9 @@ namespace AniDroid.Adapters.MediaAdapters
             _listName = mediaListGroup.Name;
             _listStatus = mediaListGroup.Status;
             _unfilteredItems = Items;
+            _viewType = viewType;
             _highlightPriorityItems = highlightPriorityItems;
             _displayProgressColors = displayProgressColors;
-            _useLongClickForEpisodeAdd = useLongClickForEpisodeAdd;
 
             _priorityBackgroundColor =
                 ColorStateList.ValueOf(new Color(Context.GetThemedColor(Resource.Attribute.ListItem_Priority)));
@@ -70,7 +77,7 @@ namespace AniDroid.Adapters.MediaAdapters
 
             if (episodeAddAction != null)
             {
-                if (_useLongClickForEpisodeAdd)
+                if (useLongClickForEpisodeAdd)
                 {
                     ButtonLongClickAction = (viewModel, pos, callback) =>
                         episodeAddAction.Invoke(viewModel as MediaListViewModel, callback);
@@ -80,6 +87,12 @@ namespace AniDroid.Adapters.MediaAdapters
                     ButtonClickAction = (viewModel, pos, callback) =>
                         episodeAddAction.Invoke(viewModel as MediaListViewModel, callback);
                 }
+            }
+
+            if (_viewType != MediaListItemViewType.Normal)
+            {
+                CardType = RecyclerCardType.Custom;
+                CustomCardUseItemDecoration = true;
             }
         }
 
@@ -165,6 +178,58 @@ namespace AniDroid.Adapters.MediaAdapters
             Items = items.ToList();
 
             NotifyDataSetChanged();
+        }
+
+        public override RecyclerView.ViewHolder CreateCustomViewHolder(ViewGroup parent, int viewType)
+        {
+            if (_viewType == MediaListItemViewType.Compact)
+            {
+                var card = new CardItem(Context.LayoutInflater.Inflate(
+                    Resource.Layout.View_CardItem_FlatHorizontalCompact,
+                    parent, false));
+
+                SetupButtonClickActions(card);
+                SetupRowClickActions(card);
+
+                return SetupCardItemViewHolder(card);
+            }
+            if (_viewType == MediaListItemViewType.TitleOnly)
+            {
+                var card = new CardItem(Context.LayoutInflater.Inflate(
+                    Resource.Layout.View_CardItem_FlatHorizontalTitleOnly,
+                    parent, false));
+
+                SetupRowClickActions(card);
+
+                return SetupCardItemViewHolder(card);
+            }
+
+            return base.CreateCustomViewHolder(parent, viewType);
+        }
+
+        public override void BindCustomViewHolder(RecyclerView.ViewHolder holder, int position)
+        {
+            var viewModel = Items[position];
+
+            if (!(holder is CardItem cardHolder))
+            {
+                return;
+            }
+
+            if (_viewType == MediaListItemViewType.TitleOnly)
+            {
+                cardHolder.Name.Visibility = viewModel.TitleVisibility;
+                cardHolder.Button.Visibility = ViewStates.Gone;
+
+                cardHolder.Name.Text = viewModel.TitleText ?? "";
+
+                cardHolder.ContainerCard.SetTag(Resource.Id.Object_Position, position);
+                cardHolder.Button.SetTag(Resource.Id.Object_Position, position);
+            }
+            else
+            {
+                BindViewHolderByType(cardHolder, position, RecyclerCardType.FlatHorizontal);
+            }
         }
     }
 }

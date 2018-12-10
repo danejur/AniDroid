@@ -129,7 +129,7 @@ namespace AniDroid.MediaList
             return AniDroidSettings.CardType;
         }
 
-        public MediaListRecyclerAdapterOld.MediaListItemViewType GetMediaListItemViewType()
+        public MediaListRecyclerAdapter.MediaListItemViewType GetMediaListItemViewType()
         {
             return AniDroidSettings.MediaViewType;
         }

@@ -95,7 +95,7 @@ namespace AniDroid.Settings
             AniDroidSettings.GroupCompletedLists = groupCompleted;
         }
 
-        public void SetMediaListViewType(MediaListRecyclerAdapterOld.MediaListItemViewType viewType)
+        public void SetMediaListViewType(MediaListRecyclerAdapter.MediaListItemViewType viewType)
         {
             AniDroidSettings.MediaViewType = viewType;
         }
