@@ -20,18 +20,21 @@ namespace AniDroid.Adapters.ViewModels
         public bool DisplayEpisodeProgressColor { get; protected set; }
 
         private readonly bool _displayTimeUntilAiringCountdown;
+        private readonly User.ScoreFormat _scoreFormat;
 
-        public MediaListViewModel(Media.MediaList model, MediaListDetailType primaryMediaListDetailType, MediaListDetailType secondaryMediaListDetailType, bool displayTimeUntilAiringCountdown) : base(model)
+        public MediaListViewModel(Media.MediaList model, MediaListDetailType primaryMediaListDetailType, MediaListDetailType secondaryMediaListDetailType, bool displayTimeUntilAiringCountdown, User.ScoreFormat scoreFormat) : base(model)
         {
             _displayTimeUntilAiringCountdown = displayTimeUntilAiringCountdown;
+            _scoreFormat = scoreFormat;
 
             TitleText = model.Media?.Title?.UserPreferred;
             DetailPrimaryText = GetDetailString(model.Media?.Type, primaryMediaListDetailType);
             DetailSecondaryText = GetDetailString(model.Media?.Type, secondaryMediaListDetailType);
             ImageUri = model.Media?.CoverImage?.Large ?? model.Media?.CoverImage?.Medium;
             IsPriority = model.Priority > 0;
+            ButtonIcon = GetEpisodeAddIcon();
 
-
+            IsButtonVisible = Model.Status?.Equals(Media.MediaListStatus.Current) == true;
 
             if (Model.Media?.Type?.Equals(Media.MediaType.Anime) == true)
             {
@@ -46,7 +49,7 @@ namespace AniDroid.Adapters.ViewModels
             }
         }
 
-        public static MediaListViewModel CreateViewModel(Media.MediaList model)
+        public static MediaListViewModel CreateViewModel(Media.MediaList model, User.ScoreFormat scoreFormat)
         {
             var secondaryDetail = MediaListDetailType.Progress;
 
@@ -59,7 +62,7 @@ namespace AniDroid.Adapters.ViewModels
                 secondaryDetail = MediaListDetailType.Rating;
             }
 
-            return new MediaListViewModel(model, MediaListDetailType.FormatAndAiringInfo, secondaryDetail, true);
+            return new MediaListViewModel(model, MediaListDetailType.FormatAndAiringInfo, secondaryDetail, true, scoreFormat);
         }
 
         public enum MediaListDetailType
@@ -69,6 +72,24 @@ namespace AniDroid.Adapters.ViewModels
             Progress,
             EpisodeCountOrMovieLength,
             Rating
+        }
+
+        private int GetEpisodeAddIcon()
+        {
+            int? totalCount = 0;
+
+            if (Model.Media?.Type?.Equals(Media.MediaType.Anime) == true)
+            {
+                totalCount = Model.Media.Episodes;
+            }
+            else if (Model.Media?.Type?.Equals(Media.MediaType.Manga) == true)
+            {
+                totalCount = Model.Media.Chapters;
+            }
+
+            return totalCount.HasValue && totalCount <= Model.Progress + 1
+                ? Resource.Drawable.svg_check_circle_outline
+                : Resource.Drawable.svg_plus_circle_outline;
         }
 
         private string GetDetailString(Media.MediaType mediaType, MediaListDetailType detailType)
@@ -136,6 +157,10 @@ namespace AniDroid.Adapters.ViewModels
                         $"Watched {Model.Progress ?? 0} out of {((Model.Media?.Episodes ?? 0) > 0 ? Model.Media?.Episodes?.ToString() : "?")}";
                 }
             }
+            else if (detailType == MediaListDetailType.Rating)
+            {
+                retString = Model.GetScoreString(_scoreFormat);
+            }
 
             return retString;
         }
@@ -173,6 +198,10 @@ namespace AniDroid.Adapters.ViewModels
                     retString =
                         $"Read {Model.Progress ?? 0} out of {((Model.Media?.Chapters ?? 0) > 0 ? Model.Media?.Chapters?.ToString() : "?")}";
                 }
+            }
+            else if (detailType == MediaListDetailType.Rating)
+            {
+                retString = Model.GetScoreString(_scoreFormat);
             }
 
             return retString;

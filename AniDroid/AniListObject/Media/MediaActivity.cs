@@ -429,7 +429,7 @@ namespace AniDroid.AniListObject.Media
                 CharacterEdgeViewModel.CreateCharacterEdgeViewModel)
             {
                 ButtonIconResourceId = Resource.Drawable.ic_record_voice_over_white_24px,
-                ButtonClickAction = viewModel => StaffListDialog.Create(this, viewModel.Model.VoiceActors)
+                ButtonClickAction = (viewModel, position, callback) => StaffListDialog.Create(this, viewModel.Model.VoiceActors)
             };
             recycler.SetAdapter(dialogRecyclerAdapter);
 

@@ -13,6 +13,7 @@ using Android.Support.Design.Widget;
 using Android.Support.V4.View;
 using Android.Support.V7.Widget;
 using Android.Views;
+using Android.Views.Animations;
 using Android.Widget;
 using AniDroid.Adapters;
 using AniDroid.Adapters.Base;
@@ -278,14 +279,29 @@ namespace AniDroid.MediaList
                     continue;
                 }
 
-                //var adapter = new MediaListRecyclerAdapterOld(Activity, statusList,
-                //    _collection.User.MediaListOptions, Presenter, Presenter.GetCardType(),
-                //    Presenter.GetMediaListItemViewType(), Presenter.GetHighlightPriorityItems(),
-                //    Presenter.GetDisplayProgressColors(), true, Presenter.GetUseLongClickForEpisodeAdd(), Presenter.GetDisplayTimeUntilAiringAsCountdown());
-
                 var adapter = new MediaListRecyclerAdapter(Activity, statusList, Presenter.GetCardType(),
-                    MediaListViewModel.CreateViewModel, Presenter.GetHighlightPriorityItems(),
-                    Presenter.GetDisplayProgressColors(), true, Presenter.GetUseLongClickForEpisodeAdd());
+                    item => MediaListViewModel.CreateViewModel(item, _collection.User.MediaListOptions.ScoreFormat), Presenter.GetHighlightPriorityItems(),
+                    Presenter.GetDisplayProgressColors(), Presenter.GetUseLongClickForEpisodeAdd(),
+                    async (viewModel, callback) =>
+                    {
+                        if (viewModel.Model.Progress + 1 ==
+                            (viewModel.Model.Media.Episodes ?? viewModel.Model.Media.Chapters))
+                        {
+                            EditMediaListItemDialog.Create(Activity, Presenter, viewModel.Model.Media, viewModel.Model,
+                                _collection.User.MediaListOptions, true);
+                        }
+                        else
+                        {
+                            await Presenter.IncreaseMediaProgress(viewModel.Model);
+                        }
+
+                        callback?.Invoke();
+                    })
+                {
+                    LongClickAction = viewModel => EditMediaListItemDialog.Create(Activity, Presenter,
+                        viewModel.Model.Media, viewModel.Model, _collection.User.MediaListOptions)
+                };
+
                 adapter.UpdateFilters(_filteredMediaFormats, _filteredMediaStatuses);
                 
                 _recyclerAdapters.Add(adapter);

@@ -40,8 +40,8 @@ namespace AniDroid.Adapters.Base
         public Action<AniDroidAdapterViewModel<TModel>> ClickAction { get; set; }
         public Action<AniDroidAdapterViewModel<TModel>> LongClickAction { get; set; }
 
-        public Action<AniDroidAdapterViewModel<TModel>> ButtonClickAction { get; set; }
-        public Action<AniDroidAdapterViewModel<TModel>> ButtonLongClickAction { get; set; }
+        public Action<AniDroidAdapterViewModel<TModel>, int, Action> ButtonClickAction { get; set; }
+        public Action<AniDroidAdapterViewModel<TModel>, int, Action> ButtonLongClickAction { get; set; }
 
         protected AniDroidRecyclerAdapter(BaseAniDroidActivity context,
             IAsyncEnumerable<OneOf<IPagedData<TModel>, IAniListError>> enumerable, RecyclerCardType cardType,
@@ -126,7 +126,7 @@ namespace AniDroid.Adapters.Base
             OnAttachedToRecyclerView(RecyclerView);
         }
 
-        public sealed override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
+        public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
             if (viewType == ProgressBarViewType)
             {
@@ -238,6 +238,9 @@ namespace AniDroid.Adapters.Base
                 cardHolder.DetailSecondary.Visibility = viewModel.DetailSecondaryVisibility;
                 cardHolder.Image.Visibility = viewModel.ImageVisibility;
                 cardHolder.Button.Visibility = viewModel.ButtonVisibility;
+                cardHolder.ButtonIcon.SetImageResource(viewModel.ButtonIcon ??
+                                                       Resource.Drawable.ic_favorite_white_24px);
+
 
                 cardHolder.Name.Text = viewModel.TitleText ?? "";
                 cardHolder.DetailPrimary.Text = viewModel.DetailPrimaryText ?? "";
@@ -269,22 +272,24 @@ namespace AniDroid.Adapters.Base
             LongClickAction?.Invoke(viewModel);
         }
 
-        private void ButtonClick(object sender, EventArgs e)
+        protected void ButtonClick(object sender, EventArgs e)
         {
             var senderView = sender as View;
             var mediaPos = (int)senderView.GetTag(Resource.Id.Object_Position);
             var viewModel = Items[mediaPos];
+            senderView.Enabled = false;
 
-            ButtonClickAction?.Invoke(viewModel);
+            ButtonClickAction?.Invoke(viewModel, mediaPos, () => senderView.Enabled = true);
         }
 
-        private void ButtonLongClick(object sender, View.LongClickEventArgs longClickEventArgs)
+        protected void ButtonLongClick(object sender, View.LongClickEventArgs longClickEventArgs)
         {
             var senderView = sender as View;
             var mediaPos = (int)senderView.GetTag(Resource.Id.Object_Position);
             var viewModel = Items[mediaPos];
+            senderView.Enabled = false;
 
-            ButtonLongClickAction?.Invoke(viewModel);
+            ButtonLongClickAction?.Invoke(viewModel, mediaPos, () => senderView.Enabled = true);
         }
 
         public sealed override int GetItemViewType(int position)

@@ -10,13 +10,16 @@ using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
+using Android.Support.V7.Widget;
 using Android.Views;
+using Android.Views.Animations;
 using Android.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Models;
 using AniDroid.AniListObject.Media;
 using AniDroid.Base;
+using AniDroid.Dialogs;
 
 namespace AniDroid.Adapters.MediaAdapters
 {
@@ -27,7 +30,6 @@ namespace AniDroid.Adapters.MediaAdapters
         private readonly Media.MediaListStatus _listStatus;
         private readonly bool _highlightPriorityItems;
         private readonly bool _displayProgressColors;
-        private readonly bool _editable;
         private readonly bool _useLongClickForEpisodeAdd;
 
         private readonly ColorStateList _priorityBackgroundColor;
@@ -40,7 +42,7 @@ namespace AniDroid.Adapters.MediaAdapters
         private IList<Media.MediaStatus> _filteredStatuses = new List<Media.MediaStatus>();
 
         public MediaListRecyclerAdapter(BaseAniDroidActivity context, Media.MediaListGroup mediaListGroup,
-            RecyclerCardType cardType, Func<Media.MediaList, MediaListViewModel> createViewModelFunc, bool highlightPriorityItems, bool displayProgressColors, bool editable, bool useLongClickForEpisodeAdd) : base(context,
+            RecyclerCardType cardType, Func<Media.MediaList, MediaListViewModel> createViewModelFunc, bool highlightPriorityItems, bool displayProgressColors, bool useLongClickForEpisodeAdd, Action<MediaListViewModel, Action> episodeAddAction = null) : base(context,
             mediaListGroup.Entries.Select(createViewModelFunc).ToList(), cardType)
         {
             CreateViewModelFunc = createViewModelFunc;
@@ -50,7 +52,6 @@ namespace AniDroid.Adapters.MediaAdapters
             _unfilteredItems = Items;
             _highlightPriorityItems = highlightPriorityItems;
             _displayProgressColors = displayProgressColors;
-            _editable = editable;
             _useLongClickForEpisodeAdd = useLongClickForEpisodeAdd;
 
             _priorityBackgroundColor =
@@ -63,9 +64,23 @@ namespace AniDroid.Adapters.MediaAdapters
             ClickAction = viewModel =>
                 MediaActivity.StartActivity(Context, viewModel.Model.Media?.Id ?? 0, BaseAniDroidActivity.ObjectBrowseRequestCode);
 
-            // TODO: should this really be the default long click action for this list type?
+            // leave this as the non-edit action so we can leave the presenter out
             LongClickAction = viewModel =>
                 Context.DisplaySnackbarMessage(viewModel.Model.Media?.Title?.UserPreferred, Snackbar.LengthLong);
+
+            if (episodeAddAction != null)
+            {
+                if (_useLongClickForEpisodeAdd)
+                {
+                    ButtonLongClickAction = (viewModel, pos, callback) =>
+                        episodeAddAction.Invoke(viewModel as MediaListViewModel, callback);
+                }
+                else
+                {
+                    ButtonClickAction = (viewModel, pos, callback) =>
+                        episodeAddAction.Invoke(viewModel as MediaListViewModel, callback);
+                }
+            }
         }
 
         public override void BindCardViewHolder(CardItem holder, int position)
