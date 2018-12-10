@@ -12,7 +12,8 @@ using Android.Support.V4.Content;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
-using AniDroid.Adapters.AniListActivityAdapters;
+using AniDroid.Adapters.UserAdapters;
+using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
@@ -28,7 +29,9 @@ namespace AniDroid.Dialogs
             dialogView.SetBackgroundColor(Color.Transparent);
             var recycler = dialogView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
             var adapter =
-                new AniListNotificationRecyclerAdapter(context, enumerable)
+                new AniListNotificationRecyclerAdapter(context, enumerable,
+                    viewModel => AniListNotificationViewModel.CreateViewModel(viewModel, context,
+                        new Color(context.GetThemedColor(Resource.Attribute.Primary))))
                 {
                     LoadingItemBackgroundColor = Color.Transparent
                 };
