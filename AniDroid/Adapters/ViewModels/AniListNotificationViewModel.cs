@@ -44,12 +44,13 @@ namespace AniDroid.Adapters.ViewModels
         private Action GetNotificationClickAction()
         {
             Action retAction = () => { };
+            var actionType = Model.GetNotificationActionType();
 
-            if (Model.Type == AniListNotification.NotificationType.Airing)
+            if (actionType.Equals(AniListNotification.NotificationActionType.Media))
             {
                 retAction = () => MediaActivity.StartActivity(_context, Model.Media.Id);
             }
-            else if (Model.Type == AniListNotification.NotificationType.Following)
+            else if (actionType.Equals(AniListNotification.NotificationActionType.User))
             {
                 retAction = () => UserActivity.StartActivity(_context, Model.User.Id);
             }
