@@ -13,10 +13,12 @@ using Android.Support.Design.Widget;
 using Android.Support.V4.View;
 using Android.Support.V7.Widget;
 using Android.Views;
+using Android.Views.Animations;
 using Android.Widget;
 using AniDroid.Adapters;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.MediaAdapters;
+using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
@@ -259,15 +261,17 @@ namespace AniDroid.MediaList
             _recyclerAdapters = new List<MediaListRecyclerAdapter>();
 
             var listOrder = GetListOrder();
-            var orderedLists = _collection.Lists.Where(x => listOrder.All(y => y.Key != x.Name) || listOrder.FirstOrDefault(y => y.Key == x.Name).Value)
-                    .OrderBy(x => listOrder.FindIndex(y=> y.Key == x.Name)).ToList();
+            var orderedLists = _collection.Lists.Where(x =>
+                    listOrder.All(y => y.Key != x.Name) || listOrder.FirstOrDefault(y => y.Key == x.Name).Value)
+                .OrderBy(x => listOrder.FindIndex(y => y.Key == x.Name)).ToList();
 
             _currentSort = Presenter.GetMediaListSortType(_type);
             _currentSortDirection = Presenter.GetMediaListSortDirection(_type);
 
             if (_currentSort != MediaListSortComparer.MediaListSortType.NoSort)
             {
-                _collection.Lists.ForEach(list => list.Entries.Sort(new MediaListSortComparer(_currentSort, _currentSortDirection)));
+                _collection.Lists.ForEach(list =>
+                    list.Entries.Sort(new MediaListSortComparer(_currentSort, _currentSortDirection)));
             }
 
             foreach (var statusList in orderedLists)
@@ -277,11 +281,32 @@ namespace AniDroid.MediaList
                     continue;
                 }
 
-                var adapter = new MediaListRecyclerAdapter(Activity, statusList,
-                    _collection.User.MediaListOptions, Presenter, Presenter.GetCardType(),
+                var adapter = new MediaListRecyclerAdapter(Activity, statusList, Presenter.GetCardType(),
+                    item => MediaListViewModel.CreateViewModel(item, _collection.User.MediaListOptions.ScoreFormat),
                     Presenter.GetMediaListItemViewType(), Presenter.GetHighlightPriorityItems(),
-                    Presenter.GetDisplayProgressColors(), true, Presenter.GetUseLongClickForEpisodeAdd(), Presenter.GetDisplayTimeUntilAiringAsCountdown());
+                    Presenter.GetDisplayProgressColors(), Presenter.GetUseLongClickForEpisodeAdd(),
+                    async (viewModel, callback) =>
+                    {
+                        if (viewModel.Model.Progress + 1 ==
+                            (viewModel.Model.Media.Episodes ?? viewModel.Model.Media.Chapters))
+                        {
+                            EditMediaListItemDialog.Create(Activity, Presenter, viewModel.Model.Media, viewModel.Model,
+                                _collection.User.MediaListOptions, true);
+                        }
+                        else
+                        {
+                            await Presenter.IncreaseMediaProgress(viewModel.Model);
+                        }
+
+                        callback?.Invoke();
+                    })
+                {
+                    LongClickAction = viewModel => EditMediaListItemDialog.Create(Activity, Presenter,
+                        viewModel.Model.Media, viewModel.Model, _collection.User.MediaListOptions)
+                };
+
                 adapter.UpdateFilters(_filteredMediaFormats, _filteredMediaStatuses);
+
                 _recyclerAdapters.Add(adapter);
                 var listView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
                 listView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView).SetAdapter(adapter);

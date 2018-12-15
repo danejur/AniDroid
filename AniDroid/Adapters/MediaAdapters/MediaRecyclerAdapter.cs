@@ -32,11 +32,32 @@ namespace AniDroid.Adapters.MediaAdapters
             IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> enumerable, RecyclerCardType cardType,
             Func<Media, MediaViewModel> createViewModelFunc) : base(context, enumerable, cardType, createViewModelFunc)
         {
+            SetDefaultClickActions();
+        }
+
+        public MediaRecyclerAdapter(BaseAniDroidActivity context, List<MediaViewModel> items, RecyclerCardType cardType)
+            : base(context, items, cardType)
+        {
+            SetDefaultClickActions();
+        }
+
+        private void SetDefaultClickActions()
+        {
             ClickAction = viewModel =>
                 MediaActivity.StartActivity(Context, viewModel.Model.Id, BaseAniDroidActivity.ObjectBrowseRequestCode);
 
             LongClickAction = viewModel =>
                 Context.DisplaySnackbarMessage(viewModel.Model.Title?.UserPreferred, Snackbar.LengthLong);
+        }
+
+        public override void BindCardViewHolder(CardItem holder, int position)
+        {
+            var viewModel = Items[position];
+
+            holder.Image.SetBackgroundColor(viewModel.ImageColor);
+            Context.LoadImage(holder.Image, viewModel.ImageUri ?? "", false);
+
+            base.BindCardViewHolder(holder, position);
         }
 
         public override CardItem SetupCardItemViewHolder(CardItem item)

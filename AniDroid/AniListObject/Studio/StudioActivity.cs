@@ -12,8 +12,10 @@ using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters;
+using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Adapters.StaffAdapters;
 using AniDroid.Adapters.StudioAdapters;
+using AniDroid.Adapters.ViewModels;
 using AniDroid.Base;
 using AniDroid.SearchResults;
 using AniDroid.Utils;
@@ -100,7 +102,7 @@ namespace AniDroid.AniListObject.Studio
             var studioMediaEnumerable = Presenter.GetStudioMediaEnumerable(studioId, PageLength);
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
-            var dialogRecyclerAdapter = new StudioMediaRecyclerAdapter(this, studioMediaEnumerable, CardType);
+            var dialogRecyclerAdapter = new MediaEdgeRecyclerAdapter(this, studioMediaEnumerable, CardType, MediaEdgeViewModel.CreateStudioMediaViewModel);
             recycler.SetAdapter(dialogRecyclerAdapter);
 
             return retView;

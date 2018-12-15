@@ -10,6 +10,8 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters;
 using AniDroid.Adapters.CharacterAdapters;
+using AniDroid.Adapters.MediaAdapters;
+using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Service;
 using AniDroid.Base;
 using AniDroid.SearchResults;
@@ -123,7 +125,7 @@ namespace AniDroid.AniListObject.Character
             var characterAnimeEnumerable = Presenter.GetCharacterMediaEnumerable(characterId, mediaType, PageLength);
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
-            var dialogRecyclerAdapter = new CharacterMediaRecyclerAdapter(this, characterAnimeEnumerable, CardType);
+            var dialogRecyclerAdapter = new MediaEdgeRecyclerAdapter(this, characterAnimeEnumerable, CardType, MediaEdgeViewModel.CreateCharacterMediaViewModel);
             recycler.SetAdapter(dialogRecyclerAdapter);
 
             return retView;

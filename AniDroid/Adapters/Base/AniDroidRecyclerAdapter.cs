@@ -40,25 +40,25 @@ namespace AniDroid.Adapters.Base
         public Action<AniDroidAdapterViewModel<TModel>> ClickAction { get; set; }
         public Action<AniDroidAdapterViewModel<TModel>> LongClickAction { get; set; }
 
-        public Action<AniDroidAdapterViewModel<TModel>> ButtonClickAction { get; set; }
-        public Action<AniDroidAdapterViewModel<TModel>> ButtonLongClickAction { get; set; }
+        public Action<AniDroidAdapterViewModel<TModel>, int, Action> ButtonClickAction { get; set; }
+        public Action<AniDroidAdapterViewModel<TModel>, int, Action> ButtonLongClickAction { get; set; }
 
         protected AniDroidRecyclerAdapter(BaseAniDroidActivity context,
             IAsyncEnumerable<OneOf<IPagedData<TModel>, IAniListError>> enumerable, RecyclerCardType cardType,
-            Func<TModel, T> createViewModelFunc) : this(context, new List<T> {null}, cardType, createViewModelFunc)
+            Func<TModel, T> createViewModelFunc) : this(context, new List<T> {null}, cardType)
         {
+            CreateViewModelFunc = createViewModelFunc;
             _asyncEnumerable = enumerable;
             _asyncEnumerator = enumerable.GetEnumerator();
         }
 
         protected AniDroidRecyclerAdapter(BaseAniDroidActivity context,
-            List<T> items, RecyclerCardType cardType, Func<TModel, T> createViewModelFunc) : base(context, items, cardType)
+            List<T> items, RecyclerCardType cardType) : base(context, items, cardType)
         {
             Items = items ?? throw new ArgumentNullException(nameof(items));
             CardType = cardType;
             DefaultIconColor = ColorStateList.ValueOf(new Color(context.GetThemedColor(Resource.Attribute.Secondary_Dark)));
             FavoriteIconColor = ColorStateList.ValueOf(new Color(ContextCompat.GetColor(context, Resource.Color.Favorite_Red)));
-            CreateViewModelFunc = createViewModelFunc;
         }
 
         protected AniDroidRecyclerAdapter(BaseAniDroidActivity context,
@@ -126,9 +126,11 @@ namespace AniDroid.Adapters.Base
             OnAttachedToRecyclerView(RecyclerView);
         }
 
-        public sealed override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
+        public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
-            if (viewType == ProgressBarViewType)
+            var cardViewType = (RecyclerCardType)viewType;
+
+            if (cardViewType == RecyclerCardType.ProgressBar)
             {
                 var view = Context.LayoutInflater.Inflate(Resource.Layout.View_IndeterminateProgressIndicator, parent,
                     false);
@@ -139,14 +141,14 @@ namespace AniDroid.Adapters.Base
                 return holder;
             }
 
-            if (CardType == RecyclerCardType.Custom)
+            if (cardViewType == RecyclerCardType.Custom)
             {
                 return CreateCustomViewHolder(parent, viewType);
             }
 
             var layoutResource = Resource.Layout.View_CardItem_Horizontal;
 
-            switch (CardType)
+            switch (cardViewType)
             {
                 case RecyclerCardType.FlatHorizontal:
                     layoutResource = Resource.Layout.View_CardItem_FlatHorizontal;
@@ -158,27 +160,9 @@ namespace AniDroid.Adapters.Base
 
             var cardHolder = new CardItem(Context.LayoutInflater.Inflate(layoutResource, parent, false));
 
-            if (ClickAction != null)
-            {
-                cardHolder.ContainerCard.Click -= RowClick;
-                cardHolder.ContainerCard.Click += RowClick;
-            }
-            if (LongClickAction != null)
-            {
-                cardHolder.ContainerCard.LongClick -= RowLongClick;
-                cardHolder.ContainerCard.LongClick += RowLongClick;
-            }
+            SetupRowClickActions(cardHolder);
 
-            if (ButtonClickAction != null)
-            {
-                cardHolder.Button.Click -= ButtonClick;
-                cardHolder.Button.Click += ButtonClick;
-            }
-            if (ButtonLongClickAction != null)
-            {
-                cardHolder.Button.LongClick -= ButtonLongClick;
-                cardHolder.Button.LongClick += ButtonLongClick;
-            }
+            SetupButtonClickActions(cardHolder);
 
             return SetupCardItemViewHolder(cardHolder);
         }
@@ -187,7 +171,7 @@ namespace AniDroid.Adapters.Base
         {
             if (Items[position] != null)
             {
-                OnBindViewHolderInternal(holder, position);
+                BindViewHolderByType(holder, position, CardType);
                 return;
             }
 
@@ -223,9 +207,9 @@ namespace AniDroid.Adapters.Base
             _isLazyLoading = false;
         }
 
-        private void OnBindViewHolderInternal(RecyclerView.ViewHolder holder, int position)
+        protected void BindViewHolderByType(RecyclerView.ViewHolder holder, int position, RecyclerCardType type)
         {
-            if (CardType == RecyclerCardType.Custom)
+            if (type == RecyclerCardType.Custom)
             {
                 BindCustomViewHolder(holder, position);
             }
@@ -238,11 +222,17 @@ namespace AniDroid.Adapters.Base
                 cardHolder.DetailSecondary.Visibility = viewModel.DetailSecondaryVisibility;
                 cardHolder.Image.Visibility = viewModel.ImageVisibility;
                 cardHolder.Button.Visibility = viewModel.ButtonVisibility;
+                cardHolder.ButtonIcon.SetImageResource(viewModel.ButtonIcon ??
+                                                       Resource.Drawable.ic_favorite_white_24px);
 
                 cardHolder.Name.Text = viewModel.TitleText ?? "";
                 cardHolder.DetailPrimary.Text = viewModel.DetailPrimaryText ?? "";
                 cardHolder.DetailSecondary.Text = viewModel.DetailSecondaryText ?? "";
-                Context.LoadImage(cardHolder.Image, viewModel.ImageUri ?? "");
+
+                if (viewModel.LoadImage)
+                {
+                    Context.LoadImage(cardHolder.Image, viewModel.ImageUri ?? "");
+                }
 
                 cardHolder.ContainerCard.SetTag(Resource.Id.Object_Position, position);
                 cardHolder.Button.SetTag(Resource.Id.Object_Position, position);
@@ -251,7 +241,35 @@ namespace AniDroid.Adapters.Base
             }
         }
 
-        private void RowClick(object sender, EventArgs e)
+        protected void SetupRowClickActions(CardItem cardHolder)
+        {
+            if (ClickAction != null)
+            {
+                cardHolder.ContainerCard.Click -= RowClick;
+                cardHolder.ContainerCard.Click += RowClick;
+            }
+            if (LongClickAction != null)
+            {
+                cardHolder.ContainerCard.LongClick -= RowLongClick;
+                cardHolder.ContainerCard.LongClick += RowLongClick;
+            }
+        }
+
+        protected void SetupButtonClickActions(CardItem cardHolder)
+        {
+            if (ButtonClickAction != null)
+            {
+                cardHolder.Button.Click -= ButtonClick;
+                cardHolder.Button.Click += ButtonClick;
+            }
+            if (ButtonLongClickAction != null)
+            {
+                cardHolder.Button.LongClick -= ButtonLongClick;
+                cardHolder.Button.LongClick += ButtonLongClick;
+            }
+        }
+
+        protected void RowClick(object sender, EventArgs e)
         {
             var senderView = sender as View;
             var mediaPos = (int)senderView.GetTag(Resource.Id.Object_Position);
@@ -260,7 +278,7 @@ namespace AniDroid.Adapters.Base
             ClickAction?.Invoke(viewModel);
         }
 
-        private void RowLongClick(object sender, View.LongClickEventArgs longClickEventArgs)
+        protected void RowLongClick(object sender, View.LongClickEventArgs longClickEventArgs)
         {
             var senderView = sender as View;
             var mediaPos = (int)senderView.GetTag(Resource.Id.Object_Position);
@@ -269,27 +287,29 @@ namespace AniDroid.Adapters.Base
             LongClickAction?.Invoke(viewModel);
         }
 
-        private void ButtonClick(object sender, EventArgs e)
+        protected void ButtonClick(object sender, EventArgs e)
         {
             var senderView = sender as View;
             var mediaPos = (int)senderView.GetTag(Resource.Id.Object_Position);
             var viewModel = Items[mediaPos];
+            senderView.Enabled = false;
 
-            ButtonClickAction?.Invoke(viewModel);
+            ButtonClickAction?.Invoke(viewModel, mediaPos, () => senderView.Enabled = true);
         }
 
-        private void ButtonLongClick(object sender, View.LongClickEventArgs longClickEventArgs)
+        protected void ButtonLongClick(object sender, View.LongClickEventArgs longClickEventArgs)
         {
             var senderView = sender as View;
             var mediaPos = (int)senderView.GetTag(Resource.Id.Object_Position);
             var viewModel = Items[mediaPos];
+            senderView.Enabled = false;
 
-            ButtonLongClickAction?.Invoke(viewModel);
+            ButtonLongClickAction?.Invoke(viewModel, mediaPos, () => senderView.Enabled = true);
         }
 
         public sealed override int GetItemViewType(int position)
         {
-            return Items[position] == null ? ProgressBarViewType : 0;
+            return (int)(Items[position] == null ? RecyclerCardType.ProgressBar : CardType);
         }
 
         private class ProgressBarViewHolder : RecyclerView.ViewHolder
@@ -302,11 +322,5 @@ namespace AniDroid.Adapters.Base
                 }
             }
         }
-
-        #region Constants
-
-        private const int ProgressBarViewType = -1;
-
-        #endregion
     }
 }

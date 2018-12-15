@@ -12,7 +12,10 @@ using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters;
+using AniDroid.Adapters.CharacterAdapters;
+using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Adapters.StaffAdapters;
+using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList;
 using AniDroid.AniList.Models;
 using AniDroid.AniList.Service;
@@ -129,7 +132,7 @@ namespace AniDroid.AniListObject.Staff
             var staffCharactersEnumerable = Presenter.GetStaffCharactersEnumerable(staffId, PageLength);
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
-            var dialogRecyclerAdapter = new StaffCharactersRecyclerAdapter(this, staffCharactersEnumerable, CardType);
+            var dialogRecyclerAdapter = new CharacterEdgeRecyclerAdapter(this, staffCharactersEnumerable, CardType, CharacterEdgeViewModel.CreateCharacterEdgeViewModel);
             recycler.SetAdapter(dialogRecyclerAdapter);
 
             return retView;
@@ -140,7 +143,7 @@ namespace AniDroid.AniListObject.Staff
             var staffMediaEnumerable = Presenter.GetStaffMediaEnumerable(staffId, mediaType, PageLength);
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
-            var dialogRecyclerAdapter = new StaffMediaRecyclerAdapter(this, staffMediaEnumerable, CardType);
+            var dialogRecyclerAdapter = new MediaEdgeRecyclerAdapter(this, staffMediaEnumerable, CardType, MediaEdgeViewModel.CreateStaffMediaViewModel);
             recycler.SetAdapter(dialogRecyclerAdapter);
 
             return retView;

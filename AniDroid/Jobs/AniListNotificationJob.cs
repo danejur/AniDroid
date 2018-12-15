@@ -28,6 +28,9 @@ namespace AniDroid.Jobs
 
         private const string NotificationTitle = "{0} new notification{1}";
         private const string BasicNotificationContent = "Tap here to open AniDroid.";
+        private const string NotificationGroup = "ANILIST_NOTIFICATION_GROUP";
+        private static int NotificationId = 1000;
+        private static int GroupNotificationId = 1000;
 
         protected IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule());
 
@@ -60,7 +63,7 @@ namespace AniDroid.Jobs
                 if (user.UnreadNotificationCount > 0)
                 {
                     var notificationEnum =
-                        aniListService.GetAniListNotifications(false, Math.Min(user.UnreadNotificationCount, 7));
+                        aniListService.GetAniListNotifications(true, Math.Min(user.UnreadNotificationCount, 7));
                     var enumerator = notificationEnum.GetEnumerator();
 
                     if (enumerator.MoveNextAsync().Result)
@@ -105,33 +108,52 @@ namespace AniDroid.Jobs
                 .SetContentText(BasicNotificationContent)
                 .SetSmallIcon(Resource.Drawable.IconTransparent)
                 .SetContentIntent(MainActivity.CreatePendingIntentToOpenNotifications(_context))
+                .SetGroup(NotificationGroup)
                 .SetAutoCancel(true)
                 .SetChannelId(_context.Resources.GetString(Resource.Config.NotificationsChannelId));
 
-            var notificationManager = (NotificationManager)_context.GetSystemService(Context.NotificationService);
-            notificationManager.Notify(1, notificationBuilder.Build());
+            NotificationManagerCompat.From(_context).Notify(NotificationId++, notificationBuilder.Build());
         }
 
         private void CreateDetailedNotification(int notificationCount, ICollection<AniListNotification> notifications)
         {
             var inboxStyle = new NotificationCompat.InboxStyle();
 
-            foreach (var notification in notifications)
-            {
-                inboxStyle.AddLine(BaseAniDroidActivity.FromHtml(notification.GetNotificationHtml("fff")));
-            }
+            var notificationTexts =
+                notifications.Select(x => BaseAniDroidActivity.FromHtml(x.GetNotificationHtml("fff"))).ToList();
+
+            notificationTexts.ForEach(n => inboxStyle.AddLine(n));
 
             var notificationBuilder = new NotificationCompat.Builder(_context)
                 .SetContentTitle(string.Format(NotificationTitle, notificationCount, notificationCount > 1 ? "s" : ""))
-                .SetContentText(BasicNotificationContent)
+                .SetContentText(notificationTexts.First())
                 .SetSmallIcon(Resource.Drawable.IconTransparent)
                 .SetContentIntent(MainActivity.CreatePendingIntentToOpenNotifications(_context))
                 .SetAutoCancel(true)
+                .SetGroup(NotificationGroup)
                 .SetChannelId(_context.Resources.GetString(Resource.Config.NotificationsChannelId))
+                .SetCategory(Notification.CategorySocial)
                 .SetStyle(inboxStyle);
 
-            var notificationManager = (NotificationManager) _context.GetSystemService(Context.NotificationService);
-            notificationManager.Notify(1, notificationBuilder.Build());
+            DisplaySummaryNotification();
+
+            NotificationManagerCompat.From(_context).Notify(NotificationId++, notificationBuilder.Build());
+        }
+
+        private void DisplaySummaryNotification()
+        {
+            var notificationBuilder = new NotificationCompat.Builder(_context)
+                .SetContentTitle("New Notifications")
+                .SetContentText("You have new notifications in AniDroid")
+                .SetSmallIcon(Resource.Drawable.IconTransparent)
+                .SetContentIntent(MainActivity.CreatePendingIntentToOpenNotifications(_context))
+                .SetAutoCancel(true)
+                .SetGroupSummary(true)
+                .SetGroup(NotificationGroup)
+                .SetChannelId(_context.Resources.GetString(Resource.Config.NotificationsChannelId))
+                .SetCategory(Notification.CategorySocial);
+
+            NotificationManagerCompat.From(_context).Notify(GroupNotificationId, notificationBuilder.Build());
         }
 
         private static bool ShouldShowNotifications()
