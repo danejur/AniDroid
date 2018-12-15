@@ -5,6 +5,7 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -16,6 +17,7 @@ namespace AniDroid.Adapters.ViewModels
     public class MediaViewModel : AniDroidAdapterViewModel<Media>
     {
         public Media.Edge ModelEdge { get; protected set; }
+        public Color ImageColor { get; protected set; }
 
         private MediaViewModel(Media model, MediaDetailType primaryMediaDetailType, MediaDetailType secondaryMediaDetailType, bool isButtonVisible) : base(model)
         {
@@ -24,6 +26,8 @@ namespace AniDroid.Adapters.ViewModels
             DetailSecondaryText = GetDetail(secondaryMediaDetailType);
             ImageUri = model.CoverImage?.Large ?? model.CoverImage?.Medium;
             IsButtonVisible = isButtonVisible;
+            ImageColor = Color.ParseColor(model.CoverImage?.Color ?? "#00000000");
+            LoadImage = false;
         }
 
         public enum MediaDetailType

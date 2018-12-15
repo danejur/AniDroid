@@ -228,7 +228,11 @@ namespace AniDroid.Adapters.Base
                 cardHolder.Name.Text = viewModel.TitleText ?? "";
                 cardHolder.DetailPrimary.Text = viewModel.DetailPrimaryText ?? "";
                 cardHolder.DetailSecondary.Text = viewModel.DetailSecondaryText ?? "";
-                Context.LoadImage(cardHolder.Image, viewModel.ImageUri ?? "");
+
+                if (viewModel.LoadImage)
+                {
+                    Context.LoadImage(cardHolder.Image, viewModel.ImageUri ?? "");
+                }
 
                 cardHolder.ContainerCard.SetTag(Resource.Id.Object_Position, position);
                 cardHolder.Button.SetTag(Resource.Id.Object_Position, position);

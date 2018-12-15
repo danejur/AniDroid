@@ -50,6 +50,16 @@ namespace AniDroid.Adapters.MediaAdapters
                 Context.DisplaySnackbarMessage(viewModel.Model.Title?.UserPreferred, Snackbar.LengthLong);
         }
 
+        public override void BindCardViewHolder(CardItem holder, int position)
+        {
+            var viewModel = Items[position];
+
+            holder.Image.SetBackgroundColor(viewModel.ImageColor);
+            Context.LoadImage(holder.Image, viewModel.ImageUri ?? "", false);
+
+            base.BindCardViewHolder(holder, position);
+        }
+
         public override CardItem SetupCardItemViewHolder(CardItem item)
         {
             if (_cardWidth.HasValue)

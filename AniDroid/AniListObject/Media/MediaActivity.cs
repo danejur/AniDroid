@@ -288,7 +288,7 @@ namespace AniDroid.AniListObject.Media
                 listStatusView.Text = media.MediaListEntry?.Status?.DisplayValue;
             }
 
-            LoadImage(retView.FindViewById<ImageView>(Resource.Id.Media_Image), media.CoverImage.Large);
+            LoadImage(retView.FindViewById<ImageView>(Resource.Id.Media_Image), media.CoverImage.ExtraLarge ?? media.CoverImage.Large);
             var genreContainer = retView.FindViewById<FlexboxLayout>(Resource.Id.Media_Genres);
 
             foreach (var genre in media.Genres)

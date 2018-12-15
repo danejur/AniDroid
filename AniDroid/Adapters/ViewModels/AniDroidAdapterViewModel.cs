@@ -22,6 +22,7 @@ namespace AniDroid.Adapters.ViewModels
         public string ImageUri { get; protected set; }
         public bool IsButtonVisible { get; protected set; }
         public int? ButtonIcon { get; protected set; }
+        public bool LoadImage { get; protected set; }
 
         public virtual ViewStates TitleVisibility => TitleText != null ? ViewStates.Visible : ViewStates.Gone;
         public virtual ViewStates DetailPrimaryVisibility => DetailPrimaryText != null ? ViewStates.Visible : ViewStates.Gone;
@@ -32,6 +33,7 @@ namespace AniDroid.Adapters.ViewModels
         protected AniDroidAdapterViewModel(T model)
         {
             Model = model;
+            LoadImage = true;
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -18,6 +19,7 @@ namespace AniDroid.Adapters.ViewModels
         public bool IsPriority { get; protected set; }
         public bool IsBehind { get; protected set; }
         public bool DisplayEpisodeProgressColor { get; protected set; }
+        public Color ImageColor { get; protected set; }
 
         private readonly bool _displayTimeUntilAiringCountdown;
         private readonly User.ScoreFormat _scoreFormat;
@@ -33,6 +35,8 @@ namespace AniDroid.Adapters.ViewModels
             ImageUri = model.Media?.CoverImage?.Large ?? model.Media?.CoverImage?.Medium;
             IsPriority = model.Priority > 0;
             ButtonIcon = GetEpisodeAddIcon();
+            ImageColor = Color.ParseColor(model.Media?.CoverImage?.Color ?? "#00000000");
+            LoadImage = false;
 
             if (Model.Media?.Type?.Equals(Media.MediaType.Anime) == true)
             {
