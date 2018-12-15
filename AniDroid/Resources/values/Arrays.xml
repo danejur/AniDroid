@@ -129,5 +129,6 @@
     <item>12-08-2018|Tapping the "Mark as Complate" button on your media lists will now display the Complete Media dialog, allowing you to enter a rating</item>
     <item>12-08-2018|You are now able to properly edit media list items from the Discover screen</item>
     <item>12-08-2018|Added setting option for displaying Next Episode information as a countdown instead of a date</item>
+    <item>12-15-2018|Refactored lists significantly. They should now function a little better across the board, and you should start seeing better information when looking at lists of media, characters, etc</item>
   </array> 
 </resources>
