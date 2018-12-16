@@ -14,6 +14,7 @@ using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
+using AniDroid.Utils.Logging;
 
 namespace AniDroid.CurrentSeason
 {
@@ -21,7 +22,8 @@ namespace AniDroid.CurrentSeason
     {
         private Media.MediaSort _sortType;
 
-        public CurrentSeasonPresenter(ICurrentSeasonView view, IAniListService service, IAniDroidSettings settings) : base(view, service, settings)
+        public CurrentSeasonPresenter(ICurrentSeasonView view, IAniListService service, IAniDroidSettings settings,
+            IAniDroidLogger logger) : base(view, service, settings, logger)
         {
             var titleLanguage = settings?.LoggedInUser?.Options?.TitleLanguage ??
                              AniList.Models.AniListObject.AniListTitleLanguage.English;

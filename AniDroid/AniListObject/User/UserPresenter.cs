@@ -16,13 +16,15 @@ using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
+using AniDroid.Utils.Logging;
 using OneOf;
 
 namespace AniDroid.AniListObject.User
 {
     public class UserPresenter : BaseAniDroidPresenter<IUserView>, IAniListActivityPresenter
     {
-        public UserPresenter(IUserView view, IAniListService service, IAniDroidSettings settings) : base(view, service, settings)
+        public UserPresenter(IUserView view, IAniListService service, IAniDroidSettings settings,
+            IAniDroidLogger logger) : base(view, service, settings, logger)
         {
         }
 
@@ -31,6 +33,8 @@ namespace AniDroid.AniListObject.User
             View.SetLoadingShown();
             var userId = View.GetUserId();
             var userName = View.GetUserName();
+
+            Logger.Debug("UserPresenter", $"Init started (userId: {userId}, userName: {userName})");
 
             var userResp = await AniListService.GetUser(userName, userId, default(CancellationToken));
 

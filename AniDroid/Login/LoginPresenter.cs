@@ -13,6 +13,7 @@ using Android.Widget;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
+using AniDroid.Utils.Logging;
 
 namespace AniDroid.Login
 {
@@ -20,7 +21,8 @@ namespace AniDroid.Login
     {
         private readonly IAniListAuthConfig _authConfig;
 
-        public LoginPresenter(ILoginView view, IAniListService service, IAniDroidSettings settings, IAniListAuthConfig authConfig) : base(view, service, settings)
+        public LoginPresenter(ILoginView view, IAniListService service, IAniDroidSettings settings,
+            IAniListAuthConfig authConfig, IAniDroidLogger logger) : base(view, service, settings, logger)
         {
             _authConfig = authConfig;
         }

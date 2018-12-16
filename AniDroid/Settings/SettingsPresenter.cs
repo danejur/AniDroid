@@ -16,12 +16,14 @@ using AniDroid.AniList.Models;
 using AniDroid.Base;
 using AniDroid.Utils.Comparers;
 using AniDroid.Utils.Interfaces;
+using AniDroid.Utils.Logging;
 
 namespace AniDroid.Settings
 {
     public class SettingsPresenter : BaseAniDroidPresenter<ISettingsView>
     {
-        public SettingsPresenter(ISettingsView view, IAniListService service, IAniDroidSettings settings) : base(view, service, settings)
+        public SettingsPresenter(ISettingsView view, IAniListService service, IAniDroidSettings settings,
+            IAniDroidLogger logger) : base(view, service, settings, logger)
         {
         }
 

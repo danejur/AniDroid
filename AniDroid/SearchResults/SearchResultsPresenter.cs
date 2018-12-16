@@ -17,6 +17,7 @@ using AniDroid.AniList.Models;
 using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
+using AniDroid.Utils.Logging;
 
 namespace AniDroid.SearchResults
 {
@@ -24,7 +25,8 @@ namespace AniDroid.SearchResults
     {
         private const int PageSize = 20;
 
-        public SearchResultsPresenter(ISearchResultsView view, IAniListService service, IAniDroidSettings settings) : base(view, service, settings)
+        public SearchResultsPresenter(ISearchResultsView view, IAniListService service, IAniDroidSettings settings,
+            IAniDroidLogger logger) : base(view, service, settings, logger)
         {
         }
 

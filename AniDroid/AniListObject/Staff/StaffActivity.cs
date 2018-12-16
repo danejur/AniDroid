@@ -42,6 +42,7 @@ namespace AniDroid.AniListObject.Staff
             if (Intent.Data != null)
             {
                 var dataUrl = Intent.Data.ToString();
+                Logger.Debug("StaffActivity", $"Intent recieved with value '{dataUrl}'");
                 var urlRegex = new Regex("anilist.co/staff/[0-9]*/?");
                 var match = urlRegex.Match(dataUrl);
                 var staffIdString = match.ToString().Replace("anilist.co/staff/", "").TrimEnd('/');

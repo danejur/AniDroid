@@ -54,6 +54,7 @@ namespace AniDroid.AniListObject.User
             if (Intent.Data != null)
             {
                 var dataUrl = Intent.Data.ToString();
+                Logger.Debug("UserActivity", $"Intent recieved with value '{dataUrl}'");
                 var urlRegex = new Regex(@"anilist.co/user/\w+/?");
                 var match = urlRegex.Match(dataUrl);
                 var userName = match.ToString().Replace("anilist.co/user/", "").TrimEnd('/');

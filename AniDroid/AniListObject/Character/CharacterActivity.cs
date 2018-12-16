@@ -36,6 +36,7 @@ namespace AniDroid.AniListObject.Character
             if (Intent.Data != null)
             {
                 var dataUrl = Intent.Data.ToString();
+                Logger.Debug("CharacterActivity", $"Intent recieved with value '{dataUrl}'");
                 var urlRegex = new Regex("anilist.co/character/[0-9]*/?");
                 var match = urlRegex.Match(dataUrl);
                 var characterIdString = match.ToString().Replace("anilist.co/character/", "").TrimEnd('/');

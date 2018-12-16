@@ -16,13 +16,15 @@ using AniDroid.AniList.Models;
 using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
+using AniDroid.Utils.Logging;
 using Task = System.Threading.Tasks.Task;
 
 namespace AniDroid.Discover
 {
     public class DiscoverPresenter : BaseAniDroidPresenter<IDiscoverView>, IAniListMediaListEditPresenter
     {
-        public DiscoverPresenter(IDiscoverView view, IAniListService service, IAniDroidSettings settings) : base(view, service, settings)
+        public DiscoverPresenter(IDiscoverView view, IAniListService service, IAniDroidSettings settings,
+            IAniDroidLogger logger) : base(view, service, settings, logger)
         {
         }
 

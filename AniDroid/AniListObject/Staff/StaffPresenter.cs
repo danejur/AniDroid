@@ -15,13 +15,15 @@ using AniDroid.AniList.Dto;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
+using AniDroid.Utils.Logging;
 using OneOf;
 
 namespace AniDroid.AniListObject.Staff
 {
     public class StaffPresenter : BaseAniDroidPresenter<IStaffView>
     {
-        public StaffPresenter(IStaffView view, IAniListService service, IAniDroidSettings settings) : base(view, service, settings)
+        public StaffPresenter(IStaffView view, IAniListService service, IAniDroidSettings settings,
+            IAniDroidLogger logger) : base(view, service, settings, logger)
         {
         }
 

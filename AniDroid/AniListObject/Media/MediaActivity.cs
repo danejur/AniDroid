@@ -65,6 +65,7 @@ namespace AniDroid.AniListObject.Media
             if (Intent.Data != null)
             {
                 var dataUrl = Intent.Data.ToString();
+                Logger.Debug("MediaActivity", $"Intent recieved with value '{dataUrl}'");
                 var urlRegex = new Regex("anilist.co/(anime|manga)/[0-9]*/?");
                 var match = urlRegex.Match(dataUrl);
                 var mediaIdString = match.ToString().Replace("anilist.co/anime/", "").Replace("anilist.co/manga/", "").TrimEnd('/');
