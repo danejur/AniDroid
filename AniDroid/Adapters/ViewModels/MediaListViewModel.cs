@@ -46,7 +46,7 @@ namespace AniDroid.Adapters.ViewModels
 
                 if (DisplayEpisodeProgressColor)
                 {
-                    IsBehind = Model.Progress < Model.Media.NextAiringEpisode?.Episode;
+                    IsBehind = Model.Progress + 1 < Model.Media.NextAiringEpisode?.Episode;
                 }
             }
         }
