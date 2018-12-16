@@ -55,12 +55,14 @@ namespace AniDroid.Utils.Comparers
                     return SortDateTime(firstMedia, secondMedia, m => m.GetDateTimeOffset(m.CreatedAt).DateTime);
                 case MediaListSortType.DateLastUpdated:
                     return SortDateTime(firstMedia, secondMedia, m => m.GetDateTimeOffset(m.UpdatedAt).DateTime);
+                case MediaListSortType.Duration:
+                    return SortNumber(firstMedia, secondMedia, m => m.Media.Duration);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        private static int SortNumber(Media.MediaList x, Media.MediaList y, Func<Media.MediaList, double> numberSelector)
+        private static int SortNumber(Media.MediaList x, Media.MediaList y, Func<Media.MediaList, double?> numberSelector)
         {
             var xNum = numberSelector(x);
             var yNum = numberSelector(y);
@@ -122,7 +124,8 @@ namespace AniDroid.Utils.Comparers
             Popularity = 5,
             DateReleased = 6,
             DateAdded = 7,
-            DateLastUpdated = 8
+            DateLastUpdated = 8,
+            Duration = 9
         }
 
         public enum MediaListSortDirection
