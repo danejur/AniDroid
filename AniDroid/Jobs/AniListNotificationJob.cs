@@ -80,25 +80,37 @@ namespace AniDroid.Jobs
 
         public static void EnableJob()
         {
-            var jobRequests = JobManager.Instance()?.GetAllJobRequestsForTag(Tag);
-
-            if (jobRequests?.Any() == true)
+            try
             {
-                return;
-            }
+                var jobRequests = JobManager.Instance()?.GetAllJobRequestsForTag(Tag);
 
-            new JobRequest.Builder(Tag)
-                .SetPeriodic(TimeUnit.Minutes.ToMillis(30))
-                .SetUpdateCurrent(true)
-                .SetRequiredNetworkType(JobRequest.NetworkType.Connected)
-                .SetRequirementsEnforced(true)
-                .Build()
-                .Schedule();
+                if (jobRequests?.Any() == true)
+                {
+                    return;
+                }
+
+                new JobRequest.Builder(Tag)
+                    .SetPeriodic(TimeUnit.Minutes.ToMillis(30))
+                    .SetUpdateCurrent(true)
+                    .SetRequiredNetworkType(JobRequest.NetworkType.Connected)
+                    .SetRequirementsEnforced(true)
+                    .Build()
+                    .Schedule();
+            }
+            catch
+            {
+            }
         }
 
         public static void DisableJob()
         {
-            JobManager.Instance().CancelAllForTag(Tag);
+            try
+            {
+                JobManager.Instance().CancelAllForTag(Tag);
+            }
+            catch
+            {
+            }
         }
 
         private void CreateBasicNotification(int notificationCount)
