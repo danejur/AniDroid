@@ -55,7 +55,6 @@ namespace AniDroid.Adapters.MediaAdapters
             var viewModel = Items[position];
 
             holder.Image.SetBackgroundColor(viewModel.ImageColor);
-            Context.LoadImage(holder.Image, viewModel.ImageUri ?? "", false);
 
             base.BindCardViewHolder(holder, position);
         }
@@ -84,17 +83,5 @@ namespace AniDroid.Adapters.MediaAdapters
             CardColumnCount = 1;
             SetHorizontalOrientation();
         }
-
-        //private static MediaViewModel.MediaDetailType GetDetailType(Media.MediaSort sort)
-        //{
-        //    if (Media.MediaSort.Popularity == sort || Media.MediaSort.PopularityDesc == sort)
-        //    {
-        //        return MediaViewModel.MediaDetailType.AverageRatingPopularity
-        //    }
-        //    else if (Media.MediaSort.Score == sort || Media.MediaSort.ScoreDesc == sortsortType)
-        //    {
-        //        retString = $"Score: {item.AverageScore}%";
-        //    }
-        //}
     }
 }

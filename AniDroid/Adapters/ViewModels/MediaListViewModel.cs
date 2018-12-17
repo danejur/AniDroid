@@ -36,7 +36,6 @@ namespace AniDroid.Adapters.ViewModels
             IsPriority = model.Priority > 0;
             ButtonIcon = GetEpisodeAddIcon();
             ImageColor = Color.ParseColor(model.Media?.CoverImage?.Color ?? "#00000000");
-            LoadImage = false;
 
             if (Model.Media?.Type?.Equals(Media.MediaType.Anime) == true)
             {
