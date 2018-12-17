@@ -29,8 +29,7 @@ namespace AniDroid.Jobs
         private const string NotificationTitle = "{0} new notification{1}";
         private const string BasicNotificationContent = "Tap here to open AniDroid.";
         private const string NotificationGroup = "ANILIST_NOTIFICATION_GROUP";
-        private static int NotificationId = 1000;
-        private static int GroupNotificationId = 1000;
+        private const int NotificationId = 1000;
 
         protected IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule());
 
@@ -63,7 +62,7 @@ namespace AniDroid.Jobs
                 if (user.UnreadNotificationCount > 0)
                 {
                     var notificationEnum =
-                        aniListService.GetAniListNotifications(true, Math.Min(user.UnreadNotificationCount, 7));
+                        aniListService.GetAniListNotifications(false, Math.Min(user.UnreadNotificationCount, 7));
                     var enumerator = notificationEnum.GetEnumerator();
 
                     if (enumerator.MoveNextAsync().Result)
@@ -80,25 +79,37 @@ namespace AniDroid.Jobs
 
         public static void EnableJob()
         {
-            var jobRequests = JobManager.Instance()?.GetAllJobRequestsForTag(Tag);
-
-            if (jobRequests?.Any() == true)
+            try
             {
-                return;
-            }
+                var jobRequests = JobManager.Instance()?.GetAllJobRequestsForTag(Tag);
 
-            new JobRequest.Builder(Tag)
-                .SetPeriodic(TimeUnit.Minutes.ToMillis(30))
-                .SetUpdateCurrent(true)
-                .SetRequiredNetworkType(JobRequest.NetworkType.Connected)
-                .SetRequirementsEnforced(true)
-                .Build()
-                .Schedule();
+                if (jobRequests?.Any() == true)
+                {
+                    return;
+                }
+
+                new JobRequest.Builder(Tag)
+                    .SetPeriodic(TimeUnit.Minutes.ToMillis(30))
+                    .SetUpdateCurrent(true)
+                    .SetRequiredNetworkType(JobRequest.NetworkType.Connected)
+                    .SetRequirementsEnforced(true)
+                    .Build()
+                    .Schedule();
+            }
+            catch
+            {
+            }
         }
 
         public static void DisableJob()
         {
-            JobManager.Instance().CancelAllForTag(Tag);
+            try
+            {
+                JobManager.Instance().CancelAllForTag(Tag);
+            }
+            catch
+            {
+            }
         }
 
         private void CreateBasicNotification(int notificationCount)
@@ -110,9 +121,10 @@ namespace AniDroid.Jobs
                 .SetContentIntent(MainActivity.CreatePendingIntentToOpenNotifications(_context))
                 .SetGroup(NotificationGroup)
                 .SetAutoCancel(true)
+                .SetDeleteIntent(AniListNotificationJobDismissReciever.CreatePendingIntent(Context))
                 .SetChannelId(_context.Resources.GetString(Resource.Config.NotificationsChannelId));
 
-            NotificationManagerCompat.From(_context).Notify(NotificationId++, notificationBuilder.Build());
+            NotificationManagerCompat.From(_context).Notify(NotificationId, notificationBuilder.Build());
         }
 
         private void CreateDetailedNotification(int notificationCount, ICollection<AniListNotification> notifications)
@@ -133,27 +145,10 @@ namespace AniDroid.Jobs
                 .SetGroup(NotificationGroup)
                 .SetChannelId(_context.Resources.GetString(Resource.Config.NotificationsChannelId))
                 .SetCategory(Notification.CategorySocial)
+                .SetDeleteIntent(AniListNotificationJobDismissReciever.CreatePendingIntent(Context))
                 .SetStyle(inboxStyle);
 
-            DisplaySummaryNotification();
-
-            NotificationManagerCompat.From(_context).Notify(NotificationId++, notificationBuilder.Build());
-        }
-
-        private void DisplaySummaryNotification()
-        {
-            var notificationBuilder = new NotificationCompat.Builder(_context)
-                .SetContentTitle("New Notifications")
-                .SetContentText("You have new notifications in AniDroid")
-                .SetSmallIcon(Resource.Drawable.IconTransparent)
-                .SetContentIntent(MainActivity.CreatePendingIntentToOpenNotifications(_context))
-                .SetAutoCancel(true)
-                .SetGroupSummary(true)
-                .SetGroup(NotificationGroup)
-                .SetChannelId(_context.Resources.GetString(Resource.Config.NotificationsChannelId))
-                .SetCategory(Notification.CategorySocial);
-
-            NotificationManagerCompat.From(_context).Notify(GroupNotificationId, notificationBuilder.Build());
+            NotificationManagerCompat.From(_context).Notify(NotificationId, notificationBuilder.Build());
         }
 
         private static bool ShouldShowNotifications()
@@ -161,6 +156,34 @@ namespace AniDroid.Jobs
             var processInfo = new ActivityManager.RunningAppProcessInfo();
             ActivityManager.GetMyMemoryState(processInfo);
             return processInfo.Importance != Importance.Foreground;
+        }
+
+        [BroadcastReceiver]
+        public class AniListNotificationJobDismissReciever : BroadcastReceiver
+        {
+            private const int RequestCode = 1001;
+
+            public override void OnReceive(Context context, Intent intent)
+            {
+                try
+                {
+                    var aniListService = new StandardKernel(new ApplicationModule()).Get<IAniListService>();
+                    var notificationEnum = aniListService.GetAniListNotifications(true, 1);
+                    var enumerator = notificationEnum.GetEnumerator();
+
+                    enumerator.MoveNextAsync().Wait();
+                }
+                catch
+                {
+
+                }
+            }
+
+            public static PendingIntent CreatePendingIntent(Context context)
+            {
+                return PendingIntent.GetBroadcast(context, RequestCode, new Intent(context, typeof(AniListNotificationJobDismissReciever)),
+                    PendingIntentFlags.UpdateCurrent);
+            }
         }
     }
 }

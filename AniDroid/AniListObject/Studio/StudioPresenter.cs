@@ -14,13 +14,15 @@ using AniDroid.AniList.Dto;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
+using AniDroid.Utils.Logging;
 using OneOf;
 
 namespace AniDroid.AniListObject.Studio
 {
     public class StudioPresenter : BaseAniDroidPresenter<IStudioView>
     {
-        public StudioPresenter(IStudioView view, IAniListService service, IAniDroidSettings settings) : base(view, service, settings)
+        public StudioPresenter(IStudioView view, IAniListService service, IAniDroidSettings settings,
+            IAniDroidLogger logger) : base(view, service, settings, logger)
         {
         }
 

@@ -21,12 +21,14 @@ using AniDroid.Base;
 using AniDroid.Dialogs;
 using AniDroid.Utils.Comparers;
 using AniDroid.Utils.Interfaces;
+using AniDroid.Utils.Logging;
 
 namespace AniDroid.MediaList
 {
     public class MediaListPresenter : BaseAniDroidPresenter<IMediaListView>, IAniListMediaListEditPresenter
     {
-        public MediaListPresenter(IMediaListView view, IAniListService service, IAniDroidSettings settings) : base(view, service, settings)
+        public MediaListPresenter(IMediaListView view, IAniListService service, IAniDroidSettings settings,
+            IAniDroidLogger logger) : base(view, service, settings, logger)
         {
         }
 

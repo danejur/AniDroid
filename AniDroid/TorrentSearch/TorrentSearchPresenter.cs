@@ -13,12 +13,14 @@ using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
 using AniDroid.Torrent.NyaaSi;
 using AniDroid.Utils.Interfaces;
+using AniDroid.Utils.Logging;
 
 namespace AniDroid.TorrentSearch
 {
     public class TorrentSearchPresenter : BaseAniDroidPresenter<ITorrentSearchView>
     {
-        public TorrentSearchPresenter(ITorrentSearchView view, IAniListService service, IAniDroidSettings settings) : base(view, service, settings)
+        public TorrentSearchPresenter(ITorrentSearchView view, IAniListService service, IAniDroidSettings settings,
+            IAniDroidLogger logger) : base(view, service, settings, logger)
         {
         }
 

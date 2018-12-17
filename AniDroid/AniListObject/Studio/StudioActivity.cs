@@ -39,6 +39,7 @@ namespace AniDroid.AniListObject.Studio
             if (Intent.Data != null)
             {
                 var dataUrl = Intent.Data.ToString();
+                Logger.Debug("StudioActivity", $"Intent recieved with value '{dataUrl}'");
                 var urlRegex = new Regex("anilist.co/studio/[0-9]*/?");
                 var match = urlRegex.Match(dataUrl);
                 var studioIdString = match.ToString().Replace("anilist.co/studio/", "").TrimEnd('/');

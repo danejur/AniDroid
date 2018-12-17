@@ -36,7 +36,6 @@ namespace AniDroid.Adapters.ViewModels
             IsPriority = model.Priority > 0;
             ButtonIcon = GetEpisodeAddIcon();
             ImageColor = Color.ParseColor(model.Media?.CoverImage?.Color ?? "#00000000");
-            LoadImage = false;
 
             if (Model.Media?.Type?.Equals(Media.MediaType.Anime) == true)
             {
@@ -46,7 +45,7 @@ namespace AniDroid.Adapters.ViewModels
 
                 if (DisplayEpisodeProgressColor)
                 {
-                    IsBehind = Model.Progress < Model.Media.NextAiringEpisode?.Episode;
+                    IsBehind = Model.Progress + 1 < Model.Media.NextAiringEpisode?.Episode;
                 }
             }
         }

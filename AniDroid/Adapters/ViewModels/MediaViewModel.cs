@@ -27,7 +27,6 @@ namespace AniDroid.Adapters.ViewModels
             ImageUri = model.CoverImage?.Large ?? model.CoverImage?.Medium;
             IsButtonVisible = isButtonVisible;
             ImageColor = Color.ParseColor(model.CoverImage?.Color ?? "#00000000");
-            LoadImage = false;
         }
 
         public enum MediaDetailType

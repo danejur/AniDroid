@@ -214,7 +214,7 @@ namespace AniDroid.Base
 
             if (showLoading)
             {
-                req = req.Placeholder(Android.Resource.Drawable.IcMenuGallery);
+                req = req.Placeholder(Resource.Drawable.svg_image);
             }
 
             req.Into(imageView);

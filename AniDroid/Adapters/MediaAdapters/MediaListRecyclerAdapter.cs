@@ -103,7 +103,6 @@ namespace AniDroid.Adapters.MediaAdapters
             holder.ContainerCard.CardBackgroundColor = _highlightPriorityItems && viewModel.IsPriority ? _priorityBackgroundColor : holder.DefaultBackgroundColor;
 
             holder.Image.SetBackgroundColor(viewModel.ImageColor);
-            Context.LoadImage(holder.Image, viewModel.ImageUri ?? "", false);
 
             if (_displayProgressColors && viewModel.DisplayEpisodeProgressColor)
             {

@@ -14,13 +14,15 @@ using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
+using AniDroid.Utils.Logging;
 using OneOf;
 
 namespace AniDroid.Main
 {
     public class MainPresenter : BaseAniDroidPresenter<IMainView>
     {
-        public MainPresenter(IMainView view, IAniListService service, IAniDroidSettings settings) : base(view, service, settings)
+        public MainPresenter(IMainView view, IAniListService service, IAniDroidSettings settings,
+            IAniDroidLogger logger) : base(view, service, settings, logger)
         {
         }
 

@@ -88,7 +88,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/User_MangaSummary"
             android:background="@drawable/Background_Alternate_Ripple"
-            app:Icon="@drawable/svg_movie"
+            app:Icon="@drawable/svg_book"
             app:TextOneColor="?Primary"
             app:TextTwoColor="?Background_Text"
             app:ButtonVisible="false"

@@ -17,13 +17,15 @@ using AniDroid.AniList.Models;
 using AniDroid.AniListObject;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
+using AniDroid.Utils.Logging;
 using OneOf;
 
 namespace AniDroid.Home
 {
     public class HomePresenter : BaseAniDroidPresenter<IHomeView>, IAniListActivityPresenter
     {
-        public HomePresenter(IHomeView view, IAniListService service, IAniDroidSettings settings) : base(view, service, settings)
+        public HomePresenter(IHomeView view, IAniListService service, IAniDroidSettings settings,
+            IAniDroidLogger logger) : base(view, service, settings, logger)
         {
         }
 

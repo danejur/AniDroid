@@ -17,12 +17,14 @@ using AniDroid.AniList.Models;
 using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
+using AniDroid.Utils.Logging;
 
 namespace AniDroid.Browse
 {
     public class BrowsePresenter : BaseAniDroidPresenter<IBrowseView>, IAniListMediaListEditPresenter
     {
-        public BrowsePresenter(IBrowseView view, IAniListService service, IAniDroidSettings settings) : base(view, service, settings)
+        public BrowsePresenter(IBrowseView view, IAniListService service, IAniDroidSettings settings,
+            IAniDroidLogger logger) : base(view, service, settings, logger)
         {
         }
 
