@@ -76,7 +76,9 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             }
 
             viewHolder.LikeCount.Text = item.Likes?.Count.ToString();
-            viewHolder.LikeIcon.ImageTintList = ColorStateList.ValueOf(item.Likes?.Any(x => x.Id == _userId) == true ? Color.Crimson : _defaultIconColor);
+            viewHolder.LikeIcon.ImageTintList = ColorStateList.ValueOf(item.Likes?.Any(x => x.Id == _userId) == true
+                ? Color.Crimson
+                : _defaultIconColor);
             viewHolder.ReplyLikeContainer.SetTag(Resource.Id.Object_Position, position);
             viewHolder.ReplyLikeContainer.Click -= ShowReplyDialog;
             viewHolder.ReplyLikeContainer.Click += ShowReplyDialog;
@@ -105,7 +107,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
                 BindListActivityViewHolder(viewHolder, item);
             }
         }
-        
+
         public override RecyclerView.ViewHolder CreateCustomViewHolder(ViewGroup parent, int viewType)
         {
             var holder = new AniListActivityViewHolder(
@@ -121,32 +123,32 @@ namespace AniDroid.Adapters.AniListActivityAdapters
 
         private void BindTextActivityViewHolder(AniListActivityViewHolder viewHolder, AniListActivity item)
         {
-            viewHolder.Title.TextFormatted = BaseAniDroidActivity.FromHtml($"<b><font color='{_userNameColorHex}'>{item.User.Name}</font></b>");
+            viewHolder.Title.TextFormatted = BaseAniDroidActivity.FromHtml($"<b><font color='{_userNameColorHex}'>{item.User?.Name}</font></b>");
             viewHolder.ContentText.TextFormatted = BaseAniDroidActivity.FromHtml(item.Text);
             viewHolder.ContentText.Visibility = ViewStates.Visible;
             viewHolder.ContentImageContainer.Visibility = ViewStates.Gone;
 
-            Context.LoadImage(viewHolder.Image, item.User.Avatar.Large);
+            Context.LoadImage(viewHolder.Image, item.User?.Avatar?.Large);
         }
 
         private void BindMessageActivityViewHolder(AniListActivityViewHolder viewHolder, AniListActivity item)
         {
-            viewHolder.Title.TextFormatted = BaseAniDroidActivity.FromHtml($"<b><font color='{_userNameColorHex}'>{item.Messenger.Name}</font></b>");
+            viewHolder.Title.TextFormatted = BaseAniDroidActivity.FromHtml($"<b><font color='{_userNameColorHex}'>{item.Messenger?.Name}</font></b>");
             viewHolder.ContentText.TextFormatted = BaseAniDroidActivity.FromHtml(item.Message);
             viewHolder.ContentText.Visibility = ViewStates.Visible;
             viewHolder.ContentImageContainer.Visibility = ViewStates.Gone;
 
-            Context.LoadImage(viewHolder.Image, item.Messenger.Avatar.Large);
+            Context.LoadImage(viewHolder.Image, item.Messenger?.Avatar?.Large);
         }
 
         private void BindListActivityViewHolder(AniListActivityViewHolder viewHolder, AniListActivity item)
         {
-            viewHolder.Title.TextFormatted = BaseAniDroidActivity.FromHtml($"<b><font color='{_userNameColorHex}'>{item.User.Name}</font></b> {item.Status} {(!string.IsNullOrWhiteSpace(item.Progress) ? $"{item.Progress} of" : "")} <b><font color='{_actionColorHex}'>{item.Media.Title.UserPreferred}</font></b>");
+            viewHolder.Title.TextFormatted = BaseAniDroidActivity.FromHtml($"<b><font color='{_userNameColorHex}'>{item.User?.Name}</font></b> {item.Status} {(!string.IsNullOrWhiteSpace(item.Progress) ? $"{item.Progress} of" : "")} <b><font color='{_actionColorHex}'>{item.Media?.Title?.UserPreferred}</font></b>");
             viewHolder.ContentText.Visibility = ViewStates.Gone;
             viewHolder.ContentImageContainer.Visibility = ViewStates.Visible;
             viewHolder.ContentImageContainer.RemoveAllViews();
 
-            Context.LoadImage(viewHolder.Image, item.Media.CoverImage.Large);
+            Context.LoadImage(viewHolder.Image, item.Media?.CoverImage?.Large);
         }
 
         private void ImageClick(object sender, EventArgs e)
@@ -157,14 +159,29 @@ namespace AniDroid.Adapters.AniListActivityAdapters
 
             if (item.Type == AniListActivity.ActivityType.Text)
             {
+                if (item.User?.Id == null)
+                {
+                    return;
+                }
+
                 UserActivity.StartActivity(Context, item.User.Id);
             }
             else if (item.Type == AniListActivity.ActivityType.Message)
             {
+                if (item.Messenger?.Id == null)
+                {
+                    return;
+                }
+
                 UserActivity.StartActivity(Context, item.Messenger.Id);
             }
             else if (item.Type == AniListActivity.ActivityType.AnimeList || item.Type == AniListActivity.ActivityType.MangaList)
             {
+                if (item.Media?.Id == null)
+                {
+                    return;
+                }
+
                 MediaActivity.StartActivity(Context, item.Media.Id);
             }
         }
