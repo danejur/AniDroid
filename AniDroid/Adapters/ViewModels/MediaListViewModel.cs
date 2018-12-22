@@ -50,7 +50,7 @@ namespace AniDroid.Adapters.ViewModels
             }
         }
 
-        public static MediaListViewModel CreateViewModel(Media.MediaList model, User.ScoreFormat scoreFormat,
+        public static MediaListViewModel CreateViewModel(Media.MediaList model, User.ScoreFormat scoreFormat, bool displayTimeUntilAiringCountdown,
             bool readOnly = false)
         {
             var secondaryDetail = MediaListDetailType.Progress;
@@ -64,7 +64,7 @@ namespace AniDroid.Adapters.ViewModels
                 secondaryDetail = MediaListDetailType.Rating;
             }
 
-            return new MediaListViewModel(model, MediaListDetailType.FormatAndAiringInfo, secondaryDetail, true,
+            return new MediaListViewModel(model, MediaListDetailType.FormatAndAiringInfo, secondaryDetail, displayTimeUntilAiringCountdown,
                 scoreFormat)
             {
                 IsButtonVisible = !readOnly && model.Status?.Equals(Media.MediaListStatus.Current) == true
