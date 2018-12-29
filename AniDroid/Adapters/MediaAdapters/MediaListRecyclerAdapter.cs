@@ -93,6 +93,8 @@ namespace AniDroid.Adapters.MediaAdapters
                 {
                     ButtonLongClickAction = (viewModel, pos, callback) =>
                         episodeAddAction.Invoke(viewModel as MediaListViewModel, callback);
+                    ButtonClickAction = (viewModel, pos, callback) => Toast.MakeText(Context.ApplicationContext,
+                        Context.GetString(Resource.String.MediaList_LongPressEnabledAlert), ToastLength.Short).Show();
                 }
                 else
                 {
