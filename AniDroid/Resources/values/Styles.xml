@@ -15,7 +15,9 @@
     <item name="ListItem_Divider">@color/Dark_ListItemDivider</item>
     <item name="ListItem_Priority">@color/Dark_ListItemPriority</item>
     <item name="ListItem_UpToDate">@color/Dark_ListItemUpToDate</item>
+    <item name="ListItem_SlightlyBehind">@color/Dark_ListItemSlightlyBehind</item>
     <item name="ListItem_Behind">@color/Dark_ListItemBehind</item>
+    <item name="ListItem_VeryBehind">@color/Dark_ListItemVeryBehind</item>
     <item name="Checkbox_Theme">@style/Dark_Checkbox</item>
     <item name="Switch_Theme">@style/Dark_Switch</item>
     <item name="Radio_Theme">@style/Dark_Radio</item>
@@ -182,7 +184,9 @@
     <item name="ListItem_Divider">@color/AniList_ListItemDivider</item>
     <item name="ListItem_Priority">@color/AniList_ListItemPriority</item>
     <item name="ListItem_UpToDate">@color/AniList_ListItemUpToDate</item>
+    <item name="ListItem_SlightlyBehind">@color/AniList_ListItemSlightlyBehind</item>
     <item name="ListItem_Behind">@color/AniList_ListItemBehind</item>
+    <item name="ListItem_VeryBehind">@color/AniList_ListItemVeryBehind</item>
     <item name="Checkbox_Theme">@style/AniList_Checkbox</item>
     <item name="Switch_Theme">@style/AniList_Switch</item>
     <item name="Radio_Theme">@style/AniList_Radio</item>

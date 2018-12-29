@@ -57,6 +57,7 @@ namespace AniDroid.Settings
                 View.CreateDisplayProgressColorsItem(AniDroidSettings.DisplayMediaListItemProgressColors);
                 View.CreateUseLongClickForEpisodeAddItem(AniDroidSettings.UseLongClickForEpisodeAdd);
                 View.CreateEnableNotificationServiceItem(AniDroidSettings.EnableNotificationService);
+                View.CreateAlwaysDisplayEpisodeProgressColorItem(AniDroidSettings.AlwaysDisplayEpisodeProgressColor);
             }
 
             View.CreatePrivacyPolicyLinkItem();
@@ -144,6 +145,11 @@ namespace AniDroid.Settings
         public void SetEnableNotificationService(bool enableNotificationService)
         {
             AniDroidSettings.EnableNotificationService = enableNotificationService;
+        }
+
+        public void SetAlwaysDisplayEpisodeProgressColor(bool alwaysDisplayEpisodeProgressColor)
+        {
+            AniDroidSettings.AlwaysDisplayEpisodeProgressColor = alwaysDisplayEpisodeProgressColor;
         }
     }
 }

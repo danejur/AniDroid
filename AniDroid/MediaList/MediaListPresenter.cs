@@ -156,6 +156,11 @@ namespace AniDroid.MediaList
             return AniDroidSettings.DisplayUpcomingEpisodeTimeAsCountdown;
         }
 
+        public bool GetAlwaysDisplayEpisodeProgressColor()
+        {
+            return AniDroidSettings.AlwaysDisplayEpisodeProgressColor;
+        }
+
         public MediaListSortComparer.MediaListSortDirection GetMediaListSortDirection(Media.MediaType mediaType)
         {
             if (Media.MediaType.Anime.Equals(mediaType))

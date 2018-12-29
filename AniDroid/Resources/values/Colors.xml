@@ -45,8 +45,10 @@
   <color name="Anilist_TrustedTorrent">#C3F4CF</color>
   <color name="Anilist_RemakeTorrent">#FFE4D1</color>
   <color name="AniList_ListItemPriority">#C3F4CF</color>
-  <color name="AniList_ListItemUpToDate">#61CE1F</color>
-  <color name="AniList_ListItemBehind">#FF7300</color>
+  <color name="AniList_ListItemUpToDate">#60CE1F</color>
+  <color name="AniList_ListItemSlightlyBehind">#D9D900</color>
+  <color name="AniList_ListItemBehind">#EC7A23</color>
+  <color name="AniList_ListItemVeryBehind">#EC2823</color>
 
   <!-- Category Item -->
   <color name="AniList_Ripple_Background">#D9D9D9</color>
@@ -86,8 +88,10 @@
   <color name="Dark_TrustedTorrent">#06260E</color>
   <color name="Dark_RemakeTorrent">#311806</color>
   <color name="Dark_ListItemPriority">#06260E</color>
-  <color name="Dark_ListItemUpToDate">#ACFF7A</color>
-  <color name="Dark_ListItemBehind">#FF9A47</color>
+  <color name="Dark_ListItemUpToDate">#ABFF7A</color>
+  <color name="Dark_ListItemSlightlyBehind">#F5FF7A</color>
+  <color name="Dark_ListItemBehind">#FFB47A</color>
+  <color name="Dark_ListItemVeryBehind">#FF3631</color>
 
   <!-- Ripple Item -->
   <color name="Dark_Ripple_Background">#181818</color>
