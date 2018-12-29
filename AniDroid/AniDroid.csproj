@@ -298,6 +298,9 @@
     <Compile Include="SearchResults\ISearchResultsView.cs" />
     <Compile Include="SearchResults\SearchResultsActivity.cs" />
     <Compile Include="SearchResults\SearchResultsPresenter.cs" />
+    <Compile Include="Settings\MediaListSettings\IMediaListSettingsView.cs" />
+    <Compile Include="Settings\MediaListSettings\MediaListSettingsActivity.cs" />
+    <Compile Include="Settings\MediaListSettings\MediaListSettingsPresenter.cs" />
     <Compile Include="Settings\SettingsPresenter.cs" />
     <Compile Include="Settings\ISettingsView.cs" />
     <Compile Include="Settings\SettingsActivity.cs" />
