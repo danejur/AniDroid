@@ -122,9 +122,9 @@ namespace AniDroid.MediaList
 
                 var adapter = new MediaListRecyclerAdapter(this, statusList, Presenter.GetCardType(),
                     item => MediaListViewModel.CreateViewModel(item, _collection.User.MediaListOptions.ScoreFormat,
-                        Settings.DisplayUpcomingEpisodeTimeAsCountdown, Settings.AlwaysDisplayEpisodeProgressColor, true),
+                        Settings.DisplayUpcomingEpisodeTimeAsCountdown, Settings.MediaListProgressDisplay, true),
                     Presenter.GetMediaListItemViewType(), Presenter.GetHighlightPriorityItems(),
-                    Presenter.GetDisplayProgressColors(), Presenter.GetUseLongClickForEpisodeAdd());
+                    Presenter.GetUseLongClickForEpisodeAdd());
 
                 _recyclerAdapters.Add(adapter);
                 var listView = LayoutInflater.Inflate(Resource.Layout.View_List, null);

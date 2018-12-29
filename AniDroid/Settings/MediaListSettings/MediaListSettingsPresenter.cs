@@ -38,14 +38,13 @@ namespace AniDroid.Settings.MediaListSettings
 
             View.CreateGroupCompletedSettingItem(AniDroidSettings.GroupCompletedLists);
             View.CreateMediaListViewTypeSettingItem(AniDroidSettings.MediaViewType);
+            View.CreateMediaListProgressDisplayItem(AniDroidSettings.MediaListProgressDisplay);
             View.CreateAnimeListSortItem(AniDroidSettings.AnimeListSortType,
                 AniDroidSettings.AnimeListSortDirection);
             View.CreateMangaListSortItem(AniDroidSettings.MangaListSortType,
                 AniDroidSettings.MangaListSortDirection);
             View.CreateHighlightPriorityMediaListItemsItem(AniDroidSettings.HighlightPriorityMediaListItems);
-            View.CreateDisplayProgressColorsItem(AniDroidSettings.DisplayMediaListItemProgressColors);
             View.CreateUseLongClickForEpisodeAddItem(AniDroidSettings.UseLongClickForEpisodeAdd);
-            View.CreateAlwaysDisplayEpisodeProgressColorItem(AniDroidSettings.AlwaysDisplayEpisodeProgressColor);
 
             return Task.CompletedTask;
         }
@@ -63,11 +62,6 @@ namespace AniDroid.Settings.MediaListSettings
         public void SetHighlightPriorityMediaListItems(bool highlightListItems)
         {
             AniDroidSettings.HighlightPriorityMediaListItems = highlightListItems;
-        }
-
-        public void SetDisplayProgressColorsItem(bool displayProgressColors)
-        {
-            AniDroidSettings.DisplayMediaListItemProgressColors = displayProgressColors;
         }
 
         public void SetAnimeListTabOrder(List<KeyValuePair<string, bool>> animeLists)
@@ -99,9 +93,10 @@ namespace AniDroid.Settings.MediaListSettings
             AniDroidSettings.UseLongClickForEpisodeAdd = useLongClickForEpisodeAdd;
         }
 
-        public void SetAlwaysDisplayEpisodeProgressColor(bool alwaysDisplayEpisodeProgressColor)
+        public void SetMediaListProgressDisplay(
+            MediaListRecyclerAdapter.MediaListProgressDisplayType mediaListProgressDisplay)
         {
-            AniDroidSettings.AlwaysDisplayEpisodeProgressColor = alwaysDisplayEpisodeProgressColor;
+            AniDroidSettings.MediaListProgressDisplay = mediaListProgressDisplay;
         }
     }
 }

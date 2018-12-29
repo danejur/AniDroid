@@ -103,21 +103,6 @@ namespace AniDroid.Settings.MediaListSettings
             _settingsContainer.AddView(SettingsActivity.CreateSettingDivider(this));
         }
 
-        public void CreateDisplayProgressColorsItem(bool displayProgressColors)
-        {
-            _settingsContainer.AddView(
-                SettingsActivity.CreateSwitchSettingRow(this, "Show Airing Progress Colors",
-                    "Turn this on to change the color of the titles of items on your anime lists as they correspond to the current number of aired episodes",
-                    displayProgressColors, true,
-                    (sender, args) =>
-                    {
-                        Presenter.SetDisplayProgressColorsItem(args.IsChecked);
-                        _recreateActivity = true;
-                        Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
-                    }));
-            _settingsContainer.AddView(SettingsActivity.CreateSettingDivider(this));
-        }
-
         public void CreateAnimeListTabOrderItem(Func<List<KeyValuePair<string, bool>>> getAnimeLists)
         {
             _settingsContainer.AddView(
@@ -175,17 +160,21 @@ namespace AniDroid.Settings.MediaListSettings
             _settingsContainer.AddView(SettingsActivity.CreateSettingDivider(this));
         }
 
-        public void CreateAlwaysDisplayEpisodeProgressColorItem(bool alwaysDisplayEpisodeProgressColor)
+        public void CreateMediaListProgressDisplayItem(MediaListRecyclerAdapter.MediaListProgressDisplayType mediaListProgressDisplay)
         {
+            var options = new List<string> { "Never", "Releasing\nOnly", "Releasing +\n1 Week", "Always" };
             _settingsContainer.AddView(
-                SettingsActivity.CreateSwitchSettingRow(this, "Always Display Episode Progress Color",
-                    "When this setting is enabled, anime in your Current list will always display the title in a color corresponding to how up-to-date you are with the total number of aired episodes, regardless of whether it is currently airing or not.",
-                    alwaysDisplayEpisodeProgressColor, true,
-                    (sender, args) =>
+                SettingsActivity.CreateSpinnerSettingRow(this, "Episode Progress Display",
+                    "Choose how you'd like to display episode progress. This will change the title color for your currently watched Anime to show how up-to-date you are.",
+                    options, (int) mediaListProgressDisplay, (sender, args) =>
                     {
-                        Presenter.SetAlwaysDisplayEpisodeProgressColor(args.IsChecked);
-                        _recreateActivity = true;
-                        Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
+                        Presenter.SetMediaListProgressDisplay((MediaListRecyclerAdapter.MediaListProgressDisplayType) args.Position);
+
+                        if (mediaListProgressDisplay != (MediaListRecyclerAdapter.MediaListProgressDisplayType) args.Position)
+                        {
+                            _recreateActivity = true;
+                            Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
+                        }
                     }));
             _settingsContainer.AddView(SettingsActivity.CreateSettingDivider(this));
         }
