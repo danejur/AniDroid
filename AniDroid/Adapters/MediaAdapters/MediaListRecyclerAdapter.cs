@@ -34,7 +34,9 @@ namespace AniDroid.Adapters.MediaAdapters
 
         private readonly ColorStateList _priorityBackgroundColor;
         private readonly ColorStateList _upToDateTitleColor;
+        private readonly ColorStateList _slightlyBehindTitleColor;
         private readonly ColorStateList _behindTitleColor;
+        private readonly ColorStateList _veryBehindTitleColor;
 
         private readonly List<MediaListViewModel> _unfilteredItems;
 
@@ -65,8 +67,12 @@ namespace AniDroid.Adapters.MediaAdapters
                 ColorStateList.ValueOf(new Color(Context.GetThemedColor(Resource.Attribute.ListItem_Priority)));
             _upToDateTitleColor =
                 ColorStateList.ValueOf(new Color(Context.GetThemedColor(Resource.Attribute.ListItem_UpToDate)));
+            _slightlyBehindTitleColor =
+                ColorStateList.ValueOf(new Color(Context.GetThemedColor(Resource.Attribute.ListItem_SlightlyBehind)));
             _behindTitleColor =
                 ColorStateList.ValueOf(new Color(Context.GetThemedColor(Resource.Attribute.ListItem_Behind)));
+            _veryBehindTitleColor =
+                ColorStateList.ValueOf(new Color(Context.GetThemedColor(Resource.Attribute.ListItem_VeryBehind)));
 
             ClickAction = viewModel =>
                 MediaActivity.StartActivity(Context, viewModel.Model.Media?.Id ?? 0, BaseAniDroidActivity.ObjectBrowseRequestCode);
@@ -106,7 +112,7 @@ namespace AniDroid.Adapters.MediaAdapters
 
             if (_displayProgressColors && viewModel.DisplayEpisodeProgressColor)
             {
-                holder.Name.SetTextColor(viewModel.IsBehind ? _behindTitleColor : _upToDateTitleColor);
+                holder.Name.SetTextColor(GetEpisodeStatusColor(viewModel.WatchingStatus, holder.DefaultNameColor));
             }
             else
             {
@@ -232,6 +238,29 @@ namespace AniDroid.Adapters.MediaAdapters
             {
                 BindViewHolderByType(cardHolder, position, RecyclerCardType.FlatHorizontal);
             }
+        }
+
+        private ColorStateList GetEpisodeStatusColor(MediaListViewModel.MediaListWatchingStatus status, ColorStateList defaultColor)
+        {
+            var retColor = defaultColor;
+
+            switch (status)
+            {
+                case MediaListViewModel.MediaListWatchingStatus.UpToDate:
+                    retColor = _upToDateTitleColor;
+                    break;
+                case MediaListViewModel.MediaListWatchingStatus.SlightlyBehind:
+                    retColor = _slightlyBehindTitleColor;
+                    break;
+                case MediaListViewModel.MediaListWatchingStatus.Behind:
+                    retColor = _behindTitleColor;
+                    break;
+                case MediaListViewModel.MediaListWatchingStatus.VeryBehind:
+                    retColor = _veryBehindTitleColor;
+                    break;
+            }
+
+            return retColor;
         }
     }
 }

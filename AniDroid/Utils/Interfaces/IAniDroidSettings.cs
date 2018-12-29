@@ -44,6 +44,7 @@ namespace AniDroid.Utils.Interfaces
         bool UseLongClickForEpisodeAdd { get; set; }
         bool EnableNotificationService { get; set; }
         bool DisplayUpcomingEpisodeTimeAsCountdown { get; set; }
+        bool AlwaysDisplayEpisodeProgressColor { get; set; }
 
         #region Methods
 

@@ -121,7 +121,8 @@ namespace AniDroid.MediaList
                 }
 
                 var adapter = new MediaListRecyclerAdapter(this, statusList, Presenter.GetCardType(),
-                    item => MediaListViewModel.CreateViewModel(item, _collection.User.MediaListOptions.ScoreFormat, true),
+                    item => MediaListViewModel.CreateViewModel(item, _collection.User.MediaListOptions.ScoreFormat,
+                        Settings.DisplayUpcomingEpisodeTimeAsCountdown, Settings.AlwaysDisplayEpisodeProgressColor, true),
                     Presenter.GetMediaListItemViewType(), Presenter.GetHighlightPriorityItems(),
                     Presenter.GetDisplayProgressColors(), Presenter.GetUseLongClickForEpisodeAdd());
 

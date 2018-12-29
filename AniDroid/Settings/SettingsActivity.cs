@@ -269,6 +269,21 @@ namespace AniDroid.Settings
             _settingsContainer.AddView(CreateSettingDivider(this));
         }
 
+        public void CreateAlwaysDisplayEpisodeProgressColorItem(bool alwaysDisplayEpisodeProgressColor)
+        {
+            _settingsContainer.AddView(
+                CreateSwitchSettingRow(this, "Always Display Episode Progress Color",
+                    "When this setting is enabled, anime in your Current list will always display the title in a color corresponding to how up-to-date you are with the total number of aired episodes, regardless of whether it is currently airing or not.",
+                    alwaysDisplayEpisodeProgressColor, true,
+                    (sender, args) =>
+                    {
+                        Presenter.SetAlwaysDisplayEpisodeProgressColor(args.IsChecked);
+                        _recreateActivity = true;
+                        Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
+                    }));
+            _settingsContainer.AddView(CreateSettingDivider(this));
+        }
+
         #endregion
 
         public static void StartActivity(Activity context)

@@ -158,6 +158,12 @@ namespace AniDroid.Utils
             set => _authSettingStorage.Put(StorageKeys.DisplayUpcomingEpisodeTimeAsCountdownKey, value);
         }
 
+        public bool AlwaysDisplayEpisodeProgressColor
+        {
+            get => _authSettingStorage.Get(StorageKeys.AlwaysDisplayEpisodeProgressColorKey, false);
+            set => _authSettingStorage.Put(StorageKeys.AlwaysDisplayEpisodeProgressColorKey, value);
+        }
+
         #region Methods
 
         public void UpdateLoggedInUser(User user)
@@ -221,6 +227,7 @@ namespace AniDroid.Utils
             public const string UseLongClickForEpisodeAddKey = "USE_LONG_CLICK_FOR_EPISODE_ADD";
             public const string EnableNotificationServiceKey = "ENABLE_NOTIFICATION_SERVICE";
             public const string DisplayUpcomingEpisodeTimeAsCountdownKey = "DISPLAY_UPCOMING_EPISODE_TIME_AS_COUNTDOWN";
+            public const string AlwaysDisplayEpisodeProgressColorKey = "ALWAYS_DISPLAY_EPISODE_PROGRESS_COLOR";
 
             public const string ShowAllActivityKey = "SHOW_ALL_ACTIVITY";
         }

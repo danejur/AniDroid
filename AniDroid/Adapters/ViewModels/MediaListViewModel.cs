@@ -17,14 +17,14 @@ namespace AniDroid.Adapters.ViewModels
     public class MediaListViewModel : AniDroidAdapterViewModel<Media.MediaList>
     {
         public bool IsPriority { get; protected set; }
-        public bool IsBehind { get; protected set; }
+        public MediaListWatchingStatus WatchingStatus { get; protected set; }
         public bool DisplayEpisodeProgressColor { get; protected set; }
         public Color ImageColor { get; protected set; }
 
         private readonly bool _displayTimeUntilAiringCountdown;
         private readonly User.ScoreFormat _scoreFormat;
 
-        public MediaListViewModel(Media.MediaList model, MediaListDetailType primaryMediaListDetailType, MediaListDetailType secondaryMediaListDetailType, bool displayTimeUntilAiringCountdown, User.ScoreFormat scoreFormat) : base(model)
+        public MediaListViewModel(Media.MediaList model, MediaListDetailType primaryMediaListDetailType, MediaListDetailType secondaryMediaListDetailType, bool displayTimeUntilAiringCountdown, bool alwaysDisplayEpisodeProgressColor, User.ScoreFormat scoreFormat) : base(model)
         {
             _displayTimeUntilAiringCountdown = displayTimeUntilAiringCountdown;
             _scoreFormat = scoreFormat;
@@ -40,18 +40,21 @@ namespace AniDroid.Adapters.ViewModels
             if (Model.Media?.Type?.Equals(Media.MediaType.Anime) == true)
             {
                 DisplayEpisodeProgressColor = Model.Status?.Equals(Media.MediaListStatus.Current) == true &&
-                                              Model.Media.Status?.Equals(Media.MediaStatus.Releasing) == true &&
-                                              Model.Media.NextAiringEpisode?.Episode > 1;
+                                              (Model.Media.Status?.Equals(Media.MediaStatus.Releasing) == true &&
+                                               Model.Media.NextAiringEpisode?.Episode > 1 ||
+                                              alwaysDisplayEpisodeProgressColor);
 
                 if (DisplayEpisodeProgressColor)
                 {
-                    IsBehind = Model.Progress + 1 < Model.Media.NextAiringEpisode?.Episode;
+                    var totalAiredEpisodes = Model.Media.NextAiringEpisode?.Episode - 1 ?? Model.Media.Episodes;
+
+                    WatchingStatus = totalAiredEpisodes > 0 ? GetWatchingStatus(Model.Progress ?? 0, totalAiredEpisodes.Value) : MediaListWatchingStatus.Unknown;
                 }
             }
         }
 
-        public static MediaListViewModel CreateViewModel(Media.MediaList model, User.ScoreFormat scoreFormat,
-            bool readOnly = false)
+        public static MediaListViewModel CreateViewModel(Media.MediaList model, User.ScoreFormat scoreFormat, bool displayTimeUntilAiringCountdown, 
+            bool alwaysDisplayEpisodeProgressColor, bool readOnly = false)
         {
             var secondaryDetail = MediaListDetailType.Progress;
 
@@ -64,8 +67,8 @@ namespace AniDroid.Adapters.ViewModels
                 secondaryDetail = MediaListDetailType.Rating;
             }
 
-            return new MediaListViewModel(model, MediaListDetailType.FormatAndAiringInfo, secondaryDetail, true,
-                scoreFormat)
+            return new MediaListViewModel(model, MediaListDetailType.FormatAndAiringInfo, secondaryDetail, displayTimeUntilAiringCountdown,
+                alwaysDisplayEpisodeProgressColor, scoreFormat)
             {
                 IsButtonVisible = !readOnly && model.Status?.Equals(Media.MediaListStatus.Current) == true
             };
@@ -78,6 +81,15 @@ namespace AniDroid.Adapters.ViewModels
             Progress,
             EpisodeCountOrMovieLength,
             Rating
+        }
+
+        public enum MediaListWatchingStatus
+        {
+            UpToDate,
+            SlightlyBehind,
+            Behind,
+            VeryBehind,
+            Unknown
         }
 
         private int GetEpisodeAddIcon()
@@ -211,6 +223,30 @@ namespace AniDroid.Adapters.ViewModels
             }
 
             return retString;
+        }
+
+        private MediaListWatchingStatus GetWatchingStatus(int progress, int totalAiredEpisodes)
+        {
+            var retStatus = MediaListWatchingStatus.Unknown;
+
+            if (progress >= totalAiredEpisodes)
+            {
+                retStatus = MediaListWatchingStatus.UpToDate;
+            }
+            else if (progress >= totalAiredEpisodes - 1)
+            {
+                retStatus = MediaListWatchingStatus.SlightlyBehind;
+            }
+            else if (progress >= totalAiredEpisodes - 3)
+            {
+                retStatus = MediaListWatchingStatus.Behind;
+            }
+            else if (progress < totalAiredEpisodes - 3)
+            {
+                retStatus = MediaListWatchingStatus.VeryBehind;
+            }
+
+            return retStatus;
         }
     }
 }
