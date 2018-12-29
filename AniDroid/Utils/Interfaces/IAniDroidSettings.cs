@@ -36,7 +36,6 @@ namespace AniDroid.Utils.Interfaces
         bool GroupCompletedLists { get; set; }
         MediaListRecyclerAdapter.MediaListItemViewType MediaViewType { get; set; }
         bool HighlightPriorityMediaListItems { get; set; }
-        bool DisplayMediaListItemProgressColors { get; set; }
 		MediaListSortComparer.MediaListSortType AnimeListSortType { get; set; }
         MediaListSortComparer.MediaListSortDirection AnimeListSortDirection { get; set; }
         MediaListSortComparer.MediaListSortType MangaListSortType { get; set; }
@@ -44,7 +43,16 @@ namespace AniDroid.Utils.Interfaces
         bool UseLongClickForEpisodeAdd { get; set; }
         bool EnableNotificationService { get; set; }
         bool DisplayUpcomingEpisodeTimeAsCountdown { get; set; }
+        MediaListRecyclerAdapter.MediaListProgressDisplayType MediaListProgressDisplay { get; set; }
+
+        #region Old Settings
+
+        [Obsolete("No longer used, use MediaListProgressDisplay instead", true)]
+        bool DisplayMediaListItemProgressColors { get; set; }
+        [Obsolete("No longer used, use MediaListProgressDisplay instead", true)]
         bool AlwaysDisplayEpisodeProgressColor { get; set; }
+
+        #endregion
 
         #region Methods
 

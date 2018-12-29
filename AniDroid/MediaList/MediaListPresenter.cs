@@ -141,9 +141,9 @@ namespace AniDroid.MediaList
             return AniDroidSettings.HighlightPriorityMediaListItems;
         }
 
-        public bool GetDisplayProgressColors()
+        public MediaListRecyclerAdapter.MediaListProgressDisplayType GetProgressDisplayType()
         {
-            return AniDroidSettings.DisplayMediaListItemProgressColors;
+            return AniDroidSettings.MediaListProgressDisplay;
         }
 
         public bool GetUseLongClickForEpisodeAdd()
@@ -154,11 +154,6 @@ namespace AniDroid.MediaList
         public bool GetDisplayTimeUntilAiringAsCountdown()
         {
             return AniDroidSettings.DisplayUpcomingEpisodeTimeAsCountdown;
-        }
-
-        public bool GetAlwaysDisplayEpisodeProgressColor()
-        {
-            return AniDroidSettings.AlwaysDisplayEpisodeProgressColor;
         }
 
         public MediaListSortComparer.MediaListSortDirection GetMediaListSortDirection(Media.MediaType mediaType)

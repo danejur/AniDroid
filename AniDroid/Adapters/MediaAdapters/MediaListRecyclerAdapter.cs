@@ -29,7 +29,6 @@ namespace AniDroid.Adapters.MediaAdapters
         private readonly string _listName;
         private readonly Media.MediaListStatus _listStatus;
         private readonly bool _highlightPriorityItems;
-        private readonly bool _displayProgressColors;
         private readonly MediaListItemViewType _viewType;
 
         private readonly ColorStateList _priorityBackgroundColor;
@@ -50,8 +49,16 @@ namespace AniDroid.Adapters.MediaAdapters
             TitleOnly = 2
         }
 
+        public enum MediaListProgressDisplayType
+        {
+            Never,
+            Releasing,
+            ReleasingExtended,
+            Always
+        }
+
         public MediaListRecyclerAdapter(BaseAniDroidActivity context, Media.MediaListGroup mediaListGroup,
-            RecyclerCardType cardType, Func<Media.MediaList, MediaListViewModel> createViewModelFunc, MediaListItemViewType viewType, bool highlightPriorityItems, bool displayProgressColors, bool useLongClickForEpisodeAdd, Action<MediaListViewModel, Action> episodeAddAction = null) : base(context,
+            RecyclerCardType cardType, Func<Media.MediaList, MediaListViewModel> createViewModelFunc, MediaListItemViewType viewType, bool highlightPriorityItems, bool useLongClickForEpisodeAdd, Action<MediaListViewModel, Action> episodeAddAction = null) : base(context,
             mediaListGroup.Entries.Select(createViewModelFunc).ToList(), cardType)
         {
             CreateViewModelFunc = createViewModelFunc;
@@ -61,7 +68,6 @@ namespace AniDroid.Adapters.MediaAdapters
             _unfilteredItems = Items;
             _viewType = viewType;
             _highlightPriorityItems = highlightPriorityItems;
-            _displayProgressColors = displayProgressColors;
 
             _priorityBackgroundColor =
                 ColorStateList.ValueOf(new Color(Context.GetThemedColor(Resource.Attribute.ListItem_Priority)));
@@ -87,6 +93,8 @@ namespace AniDroid.Adapters.MediaAdapters
                 {
                     ButtonLongClickAction = (viewModel, pos, callback) =>
                         episodeAddAction.Invoke(viewModel as MediaListViewModel, callback);
+                    ButtonClickAction = (viewModel, pos, callback) => Toast.MakeText(Context.ApplicationContext,
+                        Context.GetString(Resource.String.MediaList_LongPressEnabledAlert), ToastLength.Short).Show();
                 }
                 else
                 {
@@ -110,13 +118,13 @@ namespace AniDroid.Adapters.MediaAdapters
 
             holder.Image.SetBackgroundColor(viewModel.ImageColor);
 
-            if (_displayProgressColors && viewModel.DisplayEpisodeProgressColor)
+            if (viewModel.WatchingStatus == MediaListViewModel.MediaListWatchingStatus.None)
             {
-                holder.Name.SetTextColor(GetEpisodeStatusColor(viewModel.WatchingStatus, holder.DefaultNameColor));
+                holder.Name.SetTextColor(holder.DefaultNameColor);
             }
             else
             {
-                holder.Name.SetTextColor(holder.DefaultNameColor);
+                holder.Name.SetTextColor(GetEpisodeStatusColor(viewModel.WatchingStatus, holder.DefaultNameColor));
             }
         }
 

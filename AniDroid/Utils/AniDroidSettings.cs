@@ -109,12 +109,6 @@ namespace AniDroid.Utils
             get => _authSettingStorage.Get(StorageKeys.HighlightPriorityMediaListItems, true);
             set => _authSettingStorage.Put(StorageKeys.HighlightPriorityMediaListItems, value);
         }
-
-        public bool DisplayMediaListItemProgressColors
-        {
-            get => _authSettingStorage.Get(StorageKeys.DisplayMediaListItemProgressColors, true);
-            set => _authSettingStorage.Put(StorageKeys.DisplayMediaListItemProgressColors, value);
-        }
 		
 		public MediaListSortComparer.MediaListSortType AnimeListSortType
         {
@@ -158,11 +152,30 @@ namespace AniDroid.Utils
             set => _authSettingStorage.Put(StorageKeys.DisplayUpcomingEpisodeTimeAsCountdownKey, value);
         }
 
+        public MediaListRecyclerAdapter.MediaListProgressDisplayType MediaListProgressDisplay
+        {
+            get => _authSettingStorage.Get(StorageKeys.MediaListProgressDisplayKey,
+                _authSettingStorage.Get(OldSettingsStorageKeys.DisplayMediaListItemProgressColors, true)
+                    ? MediaListRecyclerAdapter.MediaListProgressDisplayType.Releasing
+                    : MediaListRecyclerAdapter.MediaListProgressDisplayType.Never);
+            set => _authSettingStorage.Put(StorageKeys.MediaListProgressDisplayKey, value);
+        }
+
+        #region Old Settings
+
+        public bool DisplayMediaListItemProgressColors
+        {
+            get => _authSettingStorage.Get(OldSettingsStorageKeys.DisplayMediaListItemProgressColors, true);
+            set => _authSettingStorage.Put(OldSettingsStorageKeys.DisplayMediaListItemProgressColors, value);
+        }
+
         public bool AlwaysDisplayEpisodeProgressColor
         {
-            get => _authSettingStorage.Get(StorageKeys.AlwaysDisplayEpisodeProgressColorKey, false);
-            set => _authSettingStorage.Put(StorageKeys.AlwaysDisplayEpisodeProgressColorKey, value);
+            get => _authSettingStorage.Get(OldSettingsStorageKeys.AlwaysDisplayEpisodeProgressColorKey, false);
+            set => _authSettingStorage.Put(OldSettingsStorageKeys.AlwaysDisplayEpisodeProgressColorKey, value);
         }
+
+        #endregion
 
         #region Methods
 
@@ -219,7 +232,6 @@ namespace AniDroid.Utils
             public const string GroupCompletedLists = "GROUP_COMPLETED_LISTS";
             public const string MediaViewType = "MEDIA_VIEW_TYPE";
             public const string HighlightPriorityMediaListItems = "HIGHLIGHT_PRIORITY_MEDIA_LIST_ITEMS";
-            public const string DisplayMediaListItemProgressColors = "DISPLAY_MEDIA_LIST_ITEM_PROGRESS_COLORS";
             public const string AnimeListSortTypeKey = "ANIME_LIST_SORT_TYPE";
             public const string AnimeListSortDirectionKey = "ANIME_LIST_SORT_DIRECTION";
             public const string MangaListSortTypeKey = "MANGA_LIST_SORT_TYPE";
@@ -227,9 +239,15 @@ namespace AniDroid.Utils
             public const string UseLongClickForEpisodeAddKey = "USE_LONG_CLICK_FOR_EPISODE_ADD";
             public const string EnableNotificationServiceKey = "ENABLE_NOTIFICATION_SERVICE";
             public const string DisplayUpcomingEpisodeTimeAsCountdownKey = "DISPLAY_UPCOMING_EPISODE_TIME_AS_COUNTDOWN";
-            public const string AlwaysDisplayEpisodeProgressColorKey = "ALWAYS_DISPLAY_EPISODE_PROGRESS_COLOR";
+            public const string MediaListProgressDisplayKey = "MEDIA_LIST_PROGRESS_DISPLAY";
 
             public const string ShowAllActivityKey = "SHOW_ALL_ACTIVITY";
+        }
+
+        private static class OldSettingsStorageKeys
+        {
+            public const string DisplayMediaListItemProgressColors = "DISPLAY_MEDIA_LIST_ITEM_PROGRESS_COLORS";
+            public const string AlwaysDisplayEpisodeProgressColorKey = "ALWAYS_DISPLAY_EPISODE_PROGRESS_COLOR";
         }
 
         #endregion

@@ -21,6 +21,7 @@ using AniDroid.Base;
 using AniDroid.Dialogs;
 using AniDroid.Jobs;
 using AniDroid.Main;
+using AniDroid.Settings.MediaListSettings;
 using AniDroid.Utils;
 using AniDroid.Utils.Comparers;
 using Ninject;
@@ -135,115 +136,11 @@ namespace AniDroid.Settings
 
         #region Auth Settings
 
-        public void CreateGroupCompletedSettingItem(bool groupCompleted)
+        public void CreateMediaListSettingsItem()
         {
             _settingsContainer.AddView(
-                CreateSwitchSettingRow(this, "Group Completed Items", "Choose whether you'd like to group all completed lists together under one list, regardless of how you have it set on AniList", groupCompleted, true, (sender, args) =>
-                    Presenter.SetGroupCompleted(args.IsChecked)));
-            _settingsContainer.AddView(CreateSettingDivider(this));
-        }
-
-        public void CreateMediaListViewTypeSettingItem(MediaListRecyclerAdapter.MediaListItemViewType viewType)
-        {
-            var options = new List<string> { "Normal", "Compact", "Title Only" };
-            _settingsContainer.AddView(
-                CreateSpinnerSettingRow(this, "Media List View", "Choose how you'd like to show media list items", options, (int)viewType, (sender, args) =>
-                {
-                    Presenter.SetMediaListViewType((MediaListRecyclerAdapter.MediaListItemViewType)args.Position);
-
-                    if (viewType != (MediaListRecyclerAdapter.MediaListItemViewType)args.Position)
-                    {
-                        _recreateActivity = true;
-                        Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
-                    }
-                }));
-            _settingsContainer.AddView(CreateSettingDivider(this));
-        }
-
-        public void CreateHighlightPriorityMediaListItemsItem(bool highlightPriorityItems)
-        {
-            _settingsContainer.AddView(
-                CreateSwitchSettingRow(this, "Highlight Priority Media List Items",
-                    "Choose whether you'd like to show a highlighted background on all media list items that you've marked as Priority",
-                    highlightPriorityItems, true,
-                    (sender, args) =>
-                    {
-                        Presenter.SetHighlightPriorityMediaListItems(args.IsChecked);
-                        _recreateActivity = true;
-                        Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
-                    }));
-            _settingsContainer.AddView(CreateSettingDivider(this));
-        }
-
-        public void CreateDisplayProgressColorsItem(bool displayProgressColors)
-        {
-            _settingsContainer.AddView(
-                CreateSwitchSettingRow(this, "Show Airing Progress Colors",
-                    "Turn this on to change the color of the titles of items on your anime lists as they correspond to the current number of aired episodes",
-                    displayProgressColors, true,
-                    (sender, args) =>
-                    {
-                        Presenter.SetDisplayProgressColorsItem(args.IsChecked);
-                        _recreateActivity = true;
-                        Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
-                    }));
-            _settingsContainer.AddView(CreateSettingDivider(this));
-        }
-
-        public void CreateAnimeListTabOrderItem(Func<List<KeyValuePair<string, bool>>> getAnimeLists)
-        {
-            _settingsContainer.AddView(
-                CreateChevronSettingRow(this, "Set Anime List Tab Order", null,
-                    (sender, args) =>
-                    {
-                        MediaListTabOrderDialog.Create(this, getAnimeLists.Invoke(), Presenter.SetAnimeListTabOrder);
-                        _recreateActivity = true;
-                        Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
-                    }));
-            _settingsContainer.AddView(CreateSettingDivider(this));
-        }
-
-        public void CreateMangaListTabOrderItem(Func<List<KeyValuePair<string, bool>>> getMangaLists)
-        {
-            _settingsContainer.AddView(
-                CreateChevronSettingRow(this, "Set Manga List Tab Order", null,
-                    (sender, args) =>
-                    {
-                        MediaListTabOrderDialog.Create(this, getMangaLists.Invoke(), Presenter.SetMangaListTabOrder);
-                        _recreateActivity = true;
-                        Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
-                    }));
-			_settingsContainer.AddView(CreateSettingDivider(this));
-		}
-					
-        public void CreateAnimeListSortItem(MediaListSortComparer.MediaListSortType sort, MediaListSortComparer.MediaListSortDirection direction)
-        {
-            _settingsContainer.AddView(
-                CreateSettingRow(this, "Set Anime List Sort Type", "Set how you want to sort items on your Anime lists", (sender, args) =>
-                    MediaListSortDialog.Create(this, sort, direction, Presenter.SetAnimeListSort)));
-            _settingsContainer.AddView(CreateSettingDivider(this));
-        }
-
-        public void CreateMangaListSortItem(MediaListSortComparer.MediaListSortType sort, MediaListSortComparer.MediaListSortDirection direction)
-        {
-            _settingsContainer.AddView(
-                CreateSettingRow(this, "Set Manga List Sort Type", "Set how you want to sort items on your Manga lists", (sender, args) =>
-                    MediaListSortDialog.Create(this, sort, direction, Presenter.SetMangaListSort)));
-            _settingsContainer.AddView(CreateSettingDivider(this));
-        }
-
-        public void CreateUseLongClickForEpisodeAddItem(bool useLongClickForEpisodeAdd)
-        {
-            _settingsContainer.AddView(
-                CreateSwitchSettingRow(this, "Use Long Press When Adding Episodes/Chapters",
-                    "When this setting is enabled, tapping the plus icon on your anime/manga lists to add an episode/chapter will require you to long press on the icon instead. Use this if you accidentally add episodes when trying to hit the search button.",
-                    useLongClickForEpisodeAdd, true,
-                    (sender, args) =>
-                    {
-                        Presenter.SetUseLongClickForEpisodeAdd(args.IsChecked);
-                        _recreateActivity = true;
-                        Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
-                    }));
+                CreateChevronSettingRow(this, "Media List Settings", null,
+                    (sender, args) => MediaListSettingsActivity.StartActivityForResult(this)));
             _settingsContainer.AddView(CreateSettingDivider(this));
         }
 
@@ -268,22 +165,7 @@ namespace AniDroid.Settings
                     }));
             _settingsContainer.AddView(CreateSettingDivider(this));
         }
-
-        public void CreateAlwaysDisplayEpisodeProgressColorItem(bool alwaysDisplayEpisodeProgressColor)
-        {
-            _settingsContainer.AddView(
-                CreateSwitchSettingRow(this, "Always Display Episode Progress Color",
-                    "When this setting is enabled, anime in your Current list will always display the title in a color corresponding to how up-to-date you are with the total number of aired episodes, regardless of whether it is currently airing or not.",
-                    alwaysDisplayEpisodeProgressColor, true,
-                    (sender, args) =>
-                    {
-                        Presenter.SetAlwaysDisplayEpisodeProgressColor(args.IsChecked);
-                        _recreateActivity = true;
-                        Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
-                    }));
-            _settingsContainer.AddView(CreateSettingDivider(this));
-        }
-
+        
         #endregion
 
         public static void StartActivity(Activity context)
@@ -303,42 +185,20 @@ namespace AniDroid.Settings
             await CreatePresenter(savedInstanceState);
         }
 
-        public override void OnBackPressed()
+        protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
         {
-            if (_recreateActivity)
-            {
-                var resultIntent = new Intent();
-                resultIntent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
-                SetResult(Result.Canceled, resultIntent);
-                Finish();
-            }
-            else
-            {
-                base.OnBackPressed();
-            }
-        }
+            base.OnActivityResult(requestCode, resultCode, data);
 
-        private void DisplayLogoutDialog()
-        {
-            var alert = new Android.Support.V7.App.AlertDialog.Builder(this,
-                    GetThemedResourceId(Resource.Attribute.Dialog_Theme))
-                .SetMessage(Resource.String.LoginLogout_LogoutDialogMessage)
-                .SetCancelable(true).Create();
-            alert.SetButton((int) DialogButtonType.Neutral, "Cancel", (sender, eventArgs) => alert.Dismiss());
-            alert.SetButton((int) DialogButtonType.Positive, "Logout", (sender, eventArgs) =>
-                {
-                    Settings.ClearUserAuthentication();
-                    var resultIntent = new Intent();
-                    resultIntent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
-                    SetResult(Result.Canceled, resultIntent);
-                    Finish();
-                });
-            alert.Show();
+            if (data?.GetBooleanExtra(MainActivity.RecreateActivityIntentKey, false) == true)
+            {
+                _recreateActivity = true;
+                Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
+            }
         }
 
         #region Settings Views
 
-        private static View CreateSettingRow(BaseAniDroidActivity context, string name, string description, EventHandler tapEvent)
+        public static View CreateSettingRow(BaseAniDroidActivity context, string name, string description, EventHandler tapEvent)
         {
             var view = context.LayoutInflater.Inflate(Resource.Layout.View_SettingItem, null);
             var nameView = view.FindViewById<TextView>(Resource.Id.SettingItem_Name);
@@ -476,7 +336,7 @@ namespace AniDroid.Settings
             return view;
         }
 
-        private static View CreateChevronSettingRow(BaseAniDroidActivity context, string name, string description, EventHandler tapEvent)
+        public static View CreateChevronSettingRow(BaseAniDroidActivity context, string name, string description, EventHandler tapEvent)
         {
             var view = context.LayoutInflater.Inflate(Resource.Layout.View_SettingItem_Chevron, null);
             var nameView = view.FindViewById<TextView>(Resource.Id.SettingItem_Name);
@@ -554,6 +414,39 @@ namespace AniDroid.Settings
             }
 
             return false;
+        }
+
+        public override void OnBackPressed()
+        {
+            if (_recreateActivity)
+            {
+                var resultIntent = new Intent();
+                resultIntent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
+                SetResult(Result.Canceled, resultIntent);
+                Finish();
+            }
+            else
+            {
+                base.OnBackPressed();
+            }
+        }
+
+        private void DisplayLogoutDialog()
+        {
+            var alert = new Android.Support.V7.App.AlertDialog.Builder(this,
+                    GetThemedResourceId(Resource.Attribute.Dialog_Theme))
+                .SetMessage(Resource.String.LoginLogout_LogoutDialogMessage)
+                .SetCancelable(true).Create();
+            alert.SetButton((int)DialogButtonType.Neutral, "Cancel", (sender, eventArgs) => alert.Dismiss());
+            alert.SetButton((int)DialogButtonType.Positive, "Logout", (sender, eventArgs) =>
+            {
+                Settings.ClearUserAuthentication();
+                var resultIntent = new Intent();
+                resultIntent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
+                SetResult(Result.Canceled, resultIntent);
+                Finish();
+            });
+            alert.Show();
         }
 
         #endregion

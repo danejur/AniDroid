@@ -37,27 +37,9 @@ namespace AniDroid.Settings
 
             if (AniDroidSettings.IsUserAuthenticated)
             {
-                if (AniDroidSettings.AnimeListOrder?.Any() == true)
-                {
-                    View.CreateAnimeListTabOrderItem(() => AniDroidSettings.AnimeListOrder);
-                }
-
-                if (AniDroidSettings.MangaListOrder?.Any() == true)
-                {
-                    View.CreateMangaListTabOrderItem(() => AniDroidSettings.MangaListOrder);
-                }
-
-                View.CreateGroupCompletedSettingItem(AniDroidSettings.GroupCompletedLists);
-                View.CreateMediaListViewTypeSettingItem(AniDroidSettings.MediaViewType);
-                View.CreateAnimeListSortItem(AniDroidSettings.AnimeListSortType,
-                    AniDroidSettings.AnimeListSortDirection);
-                View.CreateMangaListSortItem(AniDroidSettings.MangaListSortType,
-                    AniDroidSettings.MangaListSortDirection);
-                View.CreateHighlightPriorityMediaListItemsItem(AniDroidSettings.HighlightPriorityMediaListItems);
-                View.CreateDisplayProgressColorsItem(AniDroidSettings.DisplayMediaListItemProgressColors);
-                View.CreateUseLongClickForEpisodeAddItem(AniDroidSettings.UseLongClickForEpisodeAdd);
+                View.CreateMediaListSettingsItem();
+                
                 View.CreateEnableNotificationServiceItem(AniDroidSettings.EnableNotificationService);
-                View.CreateAlwaysDisplayEpisodeProgressColorItem(AniDroidSettings.AlwaysDisplayEpisodeProgressColor);
             }
 
             View.CreatePrivacyPolicyLinkItem();
@@ -93,63 +75,9 @@ namespace AniDroid.Settings
 
         // Auth Settings
 
-        public void SetGroupCompleted(bool groupCompleted)
-        {
-            AniDroidSettings.GroupCompletedLists = groupCompleted;
-        }
-
-        public void SetMediaListViewType(MediaListRecyclerAdapter.MediaListItemViewType viewType)
-        {
-            AniDroidSettings.MediaViewType = viewType;
-        }
-
-        public void SetHighlightPriorityMediaListItems(bool highlightListItems)
-        {
-            AniDroidSettings.HighlightPriorityMediaListItems = highlightListItems;
-        }
-
-        public void SetDisplayProgressColorsItem(bool displayProgressColors)
-        {
-            AniDroidSettings.DisplayMediaListItemProgressColors = displayProgressColors;
-        }
-
-        public void SetAnimeListTabOrder(List<KeyValuePair<string, bool>> animeLists)
-        {
-            AniDroidSettings.AnimeListOrder = animeLists;
-        }
-
-        public void SetMangaListTabOrder(List<KeyValuePair<string, bool>> mangaLists)
-        {
-            AniDroidSettings.MangaListOrder = mangaLists;
-		}
-		
-        public void SetAnimeListSort(MediaListSortComparer.MediaListSortType sort,
-            MediaListSortComparer.MediaListSortDirection direction)
-        {
-            AniDroidSettings.AnimeListSortType = sort;
-            AniDroidSettings.AnimeListSortDirection = direction;
-        }
-
-        public void SetMangaListSort(MediaListSortComparer.MediaListSortType sort,
-            MediaListSortComparer.MediaListSortDirection direction)
-        {
-            AniDroidSettings.MangaListSortType = sort;
-            AniDroidSettings.MangaListSortDirection = direction;
-        }
-
-        public void SetUseLongClickForEpisodeAdd(bool useLongClickForEpisodeAdd)
-        {
-            AniDroidSettings.UseLongClickForEpisodeAdd = useLongClickForEpisodeAdd;
-        }
-
         public void SetEnableNotificationService(bool enableNotificationService)
         {
             AniDroidSettings.EnableNotificationService = enableNotificationService;
-        }
-
-        public void SetAlwaysDisplayEpisodeProgressColor(bool alwaysDisplayEpisodeProgressColor)
-        {
-            AniDroidSettings.AlwaysDisplayEpisodeProgressColor = alwaysDisplayEpisodeProgressColor;
         }
     }
 }

@@ -26,16 +26,7 @@ namespace AniDroid.Settings
         void CreatePrivacyPolicyLinkItem();
 
         // Auth settings
-        void CreateGroupCompletedSettingItem(bool groupCompleted);
-        void CreateMediaListViewTypeSettingItem(MediaListRecyclerAdapter.MediaListItemViewType viewType);
-        void CreateHighlightPriorityMediaListItemsItem(bool highlightPriorityItems);
-        void CreateDisplayProgressColorsItem(bool displayProgressColors);
-        void CreateAnimeListTabOrderItem(Func<List<KeyValuePair<string, bool>>> getAnimeLists);
-        void CreateMangaListTabOrderItem(Func<List<KeyValuePair<string, bool>>> getMangaLists);
-        void CreateAnimeListSortItem(MediaListSortComparer.MediaListSortType sort, MediaListSortComparer.MediaListSortDirection direction);
-        void CreateMangaListSortItem(MediaListSortComparer.MediaListSortType sort, MediaListSortComparer.MediaListSortDirection direction);
-        void CreateUseLongClickForEpisodeAddItem(bool useLongClickForEpisodeAdd);
+        void CreateMediaListSettingsItem();
         void CreateEnableNotificationServiceItem(bool enableNotificationService);
-        void CreateAlwaysDisplayEpisodeProgressColorItem(bool alwaysDisplayEpisodeProgressColor);
     }
 }
