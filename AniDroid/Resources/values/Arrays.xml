@@ -131,8 +131,11 @@
     <item>12-08-2018|Added setting option for displaying Next Episode information as a countdown instead of a date</item>
     <item>12-15-2018|Refactored lists significantly. They should now function a little better across the board, and you should start seeing better information when looking at lists of media, characters, etc</item>
     <item>12-16-2018|Various bug fixes</item>
-    <item>12-29-2018|Added setting for always displaying your Current anime list with title colors depending on how much you\'ve watched.</item>
-    <item>12-29-2018|Fixed bug where "Display Upcoming Episode Times As Countdowns" setting was being ignored.</item>
-    <item>12-29-2018|Various other small bug fixes.</item>
+    <item>12-28-2018|Added setting for always displaying your Current anime list with title colors depending on how much you\'ve watched</item>
+    <item>12-28-2018|Fixed bug where Display Upcoming Episode Times As Countdowns setting was being ignored</item>
+    <item>12-28-2018|Various other small bug fixes</item>
+    <item>12-29-2018|Added new setting for changing when to show anime progress title colors</item>
+    <item>12-29-2018|Moved Media List settings to their own screen (inside Settings)</item>
+    <item>12-29-2018|A couple small bug fixes, including some modifications to how images are loaded. This will hopefully result in fewer crashes!</item>
   </array> 
 </resources>
