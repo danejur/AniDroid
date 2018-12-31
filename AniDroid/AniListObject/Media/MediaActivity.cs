@@ -21,11 +21,13 @@ using AniDroid.Adapters.CharacterAdapters;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Adapters.StaffAdapters;
 using AniDroid.Adapters.StudioAdapters;
+using AniDroid.Adapters.UserAdapters;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList;
 using AniDroid.AniList.Dto;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniListObject.Staff;
+using AniDroid.AniListObject.User;
 using AniDroid.Base;
 using AniDroid.Browse;
 using AniDroid.Dialogs;
@@ -153,6 +155,12 @@ namespace AniDroid.AniListObject.Media
             if (media.Rankings?.Any() == true || media.Stats?.AreStatsValid() == true)
             {
                 adapter.AddView(CreateMediaUserDataView(media), "User Data");
+            }
+
+            // TODO: see if there's a better way of determining whether to display this or not
+            if (Settings.IsUserAuthenticated)
+            {
+                adapter.AddView(CreateMediaFollowingUsersMediaListStatusView(media.Id), "Following");
             }
 
             ViewPager.OffscreenPageLimit = adapter.Count - 1;
@@ -508,6 +516,21 @@ namespace AniDroid.AniListObject.Media
             {
                 containerView.AddView(CreateUserListStatusView(media.Stats.StatusDistribution));
             }
+
+            return retView;
+        }
+
+        private View CreateMediaFollowingUsersMediaListStatusView(int mediaId)
+        {
+            var mediaListEnumerable = Presenter.GetMediaFollowingUsersMediaListsEnumerable(mediaId, PageLength);
+            var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
+            var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
+            var dialogRecyclerAdapter = new MediaListRecyclerAdapter(this, CardType, mediaListEnumerable,
+                MediaListViewModel.CreateUserMediaListViewModel)
+            {
+                ClickAction = viewModel => UserActivity.StartActivity(this, viewModel.Model?.User?.Id ?? 0)
+            };
+            recycler.SetAdapter(dialogRecyclerAdapter);
 
             return retView;
         }

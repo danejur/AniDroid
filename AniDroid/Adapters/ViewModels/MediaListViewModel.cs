@@ -65,6 +65,19 @@ namespace AniDroid.Adapters.ViewModels
             };
         }
 
+        public static MediaListViewModel CreateUserMediaListViewModel(Media.MediaList model)
+        {
+            return new MediaListViewModel(model, MediaListDetailType.None, MediaListDetailType.None, false,
+                    MediaListRecyclerAdapter.MediaListProgressDisplayType.Never, null)
+            {
+                TitleText = model.User?.Name,
+                DetailPrimaryText = model.Status?.DisplayValue,
+                DetailSecondaryText = model.GetScoreString(model.User?.MediaListOptions?.ScoreFormat),
+                ImageUri = model.User?.Avatar?.Large ?? model.User?.Avatar?.Medium
+            };
+
+        }
+
         public enum MediaListDetailType
         {
             None,

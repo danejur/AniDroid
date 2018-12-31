@@ -62,6 +62,12 @@ namespace AniDroid.AniListObject.Media
             return AniListService.GetMediaStaff(mediaId, perPage);
         }
 
+        public IAsyncEnumerable<OneOf<IPagedData<AniList.Models.Media.MediaList>, IAniListError>>
+            GetMediaFollowingUsersMediaListsEnumerable(int mediaId, int perPage)
+        {
+            return AniListService.GetMediaFollowingUsersMediaLists(mediaId, perPage);
+        }
+
         public async Task ToggleFavorite()
         {
             var mediaId = View.GetMediaId();
