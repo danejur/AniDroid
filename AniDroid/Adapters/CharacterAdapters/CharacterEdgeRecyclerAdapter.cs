@@ -33,12 +33,5 @@ namespace AniDroid.Adapters.CharacterAdapters
                 CharacterActivity.StartActivity(Context, viewModel.Model.Node.Id,
                     BaseAniDroidActivity.ObjectBrowseRequestCode);
         }
-
-        public override CardItem SetupCardItemViewHolder(CardItem item)
-        {
-            item.ButtonIcon.SetImageResource(ButtonIconResourceId);
-
-            return item;
-        }
     }
 }

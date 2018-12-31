@@ -133,7 +133,8 @@ namespace AniDroid.AniListObject.Staff
             var staffCharactersEnumerable = Presenter.GetStaffCharactersEnumerable(staffId, PageLength);
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
-            var dialogRecyclerAdapter = new CharacterEdgeRecyclerAdapter(this, staffCharactersEnumerable, CardType, CharacterEdgeViewModel.CreateCharacterEdgeViewModel);
+            var dialogRecyclerAdapter = new CharacterEdgeRecyclerAdapter(this, staffCharactersEnumerable, CardType,
+                model => CharacterEdgeViewModel.CreateCharacterEdgeViewModel(model));
             recycler.SetAdapter(dialogRecyclerAdapter);
 
             return retView;
