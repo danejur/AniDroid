@@ -19,6 +19,7 @@ using Android.Widget;
 using AniDroid.Adapters;
 using AniDroid.Adapters.CharacterAdapters;
 using AniDroid.Adapters.MediaAdapters;
+using AniDroid.Adapters.ReviewAdapters;
 using AniDroid.Adapters.StaffAdapters;
 using AniDroid.Adapters.StudioAdapters;
 using AniDroid.Adapters.UserAdapters;
@@ -161,6 +162,11 @@ namespace AniDroid.AniListObject.Media
             if (Settings.IsUserAuthenticated)
             {
                 adapter.AddView(CreateMediaFollowingUsersMediaListStatusView(media.Id), "Following");
+            }
+
+            if (media.Reviews?.PageInfo?.Total > 0)
+            {
+                adapter.AddView(CreateMediaReviewsView(media.Id), "Reviews");
             }
 
             ViewPager.OffscreenPageLimit = adapter.Count - 1;
@@ -530,6 +536,18 @@ namespace AniDroid.AniListObject.Media
             {
                 ClickAction = viewModel => UserActivity.StartActivity(this, viewModel.Model?.User?.Id ?? 0)
             };
+            recycler.SetAdapter(dialogRecyclerAdapter);
+
+            return retView;
+        }
+
+        private View CreateMediaReviewsView(int mediaId)
+        {
+            var reviewsEnumarable = Presenter.GetMediaReviewsEnumerable(mediaId, PageLength);
+            var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
+            var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
+            var dialogRecyclerAdapter = new ReviewRecyclerAdapter(this, reviewsEnumarable, CardType,
+                ReviewViewModel.CreateMediaReviewViewModel);
             recycler.SetAdapter(dialogRecyclerAdapter);
 
             return retView;

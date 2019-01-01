@@ -75,6 +75,12 @@ namespace AniDroid.AniListObject.User
             return AniListService.GetUserFollowing(userId, AniList.Models.User.UserSort.Username, count);
         }
 
+        public IAsyncEnumerable<OneOf<IPagedData<Review>, IAniListError>> GetUserReviewsEnumerable(int userId,
+            int perPage)
+        {
+            return AniListService.GetUserReviews(userId, perPage);
+        }
+
         public async Task ToggleFollowUser(int userId)
         {
             var toggleResp = await AniListService.ToggleFollowUser(userId, default(CancellationToken));

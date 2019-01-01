@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Android.Support.Design.Widget;
 using AniDroid.AniList.Dto;
 using AniDroid.AniList.Interfaces;
+using AniDroid.AniList.Models;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
 using AniDroid.Utils.Logging;
@@ -66,6 +67,12 @@ namespace AniDroid.AniListObject.Media
             GetMediaFollowingUsersMediaListsEnumerable(int mediaId, int perPage)
         {
             return AniListService.GetMediaFollowingUsersMediaLists(mediaId, perPage);
+        }
+
+        public IAsyncEnumerable<OneOf<IPagedData<Review>, IAniListError>> GetMediaReviewsEnumerable(int mediaId,
+            int perPage)
+        {
+            return AniListService.GetMediaReviews(mediaId, perPage);
         }
 
         public async Task ToggleFavorite()
