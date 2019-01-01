@@ -18,6 +18,7 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters;
 using AniDroid.Adapters.CharacterAdapters;
+using AniDroid.Adapters.ForumThreadAdapters;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Adapters.ReviewAdapters;
 using AniDroid.Adapters.StaffAdapters;
@@ -168,6 +169,8 @@ namespace AniDroid.AniListObject.Media
             {
                 adapter.AddView(CreateMediaReviewsView(media.Id), "Reviews");
             }
+
+            adapter.AddView(CreateMediaForumThreadsView(media.Id), "Forum Threads");
 
             ViewPager.OffscreenPageLimit = adapter.Count - 1;
             ViewPager.Adapter = adapter;
@@ -531,12 +534,12 @@ namespace AniDroid.AniListObject.Media
             var mediaListEnumerable = Presenter.GetMediaFollowingUsersMediaListsEnumerable(mediaId, PageLength);
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
-            var dialogRecyclerAdapter = new MediaListRecyclerAdapter(this, CardType, mediaListEnumerable,
+            var recyclerAdapter = new MediaListRecyclerAdapter(this, CardType, mediaListEnumerable,
                 MediaListViewModel.CreateUserMediaListViewModel)
             {
                 ClickAction = viewModel => UserActivity.StartActivity(this, viewModel.Model?.User?.Id ?? 0)
             };
-            recycler.SetAdapter(dialogRecyclerAdapter);
+            recycler.SetAdapter(recyclerAdapter);
 
             return retView;
         }
@@ -546,9 +549,21 @@ namespace AniDroid.AniListObject.Media
             var reviewsEnumarable = Presenter.GetMediaReviewsEnumerable(mediaId, PageLength);
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
-            var dialogRecyclerAdapter = new ReviewRecyclerAdapter(this, reviewsEnumarable, CardType,
+            var recyclerAdapter = new ReviewRecyclerAdapter(this, reviewsEnumarable, CardType,
                 ReviewViewModel.CreateMediaReviewViewModel);
-            recycler.SetAdapter(dialogRecyclerAdapter);
+            recycler.SetAdapter(recyclerAdapter);
+
+            return retView;
+        }
+
+        private View CreateMediaForumThreadsView(int mediaId)
+        {
+            var forumThreadsEnumerable = Presenter.GetMediaForumThreadsEnumerable(mediaId, PageLength);
+            var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
+            var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
+            var recyclerAdapter = new ForumThreadAdapter(this, forumThreadsEnumerable,
+                ForumThreadViewModel.CreateForumThreadViewModel);
+            recycler.SetAdapter(recyclerAdapter);
 
             return retView;
         }

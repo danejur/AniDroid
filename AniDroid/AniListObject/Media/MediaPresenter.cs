@@ -75,6 +75,12 @@ namespace AniDroid.AniListObject.Media
             return AniListService.GetMediaReviews(mediaId, perPage);
         }
 
+        public IAsyncEnumerable<OneOf<IPagedData<ForumThread>, IAniListError>> GetMediaForumThreadsEnumerable(int mediaId,
+            int perPage)
+        {
+            return AniListService.GetMediaForumThreads(mediaId, perPage);
+        }
+
         public async Task ToggleFavorite()
         {
             var mediaId = View.GetMediaId();
