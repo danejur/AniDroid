@@ -227,6 +227,7 @@
     <Compile Include="Adapters\MediaAdapters\MediaListTabOrderRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaStreamingEpisodesRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaTagsRecyclerAdapter.cs" />
+    <Compile Include="Adapters\ReviewAdapters\ReviewRecyclerAdapter.cs" />
     <Compile Include="Adapters\StaffAdapters\StaffEdgeRecyclerAdapter.cs" />
     <Compile Include="Adapters\StaffAdapters\StaffRecyclerAdapter.cs" />
     <Compile Include="Adapters\StudioAdapters\StudioEdgeRecyclerAdapter.cs" />
@@ -242,6 +243,7 @@
     <Compile Include="Adapters\ViewModels\MediaEdgeViewModel.cs" />
     <Compile Include="Adapters\ViewModels\MediaListViewModel.cs" />
     <Compile Include="Adapters\ViewModels\MediaViewModel.cs" />
+    <Compile Include="Adapters\ViewModels\ReviewViewModel.cs" />
     <Compile Include="Adapters\ViewModels\StaffEdgeViewModel.cs" />
     <Compile Include="Adapters\ViewModels\StaffViewModel.cs" />
     <Compile Include="Adapters\ViewModels\StudioEdgeViewModel.cs" />
@@ -874,6 +876,7 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\svg_image.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

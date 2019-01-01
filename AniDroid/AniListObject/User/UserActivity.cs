@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Android.App;
+﻿using Android.App;
 using Android.Content;
-using Android.Graphics;
 using Android.OS;
-using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Support.V7.Widget;
 using Android.Views;
@@ -22,13 +14,16 @@ using AniDroid.Base;
 using AniDroid.Dialogs;
 using AniDroid.MediaList;
 using AniDroid.Utils;
-using AniDroid.Utils.Formatting;
-using AniDroid.Utils.Interfaces;
 using AniDroid.Widgets;
 using MikePhil.Charting.Charts;
 using MikePhil.Charting.Components;
 using MikePhil.Charting.Data;
 using Ninject;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using AniDroid.Adapters.ReviewAdapters;
 
 namespace AniDroid.AniListObject.User
 {
@@ -135,6 +130,8 @@ namespace AniDroid.AniListObject.User
 
             adapter.AddView(CreateUserFollowersView(user.Id), "Followers");
 
+            adapter.AddView(CreateUserReviewsView(user.Id), "Reviews");
+
             ViewPager.OffscreenPageLimit = adapter.Count - 1;
             ViewPager.Adapter = adapter;
 
@@ -235,6 +232,17 @@ namespace AniDroid.AniListObject.User
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
             var recyclerAdapter = new UserRecyclerAdapter(this, userFollowersEnumerable, CardType, UserViewModel.CreateUserViewModel);
+            recycler.SetAdapter(recyclerAdapter);
+
+            return retView;
+        }
+
+        private View CreateUserReviewsView(int userId)
+        {
+            var userReviewsEnumerable = Presenter.GetUserReviewsEnumerable(userId, PageLength);
+            var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
+            var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
+            var recyclerAdapter = new ReviewRecyclerAdapter(this, userReviewsEnumerable, CardType, ReviewViewModel.CreateUserReviewViewModel);
             recycler.SetAdapter(recyclerAdapter);
 
             return retView;

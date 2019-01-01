@@ -18,14 +18,18 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters;
 using AniDroid.Adapters.CharacterAdapters;
+using AniDroid.Adapters.ForumThreadAdapters;
 using AniDroid.Adapters.MediaAdapters;
+using AniDroid.Adapters.ReviewAdapters;
 using AniDroid.Adapters.StaffAdapters;
 using AniDroid.Adapters.StudioAdapters;
+using AniDroid.Adapters.UserAdapters;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList;
 using AniDroid.AniList.Dto;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniListObject.Staff;
+using AniDroid.AniListObject.User;
 using AniDroid.Base;
 using AniDroid.Browse;
 using AniDroid.Dialogs;
@@ -154,6 +158,19 @@ namespace AniDroid.AniListObject.Media
             {
                 adapter.AddView(CreateMediaUserDataView(media), "User Data");
             }
+
+            // TODO: see if there's a better way of determining whether to display this or not
+            if (Settings.IsUserAuthenticated)
+            {
+                adapter.AddView(CreateMediaFollowingUsersMediaListStatusView(media.Id), "Following");
+            }
+
+            if (media.Reviews?.PageInfo?.Total > 0)
+            {
+                adapter.AddView(CreateMediaReviewsView(media.Id), "Reviews");
+            }
+
+            adapter.AddView(CreateMediaForumThreadsView(media.Id), "Forum Threads");
 
             ViewPager.OffscreenPageLimit = adapter.Count - 1;
             ViewPager.Adapter = adapter;
@@ -427,10 +444,15 @@ namespace AniDroid.AniListObject.Media
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
             var dialogRecyclerAdapter = new CharacterEdgeRecyclerAdapter(this, mediaCharactersEnumerable, CardType,
-                CharacterEdgeViewModel.CreateCharacterEdgeViewModel)
+                model => CharacterEdgeViewModel.CreateCharacterEdgeViewModel(model,
+                    Resource.Drawable.ic_record_voice_over_white_24px))
             {
                 ButtonIconResourceId = Resource.Drawable.ic_record_voice_over_white_24px,
-                ButtonClickAction = (viewModel, position, callback) => StaffListDialog.Create(this, viewModel.Model.VoiceActors)
+                ButtonClickAction = (viewModel, position, callback) =>
+                {
+                    StaffListDialog.Create(this, viewModel.Model.VoiceActors);
+                    callback?.Invoke();
+                }
             };
             recycler.SetAdapter(dialogRecyclerAdapter);
 
@@ -503,6 +525,45 @@ namespace AniDroid.AniListObject.Media
             {
                 containerView.AddView(CreateUserListStatusView(media.Stats.StatusDistribution));
             }
+
+            return retView;
+        }
+
+        private View CreateMediaFollowingUsersMediaListStatusView(int mediaId)
+        {
+            var mediaListEnumerable = Presenter.GetMediaFollowingUsersMediaListsEnumerable(mediaId, PageLength);
+            var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
+            var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
+            var recyclerAdapter = new MediaListRecyclerAdapter(this, CardType, mediaListEnumerable,
+                MediaListViewModel.CreateUserMediaListViewModel)
+            {
+                ClickAction = viewModel => UserActivity.StartActivity(this, viewModel.Model?.User?.Id ?? 0)
+            };
+            recycler.SetAdapter(recyclerAdapter);
+
+            return retView;
+        }
+
+        private View CreateMediaReviewsView(int mediaId)
+        {
+            var reviewsEnumarable = Presenter.GetMediaReviewsEnumerable(mediaId, PageLength);
+            var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
+            var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
+            var recyclerAdapter = new ReviewRecyclerAdapter(this, reviewsEnumarable, CardType,
+                ReviewViewModel.CreateMediaReviewViewModel);
+            recycler.SetAdapter(recyclerAdapter);
+
+            return retView;
+        }
+
+        private View CreateMediaForumThreadsView(int mediaId)
+        {
+            var forumThreadsEnumerable = Presenter.GetMediaForumThreadsEnumerable(mediaId, PageLength);
+            var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
+            var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
+            var recyclerAdapter = new ForumThreadAdapter(this, forumThreadsEnumerable,
+                ForumThreadViewModel.CreateForumThreadViewModel);
+            recycler.SetAdapter(recyclerAdapter);
 
             return retView;
         }

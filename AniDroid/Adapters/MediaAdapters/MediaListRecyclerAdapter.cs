@@ -16,10 +16,12 @@ using Android.Views.Animations;
 using Android.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.ViewModels;
+using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 using AniDroid.Dialogs;
+using OneOf;
 
 namespace AniDroid.Adapters.MediaAdapters
 {
@@ -108,6 +110,14 @@ namespace AniDroid.Adapters.MediaAdapters
                 CardType = RecyclerCardType.Custom;
                 CustomCardUseItemDecoration = true;
             }
+        }
+
+        public MediaListRecyclerAdapter(BaseAniDroidActivity context, RecyclerCardType cardType,
+            IAsyncEnumerable<OneOf<IPagedData<Media.MediaList>, IAniListError>> enumerable,
+            Func<Media.MediaList, MediaListViewModel> createViewModelFunc) : base(context, enumerable, cardType, createViewModelFunc)
+        {
+
+
         }
 
         public override void BindCardViewHolder(CardItem holder, int position)
