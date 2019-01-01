@@ -137,5 +137,8 @@
     <item>12-29-2018|Added new setting for changing when to show anime progress title colors</item>
     <item>12-29-2018|Moved Media List settings to their own screen (inside Settings)</item>
     <item>12-29-2018|A couple small bug fixes, including some modifications to how images are loaded. This will hopefully result in fewer crashes!</item>
+    <item>12-31-2018|Last update of the year! Added forum thread, reviews, and user media list status lists to Media page</item>
+    <item>12-31-2018|Added reviews to User page</item>
+    <item>12-31-2018|Bug fixes</item>
   </array> 
 </resources>
