@@ -134,7 +134,7 @@ namespace AniDroid.AniListObject.Staff
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
             var dialogRecyclerAdapter = new CharacterEdgeRecyclerAdapter(this, staffCharactersEnumerable, CardType,
-                model => CharacterEdgeViewModel.CreateCharacterEdgeViewModel(model));
+                CharacterEdgeViewModel.CreateStaffCharacterEdgeViewModel);
             recycler.SetAdapter(dialogRecyclerAdapter);
 
             return retView;

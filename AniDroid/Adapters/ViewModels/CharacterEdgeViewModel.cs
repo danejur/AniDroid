@@ -33,12 +33,18 @@ namespace AniDroid.Adapters.ViewModels
             Role
         }
 
-        public static CharacterEdgeViewModel CreateCharacterEdgeViewModel(Character.Edge model, int? buttonIcon = null)
+        public static CharacterEdgeViewModel CreateMediaCharacterEdgeViewModel(Character.Edge model, int? buttonIcon = null)
         {
             return new CharacterEdgeViewModel(model, CharacterEdgeDetailType.NativeName, CharacterEdgeDetailType.Role,
-                model.Media?.Any() == true, buttonIcon);
+                model.VoiceActors?.Any() == true, buttonIcon);
         }
 
+        public static CharacterEdgeViewModel CreateStaffCharacterEdgeViewModel(Character.Edge model)
+        {
+            return new CharacterEdgeViewModel(model, CharacterEdgeDetailType.NativeName, CharacterEdgeDetailType.Role,
+                false, null);
+        }
+        
         private string GetDetail(CharacterEdgeDetailType detailType)
         {
             string retString = null;

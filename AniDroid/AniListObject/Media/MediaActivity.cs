@@ -444,7 +444,7 @@ namespace AniDroid.AniListObject.Media
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
             var dialogRecyclerAdapter = new CharacterEdgeRecyclerAdapter(this, mediaCharactersEnumerable, CardType,
-                model => CharacterEdgeViewModel.CreateCharacterEdgeViewModel(model,
+                model => CharacterEdgeViewModel.CreateMediaCharacterEdgeViewModel(model,
                     Resource.Drawable.ic_record_voice_over_white_24px))
             {
                 ButtonIconResourceId = Resource.Drawable.ic_record_voice_over_white_24px,
