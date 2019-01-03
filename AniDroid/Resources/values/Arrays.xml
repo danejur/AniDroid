@@ -140,5 +140,8 @@
     <item>12-31-2018|Last update of the year! Added forum thread, reviews, and user media list status lists to Media page</item>
     <item>12-31-2018|Added reviews to User page</item>
     <item>12-31-2018|Bug fixes</item>
+    <item>01-02-2019|First update of the new year! Added advanced scoring. If you have it enabled on AniList, you should now see an option to edit those scores when editing a list item</item>
+    <item>01-02-2019|All notifications now have an action when tapped on. Some just go to AniList (for now), but all of them will be handled in the app in the future</item>
+    <item>01-02-2019|Bug fixes</item>
   </array> 
 </resources>
