@@ -72,6 +72,7 @@
       <HintPath>..\packages\HtmlAgilityPack.1.8.11\lib\netstandard2.0\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="Java.Interop" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Android.Export" />
     <Reference Include="MPAndroidChart, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MPAndroidChart.3.0.3\lib\MonoAndroid\MPAndroidChart.dll</HintPath>
@@ -295,6 +296,7 @@
     <Compile Include="Dialogs\AniListActivityRepliesDialog.cs" />
     <Compile Include="Dialogs\AniListActivityCreateDialog.cs" />
     <Compile Include="Dialogs\AniListNotificationsDialog.cs" />
+    <Compile Include="Dialogs\CustomScoringDialog.cs" />
     <Compile Include="Dialogs\EditMediaListItemDialog.cs" />
     <Compile Include="Dialogs\MediaListFilterDialog.cs" />
     <Compile Include="Dialogs\MediaListTabOrderDialog.cs" />
@@ -890,7 +892,23 @@
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\svg_image.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Dialog_CustomScoring.axml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\View_PickerWithLabel.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Dialog_CustomScoring_Copy.axml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

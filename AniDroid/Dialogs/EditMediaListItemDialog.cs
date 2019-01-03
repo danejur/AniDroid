@@ -25,6 +25,7 @@ using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 using AniDroid.Settings;
 using AniDroid.Widgets;
+using Newtonsoft.Json.Linq;
 using AlertDialog = Android.Support.V7.App.AlertDialog;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 
@@ -52,12 +53,14 @@ namespace AniDroid.Dialogs
             private readonly User.UserMediaListOptions _mediaListOptions;
             private readonly List<string> _mediaStatusList;
             private readonly HashSet<string> _customLists;
+            private readonly bool _completeMedia;
+            private bool _customScoringEnabled;
             private new BaseAniDroidActivity Activity => base.Activity as BaseAniDroidActivity;
             private bool _isPrivate;
             private bool _hideFromStatusLists;
             private int _priority;
             private bool _pendingDismiss;
-            private bool _completeMedia;
+            private List<float?> _advancedScores;
 
             private CoordinatorLayout _coordLayout;
             private Picker _scorePicker;
@@ -82,6 +85,8 @@ namespace AniDroid.Dialogs
                 _completeMedia = completeMedia;
                 _customLists = (mediaList?.CustomLists?.Where(x => x.Enabled).Select(x => x.Name).ToList() ??
                                new List<string>()).ToHashSet();
+                _customScoringEnabled = mediaListOptions.AnimeList?.AdvancedScoringEnabled ??
+                                 mediaListOptions.MangaList?.AdvancedScoringEnabled == true;
 
                 _mediaStatusList = AniListEnum.GetEnumValues<Media.MediaListStatus>().OrderBy(x => x.Index)
                     .Select(x => x.DisplayValue).ToList();
@@ -103,7 +108,7 @@ namespace AniDroid.Dialogs
                 _coordLayout = view.FindViewById<CoordinatorLayout>(Resource.Id.EditMediaListItem_CoordLayout);
 
                 SetupToolbar(view.FindViewById<Toolbar>(Resource.Id.EditMediaListItem_Toolbar));
-                SetupScore(_scorePicker = view.FindViewById<Picker>(Resource.Id.EditMediaListItem_ScorePicker));
+                SetupScore(_scorePicker = view.FindViewById<Picker>(Resource.Id.EditMediaListItem_ScorePicker), view.FindViewById<Button>(Resource.Id.EditMediaListItem_CustomScoringButton));
                 SetupStatus(_statusSpinner = view.FindViewById<AppCompatSpinner>(Resource.Id.EditMediaListItem_StatusSpinner));
                 SetupProgress(_progressPicker = view.FindViewById<Picker>(Resource.Id.EditMediaListItem_ProgressPicker),
                     view.FindViewById<TextView>(Resource.Id.EditMediaListItem_ProgressLabel));
@@ -174,12 +179,13 @@ namespace AniDroid.Dialogs
                 isPriorityItem.SetTitle(_priority > 0 ? "Unprioritize" : "Prioritize");
             }
 
-            private void SetupScore(Picker scorePicker)
+            private void SetupScore(Picker scorePicker, Button customScoresButton)
             {
                 if (_mediaListOptions.ScoreFormat == User.ScoreFormat.FiveStars)
                 {
                     var list = new List<string> { "★", "★★", "★★★", "★★★★", "★★\n★★★" };
                     scorePicker.SetStringItems(list, (int)(_mediaList?.Score ?? 3) - 1);
+                    _customScoringEnabled = false;
                 }
                 else if (_mediaListOptions.ScoreFormat == User.ScoreFormat.Hundred)
                 {
@@ -188,6 +194,7 @@ namespace AniDroid.Dialogs
                 else if (_mediaListOptions.ScoreFormat == User.ScoreFormat.Ten)
                 {
                     scorePicker.SetMaxValue(10, 0, false, _mediaList?.Score);
+                    _customScoringEnabled = false;
                 }
                 else if (_mediaListOptions.ScoreFormat == User.ScoreFormat.TenDecimal)
                 {
@@ -196,6 +203,36 @@ namespace AniDroid.Dialogs
                 else if (_mediaListOptions.ScoreFormat == User.ScoreFormat.ThreeSmileys)
                 {
                     scorePicker.SetDrawableItems(new List<int> { Resource.Drawable.svg_sad, Resource.Drawable.svg_neutral, Resource.Drawable.svg_happy }, (int)(_mediaList?.Score ?? 2) - 1);
+                    _customScoringEnabled = false;
+                }
+
+                if (_customScoringEnabled)
+                {
+                    try
+                    {
+                        // TODO: this is a massive hack. need to see about getting these values returned as an array
+                        _advancedScores = (_mediaList?.AdvancedScores as JObject)?.PropertyValues().Select(x => x.Value<float?>()).ToList();
+
+                        if (_advancedScores == null && _mediaList != null)
+                        {
+                            throw new Exception("Advanced Scores failed to parse");
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Activity.Logger.Error("CUSTOM_SCORING", "Error occurred while setting up custom scoring", e);
+                        Toast.MakeText(Activity, "Error occurred while getting advanced scores", ToastLength.Short).Show();
+                        return;
+                    }
+
+
+                    customScoresButton.Visibility = ViewStates.Visible;
+                    customScoresButton.Click += (sender, e) =>
+                        CustomScoringDialog.Create(Activity, _mediaListOptions.AnimeList.AdvancedScoring, _mediaListOptions.ScoreFormat, _advancedScores, SetAdvancedScoresToSave);
+                }
+                else
+                {
+                    customScoresButton.Visibility = ViewStates.Gone;
                 }
             }
 
@@ -392,13 +429,22 @@ namespace AniDroid.Dialogs
                         Activity.GetThemedResourceId(Resource.Attribute.Dialog_Theme));
 
                     confirmation.SetMessage(
-                        "Do you really wish to delete this item from you lists? This action CAN NOT be undone!");
+                        "Do you really wish to delete this item from your lists? This action CAN NOT be undone!");
                     confirmation.SetTitle($"Delete {_media.Title.UserPreferred}");
                     confirmation.SetNegativeButton("Cancel", (cancelSender, cancelArgs) => { });
                     confirmation.SetPositiveButton("Delete", async (delSender, delArgs) => await DeleteMediaListItem());
 
                     confirmation.Show();
                 };
+            }
+
+            private void SetAdvancedScoresToSave(List<float?> scores)
+            {
+                _advancedScores = scores;
+
+                var score = scores.Sum() / scores.Count(x => x > 0);
+
+                _scorePicker.SetValue(score);
             }
 
             private async Task SaveMediaListItem(IMenuItem menuItem)
@@ -421,8 +467,8 @@ namespace AniDroid.Dialogs
                     CustomLists = _customLists.ToList(),
                     HiddenFromStatusLists = _hideFromStatusLists,
                     StartDate = new FuzzyDate(_startDateView.SelectedDate),
-                    FinishDate = new FuzzyDate(_finishDateView.SelectedDate)
-
+                    FinishDate = new FuzzyDate(_finishDateView.SelectedDate),
+                    AdvancedScores = _advancedScores
                 };
 
                 if ((_mediaListOptions.ScoreFormat == User.ScoreFormat.FiveStars ||
