@@ -161,6 +161,11 @@ namespace AniDroid.Main
             SetupToolbar();
             SetupNavigation();
 
+            if (Settings.IsUserAuthenticated)
+            {
+                Logger.Debug("MAIN_ACTIVITY", $"Current authenticated user id: {Settings.LoggedInUser?.Id}");
+            }
+
             var notificationText = Intent.GetStringExtra(NotificationTextIntentKey);
             if (!string.IsNullOrWhiteSpace(notificationText))
             {

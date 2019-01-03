@@ -54,6 +54,16 @@ namespace AniDroid.Adapters.ViewModels
             {
                 retAction = () => UserActivity.StartActivity(_context, Model.User.Id);
             }
+            else if (actionType.Equals(AniListNotification.NotificationActionType.Activity))
+            {
+                retAction = () => _context.StartActivity(new Intent(Intent.ActionView, Android.Net.Uri.Parse($"https://anilist.co/activity/{Model.ActivityId}")));
+            }
+            else if (actionType.EqualsAny(AniListNotification.NotificationActionType.Thread, AniListNotification.NotificationActionType.Comment))
+            {
+                retAction = () => _context.StartActivity(new Intent(Intent.ActionView,
+                    Android.Net.Uri.Parse(
+                        $"https://anilist.co/forum/thread/{Model.Thread?.Id}{(Model.CommentId > 0 ? $"/comment/{Model.CommentId}" : "")}")));
+            }
 
             return retAction;
         }
