@@ -156,6 +156,11 @@ namespace AniDroid.MediaList
             return AniDroidSettings.DisplayUpcomingEpisodeTimeAsCountdown;
         }
 
+        public bool GetUseSwipeToRefreshOnMediaLists()
+        {
+            return AniDroidSettings.UseSwipeToRefreshOnMediaLists;
+        }
+
         public MediaListSortComparer.MediaListSortDirection GetMediaListSortDirection(Media.MediaType mediaType)
         {
             if (Media.MediaType.Anime.Equals(mediaType))

@@ -76,12 +76,16 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             }
 
             viewHolder.LikeCount.Text = item.Likes?.Count.ToString();
-            viewHolder.LikeIcon.ImageTintList = ColorStateList.ValueOf(item.Likes?.Any(x => x.Id == _userId) == true
-                ? Color.Crimson
-                : _defaultIconColor);
-            viewHolder.ReplyLikeContainer.SetTag(Resource.Id.Object_Position, position);
-            viewHolder.ReplyLikeContainer.Click -= ShowReplyDialog;
-            viewHolder.ReplyLikeContainer.Click += ShowReplyDialog;
+
+            if (_userId.HasValue)
+            {
+                viewHolder.LikeIcon.ImageTintList = ColorStateList.ValueOf(item.Likes?.Any(x => x.Id == _userId) == true
+                    ? Color.Crimson
+                    : _defaultIconColor);
+                viewHolder.ReplyLikeContainer.SetTag(Resource.Id.Object_Position, position);
+                viewHolder.ReplyLikeContainer.Click -= ShowReplyDialog;
+                viewHolder.ReplyLikeContainer.Click += ShowReplyDialog;
+            }
 
             viewHolder.Image.SetTag(Resource.Id.Object_Position, position);
             viewHolder.Image.Click -= ImageClick;

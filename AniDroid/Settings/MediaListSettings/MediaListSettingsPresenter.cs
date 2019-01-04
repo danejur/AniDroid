@@ -45,6 +45,7 @@ namespace AniDroid.Settings.MediaListSettings
                 AniDroidSettings.MangaListSortDirection);
             View.CreateHighlightPriorityMediaListItemsItem(AniDroidSettings.HighlightPriorityMediaListItems);
             View.CreateUseLongClickForEpisodeAddItem(AniDroidSettings.UseLongClickForEpisodeAdd);
+            View.CreateUseSwipeToRefreshOnMediaLists(AniDroidSettings.UseSwipeToRefreshOnMediaLists);
 
             return Task.CompletedTask;
         }
@@ -97,6 +98,11 @@ namespace AniDroid.Settings.MediaListSettings
             MediaListRecyclerAdapter.MediaListProgressDisplayType mediaListProgressDisplay)
         {
             AniDroidSettings.MediaListProgressDisplay = mediaListProgressDisplay;
+        }
+
+        public void SetUseSwipeToRefreshOnMediaLists(bool useSwipeToRefreshOnMediaLists)
+        {
+            AniDroidSettings.UseSwipeToRefreshOnMediaLists = useSwipeToRefreshOnMediaLists;
         }
     }
 }

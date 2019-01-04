@@ -113,6 +113,20 @@ namespace AniDroid.Settings
             _settingsContainer.AddView(CreateSettingDivider(this));
         }
 
+        public void CreateUseSwipeToRefreshHomeScreen(bool useSwipeToRefreshHomeScreen)
+        {
+            _settingsContainer.AddView(
+                CreateSwitchSettingRow(this, "Swipe to Refresh Home Screen",
+                    "With this enabled, you can swipe down to refresh the content on the Home screen",
+                    useSwipeToRefreshHomeScreen, true, (sender, args) =>
+                    {
+                        Presenter.SetUseSwipeToRefreshHomeScreen(args.IsChecked);
+                        _recreateActivity = true;
+                        Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
+                    }));
+            _settingsContainer.AddView(CreateSettingDivider(this));
+        }
+
         public void CreateWhatsNewSettingItem()
         {
             _settingsContainer.AddView(

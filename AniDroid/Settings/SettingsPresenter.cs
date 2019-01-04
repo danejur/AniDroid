@@ -34,6 +34,7 @@ namespace AniDroid.Settings
             View.CreateDisplayBannersSettingItem(AniDroidSettings.DisplayBanners);
             View.CreateDisplayUpcomingEpisodeTimeAsCountdownItem(AniDroidSettings
                 .DisplayUpcomingEpisodeTimeAsCountdown);
+            View.CreateUseSwipeToRefreshHomeScreen(AniDroidSettings.UseSwipeToRefreshHomeScreen);
 
             if (AniDroidSettings.IsUserAuthenticated)
             {
@@ -71,6 +72,11 @@ namespace AniDroid.Settings
         public void SetDisplayUpcomingEpisodeTimeAsCountdown(bool displayUpcomingEpisodeTimeAsCountdown)
         {
             AniDroidSettings.DisplayUpcomingEpisodeTimeAsCountdown = displayUpcomingEpisodeTimeAsCountdown;
+        }
+
+        public void SetUseSwipeToRefreshHomeScreen(bool useSwipeToRefreshHomeScreen)
+        {
+            AniDroidSettings.UseSwipeToRefreshHomeScreen = useSwipeToRefreshHomeScreen;
         }
 
         // Auth Settings
