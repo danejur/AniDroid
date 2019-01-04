@@ -143,5 +143,8 @@
     <item>01-02-2019|First update of the new year! Added advanced scoring. If you have it enabled on AniList, you should now see an option to edit those scores when editing a list item</item>
     <item>01-02-2019|All notifications now have an action when tapped on. Some just go to AniList (for now), but all of them will be handled in the app in the future</item>
     <item>01-02-2019|Bug fixes</item>
+    <item>01-03-2019|Added swipe to refresh for the home screen and media lists! Check the settings to enable them</item>
+    <item>01-03-2019|Manga list re-ordering now works</item>
+    <item>01-03-2019|Attempted to fix bug where users who use a comma as the decimal seperator character weren\'t able to properly enter scores. This fix may not work, so please give feedback if it isn\'t!</item>
   </array> 
 </resources>
