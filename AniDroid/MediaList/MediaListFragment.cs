@@ -261,8 +261,8 @@ namespace AniDroid.MediaList
             _recyclerAdapters = new List<MediaListRecyclerAdapter>();
 
             var listOrder = GetListOrder();
-            var orderedLists = _collection.Lists.Where(x =>
-                    listOrder.All(y => y.Key != x.Name) || listOrder.FirstOrDefault(y => y.Key == x.Name).Value)
+            var orderedLists = _collection.Lists
+                .Where(x => listOrder.FirstOrDefault(y => y.Key == x.Name).Value)
                 .OrderBy(x => listOrder.FindIndex(y => y.Key == x.Name)).ToList();
 
             _currentSort = Presenter.GetMediaListSortType(_type);
@@ -349,7 +349,7 @@ namespace AniDroid.MediaList
                     settings.MangaListOrder = lists.Select(x => new KeyValuePair<string, bool>(x, true)).ToList();
                 }
 
-                retList = settings.AnimeListOrder;
+                retList = settings.MangaListOrder;
             }
 
             return retList;
