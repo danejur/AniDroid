@@ -124,7 +124,7 @@ namespace AniDroid.Widgets
                 var str = args.Editable.ToString();
                 var length = str.Length;
 
-                if (!float.TryParse(str, out var parsedResult) && args.Editable.All(x => x == '.') ||
+                if (!float.TryParse(str, NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture, out var parsedResult) ||
                     parsedResult < 0)
                 {
                     _currentValue = 0;
@@ -132,7 +132,7 @@ namespace AniDroid.Widgets
                 else if (parsedResult > _maxValue)
                 {
                     _currentValue = _maxValue;
-                    args.Editable.Replace(0, length, _maxValue.ToString(CultureInfo.InvariantCulture));
+                    args.Editable.Replace(0, length, _maxValue.ToString(CultureInfo.CurrentCulture));
                 }
                 else
                 {
