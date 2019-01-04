@@ -30,34 +30,52 @@ namespace AniDroid.Utils
             _authSettingStorage = authSettingsStorage;
         }
 
+        #region Unauthenticated Settings
+
         public int HighestVersionUsed
         {
-            get => _settingStorage.Get(StorageKeys.HighestVersionUsed, 0);
-            set => _settingStorage.Put(StorageKeys.HighestVersionUsed, value);
+            get => _settingStorage.Get(UnauthenticatedKeys.HighestVersionUsed, 0);
+            set => _settingStorage.Put(UnauthenticatedKeys.HighestVersionUsed, value);
         }
 
         public BaseRecyclerAdapter.RecyclerCardType CardType
         {
-            get => _settingStorage.Get(StorageKeys.CardTypeKey, BaseRecyclerAdapter.RecyclerCardType.Vertical);
-            set => _settingStorage.Put(StorageKeys.CardTypeKey, value);
+            get => _settingStorage.Get(UnauthenticatedKeys.CardTypeKey, BaseRecyclerAdapter.RecyclerCardType.Vertical);
+            set => _settingStorage.Put(UnauthenticatedKeys.CardTypeKey, value);
         }
 
         public BaseAniDroidActivity.AniDroidTheme Theme
         {
-            get => _settingStorage.Get(StorageKeys.ThemeKey, BaseAniDroidActivity.AniDroidTheme.AniList);
-            set => _settingStorage.Put(StorageKeys.ThemeKey, value);
+            get => _settingStorage.Get(UnauthenticatedKeys.ThemeKey, BaseAniDroidActivity.AniDroidTheme.AniList);
+            set => _settingStorage.Put(UnauthenticatedKeys.ThemeKey, value);
         }
 
         public bool DisplayBanners
         {
-            get => _settingStorage.Get(StorageKeys.DisplayBannersKey, true);
-            set => _settingStorage.Put(StorageKeys.DisplayBannersKey, value);
+            get => _settingStorage.Get(UnauthenticatedKeys.DisplayBannersKey, true);
+            set => _settingStorage.Put(UnauthenticatedKeys.DisplayBannersKey, value);
         }
+
+        public bool DisplayUpcomingEpisodeTimeAsCountdown
+        {
+            get => _authSettingStorage.Get(UnauthenticatedKeys.DisplayUpcomingEpisodeTimeAsCountdownKey, false);
+            set => _authSettingStorage.Put(UnauthenticatedKeys.DisplayUpcomingEpisodeTimeAsCountdownKey, value);
+        }
+
+        public bool UseSwipeToRefreshHomeScreen
+        {
+            get => _authSettingStorage.Get(UnauthenticatedKeys.UseSwipeToRefreshHomeScreenKey, false);
+            set => _authSettingStorage.Put(UnauthenticatedKeys.UseSwipeToRefreshHomeScreenKey, value);
+        }
+
+        #endregion
+
+        #region Authenticated Settings
 
         public string UserAccessCode
         {
-            get => _authSettingStorage.Get(StorageKeys.AccessCode);
-            set => _authSettingStorage.Put(StorageKeys.AccessCode, value);
+            get => _authSettingStorage.Get(AuthenticatedKeys.AccessCode);
+            set => _authSettingStorage.Put(AuthenticatedKeys.AccessCode, value);
         }
 
         public bool IsUserAuthenticated => !string.IsNullOrWhiteSpace(UserAccessCode);
@@ -70,96 +88,102 @@ namespace AniDroid.Utils
 
         public User LoggedInUser
         {
-            get => _authSettingStorage.Get<User>(StorageKeys.LoggedInUser);
-            set => _authSettingStorage.Put(StorageKeys.LoggedInUser, value);
+            get => _authSettingStorage.Get<User>(AuthenticatedKeys.LoggedInUser);
+            set => _authSettingStorage.Put(AuthenticatedKeys.LoggedInUser, value);
         }
 
         public bool ShowAllAniListActivity
         {
-            get => _authSettingStorage.Get(StorageKeys.ShowAllActivityKey, false);
-            set => _authSettingStorage.Put(StorageKeys.ShowAllActivityKey, value);
-        }
-
-        public List<KeyValuePair<string, bool>> AnimeListOrder
-        {
-            get => _authSettingStorage.Get(StorageKeys.AnimeListOrderKey, (List<KeyValuePair<string, bool>>)null);
-            set => _authSettingStorage.Put(StorageKeys.AnimeListOrderKey, value);
-        }
-
-        public List<KeyValuePair<string, bool>> MangaListOrder
-        {
-            get => _authSettingStorage.Get(StorageKeys.MangaListOrderKey, (List<KeyValuePair<string, bool>>)null);
-            set => _authSettingStorage.Put(StorageKeys.MangaListOrderKey, value);
-        }
-
-        public bool GroupCompletedLists
-        {
-            get => _authSettingStorage.Get(StorageKeys.GroupCompletedLists, false);
-            set => _authSettingStorage.Put(StorageKeys.GroupCompletedLists, value);
-        }
-
-        public MediaListRecyclerAdapter.MediaListItemViewType MediaViewType
-        {
-            get => _authSettingStorage.Get(StorageKeys.MediaViewType, MediaListRecyclerAdapter.MediaListItemViewType.Normal);
-            set => _authSettingStorage.Put(StorageKeys.MediaViewType, value);
-        }
-
-        public bool HighlightPriorityMediaListItems
-        {
-            get => _authSettingStorage.Get(StorageKeys.HighlightPriorityMediaListItems, true);
-            set => _authSettingStorage.Put(StorageKeys.HighlightPriorityMediaListItems, value);
-        }
-		
-		public MediaListSortComparer.MediaListSortType AnimeListSortType
-        {
-            get => _authSettingStorage.Get(StorageKeys.AnimeListSortTypeKey, MediaListSortComparer.MediaListSortType.NoSort);
-            set => _authSettingStorage.Put(StorageKeys.AnimeListSortTypeKey, value);
-        }
-
-        public MediaListSortComparer.MediaListSortDirection AnimeListSortDirection
-        {
-            get => _authSettingStorage.Get(StorageKeys.AnimeListSortDirectionKey, MediaListSortComparer.MediaListSortDirection.Descending);
-            set => _authSettingStorage.Put(StorageKeys.AnimeListSortDirectionKey, value);
-        }
-
-        public MediaListSortComparer.MediaListSortType MangaListSortType
-        {
-            get => _authSettingStorage.Get(StorageKeys.MangaListSortTypeKey, MediaListSortComparer.MediaListSortType.NoSort);
-            set => _authSettingStorage.Put(StorageKeys.MangaListSortTypeKey, value);
-        }
-
-        public MediaListSortComparer.MediaListSortDirection MangaListSortDirection
-        {
-            get => _authSettingStorage.Get(StorageKeys.MangaListSortDirectionKey, MediaListSortComparer.MediaListSortDirection.Descending);
-            set => _authSettingStorage.Put(StorageKeys.MangaListSortDirectionKey, value);
-        }
-
-        public bool UseLongClickForEpisodeAdd
-        {
-            get => _authSettingStorage.Get(StorageKeys.UseLongClickForEpisodeAddKey, false);
-            set => _authSettingStorage.Put(StorageKeys.UseLongClickForEpisodeAddKey, value);
+            get => _authSettingStorage.Get(AuthenticatedKeys.ShowAllActivityKey, false);
+            set => _authSettingStorage.Put(AuthenticatedKeys.ShowAllActivityKey, value);
         }
 
         public bool EnableNotificationService
         {
-            get => _authSettingStorage.Get(StorageKeys.EnableNotificationServiceKey, true);
-            set => _authSettingStorage.Put(StorageKeys.EnableNotificationServiceKey, value);
+            get => _authSettingStorage.Get(AuthenticatedKeys.EnableNotificationServiceKey, true);
+            set => _authSettingStorage.Put(AuthenticatedKeys.EnableNotificationServiceKey, value);
         }
 
-        public bool DisplayUpcomingEpisodeTimeAsCountdown
+        #endregion
+
+        #region Media List Settings
+
+        public List<KeyValuePair<string, bool>> AnimeListOrder
         {
-            get => _authSettingStorage.Get(StorageKeys.DisplayUpcomingEpisodeTimeAsCountdownKey, false);
-            set => _authSettingStorage.Put(StorageKeys.DisplayUpcomingEpisodeTimeAsCountdownKey, value);
+            get => _authSettingStorage.Get(MediaListKeys.AnimeListOrderKey, (List<KeyValuePair<string, bool>>)null);
+            set => _authSettingStorage.Put(MediaListKeys.AnimeListOrderKey, value);
+        }
+
+        public List<KeyValuePair<string, bool>> MangaListOrder
+        {
+            get => _authSettingStorage.Get(MediaListKeys.MangaListOrderKey, (List<KeyValuePair<string, bool>>)null);
+            set => _authSettingStorage.Put(MediaListKeys.MangaListOrderKey, value);
+        }
+
+        public bool GroupCompletedLists
+        {
+            get => _authSettingStorage.Get(MediaListKeys.GroupCompletedLists, false);
+            set => _authSettingStorage.Put(MediaListKeys.GroupCompletedLists, value);
+        }
+
+        public MediaListRecyclerAdapter.MediaListItemViewType MediaViewType
+        {
+            get => _authSettingStorage.Get(MediaListKeys.MediaViewType, MediaListRecyclerAdapter.MediaListItemViewType.Normal);
+            set => _authSettingStorage.Put(MediaListKeys.MediaViewType, value);
+        }
+
+        public bool HighlightPriorityMediaListItems
+        {
+            get => _authSettingStorage.Get(MediaListKeys.HighlightPriorityMediaListItems, true);
+            set => _authSettingStorage.Put(MediaListKeys.HighlightPriorityMediaListItems, value);
+        }
+
+        public MediaListSortComparer.MediaListSortType AnimeListSortType
+        {
+            get => _authSettingStorage.Get(MediaListKeys.AnimeListSortTypeKey, MediaListSortComparer.MediaListSortType.NoSort);
+            set => _authSettingStorage.Put(MediaListKeys.AnimeListSortTypeKey, value);
+        }
+
+        public MediaListSortComparer.MediaListSortDirection AnimeListSortDirection
+        {
+            get => _authSettingStorage.Get(MediaListKeys.AnimeListSortDirectionKey, MediaListSortComparer.MediaListSortDirection.Descending);
+            set => _authSettingStorage.Put(MediaListKeys.AnimeListSortDirectionKey, value);
+        }
+
+        public MediaListSortComparer.MediaListSortType MangaListSortType
+        {
+            get => _authSettingStorage.Get(MediaListKeys.MangaListSortTypeKey, MediaListSortComparer.MediaListSortType.NoSort);
+            set => _authSettingStorage.Put(MediaListKeys.MangaListSortTypeKey, value);
+        }
+
+        public MediaListSortComparer.MediaListSortDirection MangaListSortDirection
+        {
+            get => _authSettingStorage.Get(MediaListKeys.MangaListSortDirectionKey, MediaListSortComparer.MediaListSortDirection.Descending);
+            set => _authSettingStorage.Put(MediaListKeys.MangaListSortDirectionKey, value);
+        }
+
+        public bool UseLongClickForEpisodeAdd
+        {
+            get => _authSettingStorage.Get(MediaListKeys.UseLongClickForEpisodeAddKey, false);
+            set => _authSettingStorage.Put(MediaListKeys.UseLongClickForEpisodeAddKey, value);
         }
 
         public MediaListRecyclerAdapter.MediaListProgressDisplayType MediaListProgressDisplay
         {
-            get => _authSettingStorage.Get(StorageKeys.MediaListProgressDisplayKey,
+            get => _authSettingStorage.Get(MediaListKeys.MediaListProgressDisplayKey,
                 _authSettingStorage.Get(OldSettingsStorageKeys.DisplayMediaListItemProgressColors, true)
                     ? MediaListRecyclerAdapter.MediaListProgressDisplayType.Releasing
                     : MediaListRecyclerAdapter.MediaListProgressDisplayType.Never);
-            set => _authSettingStorage.Put(StorageKeys.MediaListProgressDisplayKey, value);
+            set => _authSettingStorage.Put(MediaListKeys.MediaListProgressDisplayKey, value);
         }
+
+        public bool UseSwipeToRefreshOnMediaLists
+        {
+            get => _authSettingStorage.Get(MediaListKeys.UseSwipeToRefreshMediaListsKey, false);
+            set => _authSettingStorage.Put(MediaListKeys.UseSwipeToRefreshMediaListsKey, value);
+        }
+
+        #endregion
 
         #region Old Settings
 
@@ -218,15 +242,26 @@ namespace AniDroid.Utils
 
         #region Constants
 
-        private static class StorageKeys
+        private static class UnauthenticatedKeys
         {
             public const string HighestVersionUsed = "HIGHEST_VERSION_USED";
             public const string CardTypeKey = "CARD_TYPE";
             public const string ThemeKey = "THEME";
             public const string DisplayBannersKey = "DISPLAY_BANNERS";
+            public const string UseSwipeToRefreshHomeScreenKey = "USE_SWIPE_TO_REFRESH_HOME_SCREEN";
+            public const string DisplayUpcomingEpisodeTimeAsCountdownKey = "DISPLAY_UPCOMING_EPISODE_TIME_AS_COUNTDOWN";
+        }
 
+        private static class AuthenticatedKeys
+        {
             public const string AccessCode = "ACCESS_CODE";
             public const string LoggedInUser = "LOGGED_IN_USER";
+            public const string ShowAllActivityKey = "SHOW_ALL_ACTIVITY";
+            public const string EnableNotificationServiceKey = "ENABLE_NOTIFICATION_SERVICE";
+        }
+
+        private static class MediaListKeys
+        {
             public const string AnimeListOrderKey = "ANIME_LIST_ORDER_KEY";
             public const string MangaListOrderKey = "MANGA_LIST_ORDER_KEY";
             public const string GroupCompletedLists = "GROUP_COMPLETED_LISTS";
@@ -237,11 +272,8 @@ namespace AniDroid.Utils
             public const string MangaListSortTypeKey = "MANGA_LIST_SORT_TYPE";
             public const string MangaListSortDirectionKey = "MANGA_LIST_SORT_DIRECTION";
             public const string UseLongClickForEpisodeAddKey = "USE_LONG_CLICK_FOR_EPISODE_ADD";
-            public const string EnableNotificationServiceKey = "ENABLE_NOTIFICATION_SERVICE";
-            public const string DisplayUpcomingEpisodeTimeAsCountdownKey = "DISPLAY_UPCOMING_EPISODE_TIME_AS_COUNTDOWN";
             public const string MediaListProgressDisplayKey = "MEDIA_LIST_PROGRESS_DISPLAY";
-
-            public const string ShowAllActivityKey = "SHOW_ALL_ACTIVITY";
+            public const string UseSwipeToRefreshMediaListsKey = "USE_SWIPE_TO_REFRESH_MEDIA_LISTS";
         }
 
         private static class OldSettingsStorageKeys

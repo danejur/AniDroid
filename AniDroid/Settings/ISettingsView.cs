@@ -22,6 +22,7 @@ namespace AniDroid.Settings
         void CreateAniDroidThemeSettingItem(BaseAniDroidActivity.AniDroidTheme theme);
         void CreateDisplayBannersSettingItem(bool displayBanners);
         void CreateDisplayUpcomingEpisodeTimeAsCountdownItem(bool displayUpcomingEpisodeTimeAsCountdown);
+        void CreateUseSwipeToRefreshHomeScreen(bool useSwipeToRefreshHomeScreen);
         void CreateWhatsNewSettingItem();
         void CreatePrivacyPolicyLinkItem();
 

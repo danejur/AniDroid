@@ -179,6 +179,21 @@ namespace AniDroid.Settings.MediaListSettings
             _settingsContainer.AddView(SettingsActivity.CreateSettingDivider(this));
         }
 
+        public void CreateUseSwipeToRefreshOnMediaLists(bool useSwipeToRefreshOnMediaLists)
+        {
+            _settingsContainer.AddView(
+                SettingsActivity.CreateSwitchSettingRow(this, "Swipe to Refresh Media Lists",
+                    "With this enabled, you can swipe down to refresh the content on your media lists",
+                    useSwipeToRefreshOnMediaLists, true,
+                    (sender, args) =>
+                    {
+                        Presenter.SetUseSwipeToRefreshOnMediaLists(args.IsChecked);
+                        _recreateActivity = true;
+                        Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
+                    }));
+            _settingsContainer.AddView(SettingsActivity.CreateSettingDivider(this));
+        }
+
         #region Toolbar
 
         public override void OnBackPressed()

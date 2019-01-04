@@ -1,11 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
   <group android:checkableBehavior="single"
-         android:id="@+id/Menu_NavigationGroup_AuthenticatedUser">
+         android:id="@+id/Menu_NavigationGroup_Home">
     <item
       android:id="@+id/Menu_Navigation_Home"
       android:title="Home"
       android:icon="@drawable/ic_home_white_24px"/>
+  </group>
+  <group android:checkableBehavior="single"
+         android:id="@+id/Menu_NavigationGroup_AuthenticatedUser">
     <item
       android:id="@+id/Menu_Navigation_Anime"
       android:title="Anime"

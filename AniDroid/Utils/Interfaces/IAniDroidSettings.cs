@@ -19,31 +19,44 @@ namespace AniDroid.Utils.Interfaces
 {
     public interface IAniDroidSettings
     {
+        #region Unauthenticated Settings
+
         int HighestVersionUsed { get; set; }
         BaseRecyclerAdapter.RecyclerCardType CardType { get; set; }
         BaseAniDroidActivity.AniDroidTheme Theme { get; set; }
         bool DisplayBanners { get; set; }
+        bool DisplayUpcomingEpisodeTimeAsCountdown { get; set; }
+        bool UseSwipeToRefreshHomeScreen { get; set; }
 
-        // Authenticated Settings
+        #endregion
+
+        #region Authenticated Settings
 
         string UserAccessCode { get; set; }
         bool IsUserAuthenticated { get; }
         void ClearUserAuthentication();
         User LoggedInUser { get; set; }
         bool ShowAllAniListActivity { get; set; }
+        bool EnableNotificationService { get; set; }
+
+        #endregion
+
+        #region Media List Settings
+
         List<KeyValuePair<string, bool>> AnimeListOrder { get; set; }
         List<KeyValuePair<string, bool>> MangaListOrder { get; set; }
         bool GroupCompletedLists { get; set; }
         MediaListRecyclerAdapter.MediaListItemViewType MediaViewType { get; set; }
         bool HighlightPriorityMediaListItems { get; set; }
-		MediaListSortComparer.MediaListSortType AnimeListSortType { get; set; }
+        MediaListSortComparer.MediaListSortType AnimeListSortType { get; set; }
         MediaListSortComparer.MediaListSortDirection AnimeListSortDirection { get; set; }
         MediaListSortComparer.MediaListSortType MangaListSortType { get; set; }
         MediaListSortComparer.MediaListSortDirection MangaListSortDirection { get; set; }
         bool UseLongClickForEpisodeAdd { get; set; }
-        bool EnableNotificationService { get; set; }
-        bool DisplayUpcomingEpisodeTimeAsCountdown { get; set; }
         MediaListRecyclerAdapter.MediaListProgressDisplayType MediaListProgressDisplay { get; set; }
+        bool UseSwipeToRefreshOnMediaLists { get; set; }
+
+        #endregion
 
         #region Old Settings
 

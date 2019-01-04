@@ -40,9 +40,9 @@ namespace AniDroid.Home
             return AniListService.GetAniListActivity(new AniListActivityDto {IsFollowing = isFollowingOnly}, 20);
         }
 
-        public int GetUserId()
+        public int? GetUserId()
         {
-            return AniDroidSettings.LoggedInUser?.Id ?? 0;
+            return AniDroidSettings.LoggedInUser?.Id;
         }
 
         public async Task ToggleActivityLikeAsync(AniListActivity activity, int activityPosition)

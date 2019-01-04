@@ -7,6 +7,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.V4.Widget;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
@@ -27,8 +28,10 @@ namespace AniDroid.Home
         public const string HomeFragmentName = "HOME_FRAGMENT";
 
         private RecyclerView _recyclerView;
+        private SwipeRefreshLayout _swipeRefreshLayout;
         private AniListActivityRecyclerAdapter _recyclerAdapter;
         private bool _isFollowingOnly;
+        private bool _isAuthenticated;
         private static HomeFragment _instance;
 
         public override bool HasMenu => true;
@@ -49,12 +52,15 @@ namespace AniDroid.Home
 
         public override View CreateMainActivityFragmentView(ViewGroup container, Bundle savedInstanceState)
         {
-            _isFollowingOnly = !Kernel.Get<IAniDroidSettings>().ShowAllAniListActivity;
+            var settings = Kernel.Get<IAniDroidSettings>();
+            _isAuthenticated = settings.IsUserAuthenticated;
+            _isFollowingOnly = _isAuthenticated && !settings.ShowAllAniListActivity;
 
             CreatePresenter(savedInstanceState).GetAwaiter().GetResult();
 
-            var listView = LayoutInflater.Inflate(Resource.Layout.View_List, container, false);
+            var listView = LayoutInflater.Inflate(Resource.Layout.View_SwipeRefreshList, container, false);
             _recyclerView = listView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
+            _swipeRefreshLayout = listView.FindViewById<SwipeRefreshLayout>(Resource.Id.List_SwipeRefreshLayout);
 
             _recyclerAdapter = _recyclerAdapter != null
                 ? new AniListActivityRecyclerAdapter(Activity, _recyclerAdapter)
@@ -62,6 +68,20 @@ namespace AniDroid.Home
                     Presenter.GetAniListActivity(_isFollowingOnly), Presenter.GetUserId());
 
             _recyclerView.SetAdapter(_recyclerAdapter);
+
+            if (settings.UseSwipeToRefreshHomeScreen)
+            {
+                _swipeRefreshLayout.SetEnabled(true);
+                _swipeRefreshLayout.Refresh += (sender, e) =>
+                {
+                    RefreshActivity();
+                    _swipeRefreshLayout.Refreshing = false;
+                };
+            }
+            else
+            {
+                _swipeRefreshLayout.SetEnabled(false);
+            }
 
             return listView;
         }
@@ -71,6 +91,11 @@ namespace AniDroid.Home
             menu.Clear();
             var inflater = new MenuInflater(Context);
             inflater.Inflate(Resource.Menu.Home_ActionBar, menu);
+
+            if (!_isAuthenticated)
+            {
+                menu.FindItem(Resource.Id.Menu_Home_PostStatus).SetVisible(false);
+            }
 
             SetActivityIcon(menu.FindItem(Resource.Id.Menu_Home_ToggleActivityType));
         }
@@ -131,15 +156,22 @@ namespace AniDroid.Home
 
         private void SetActivityIcon(IMenuItem menuItem)
         {
-            if (_isFollowingOnly)
+            if (!_isAuthenticated)
             {
-                menuItem.SetIcon(Resource.Drawable.svg_person);
-                menuItem.SetTitle("Show Public Activity");
+                menuItem.SetVisible(false);
             }
             else
             {
-                menuItem.SetIcon(Resource.Drawable.ic_group_white_24px);
-                menuItem.SetTitle("Show Personal Activity");
+                if (_isFollowingOnly)
+                {
+                    menuItem.SetIcon(Resource.Drawable.svg_person);
+                    menuItem.SetTitle("Show Public Activity");
+                }
+                else
+                {
+                    menuItem.SetIcon(Resource.Drawable.ic_group_white_24px);
+                    menuItem.SetTitle("Show Personal Activity");
+                }
             }
         }
     }

@@ -11,6 +11,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Support.V4.View;
+using Android.Support.V4.Widget;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Views.Animations;
@@ -309,9 +310,29 @@ namespace AniDroid.MediaList
                 adapter.UpdateFilters(_filteredMediaFormats, _filteredMediaStatuses);
 
                 _recyclerAdapters.Add(adapter);
-                var listView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
+                var listView = LayoutInflater.Inflate(Resource.Layout.View_SwipeRefreshList, null);
                 listView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView).SetAdapter(adapter);
                 pagerAdapter.AddView(listView, statusList.Name);
+
+                var swipeRefreshLayout = listView.FindViewById<SwipeRefreshLayout>(Resource.Id.List_SwipeRefreshLayout);
+
+                if (Presenter.GetUseSwipeToRefreshOnMediaLists())
+                {
+                    swipeRefreshLayout.SetEnabled(true);
+                    swipeRefreshLayout.Refresh += (sender, e) =>
+                    {
+                        _collection = null;
+                        RecreateFragment();
+                        if (sender is SwipeRefreshLayout refreshLayout)
+                        {
+                            refreshLayout.Refreshing = false;
+                        }
+                    };
+                }
+                else
+                {
+                    swipeRefreshLayout.SetEnabled(false);
+                }
             }
 
             var viewPagerView = mediaCollectionView.FindViewById<ViewPager>(Resource.Id.MediaLists_ViewPager);
