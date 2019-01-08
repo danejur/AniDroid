@@ -146,5 +146,8 @@
     <item>01-03-2019|Added swipe to refresh for the home screen and media lists! Check the settings to enable them</item>
     <item>01-03-2019|Manga list re-ordering now works</item>
     <item>01-03-2019|Attempted to fix bug where users who use a comma as the decimal seperator character weren\'t able to properly enter scores. This fix may not work, so please give feedback if it isn\'t!</item>
-  </array> 
+    <item>01-07-2019|Adding some initial markdown support for the activity feed! Most (maybe) tags are supported at this point, and I will work to add proper markdown support to user profiles and other places. Coming soon!</item>
+    <item>01-07-2019|Added option in Media List Settings to allow you to turn on the plus button on media you are repeating</item>
+    <item>01-07-2019|Bug fixes</item>
+  </array>
 </resources>
