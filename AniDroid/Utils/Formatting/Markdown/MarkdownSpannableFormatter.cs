@@ -31,7 +31,12 @@ namespace AniDroid.Utils.Formatting.Markdown
 
         private static void FormatImages(Context context, ISpannable spannable)
         {
-            var text = spannable.ToString();
+            var text = spannable?.ToString();
+
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                return;
+            }
 
             var matches = ImageRegex.Matches(text);
 
@@ -59,7 +64,12 @@ namespace AniDroid.Utils.Formatting.Markdown
 
         private static void FormatYoutube(Context context, ISpannable spannable)
         {
-            var text = spannable.ToString();
+            var text = spannable?.ToString();
+
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                return;
+            }
 
             var matches = YoutubeRegex.Matches(text);
 
