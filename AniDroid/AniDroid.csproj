@@ -72,6 +72,9 @@
       <HintPath>..\packages\HtmlAgilityPack.1.8.11\lib\netstandard2.0\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="Java.Interop" />
+    <Reference Include="Markdig, Version=0.15.6.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Markdig.0.15.6\lib\netstandard2.0\Markdig.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Mono.Android.Export" />
     <Reference Include="MPAndroidChart, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
@@ -335,6 +338,8 @@
     <Compile Include="Utils\AniDroidSettings.cs" />
     <Compile Include="Utils\ChartUtils.cs" />
     <Compile Include="Utils\Comparers\MediaListSortComparer.cs" />
+    <Compile Include="Utils\Formatting\Markdown\MarkdownSpannableFormatter.cs" />
+    <Compile Include="Utils\Formatting\Markdown\MarkdownTextCleaner.cs" />
     <Compile Include="Utils\Formatting\NumberFormatters.cs" />
     <Compile Include="Utils\Integration\AniDroidAniListAuthConfig.cs" />
     <Compile Include="Utils\Listeners\InterceptClickListener.cs" />

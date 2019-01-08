@@ -11,6 +11,8 @@ using Android.OS;
 using Android.Runtime;
 using Android.Support.Design.Widget;
 using Android.Support.V7.Widget;
+using Android.Text;
+using Android.Text.Method;
 using Android.Views;
 using Android.Views.Animations;
 using Android.Widget;
@@ -24,6 +26,10 @@ using AniDroid.AniListObject.User;
 using AniDroid.Base;
 using AniDroid.Dialogs;
 using AniDroid.Home;
+using AniDroid.Utils.Formatting;
+using AniDroid.Utils.Formatting.Markdown;
+using CommonMark;
+using Markdig;
 using OneOf;
 
 namespace AniDroid.Adapters.AniListActivityAdapters
@@ -128,9 +134,13 @@ namespace AniDroid.Adapters.AniListActivityAdapters
         private void BindTextActivityViewHolder(AniListActivityViewHolder viewHolder, AniListActivity item)
         {
             viewHolder.Title.TextFormatted = BaseAniDroidActivity.FromHtml($"<b><font color='{_userNameColorHex}'>{item.User?.Name}</font></b>");
-            viewHolder.ContentText.TextFormatted = BaseAniDroidActivity.FromHtml(item.Text);
-            viewHolder.ContentText.Visibility = ViewStates.Visible;
             viewHolder.ContentImageContainer.Visibility = ViewStates.Gone;
+
+            var builder = new SpannableStringBuilder(MarkdownTextCleaner.ConvertToSpanned(item.Text));
+            viewHolder.ContentText.MovementMethod = LinkMovementMethod.Instance;
+            viewHolder.ContentText.SetText(builder, TextView.BufferType.Spannable);
+            MarkdownSpannableFormatter.FormatMarkdownSpannable(Context, viewHolder.ContentText.TextFormatted as ISpannable);
+            viewHolder.ContentText.Visibility = ViewStates.Visible;
 
             Context.LoadImage(viewHolder.Image, item.User?.Avatar?.Large);
         }
@@ -138,9 +148,13 @@ namespace AniDroid.Adapters.AniListActivityAdapters
         private void BindMessageActivityViewHolder(AniListActivityViewHolder viewHolder, AniListActivity item)
         {
             viewHolder.Title.TextFormatted = BaseAniDroidActivity.FromHtml($"<b><font color='{_userNameColorHex}'>{item.Messenger?.Name}</font></b>");
-            viewHolder.ContentText.TextFormatted = BaseAniDroidActivity.FromHtml(item.Message);
-            viewHolder.ContentText.Visibility = ViewStates.Visible;
             viewHolder.ContentImageContainer.Visibility = ViewStates.Gone;
+
+            var builder = new SpannableStringBuilder(MarkdownTextCleaner.ConvertToSpanned(item.Message));
+            viewHolder.ContentText.MovementMethod = LinkMovementMethod.Instance;
+            viewHolder.ContentText.SetText(builder, TextView.BufferType.Spannable);
+            MarkdownSpannableFormatter.FormatMarkdownSpannable(Context, viewHolder.ContentText.TextFormatted as ISpannable);
+            viewHolder.ContentText.Visibility = ViewStates.Visible;
 
             Context.LoadImage(viewHolder.Image, item.Messenger?.Avatar?.Large);
         }
