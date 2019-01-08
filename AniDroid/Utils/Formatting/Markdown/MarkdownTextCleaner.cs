@@ -11,13 +11,11 @@ using Android.Text;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Base;
-using CommonMark;
 
 namespace AniDroid.Utils.Formatting.Markdown
 {
     public static class MarkdownTextCleaner
     {
-        //private static readonly Regex CenteredContentRegex = new Regex(@"~~~([^~]*)~~~", RegexOptions.Compiled | RegexOptions.Singleline);
         private static readonly Regex MalformedHeaderRegex = new Regex(@"^\ {0,3}(\#+)([^\s\#]{1})", RegexOptions.Compiled | RegexOptions.Multiline);
 
         public static string FormatMarkdownText(string text)

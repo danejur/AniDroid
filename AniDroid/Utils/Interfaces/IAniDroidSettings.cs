@@ -55,6 +55,7 @@ namespace AniDroid.Utils.Interfaces
         bool UseLongClickForEpisodeAdd { get; set; }
         MediaListRecyclerAdapter.MediaListProgressDisplayType MediaListProgressDisplay { get; set; }
         bool UseSwipeToRefreshOnMediaLists { get; set; }
+        bool ShowEpisodeAddButtonForRepeatingMedia { get; set; }
 
         #endregion
 

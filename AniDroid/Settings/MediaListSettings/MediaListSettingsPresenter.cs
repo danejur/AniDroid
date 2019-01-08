@@ -45,7 +45,9 @@ namespace AniDroid.Settings.MediaListSettings
                 AniDroidSettings.MangaListSortDirection);
             View.CreateHighlightPriorityMediaListItemsItem(AniDroidSettings.HighlightPriorityMediaListItems);
             View.CreateUseLongClickForEpisodeAddItem(AniDroidSettings.UseLongClickForEpisodeAdd);
-            View.CreateUseSwipeToRefreshOnMediaLists(AniDroidSettings.UseSwipeToRefreshOnMediaLists);
+            View.CreateUseSwipeToRefreshOnMediaListsItem(AniDroidSettings.UseSwipeToRefreshOnMediaLists);
+            View.CreateShowEpisodeAddButtonForRepeatingMediaItem(AniDroidSettings
+                .ShowEpisodeAddButtonForRepeatingMedia);
 
             return Task.CompletedTask;
         }
@@ -103,6 +105,11 @@ namespace AniDroid.Settings.MediaListSettings
         public void SetUseSwipeToRefreshOnMediaLists(bool useSwipeToRefreshOnMediaLists)
         {
             AniDroidSettings.UseSwipeToRefreshOnMediaLists = useSwipeToRefreshOnMediaLists;
+        }
+
+        public void SetShowEpisodeAddButtonForRepeatingMedia(bool showEpisodeAddButtonForRewatchingAnime)
+        {
+            AniDroidSettings.ShowEpisodeAddButtonForRepeatingMedia = showEpisodeAddButtonForRewatchingAnime;
         }
     }
 }

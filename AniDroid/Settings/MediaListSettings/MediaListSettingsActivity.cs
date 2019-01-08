@@ -179,7 +179,7 @@ namespace AniDroid.Settings.MediaListSettings
             _settingsContainer.AddView(SettingsActivity.CreateSettingDivider(this));
         }
 
-        public void CreateUseSwipeToRefreshOnMediaLists(bool useSwipeToRefreshOnMediaLists)
+        public void CreateUseSwipeToRefreshOnMediaListsItem(bool useSwipeToRefreshOnMediaLists)
         {
             _settingsContainer.AddView(
                 SettingsActivity.CreateSwitchSettingRow(this, "Swipe to Refresh Media Lists",
@@ -188,6 +188,21 @@ namespace AniDroid.Settings.MediaListSettings
                     (sender, args) =>
                     {
                         Presenter.SetUseSwipeToRefreshOnMediaLists(args.IsChecked);
+                        _recreateActivity = true;
+                        Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
+                    }));
+            _settingsContainer.AddView(SettingsActivity.CreateSettingDivider(this));
+        }
+
+        public void CreateShowEpisodeAddButtonForRepeatingMediaItem(bool showEpisodeAddButtonForRepeatingMedia)
+        {
+            _settingsContainer.AddView(
+                SettingsActivity.CreateSwitchSettingRow(this, "Show Episode/Chapter Add Button For Repeating Media",
+                    "Select this to enable the add episode/chapter button on your media that are in the Rewatching/Rereading statuses.",
+                    showEpisodeAddButtonForRepeatingMedia, true,
+                    (sender, args) =>
+                    {
+                        Presenter.SetShowEpisodeAddButtonForRepeatingMedia(args.IsChecked);
                         _recreateActivity = true;
                         Intent.PutExtra(MainActivity.RecreateActivityIntentKey, true);
                     }));

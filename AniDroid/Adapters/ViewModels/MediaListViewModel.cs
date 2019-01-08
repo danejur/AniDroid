@@ -45,7 +45,7 @@ namespace AniDroid.Adapters.ViewModels
         }
 
         public static MediaListViewModel CreateViewModel(Media.MediaList model, User.ScoreFormat scoreFormat, bool displayTimeUntilAiringCountdown,
-            MediaListRecyclerAdapter.MediaListProgressDisplayType progressDisplayType, bool readOnly = false)
+            MediaListRecyclerAdapter.MediaListProgressDisplayType progressDisplayType, bool readOnly, bool showEpisodeAddButtonForRepeatingMedia)
         {
             var secondaryDetail = MediaListDetailType.Progress;
 
@@ -61,7 +61,7 @@ namespace AniDroid.Adapters.ViewModels
             return new MediaListViewModel(model, MediaListDetailType.FormatAndAiringInfo, secondaryDetail, displayTimeUntilAiringCountdown,
                 progressDisplayType, scoreFormat)
             {
-                IsButtonVisible = !readOnly && model.Status?.Equals(Media.MediaListStatus.Current) == true
+                IsButtonVisible = !readOnly && (model.Status?.Equals(Media.MediaListStatus.Current) == true || showEpisodeAddButtonForRepeatingMedia && model.Status?.Equals(Media.MediaListStatus.Repeating) == true)
             };
         }
 

@@ -28,7 +28,6 @@ using AniDroid.Dialogs;
 using AniDroid.Home;
 using AniDroid.Utils.Formatting;
 using AniDroid.Utils.Formatting.Markdown;
-using CommonMark;
 using Markdig;
 using OneOf;
 
