@@ -203,7 +203,7 @@ namespace AniDroid.Widgets
 
         private void IncrementCounter(object sender, EventArgs eventArgs)
         {
-            var alteredVal = (_currentValue ?? (_type == PickerType.Drawable || _type == PickerType.Strings ? -1 : 0)) + 1 / (float)Math.Pow(10, _precision);
+            var alteredVal = (_currentValue ?? (_type == PickerType.Drawable || _type == PickerType.Strings ? -1 : 0)) + 1;
 
             if ((_type == PickerType.Drawable || _type == PickerType.Strings) && !GetCollectionPosition(alteredVal).HasValue || (_type != PickerType.Drawable && _type != PickerType.Strings) && alteredVal > _maxValue)
             {

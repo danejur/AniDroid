@@ -57,7 +57,7 @@
                 <LinearLayout
                     android:orientation="horizontal"
                     android:id="@+id/AniListActivity_ContentContainer"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp">
@@ -67,7 +67,7 @@
                         android:textColor="?Background_Text_Alternate"
                         android:text="Content"
                         android:gravity="top"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentLeft="true" />

@@ -284,7 +284,8 @@ namespace AniDroid.MediaList
 
                 var adapter = new MediaListRecyclerAdapter(Activity, statusList, Presenter.GetCardType(),
                     item => MediaListViewModel.CreateViewModel(item, _collection.User.MediaListOptions.ScoreFormat,
-                        Presenter.GetDisplayTimeUntilAiringAsCountdown(), Presenter.GetProgressDisplayType()),
+                        Presenter.GetDisplayTimeUntilAiringAsCountdown(), Presenter.GetProgressDisplayType(), false,
+                        Presenter.GetShowEpisodeAddButtonForRepeatingMedia()),
                     Presenter.GetMediaListItemViewType(), Presenter.GetHighlightPriorityItems(),
                     Presenter.GetUseLongClickForEpisodeAdd(),
                     async (viewModel, callback) =>

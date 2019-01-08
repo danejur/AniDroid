@@ -161,6 +161,11 @@ namespace AniDroid.MediaList
             return AniDroidSettings.UseSwipeToRefreshOnMediaLists;
         }
 
+        public bool GetShowEpisodeAddButtonForRepeatingMedia()
+        {
+            return AniDroidSettings.ShowEpisodeAddButtonForRepeatingMedia;
+        }
+
         public MediaListSortComparer.MediaListSortDirection GetMediaListSortDirection(Media.MediaType mediaType)
         {
             if (Media.MediaType.Anime.Equals(mediaType))

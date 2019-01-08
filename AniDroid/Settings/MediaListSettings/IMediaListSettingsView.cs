@@ -26,6 +26,7 @@ namespace AniDroid.Settings.MediaListSettings
         void CreateMangaListSortItem(MediaListSortComparer.MediaListSortType sort, MediaListSortComparer.MediaListSortDirection direction);
         void CreateUseLongClickForEpisodeAddItem(bool useLongClickForEpisodeAdd);
         void CreateMediaListProgressDisplayItem(MediaListRecyclerAdapter.MediaListProgressDisplayType mediaListProgressDisplay);
-        void CreateUseSwipeToRefreshOnMediaLists(bool useSwipeToRefreshOnMediaLists);
+        void CreateUseSwipeToRefreshOnMediaListsItem(bool useSwipeToRefreshOnMediaLists);
+        void CreateShowEpisodeAddButtonForRepeatingMediaItem(bool showEpisodeAddButtonForRepeatingMedia);
     }
 }
