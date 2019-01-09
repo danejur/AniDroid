@@ -23,13 +23,13 @@ namespace AniDroid.Dialogs
 {
     public static class AniListNotificationsDialog
     {
-        public static void Create(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<AniListNotification>, IAniListError>> enumerable, Action dataLoadedAction = null)
+        public static void Create(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<AniListNotification>, IAniListError>> enumerable, int unreadCount, Action dataLoadedAction = null)
         {
             var dialogView = context.LayoutInflater.Inflate(Resource.Layout.View_List, null);
             dialogView.SetBackgroundColor(Color.Transparent);
             var recycler = dialogView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
             var adapter =
-                new AniListNotificationRecyclerAdapter(context, enumerable,
+                new AniListNotificationRecyclerAdapter(context, enumerable, unreadCount,
                     viewModel => AniListNotificationViewModel.CreateViewModel(viewModel, context,
                         new Color(context.GetThemedColor(Resource.Attribute.Primary))))
                 {
