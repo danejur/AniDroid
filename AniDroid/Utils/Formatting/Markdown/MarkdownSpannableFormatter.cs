@@ -73,6 +73,10 @@ namespace AniDroid.Utils.Formatting.Markdown
 
             var matches = YoutubeRegex.Matches(text);
 
+            var playIcon = ContextCompat.GetDrawable(context, Resource.Drawable.svg_play);
+            playIcon.SetColorFilter(Color.White, PorterDuff.Mode.SrcIn);
+            playIcon.SetAlpha(150);
+
             foreach (var match in matches.ToList())
             {
                 var drawable = ContextCompat.GetDrawable(Application.Context, PlaceholderImage);
@@ -95,7 +99,8 @@ namespace AniDroid.Utils.Formatting.Markdown
                     SpanTypes.InclusiveExclusive);
 
                 Picasso.Get().Load(string.Format(YoutubeThumbnailUrl, match.Groups[1].Value))
-                    .Into(new DrawableTarget(spannable, match.Index, match.Index + match.Length, (int)(250 * context.Resources.DisplayMetrics.Density)));
+                    .Into(new DrawableTarget(spannable, match.Index, match.Index + match.Length,
+                        (int) (250 * context.Resources.DisplayMetrics.Density), playIcon));
             }
         }
 
@@ -105,13 +110,15 @@ namespace AniDroid.Utils.Formatting.Markdown
             private readonly int _start;
             private readonly int _end;
             private readonly int _width;
+            private readonly Drawable _playIcon;
 
-            public DrawableTarget(ISpannable spannable, int start, int end, int width)
+            public DrawableTarget(ISpannable spannable, int start, int end, int width, Drawable playIcon = null)
             {
                 _spannable = spannable;
                 _start = start;
                 _end = end;
                 _width = width;
+                _playIcon = playIcon;
             }
 
             public void OnBitmapFailed(Java.Lang.Exception e, Drawable errorDrawable)
@@ -121,11 +128,16 @@ namespace AniDroid.Utils.Formatting.Markdown
             public void OnBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom @from)
             {
                 var scaledBitmap = Bitmap.CreateScaledBitmap(bitmap, _width, (int)(bitmap.Height / ((float)bitmap.Width / _width)), true);
-                //bitmap.Recycle();
+
+                if (_playIcon != null)
+                {
+                    _playIcon.SetBounds((int) (scaledBitmap.Width * .35), (int) (scaledBitmap.Height * .3),
+                        (int) (scaledBitmap.Width * .65), (int) (scaledBitmap.Height * .7));
+                    _playIcon.Draw(new Canvas(scaledBitmap));
+                }
 
                 var drawable = new BitmapDrawable(Application.Context.Resources, scaledBitmap);
                 drawable.SetBounds(0, 0, drawable.IntrinsicWidth, drawable.IntrinsicHeight);
-
 
                 var imageSpan = new ImageSpan(drawable, SpanAlign.Baseline);
                 _spannable.SetSpan(imageSpan, _start, _end,

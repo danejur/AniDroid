@@ -21,11 +21,14 @@ namespace AniDroid.Adapters.UserAdapters
 {
     public class AniListNotificationRecyclerAdapter : AniDroidRecyclerAdapter<AniListNotificationViewModel, AniListNotification>
     {
+        private readonly int _unreadCount;
+
         public AniListNotificationRecyclerAdapter(BaseAniDroidActivity context,
-            IAsyncEnumerable<OneOf<IPagedData<AniListNotification>, IAniListError>> enumerable,
+            IAsyncEnumerable<OneOf<IPagedData<AniListNotification>, IAniListError>> enumerable, int unreadCount,
             Func<AniListNotification, AniListNotificationViewModel> createViewModelFunc) : base(context, enumerable,
             RecyclerCardType.Custom, createViewModelFunc)
         {
+            _unreadCount = unreadCount;
             CustomCardUseItemDecoration = true;
             ClickAction = viewModel => (viewModel as AniListNotificationViewModel)?.ClickAction?.Invoke();
         }

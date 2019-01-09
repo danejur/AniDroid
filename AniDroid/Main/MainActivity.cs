@@ -66,6 +66,7 @@ namespace AniDroid.Main
         private BadgeDrawerToggle _drawerToggle;
         private BadgeImageView _notificationImageView;
         private IMenuItem _selectedItem;
+        private int _unreadNotificationCount;
 
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IMainView, MainActivity>(this));
 
@@ -101,6 +102,8 @@ namespace AniDroid.Main
 
         public void SetNotificationCount(int count)
         {
+            _unreadNotificationCount = count;
+
             var countVal = "";
 
             if (count > 99)
@@ -184,7 +187,8 @@ namespace AniDroid.Main
                 if (Intent.GetBooleanExtra(DisplayNotificationsIntentKey, false))
                 {
                     Intent.RemoveExtra(DisplayNotificationsIntentKey);
-                    AniListNotificationsDialog.Create(this, Presenter.GetNotificationsEnumerable(), () => SetNotificationCount(0));
+                    AniListNotificationsDialog.Create(this, Presenter.GetNotificationsEnumerable(),
+                        _unreadNotificationCount, () => SetNotificationCount(0));
                 }
                 else
                 {
@@ -334,7 +338,8 @@ namespace AniDroid.Main
                 userNameViewContainer.Click += (sender, args) =>
                 {
                     _navClosedAction = () =>
-                        AniListNotificationsDialog.Create(this, Presenter.GetNotificationsEnumerable(), () => SetNotificationCount(0));
+                        AniListNotificationsDialog.Create(this, Presenter.GetNotificationsEnumerable(),
+                            _unreadNotificationCount, () => SetNotificationCount(0));
                     _navigationDrawer.CloseDrawer(GravityCompat.Start);
                 };
 

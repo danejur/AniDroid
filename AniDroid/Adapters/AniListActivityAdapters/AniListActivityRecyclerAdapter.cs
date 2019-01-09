@@ -138,7 +138,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             var builder = new SpannableStringBuilder(MarkdownTextCleaner.ConvertToSpanned(item.Text));
             viewHolder.ContentText.MovementMethod = LinkMovementMethod.Instance;
             viewHolder.ContentText.SetText(builder, TextView.BufferType.Spannable);
-            MarkdownSpannableFormatter.FormatMarkdownSpannable(Context, viewHolder.ContentText.TextFormatted as ISpannable);
+            MarkdownSpannableFormatter.FormatMarkdownSpannable(Context, viewHolder.ContentText.TextFormatted as SpannableString);
             viewHolder.ContentText.Visibility = ViewStates.Visible;
 
             Context.LoadImage(viewHolder.Image, item.User?.Avatar?.Large);
@@ -152,7 +152,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             var builder = new SpannableStringBuilder(MarkdownTextCleaner.ConvertToSpanned(item.Message));
             viewHolder.ContentText.MovementMethod = LinkMovementMethod.Instance;
             viewHolder.ContentText.SetText(builder, TextView.BufferType.Spannable);
-            MarkdownSpannableFormatter.FormatMarkdownSpannable(Context, viewHolder.ContentText.TextFormatted as ISpannable);
+            MarkdownSpannableFormatter.FormatMarkdownSpannable(Context, viewHolder.ContentText.TextFormatted as SpannableString);
             viewHolder.ContentText.Visibility = ViewStates.Visible;
 
             Context.LoadImage(viewHolder.Image, item.Messenger?.Avatar?.Large);
