@@ -23,7 +23,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Android.Text;
+using Android.Text.Method;
 using AniDroid.Adapters.ReviewAdapters;
+using AniDroid.Utils.Formatting.Markdown;
 
 namespace AniDroid.AniListObject.User
 {
@@ -174,7 +177,14 @@ namespace AniDroid.AniListObject.User
             var aboutView = retView.FindViewById<ExpandableText>(Resource.Id.User_Description);
             if (!string.IsNullOrWhiteSpace(user.About))
             {
-                aboutView.TextFormatted = FromHtml(user.About);
+                aboutView.TextFormatted = MarkdownTextCleaner.ConvertToSpanned(user.About);
+
+                aboutView.ExpandTextAction = textView => {
+                    var builder = new SpannableStringBuilder(MarkdownTextCleaner.ConvertToSpanned(user.About));
+                    textView.MovementMethod = LinkMovementMethod.Instance;
+                    textView.SetText(builder, TextView.BufferType.Spannable);
+                    MarkdownSpannableFormatter.FormatMarkdownSpannable(this, textView.TextFormatted as SpannableString);
+                };
             }
             else
             {
