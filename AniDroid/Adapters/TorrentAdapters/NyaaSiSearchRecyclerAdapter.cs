@@ -77,6 +77,8 @@ namespace AniDroid.Adapters.TorrentAdapters
                     cardHolder.ContainerCard.CardBackgroundColor = DefaultBackgroundColor;
                     break;
             }
+
+            cardHolder.ContainerCard.SetTag(Resource.Id.Object_Position, position);
         }
 
 
@@ -91,22 +93,17 @@ namespace AniDroid.Adapters.TorrentAdapters
         private void ItemClick(object sender, EventArgs e)
         {
             var view = sender as View;
-            var position = (int)view.Tag;
+            var position = (int)view.GetTag(Resource.Id.Object_Position);
             var item = Items[position];
 
             var a = new AlertDialog.Builder(Context).Create();
             a.SetTitle("Open Torrent");
-            a.SetMessage("Would you like to download this torrent?");
+            a.SetMessage("Would you like to open this torrent (magnet)?");
             a.SetButton2("Yes", (aS, ev) => {
                 var intent = new Intent(Intent.ActionView);
+                intent.SetData(Android.Net.Uri.Parse(item.Link));
                 intent.AddFlags(ActivityFlags.NewTask);
-                intent.SetDataAndType(Android.Net.Uri.Parse(item.Link), "application/x-bittorrent");
-                var list = Context.PackageManager.QueryIntentActivities(intent, Android.Content.PM.PackageInfoFlags.MatchDefaultOnly);
-                a.Dismiss();
-                if (list.Any())
-                    Context.StartActivity(intent);
-                else
-                    Toast.MakeText(Context, "No torrent client installed!", ToastLength.Short).Show();
+                Context.StartActivity(intent);
             });
             a.SetButton("Open in Browser", (aS, eV) => {
                 var intent = new Intent(Intent.ActionView);
