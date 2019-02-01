@@ -5,6 +5,7 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.V7.Widget;
@@ -15,6 +16,7 @@ using AniDroid.Adapters;
 using AniDroid.Adapters.AniListActivityAdapters;
 using AniDroid.AniList.Models;
 using AniDroid.Adapters.Base;
+using AniDroid.Adapters.ViewModels;
 using AniDroid.AniListObject.User;
 using AniDroid.Base;
 
@@ -27,7 +29,21 @@ namespace AniDroid.Dialogs
             var view = context.LayoutInflater.Inflate(Resource.Layout.Dialog_AniListActivityReply, null);
             var recycler = view.FindViewById<RecyclerView>(Resource.Id.AniListActivityReply_Recycler);
             var likesContainer = view.FindViewById<LinearLayout>(Resource.Id.AniListActivityReply_LikesContainer);
-            var adapter = new AniListActivityRepliesRecyclerAdapter(context, activity.Replies);
+            var adapter = new AniListActivityRepliesRecyclerAdapter(context,
+                activity.Replies.Select(x => AniListActivityReplyViewModel.CreateViewModel(x,
+                    new Color(context.GetThemedColor(Resource.Attribute.Secondary_Dark)), currentUserId)).ToList());
+            
+            // TODO: add reply editing and deleting
+            //{
+            //    LongClickAction = viewModel => {
+            //        if (currentUserId.HasValue && viewModel.Model?.User?.Id == currentUserId)
+            //        {
+            //            AniListActivityCreateDialog.CreateEditActivity(context, viewModel.Model.Text,
+            //                async text => await _presenter.EditReplyAsync(viewModel.Model.ActivityId, viewModel.Model.Id, text),
+            //                async () => await _presenter.DeleteReplyAsync(viewModel.Model.ActivityId, viewModel.Model.Id));
+            //        }
+            //    }
+            //};
 
             PopulateLikesContainer(context, activity, likesContainer);
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.Content.Res;
@@ -13,32 +13,63 @@ using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.Base;
+using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Models;
+using AniDroid.AniListObject;
 using AniDroid.AniListObject.User;
 using AniDroid.Base;
+using AniDroid.Dialogs;
 
 namespace AniDroid.Adapters.AniListActivityAdapters
 {
-    public class AniListActivityRepliesRecyclerAdapter : BaseRecyclerAdapter<AniListActivity.ActivityReply>
+    public class AniListActivityRepliesRecyclerAdapter : AniDroidRecyclerAdapter<AniListActivityReplyViewModel, AniListActivity.ActivityReply>
     {
         private readonly Color _userNameColor;
 
-        public AniListActivityRepliesRecyclerAdapter(BaseAniDroidActivity context, List<AniListActivity.ActivityReply> items) : base(context, items, RecyclerCardType.FlatHorizontal)
+        public AniListActivityRepliesRecyclerAdapter(BaseAniDroidActivity context,
+            List<AniListActivityReplyViewModel> items) : base(context, items, RecyclerCardType.Custom)
         {
             _userNameColor = new Color(Context.GetThemedColor(Resource.Attribute.Primary));
         }
 
-        public override void BindCardViewHolder(CardItem holder, int position)
+        public override void BindCustomViewHolder(RecyclerView.ViewHolder holder, int position)
         {
-            var item = Items[position];
+            var viewModel = Items[position];
 
-            holder.Name.Text = item.User.Name;
-            holder.DetailPrimary.TextFormatted = BaseAniDroidActivity.FromHtml(item.Text);
-            Context.LoadImage(holder.Image, item.User.Avatar.Large);
+            if (holder is AniListActivityRecyclerAdapter.AniListActivityViewHolder activityHolder)
+            {
+                activityHolder.Title.Text = viewModel.TitleText;
+                activityHolder.ContentText.TextFormatted = viewModel.DetailFormatted;
+                activityHolder.Timestamp.Text = viewModel.TimestampText;
+                activityHolder.LikeCount.Text = viewModel.LikeCount;
+                activityHolder.LikeIcon.ImageTintList = viewModel.LikeIconColor;
 
-            holder.Image.SetTag(Resource.Id.Object_Position, position);
-            holder.Image.Click -= ImageClick;
-            holder.Image.Click += ImageClick;
+                Context.LoadImage(activityHolder.Image, viewModel.ImageUri);
+
+                activityHolder.Image.SetTag(Resource.Id.Object_Position, position);
+                activityHolder.Image.Click -= ImageClick;
+                activityHolder.Image.Click += ImageClick;
+
+                activityHolder.Container.SetTag(Resource.Id.Object_Position, position);
+                activityHolder.Container.LongClick -= RowLongClick;
+                activityHolder.Container.LongClick += RowLongClick;
+            }
+        }
+
+        public override RecyclerView.ViewHolder CreateCustomViewHolder(ViewGroup parent, int viewType)
+        {
+            var holder = new AniListActivityRecyclerAdapter.AniListActivityViewHolder(
+                Context.LayoutInflater.Inflate(Resource.Layout.View_AniListActivityItem, parent, false))
+            {
+                ReplyButton = {Visibility = ViewStates.Gone},
+                ContentImageContainer = {Visibility = ViewStates.Gone},
+                ReplyCountContainer = {Visibility = ViewStates.Gone}
+            };
+
+            holder.Title.SetTextColor(_userNameColor);
+            holder.Container.SetBackgroundColor(Color.Transparent);
+
+            return holder;
         }
 
         public override CardItem SetupCardItemViewHolder(CardItem item)
@@ -53,9 +84,9 @@ namespace AniDroid.Adapters.AniListActivityAdapters
         private void ImageClick(object sender, EventArgs e)
         {
             var senderView = sender as View;
-            var userPos = (int)senderView.GetTag(Resource.Id.Object_Position);
-            var user = Items[userPos];
-            UserActivity.StartActivity(Context, user.Id);
+            var userPos = (int) senderView.GetTag(Resource.Id.Object_Position);
+            var viewModel = Items[userPos];
+            UserActivity.StartActivity(Context, viewModel.Model?.User?.Id ?? 0);
         }
     }
 }

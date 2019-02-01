@@ -253,6 +253,7 @@
     <Compile Include="Adapters\TorrentAdapters\NyaaSiSearchRecyclerAdapter.cs" />
     <Compile Include="Adapters\UserAdapters\AniListNotificationRecyclerAdapter.cs" />
     <Compile Include="Adapters\UserAdapters\UserRecyclerAdapter.cs" />
+    <Compile Include="Adapters\ViewModels\AniListActivityReplyViewModel.cs" />
     <Compile Include="Adapters\ViewModels\AniDroidAdapterViewModel.cs" />
     <Compile Include="Adapters\ViewModels\AniListNotificationViewModel.cs" />
     <Compile Include="Adapters\ViewModels\CharacterEdgeViewModel.cs" />
