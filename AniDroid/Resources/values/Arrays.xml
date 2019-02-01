@@ -149,5 +149,9 @@
     <item>01-07-2019|Adding some initial markdown support for the activity feed! Most (maybe) tags are supported at this point, and I will work to add proper markdown support to user profiles and other places. Coming soon!</item>
     <item>01-07-2019|Added option in Media List Settings to allow you to turn on the plus button on media you are repeating</item>
     <item>01-07-2019|Bug fixes</item>
+    <item>01-31-2019|Adding initial markdown support to user profiles. More improvements are coming!</item>
+    <item>01-31-2019|The Current Season section on the Discover screen now shows the actual current season</item>
+    <item>01-31-2019|A few fixes to torrent searching and opening</item>
+    <item>01-31-2019|You can now see the progress of users you are following on airing shows and manga</item>
   </array>
 </resources>
