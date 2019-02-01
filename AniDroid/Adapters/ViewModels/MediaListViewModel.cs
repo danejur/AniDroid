@@ -67,15 +67,22 @@ namespace AniDroid.Adapters.ViewModels
 
         public static MediaListViewModel CreateUserMediaListViewModel(Media.MediaList model)
         {
-            return new MediaListViewModel(model, MediaListDetailType.None, MediaListDetailType.None, false,
-                    MediaListRecyclerAdapter.MediaListProgressDisplayType.Never, null)
+            var retModel = new MediaListViewModel(model, MediaListDetailType.None, MediaListDetailType.None, false,
+                MediaListRecyclerAdapter.MediaListProgressDisplayType.Never, null)
             {
                 TitleText = model.User?.Name,
                 DetailPrimaryText = model.Status?.DisplayValue,
-                DetailSecondaryText = model.GetScoreString(model.User?.MediaListOptions?.ScoreFormat),
                 ImageUri = model.User?.Avatar?.Large ?? model.User?.Avatar?.Medium
             };
 
+            retModel.DetailSecondaryText = model.Media?.Status?.Equals(Media.MediaStatus.Releasing) == true &&
+                                           model.Status?.EqualsAny(Media.MediaListStatus.Current,
+                                               Media.MediaListStatus.Paused, Media.MediaListStatus.Dropped,
+                                               Media.MediaListStatus.Planning) == true
+                ? retModel.GetDetailString(model.Media.Type, MediaListDetailType.Progress)
+                : model.GetScoreString(model.User?.MediaListOptions?.ScoreFormat);
+
+            return retModel;
         }
 
         public enum MediaListDetailType

@@ -47,12 +47,13 @@ namespace AniDroid.Torrent.NyaaSi
                     var category = element.Descendants("td").First().Descendants("a").First().Attributes["href"].Value
                         .Replace("/?c=", "");
                     var title = element.Descendants("td").ElementAt(1).Descendants("a").First(x =>
-                            !x.Attributes.Contains("class") || !x.Attributes["class"].Value.Contains("comments"))
+                            !x.Attributes.Contains("class"))
                         .InnerText
                         .Trim('\n');
                     var link = element.Descendants("td").ElementAt(2).Descendants("a")
-                        .FirstOrDefault(x => x.Attributes["href"].Value.Contains("magnet"))?.Attributes["href"].Value;
-                    var siteLink = element.Descendants("td").ElementAt(1).Descendants("a").First().Attributes["href"]
+                        .FirstOrDefault(x => x.Attributes["href"].Value.Contains(".torrent"))?.Attributes["href"].Value;
+                    var siteLink = element.Descendants("td").ElementAt(1).Descendants("a").First(x =>
+                            !x.Attributes.Contains("class")).Attributes["href"]
                         .Value;
                     var date = element.Descendants("td").ElementAt(4).InnerText;
                     var size = element.Descendants("td").ElementAt(3).InnerText;
@@ -71,7 +72,7 @@ namespace AniDroid.Torrent.NyaaSi
                     var result = new NyaaSiSearchResult
                     {
                         Title = title,
-                        Link = link,
+                        Link = $"{BaseAddress}{link}",
                         PublishDate = DateTime.Parse(date),
                         Description = description,
                         Category = NyaaSiConstants.TorrentCategories.GetDisplayCategory(category),

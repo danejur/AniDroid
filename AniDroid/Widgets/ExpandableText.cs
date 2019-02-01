@@ -22,6 +22,8 @@ namespace AniDroid.Widgets
         private TextView _text;
         private TextView _button;
 
+        public Action<TextView> ExpandTextAction { get; set; }
+
         public ExpandableText(Context context) : base(context)
         {
             Initialize(context, null, null, null);
@@ -107,6 +109,7 @@ namespace AniDroid.Widgets
         {
             _text.SetMaxLines(int.MaxValue);
             _button.Visibility = ViewStates.Gone;
+            ExpandTextAction?.Invoke(_text);
         }
 
         public string Text

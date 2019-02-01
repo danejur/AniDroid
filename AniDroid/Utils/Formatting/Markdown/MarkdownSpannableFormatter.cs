@@ -47,6 +47,17 @@ namespace AniDroid.Utils.Formatting.Markdown
 
                 var imageSpan = new ImageSpan(drawable, SpanAlign.Baseline);
 
+                var clickSpan = new CustomClickableSpan();
+                clickSpan.Click += (sender, e) =>
+                {
+                    var intent = new Intent(Intent.ActionView,
+                        Android.Net.Uri.Parse(match.Groups[2].Value));
+                    context.StartActivity(intent);
+                };
+
+                spannable.SetSpan(clickSpan, match.Index, match.Index + match.Length,
+                    SpanTypes.InclusiveExclusive);
+
                 spannable.SetSpan(imageSpan, match.Index, match.Index + match.Length,
                     SpanTypes.InclusiveExclusive);
 
