@@ -12,6 +12,7 @@ using Android.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Base;
+using AniDroid.Main;
 using AniDroid.Utils.Comparers;
 
 namespace AniDroid.Settings
@@ -29,5 +30,6 @@ namespace AniDroid.Settings
         // Auth settings
         void CreateMediaListSettingsItem();
         void CreateEnableNotificationServiceItem(bool enableNotificationService);
+        void CreateDefaultTabItem(MainActivity.DefaultTab defaultTab);
     }
 }

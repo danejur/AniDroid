@@ -179,7 +179,19 @@ namespace AniDroid.Settings
                     }));
             _settingsContainer.AddView(CreateSettingDivider(this));
         }
-        
+
+        public void CreateDefaultTabItem(MainActivity.DefaultTab defaultTab)
+        {
+            var tabs = Enum.GetNames(typeof(MainActivity.DefaultTab)).ToList();
+
+            _settingsContainer.AddView(
+                CreateSpinnerSettingRow(this, "Default Tab",
+                    "Choose which tab you'd like to show by default when opening AniDroid", tabs,
+                    tabs.IndexOf(defaultTab.ToString()),
+                    (sender, args) => Presenter.SetDefaultTab((MainActivity.DefaultTab) args.Position)));
+            _settingsContainer.AddView(CreateSettingDivider(this));
+        }
+
         #endregion
 
         public static void StartActivity(Activity context)

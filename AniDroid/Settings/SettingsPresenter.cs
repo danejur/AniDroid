@@ -14,6 +14,7 @@ using AniDroid.Adapters.MediaAdapters;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
+using AniDroid.Main;
 using AniDroid.Utils.Comparers;
 using AniDroid.Utils.Interfaces;
 using AniDroid.Utils.Logging;
@@ -39,8 +40,8 @@ namespace AniDroid.Settings
             if (AniDroidSettings.IsUserAuthenticated)
             {
                 View.CreateMediaListSettingsItem();
-                
                 View.CreateEnableNotificationServiceItem(AniDroidSettings.EnableNotificationService);
+                View.CreateDefaultTabItem(AniDroidSettings.DefaultTab);
             }
 
             View.CreatePrivacyPolicyLinkItem();
@@ -84,6 +85,11 @@ namespace AniDroid.Settings
         public void SetEnableNotificationService(bool enableNotificationService)
         {
             AniDroidSettings.EnableNotificationService = enableNotificationService;
+        }
+
+        public void SetDefaultTab(MainActivity.DefaultTab defaultTab)
+        {
+            AniDroidSettings.DefaultTab = defaultTab;
         }
     }
 }

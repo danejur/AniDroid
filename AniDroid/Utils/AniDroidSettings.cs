@@ -13,6 +13,7 @@ using AniDroid.Adapters.Base;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
+using AniDroid.Main;
 using AniDroid.Utils.Comparers;
 using AniDroid.Utils.Interfaces;
 using AniDroid.Utils.Storage;
@@ -102,6 +103,12 @@ namespace AniDroid.Utils
         {
             get => _authSettingStorage.Get(AuthenticatedKeys.EnableNotificationServiceKey, true);
             set => _authSettingStorage.Put(AuthenticatedKeys.EnableNotificationServiceKey, value);
+        }
+
+        public MainActivity.DefaultTab DefaultTab
+        {
+            get => _authSettingStorage.Get(AuthenticatedKeys.DefaultTabKey, MainActivity.DefaultTab.Anime);
+            set => _authSettingStorage.Put(AuthenticatedKeys.DefaultTabKey, value);
         }
 
         #endregion
@@ -264,6 +271,7 @@ namespace AniDroid.Utils
             public const string LoggedInUser = "LOGGED_IN_USER";
             public const string ShowAllActivityKey = "SHOW_ALL_ACTIVITY";
             public const string EnableNotificationServiceKey = "ENABLE_NOTIFICATION_SERVICE";
+            public const string DefaultTabKey = "DEFAULT_TAB";
         }
 
         private static class MediaListKeys

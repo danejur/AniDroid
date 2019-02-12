@@ -13,6 +13,7 @@ using AniDroid.Adapters.Base;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
+using AniDroid.Main;
 using AniDroid.Utils.Comparers;
 
 namespace AniDroid.Utils.Interfaces
@@ -38,6 +39,7 @@ namespace AniDroid.Utils.Interfaces
         User LoggedInUser { get; set; }
         bool ShowAllAniListActivity { get; set; }
         bool EnableNotificationService { get; set; }
+        MainActivity.DefaultTab DefaultTab { get; set; }
 
         #endregion
 

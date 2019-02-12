@@ -59,5 +59,10 @@ namespace AniDroid.Main
         {
             return AniDroidSettings.IsUserAuthenticated;
         }
+
+        public MainActivity.DefaultTab GetDefaultTab()
+        {
+            return AniDroidSettings.DefaultTab;
+        }
     }
 }
