@@ -42,9 +42,15 @@ namespace AniDroid.Discover
                 Type = Media.MediaType.Anime,
                 Sort = new List<Media.MediaSort> { Media.MediaSort.PopularityDesc }
             }, 5));
-            View.ShowTrendingResults(AniListService.BrowseMedia(new BrowseMediaDto
+            View.ShowTrendingAnimeResults(AniListService.BrowseMedia(new BrowseMediaDto
             {
+                Type = Media.MediaType.Anime,
                 Sort = new List<Media.MediaSort> {Media.MediaSort.TrendingDesc}
+            }, 5));
+            View.ShowTrendingMangaResults(AniListService.BrowseMedia(new BrowseMediaDto
+            {
+                Type = Media.MediaType.Manga,
+                Sort = new List<Media.MediaSort> { Media.MediaSort.TrendingDesc }
             }, 5));
             View.ShowNewAnimeResults(AniListService.BrowseMedia(
                 new BrowseMediaDto

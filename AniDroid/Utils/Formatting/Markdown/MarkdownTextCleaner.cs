@@ -11,6 +11,7 @@ using Android.Text;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Base;
+using Markdig;
 
 namespace AniDroid.Utils.Formatting.Markdown
 {
@@ -29,8 +30,10 @@ namespace AniDroid.Utils.Formatting.Markdown
 
         public static ISpanned ConvertToSpanned(string text)
         {
+            var pipeline = new MarkdownPipelineBuilder().UseEmphasisExtras().UseEmojiAndSmiley().UseListExtras().Build();
+
             var cleanedText = FormatMarkdownText(text);
-            var parsedText = Markdig.Markdown.ToHtml(cleanedText);
+            var parsedText = Markdig.Markdown.ToHtml(cleanedText, pipeline);
             return BaseAniDroidActivity.FromHtml(parsedText);
         }
 

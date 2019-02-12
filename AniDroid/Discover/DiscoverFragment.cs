@@ -129,9 +129,34 @@ namespace AniDroid.Discover
             _listContainer.AddView(currentlyAiringView);
         }
 
-        public void ShowTrendingResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
+        public void ShowTrendingAnimeResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
         {
-            var trendingView = new SideScrollingList(Activity) {LabelText = "Trending"};
+            var trendingView = new SideScrollingList(Activity) { LabelText = "Trending Anime" };
+
+            var adapter = new MediaRecyclerAdapter(Activity, mediaEnumerable,
+                BaseRecyclerAdapter.RecyclerCardType.Vertical, MediaViewModel.CreateMediaViewModel)
+            {
+                LongClickAction = viewModel =>
+                {
+                    if (Presenter.GetIsUserAuthenticated())
+                    {
+                        EditMediaListItemDialog.Create(Activity, Presenter, viewModel.Model,
+                            viewModel.Model.MediaListEntry,
+                            Presenter.GetLoggedInUser()?.MediaListOptions);
+                    }
+                },
+
+            };
+            adapter.SetHorizontalAdapterCardWidthDip(CardWidth);
+
+            trendingView.RecyclerAdapter = _trendingRecyclerAdapter = adapter;
+
+            _listContainer.AddView(trendingView);
+        }
+
+        public void ShowTrendingMangaResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
+        {
+            var trendingView = new SideScrollingList(Activity) { LabelText = "Trending Manga" };
 
             var adapter = new MediaRecyclerAdapter(Activity, mediaEnumerable,
                 BaseRecyclerAdapter.RecyclerCardType.Vertical, MediaViewModel.CreateMediaViewModel)
