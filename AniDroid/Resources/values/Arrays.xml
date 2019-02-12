@@ -153,5 +153,7 @@
     <item>01-31-2019|The Current Season section on the Discover screen now shows the actual current season</item>
     <item>01-31-2019|A few fixes to torrent searching and opening</item>
     <item>01-31-2019|You can now see the progress of users you are following on airing shows and manga</item>
+    <item>02-11-2019|Split Trending section into Trending Anime and Trending Manga</item>
+    <item>02-11-2019|Added some more markdown support</item>
   </array>
 </resources>
