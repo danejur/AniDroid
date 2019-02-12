@@ -5,10 +5,11 @@
       android:layout_height="match_parent"
       android:minWidth="25px"
       android:minHeight="25px">
-  <android.support.v7.widget.RecyclerView
-    android:id="@+id/AniListActivityReply_Recycler"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+	<android.support.v7.widget.RecyclerView
+		android:id="@+id/AniListActivityReply_Recycler"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_weight="1" />
   <LinearLayout
     android:orientation="horizontal"
     android:id="@+id/AniListActivityReply_LikesContainer"
