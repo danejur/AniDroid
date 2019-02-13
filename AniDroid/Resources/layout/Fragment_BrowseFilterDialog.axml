@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/BrowseFilterDialog_CoordLayout"
+    android:theme="?Dialog_Theme"
+    android:background="?Background_Alternate"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/BrowseFilterDialog_AppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="?AppBarLayout_Style">
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/BrowseFilterDialog_Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            app:popupTheme="?Toolbar_PopupTheme"
+            app:theme="?Toolbar_Theme"
+            style="?Toolbar_Style"
+            app:layout_scrollFlags="enterAlways" />
+    </android.support.design.widget.AppBarLayout>
+    <android.support.v4.widget.NestedScrollView
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
+            android:background="?Background_Alternate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+			<LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp">
+                    <TextView
+                        android:text="Type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="?Primary_Dark"
+                        android:layout_gravity="top" />
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_gravity="bottom"
+                        android:id="@+id/BrowseFilterDialog_TypeSpinner" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:text="Format"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="?Primary_Dark"
+                        android:layout_gravity="top" />
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_gravity="bottom"
+                        android:id="@+id/BrowseFilterDialog_FormatSpinner" />
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+				android:layout_marginTop="20dp">
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp">
+                    <TextView
+                        android:text="Status"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="?Primary_Dark"
+                        android:layout_gravity="top" />
+					<android.support.v7.widget.AppCompatSpinner
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_gravity="bottom"
+                        android:id="@+id/BrowseFilterDialog_StatusSpinner" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:text="Country"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="?Primary_Dark"
+                        android:layout_gravity="top" />
+					<android.support.v7.widget.AppCompatSpinner
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_gravity="bottom"
+                        android:id="@+id/BrowseFilterDialog_CountrySpinner" />
+                </LinearLayout>
+            </LinearLayout>
+			<LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+				android:layout_marginTop="20dp">
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp">
+                    <TextView
+                        android:text="Source"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="?Primary_Dark"
+                        android:layout_gravity="top" />
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_gravity="bottom"
+                        android:id="@+id/BrowseFilterDialog_SourceSpinner" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:text="Genres and Tags"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="?Primary_Dark"
+                        android:layout_gravity="top" />
+                    <Button
+						android:text="All"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:id="@+id/BrowseFilterDialog_GenresTagsButton"
+						android:layout_gravity="center_horizontal" />
+                </LinearLayout>
+            </LinearLayout>
+			<LinearLayout
+				android:id="@+id/NrowseDialog_AnimeSection"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+				android:layout_marginTop="20dp">
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp">
+                    <TextView
+                        android:text="Season"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="?Primary_Dark"
+                        android:layout_gravity="top" />
+                    <android.support.v7.widget.AppCompatSpinner
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_gravity="bottom"
+                        android:id="@+id/BrowseFilterDialog_SeasonSpinner" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:text="Streaming On"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="?Primary_Dark"
+                        android:layout_gravity="top" />
+                    <Button
+						android:text="All"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:id="@+id/BrowseFilterDialog_StreamingOnButton"
+						android:layout_gravity="center_horizontal" />
+                </LinearLayout>
+            </LinearLayout>
+			<LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+				android:layout_marginTop="20dp">
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp">
+                    <TextView
+                        android:text="Year From"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="?Primary_Dark"
+                        android:layout_gravity="top" />
+                    <AniDroid.Widgets.Picker
+                        android:id="@+id/BrowseFilterDialog_YearFromPicker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_gravity="bottom"
+                        android:background="@android:color/transparent" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+					<TextView
+                        android:text="Year To"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="?Primary_Dark"
+                        android:layout_gravity="top" />
+                    <AniDroid.Widgets.Picker
+                        android:id="@+id/BrowseFilterDialog_YearToPicker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_gravity="bottom"
+                        android:background="@android:color/transparent" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>

@@ -300,6 +300,7 @@
     <Compile Include="Dialogs\AniListActivityRepliesDialog.cs" />
     <Compile Include="Dialogs\AniListActivityCreateDialog.cs" />
     <Compile Include="Dialogs\AniListNotificationsDialog.cs" />
+    <Compile Include="Dialogs\BrowseFilterDialog.cs" />
     <Compile Include="Dialogs\CustomScoringDialog.cs" />
     <Compile Include="Dialogs\EditMediaListItemDialog.cs" />
     <Compile Include="Dialogs\MediaListFilterDialog.cs" />
@@ -809,7 +810,7 @@
     <AndroidResource Include="Resources\drawable\svg_priority_high.xml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\Fragment_BrowseDialog.axml">
+    <AndroidResource Include="Resources\layout\Fragment_BrowseFilterDialog.axml">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </AndroidResource>
@@ -923,6 +924,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\svg_send.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\Browse_ActionBar.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
