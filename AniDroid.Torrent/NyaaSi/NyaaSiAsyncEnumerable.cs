@@ -47,12 +47,13 @@ namespace AniDroid.Torrent.NyaaSi
                 Current = await NyaaSiService.SearchAsync(_request);
 
                 if (Current.Match((IAniListError error) => true)
-                    .Match(data => data.PageInfo?.HasNextPage == false))
+                    .Match(data => data.PageInfo?.HasNextPage != true))
                 {
                     return false;
                 }
 
                 _request.PageNumber += 1;
+                Current.Switch(result => _pageInfo.HasNextPage = result.PageInfo.HasNextPage = result.Data.Count >= 75);
 
                 return true;
             }

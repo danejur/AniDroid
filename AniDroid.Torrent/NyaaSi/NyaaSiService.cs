@@ -27,8 +27,10 @@ namespace AniDroid.Torrent.NyaaSi
         {
             try
             {
+                var searchTerms = (searchReq.SearchTerm ?? string.Empty).Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+
                 var searchString =
-                    $"{BaseAddress}/?f={searchReq.Filter}&c={searchReq.Category}&q={(searchReq.SearchTerm ?? "").Replace(" ", "+")}&p={searchReq.PageNumber}";
+                    $"{BaseAddress}/?f={searchReq.Filter}&c={searchReq.Category}&q={string.Join("+", searchTerms)}&p={searchReq.PageNumber}";
                 var webReq = WebRequest.Create(searchString);
                 var webResp = await webReq.GetResponseAsync();
                 var webRespStream = webResp.GetResponseStream();
@@ -40,7 +42,7 @@ namespace AniDroid.Torrent.NyaaSi
                     .FirstOrDefault(x =>
                         x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("torrent-list"))
                     ?.Descendants("tbody").First();
-                var torrentRows = torrentTable.Descendants("tr");
+                var torrentRows = torrentTable?.Descendants("tr") ?? new List<HtmlNode>();
 
                 foreach (var element in torrentRows)
                 {
@@ -90,7 +92,7 @@ namespace AniDroid.Torrent.NyaaSi
                     PageInfo = new PageInfo
                     {
                         CurrentPage = searchReq.PageNumber,
-                        HasNextPage = retList.Count >= 75
+                        HasNextPage = retList.Count > 0
                     }
                 };
             }
