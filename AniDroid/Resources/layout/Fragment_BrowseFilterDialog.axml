@@ -157,7 +157,31 @@
                         android:layout_gravity="bottom"
                         android:id="@+id/BrowseFilterDialog_SourceSpinner" />
                 </LinearLayout>
+				<LinearLayout
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp">
+                    <TextView
+                        android:text="Year"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="?Primary_Dark"
+                        android:layout_gravity="top" />
+                    <AniDroid.Widgets.Picker
+                        android:id="@+id/BrowseFilterDialog_YearPicker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_gravity="bottom"
+                        android:background="@android:color/transparent" />
+                </LinearLayout>
                 <LinearLayout
+					android:visibility="gone"
                     android:layout_weight="1"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
@@ -180,7 +204,7 @@
                 </LinearLayout>
             </LinearLayout>
 			<LinearLayout
-				android:id="@+id/NrowseDialog_AnimeSection"
+				android:id="@+id/BrowseDialog_AnimeSection"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -208,6 +232,7 @@
                         android:id="@+id/BrowseFilterDialog_SeasonSpinner" />
                 </LinearLayout>
                 <LinearLayout
+					android:visibility="invisible"
                     android:layout_weight="1"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
@@ -230,6 +255,7 @@
                 </LinearLayout>
             </LinearLayout>
 			<LinearLayout
+				android:visibility="gone"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

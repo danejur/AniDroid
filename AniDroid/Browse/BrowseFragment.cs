@@ -33,7 +33,6 @@ namespace AniDroid.Browse
 
         private MediaRecyclerAdapter _adapter;
         private BaseRecyclerAdapter.RecyclerCardType _cardType;
-        private BrowseMediaDto _browseModel;
         private static BrowseFragment _instance;
 
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IBrowseView, BrowseFragment>(this));
@@ -133,17 +132,17 @@ namespace AniDroid.Browse
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
-            _browseModel = new BrowseMediaDto()
+            var browseModel = new BrowseMediaDto()
             {
                 Type = Media.MediaType.Anime,
                 Format = Media.MediaFormat.Tv,
                 Status = Media.MediaStatus.Releasing,
                 Season = Media.MediaSeason.GetFromDate(DateTime.UtcNow),
                 Country = Media.MediaCountry.Japan,
-                SeasonYear = DateTime.Now.Year,
+                Year = DateTime.Now.Year,
                 Sort = new List<Media.MediaSort> { Media.MediaSort.PopularityDesc }
             };
-            Presenter.BrowseAniListMedia(_browseModel);
+            Presenter.BrowseAniListMedia(browseModel);
         }
 
         public override void OnConfigurationChanged(Configuration newConfig)
@@ -165,7 +164,15 @@ namespace AniDroid.Browse
             switch (item.ItemId)
             {
                 case Resource.Id.Menu_Browse_Filter:
-                    BrowseFilterDialog.Create(Activity, _browseModel);
+                    BrowseFilterDialog.Create(Activity, Presenter);
+                    return true;
+                case Resource.Id.Menu_Browse_Sort:
+                    BrowseSortDialog.Create(Activity, Presenter.GetBrowseDto().Sort.FirstOrDefault(), sort =>
+                    {
+                        var browseDto = Presenter.GetBrowseDto();
+                        browseDto.Sort = new List<Media.MediaSort> {sort};
+                        Presenter.BrowseAniListMedia(browseDto);
+                    });
                     return true;
             }
 

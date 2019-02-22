@@ -17,8 +17,6 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.Base;
 using Java.Lang;
-using Math = System.Math;
-using Single = System.Single;
 
 namespace AniDroid.Widgets
 {
@@ -32,6 +30,7 @@ namespace AniDroid.Widgets
         private ImageView _imageView;
         private IList<int> _resIdItems;
         private IList<string> _stringItems;
+        private float _minValue;
         private float _maxValue;
         private uint _precision;
         private float? _currentValue;
@@ -104,9 +103,10 @@ namespace AniDroid.Widgets
             DisplayValue();
         }
 
-        public void SetMaxValue(float max, uint precision, bool readOnly, float? defaultValue)
+        public void SetNumericValues(float max, uint precision, bool readOnly, float? defaultValue, float min = 0)
         {
             _maxValue = max;
+            _minValue = min;
             _precision = precision;
             _type = readOnly ? PickerType.ReadOnly : PickerType.Editable;
 
@@ -125,9 +125,9 @@ namespace AniDroid.Widgets
                 var length = str.Length;
 
                 if (!float.TryParse(str, NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture, out var parsedResult) ||
-                    parsedResult < 0)
+                    parsedResult < min)
                 {
-                    _currentValue = 0;
+                    _currentValue = min;
                 }
                 else if (parsedResult > _maxValue)
                 {
@@ -140,8 +140,6 @@ namespace AniDroid.Widgets
                 }
 
             };
-
-           
 
             _currentValue = defaultValue;
 
@@ -198,12 +196,12 @@ namespace AniDroid.Widgets
                 return;
             }
 
-            _editView.Text = _readOnlyView.Text = _currentValue?.ToString("N" + _precision) ?? "";
+            _editView.Text = _readOnlyView.Text = _currentValue?.ToString("#" + _precision) ?? "";
         }
 
         private void IncrementCounter(object sender, EventArgs eventArgs)
         {
-            var alteredVal = (_currentValue ?? (_type == PickerType.Drawable || _type == PickerType.Strings ? -1 : 0)) + 1;
+            var alteredVal = (_currentValue ?? (_type == PickerType.Drawable || _type == PickerType.Strings ? -1 : _minValue)) + 1;
 
             if ((_type == PickerType.Drawable || _type == PickerType.Strings) && !GetCollectionPosition(alteredVal).HasValue || (_type != PickerType.Drawable && _type != PickerType.Strings) && alteredVal > _maxValue)
             {
@@ -219,7 +217,7 @@ namespace AniDroid.Widgets
         {
             var alteredVal = _currentValue - 1;
 
-            if (alteredVal < 0)
+            if (alteredVal < _minValue)
             {
                 alteredVal = null;
             }

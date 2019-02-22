@@ -21,8 +21,10 @@ using AniDroid.Utils.Logging;
 
 namespace AniDroid.Browse
 {
-    public class BrowsePresenter : BaseAniDroidPresenter<IBrowseView>, IAniListMediaListEditPresenter
+    public class BrowsePresenter : BaseAniDroidPresenter<IBrowseView>, IAniListMediaListEditPresenter, IBrowsePresenter
     {
+        private BrowseMediaDto _browseDto;
+
         public BrowsePresenter(IBrowseView view, IAniListService service, IAniDroidSettings settings,
             IAniDroidLogger logger) : base(view, service, settings, logger)
         {
@@ -30,6 +32,7 @@ namespace AniDroid.Browse
 
         public void BrowseAniListMedia(BrowseMediaDto browseDto)
         {
+            _browseDto = browseDto;
             View.ShowMediaSearchResults(AniListService.BrowseMedia(browseDto, 20));
             View.DisplaySnackbarMessage("Browse filtering not yet implemented", Snackbar.LengthShort);
         }
@@ -73,6 +76,11 @@ namespace AniDroid.Browse
                 View.RemoveMediaListItem(mediaListId);
             }).Switch(error =>
                 onError());
+        }
+
+        public BrowseMediaDto GetBrowseDto()
+        {
+            return _browseDto;
         }
     }
 }

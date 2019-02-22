@@ -17,8 +17,8 @@ namespace AniDroid.Dialogs
     public static class MediaListSortDialog
     {
         public static void Create(BaseAniDroidActivity context,
-            MediaListSortComparer.MediaListSortType currentSort, MediaListSortComparer.MediaListSortDirection currentDirection,
-            Action<MediaListSortComparer.MediaListSortType, MediaListSortComparer.MediaListSortDirection> onSelectSortAction)
+            MediaListSortComparer.MediaListSortType currentSort, MediaListSortComparer.SortDirection currentDirection,
+            Action<MediaListSortComparer.MediaListSortType, MediaListSortComparer.SortDirection> onSelectSortAction)
         {
             var view = context.LayoutInflater.Inflate(Resource.Layout.Dialog_MediaListSort, null);
             var dialog = new Android.Support.V7.App.AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme));
@@ -62,7 +62,7 @@ namespace AniDroid.Dialogs
             sortRadioGroup.Check(selectedSort);
 
             var directionRadioGroup = view.FindViewById<RadioGroup>(Resource.Id.MediaListSort_DirectionRadioGroup);
-            directionRadioGroup.Check(currentDirection == MediaListSortComparer.MediaListSortDirection.Ascending
+            directionRadioGroup.Check(currentDirection == MediaListSortComparer.SortDirection.Ascending
                 ? Resource.Id.MediaListSort_Ascending
                 : Resource.Id.MediaListSort_Descending);
 
@@ -100,8 +100,8 @@ namespace AniDroid.Dialogs
                 }
 
                 var direction = directionRadioGroup.CheckedRadioButtonId == Resource.Id.MediaListSort_Ascending
-                    ? MediaListSortComparer.MediaListSortDirection.Ascending
-                    : MediaListSortComparer.MediaListSortDirection.Descending;
+                    ? MediaListSortComparer.SortDirection.Ascending
+                    : MediaListSortComparer.SortDirection.Descending;
 
                 onSelectSortAction(sort, direction);
             });

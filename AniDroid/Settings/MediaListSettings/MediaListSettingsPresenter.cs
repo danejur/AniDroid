@@ -78,14 +78,14 @@ namespace AniDroid.Settings.MediaListSettings
         }
 
         public void SetAnimeListSort(MediaListSortComparer.MediaListSortType sort,
-            MediaListSortComparer.MediaListSortDirection direction)
+            MediaListSortComparer.SortDirection direction)
         {
             AniDroidSettings.AnimeListSortType = sort;
             AniDroidSettings.AnimeListSortDirection = direction;
         }
 
         public void SetMangaListSort(MediaListSortComparer.MediaListSortType sort,
-            MediaListSortComparer.MediaListSortDirection direction)
+            MediaListSortComparer.SortDirection direction)
         {
             AniDroidSettings.MangaListSortType = sort;
             AniDroidSettings.MangaListSortDirection = direction;

@@ -129,7 +129,7 @@ namespace AniDroid.Settings.MediaListSettings
             _settingsContainer.AddView(SettingsActivity.CreateSettingDivider(this));
         }
 
-        public void CreateAnimeListSortItem(MediaListSortComparer.MediaListSortType sort, MediaListSortComparer.MediaListSortDirection direction)
+        public void CreateAnimeListSortItem(MediaListSortComparer.MediaListSortType sort, MediaListSortComparer.SortDirection direction)
         {
             _settingsContainer.AddView(
                 SettingsActivity.CreateChevronSettingRow(this, "Set Anime List Sort Type", "Set how you want to sort items on your Anime lists", (sender, args) =>
@@ -137,7 +137,7 @@ namespace AniDroid.Settings.MediaListSettings
             _settingsContainer.AddView(SettingsActivity.CreateSettingDivider(this));
         }
 
-        public void CreateMangaListSortItem(MediaListSortComparer.MediaListSortType sort, MediaListSortComparer.MediaListSortDirection direction)
+        public void CreateMangaListSortItem(MediaListSortComparer.MediaListSortType sort, MediaListSortComparer.SortDirection direction)
         {
             _settingsContainer.AddView(
                 SettingsActivity.CreateChevronSettingRow(this, "Set Manga List Sort Type", "Set how you want to sort items on your Manga lists", (sender, args) =>

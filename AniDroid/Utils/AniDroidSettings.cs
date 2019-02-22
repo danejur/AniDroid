@@ -151,9 +151,9 @@ namespace AniDroid.Utils
             set => _authSettingStorage.Put(MediaListKeys.AnimeListSortTypeKey, value);
         }
 
-        public MediaListSortComparer.MediaListSortDirection AnimeListSortDirection
+        public MediaListSortComparer.SortDirection AnimeListSortDirection
         {
-            get => _authSettingStorage.Get(MediaListKeys.AnimeListSortDirectionKey, MediaListSortComparer.MediaListSortDirection.Descending);
+            get => _authSettingStorage.Get(MediaListKeys.AnimeListSortDirectionKey, MediaListSortComparer.SortDirection.Descending);
             set => _authSettingStorage.Put(MediaListKeys.AnimeListSortDirectionKey, value);
         }
 
@@ -163,9 +163,9 @@ namespace AniDroid.Utils
             set => _authSettingStorage.Put(MediaListKeys.MangaListSortTypeKey, value);
         }
 
-        public MediaListSortComparer.MediaListSortDirection MangaListSortDirection
+        public MediaListSortComparer.SortDirection MangaListSortDirection
         {
-            get => _authSettingStorage.Get(MediaListKeys.MangaListSortDirectionKey, MediaListSortComparer.MediaListSortDirection.Descending);
+            get => _authSettingStorage.Get(MediaListKeys.MangaListSortDirectionKey, MediaListSortComparer.SortDirection.Descending);
             set => _authSettingStorage.Put(MediaListKeys.MangaListSortDirectionKey, value);
         }
 

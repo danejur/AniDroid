@@ -51,9 +51,9 @@ namespace AniDroid.Utils.Interfaces
         MediaListRecyclerAdapter.MediaListItemViewType MediaViewType { get; set; }
         bool HighlightPriorityMediaListItems { get; set; }
         MediaListSortComparer.MediaListSortType AnimeListSortType { get; set; }
-        MediaListSortComparer.MediaListSortDirection AnimeListSortDirection { get; set; }
+        MediaListSortComparer.SortDirection AnimeListSortDirection { get; set; }
         MediaListSortComparer.MediaListSortType MangaListSortType { get; set; }
-        MediaListSortComparer.MediaListSortDirection MangaListSortDirection { get; set; }
+        MediaListSortComparer.SortDirection MangaListSortDirection { get; set; }
         bool UseLongClickForEpisodeAdd { get; set; }
         MediaListRecyclerAdapter.MediaListProgressDisplayType MediaListProgressDisplay { get; set; }
         bool UseSwipeToRefreshOnMediaLists { get; set; }

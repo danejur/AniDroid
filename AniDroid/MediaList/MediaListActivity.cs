@@ -52,7 +52,7 @@ namespace AniDroid.MediaList
         private Media.MediaListCollection _collection;
         private IList<MediaListRecyclerAdapter> _recyclerAdapters;
         private MediaListSortComparer.MediaListSortType _currentSort;
-        private MediaListSortComparer.MediaListSortDirection _currentSortDirection;
+        private MediaListSortComparer.SortDirection _currentSortDirection;
         private IMenu _menu;
 
         private IList<Media.MediaFormat> _filteredMediaFormats = new List<Media.MediaFormat>();

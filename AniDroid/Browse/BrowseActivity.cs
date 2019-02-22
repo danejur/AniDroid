@@ -37,7 +37,6 @@ namespace AniDroid.Browse
         private BaseRecyclerAdapter.RecyclerCardType _cardType;
         private Media.MediaSort _sortType;
         private MediaRecyclerAdapter _adapter;
-        private BrowseMediaDto _browseModel;
 
         [InjectView(Resource.Id.Browse_CoordLayout)]
         private CoordinatorLayout _coordLayout;
@@ -124,11 +123,12 @@ namespace AniDroid.Browse
         public override async Task OnCreateExtended(Bundle savedInstanceState)
         {
             SetContentView(Resource.Layout.Activity_Browse);
+            var browseModel = new BrowseMediaDto();
 
             try
             {
-                _browseModel = AniListJsonSerializer.Default.Deserialize<BrowseMediaDto>(Intent.GetStringExtra(BrowseDtoIntentKey)) ?? new BrowseMediaDto();
-                _sortType = _browseModel.Sort?.FirstOrDefault() ?? Media.MediaSort.Id;
+                browseModel = AniListJsonSerializer.Default.Deserialize<BrowseMediaDto>(Intent.GetStringExtra(BrowseDtoIntentKey)) ?? new BrowseMediaDto();
+                _sortType = browseModel.Sort?.FirstOrDefault() ?? Media.MediaSort.Id;
             }
             catch
             {
@@ -139,7 +139,7 @@ namespace AniDroid.Browse
             _cardType = settings.CardType;
 
             await CreatePresenter(savedInstanceState);
-            Presenter.BrowseAniListMedia(_browseModel);
+            Presenter.BrowseAniListMedia(browseModel);
 
             SetupToolbar();
         }
@@ -206,7 +206,7 @@ namespace AniDroid.Browse
                     Finish();
                     break;
                 case Resource.Id.Menu_Browse_Filter:
-                    BrowseFilterDialog.Create(this, _browseModel);
+                    BrowseFilterDialog.Create(this, Presenter);
                     break;
             }
 

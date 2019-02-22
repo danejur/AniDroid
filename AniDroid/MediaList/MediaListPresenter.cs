@@ -166,7 +166,7 @@ namespace AniDroid.MediaList
             return AniDroidSettings.ShowEpisodeAddButtonForRepeatingMedia;
         }
 
-        public MediaListSortComparer.MediaListSortDirection GetMediaListSortDirection(Media.MediaType mediaType)
+        public MediaListSortComparer.SortDirection GetMediaListSortDirection(Media.MediaType mediaType)
         {
             if (Media.MediaType.Anime.Equals(mediaType))
             {
@@ -177,7 +177,7 @@ namespace AniDroid.MediaList
                 return AniDroidSettings.MangaListSortDirection;
             }
 
-            return MediaListSortComparer.MediaListSortDirection.Ascending;
+            return MediaListSortComparer.SortDirection.Ascending;
         }
 
         public MediaListSortComparer.MediaListSortType GetMediaListSortType(Media.MediaType mediaType)
@@ -195,7 +195,7 @@ namespace AniDroid.MediaList
         }
 
         public void SetMediaListSortSettings(Media.MediaType mediaType, MediaListSortComparer.MediaListSortType sort,
-            MediaListSortComparer.MediaListSortDirection direction)
+            MediaListSortComparer.SortDirection direction)
         {
             if (Media.MediaType.Anime.Equals(mediaType))
             {

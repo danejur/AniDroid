@@ -2,9 +2,14 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-  <item
-      android:id="@+id/Menu_Browse_Filter"
-      android:title="Filter"
-      android:showAsAction="always"
-      android:icon="@drawable/svg_filter"/>
+    <item
+        android:id="@+id/Menu_Browse_Filter"
+        android:title="Filter"
+        android:showAsAction="always"
+        android:icon="@drawable/svg_filter"/>
+    <item
+        android:id="@+id/Menu_Browse_Sort"
+        android:title="Sort"
+        android:showAsAction="always"
+        android:icon="@drawable/svg_sort_variant"/>
 </menu>

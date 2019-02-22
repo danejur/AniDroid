@@ -290,6 +290,7 @@
     <Compile Include="Browse\BrowseActivity.cs" />
     <Compile Include="Browse\BrowseFragment.cs" />
     <Compile Include="Browse\BrowsePresenter.cs" />
+    <Compile Include="Browse\IBrowsePresenter.cs" />
     <Compile Include="Browse\IBrowseView.cs" />
     <Compile Include="AniListObject\Character\CharacterActivity.cs" />
     <Compile Include="AniListObject\Character\CharacterPresenter.cs" />
@@ -301,6 +302,7 @@
     <Compile Include="Dialogs\AniListActivityCreateDialog.cs" />
     <Compile Include="Dialogs\AniListNotificationsDialog.cs" />
     <Compile Include="Dialogs\BrowseFilterDialog.cs" />
+    <Compile Include="Dialogs\BrowseSortDialog.cs" />
     <Compile Include="Dialogs\CustomScoringDialog.cs" />
     <Compile Include="Dialogs\EditMediaListItemDialog.cs" />
     <Compile Include="Dialogs\MediaListFilterDialog.cs" />
@@ -339,7 +341,9 @@
     <Compile Include="TorrentSearch\TorrentSearchPresenter.cs" />
     <Compile Include="Utils\AniDroidSettings.cs" />
     <Compile Include="Utils\ChartUtils.cs" />
+    <Compile Include="Utils\Comparers\BaseAniDroidComparer.cs" />
     <Compile Include="Utils\Comparers\MediaListSortComparer.cs" />
+    <Compile Include="Utils\Comparers\MediaSortComparer.cs" />
     <Compile Include="Utils\Formatting\Markdown\MarkdownSpannableFormatter.cs" />
     <Compile Include="Utils\Formatting\Markdown\MarkdownTextCleaner.cs" />
     <Compile Include="Utils\Formatting\NumberFormatters.cs" />
@@ -927,6 +931,18 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\menu\Browse_ActionBar.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\BrowseFilters_ActionBar.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Dialog_BrowseSort.axml">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
     </AndroidResource>

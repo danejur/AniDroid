@@ -189,16 +189,16 @@ namespace AniDroid.Dialogs
                 }
                 else if (_mediaListOptions.ScoreFormat == User.ScoreFormat.Hundred)
                 {
-                    scorePicker.SetMaxValue(100, 0, false, _mediaList?.Score);
+                    scorePicker.SetNumericValues(100, 0, false, _mediaList?.Score);
                 }
                 else if (_mediaListOptions.ScoreFormat == User.ScoreFormat.Ten)
                 {
-                    scorePicker.SetMaxValue(10, 0, false, _mediaList?.Score);
+                    scorePicker.SetNumericValues(10, 0, false, _mediaList?.Score);
                     _customScoringEnabled = false;
                 }
                 else if (_mediaListOptions.ScoreFormat == User.ScoreFormat.TenDecimal)
                 {
-                    scorePicker.SetMaxValue(10, 1, false, _mediaList?.Score);
+                    scorePicker.SetNumericValues(10, 1, false, _mediaList?.Score);
                 }
                 else if (_mediaListOptions.ScoreFormat == User.ScoreFormat.ThreeSmileys)
                 {
@@ -300,12 +300,12 @@ namespace AniDroid.Dialogs
                         ? _media.Episodes.Value
                         : (_media?.NextAiringEpisode?.Episode > 0 ? _media.NextAiringEpisode.Episode : DefaultMaxPickerValue);
 
-                    progressPicker.SetMaxValue(episodes, 0, false, _completeMedia ? episodes : _mediaList?.Progress);
+                    progressPicker.SetNumericValues(episodes, 0, false, _completeMedia ? episodes : _mediaList?.Progress);
                 }
                 else if (_media.Type == Media.MediaType.Manga)
                 {
                     progressLabel.Text = "Chapters";
-                    progressPicker.SetMaxValue(_media.Chapters > 0 ? _media.Chapters.Value : DefaultMaxPickerValue, 0, false, _completeMedia ? _media.Chapters : _mediaList?.Progress);
+                    progressPicker.SetNumericValues(_media.Chapters > 0 ? _media.Chapters.Value : DefaultMaxPickerValue, 0, false, _completeMedia ? _media.Chapters : _mediaList?.Progress);
                 }
             }
 
@@ -318,7 +318,7 @@ namespace AniDroid.Dialogs
                 }
 
                 volumeProgressContainer.Visibility = ViewStates.Visible;
-                volumeProgressPicker.SetMaxValue(_media.Volumes > 0 ? _media.Volumes.Value : DefaultMaxPickerValue, 0, false, _mediaList?.ProgressVolumes);
+                volumeProgressPicker.SetNumericValues(_media.Volumes > 0 ? _media.Volumes.Value : DefaultMaxPickerValue, 0, false, _mediaList?.ProgressVolumes);
             }
 
             private void SetupRepeat(Picker rewatchedPicker, TextView rewatchedLabel)
@@ -328,7 +328,7 @@ namespace AniDroid.Dialogs
                     rewatchedLabel.Text = "Reread";
                 }
 
-                rewatchedPicker.SetMaxValue(DefaultMaxPickerValue, 0, false, _mediaList?.Repeat);
+                rewatchedPicker.SetNumericValues(DefaultMaxPickerValue, 0, false, _mediaList?.Repeat);
             }
 
             private void SetupNotes(TextView notesView)
