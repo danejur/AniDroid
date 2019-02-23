@@ -155,5 +155,9 @@
     <item>01-31-2019|You can now see the progress of users you are following on airing shows and manga</item>
     <item>02-11-2019|Split Trending section into Trending Anime and Trending Manga</item>
     <item>02-11-2019|Added some more markdown support</item>
+    <item>02-22-2019|Adding some initial browse support! Filtering by tags and genres isn\'t supported yet, but should be coming soon!</item>
+    <item>02-22-2019|Adding ability to set your default tab when you open the app. Check the settings!</item>
+    <item>02-22-2019|Fixed torrent searching (mostly)</item>
+    <item>02-22-2019|Fixed bug where activity replies could cover up the reply text box</item>
   </array>
 </resources>
