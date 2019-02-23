@@ -947,6 +947,12 @@
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\BrowseFragment_ActionBar.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

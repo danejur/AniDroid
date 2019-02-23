@@ -154,9 +154,9 @@ namespace AniDroid.Browse
 
         public override void SetupMenu(IMenu menu)
         {
-            menu.Clear();
+            menu?.Clear();
             var inflater = new MenuInflater(Context);
-            inflater.Inflate(Resource.Menu.Browse_ActionBar, menu);
+            inflater.Inflate(Resource.Menu.BrowseFragment_ActionBar, menu);
         }
 
         public override bool OnOptionsItemSelected(IMenuItem item)

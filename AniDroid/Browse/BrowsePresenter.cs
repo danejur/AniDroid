@@ -34,7 +34,6 @@ namespace AniDroid.Browse
         {
             _browseDto = browseDto;
             View.ShowMediaSearchResults(AniListService.BrowseMedia(browseDto, 20));
-            View.DisplaySnackbarMessage("Browse filtering not yet implemented", Snackbar.LengthShort);
         }
 
         public override Task Init()
