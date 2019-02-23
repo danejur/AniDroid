@@ -121,6 +121,50 @@
   <color name="Dark_Tertiary_Dark_Text">#E4E9E9E9</color>
   <color name="Dark_Inactive">#FF9E9E9E</color>
 
+    <!--
+    **
+    ANILIST DARK COLOR SCHEME
+    **
+    -->
+
+    <!-- List Items -->
+    <color name="AniListDark_ListItemDivider">#FF252525</color>
+    <color name="AniListDark_TrustedTorrent">#06260E</color>
+    <color name="AniListDark_RemakeTorrent">#311806</color>
+    <color name="AniListDark_ListItemPriority">#06260E</color>
+    <color name="AniListDark_ListItemUpToDate">#ABFF7A</color>
+    <color name="AniListDark_ListItemSlightlyBehind">#F5FF7A</color>
+    <color name="AniListDark_ListItemBehind">#FFB47A</color>
+    <color name="AniListDark_ListItemVeryBehind">#FF3631</color>
+
+    <!-- Ripple Item -->
+    <color name="AniListDark_Ripple_Background">#181818</color>
+    <color name="AniListDark_Ripple_Highlight">#414141</color>
+    <color name="AniListDark_Ripple_Text">#D4C0C0C0</color>
+
+    <!-- General -->
+    <color name="AniListDark_Background">#272c38</color>
+    <color name="AniListDark_Background_Alternate">#1f232d</color>
+    <color name="AniListDark_Background_Special">#191d26</color>
+    <color name="AniListDark_Background_Special_Dark">#101419</color>
+    <color name="AniListDark_Background_Text">#9fadbd</color>
+    <color name="AniListDark_Background_Text_Alternate">#818c99</color>
+    <color name="AniListDark_Background_Text_Special">#8596a5</color>
+
+    <color name="AniListDark_Primary">#3db4f2</color>
+    <color name="AniListDark_Primary_Text">#A3FFFFFF</color>
+    <color name="AniListDark_Primary_Dark">#287EAB</color>
+    <color name="AniListDark_Primary_Dark_Text">#A3FFFFFF</color>
+    <color name="AniListDark_Secondary">#77DCD5</color>
+    <color name="AniListDark_Secondary_Text">#E4FFFFFF</color>
+    <color name="AniListDark_Secondary_Dark">#68C3BD</color>
+    <color name="AniListDark_Secondary_Dark_Text">#E4FFFFFF</color>
+    <color name="AniListDark_Tertiary">#A0F481</color>
+    <color name="AniListDark_Tertiary_Text">#E4FFFFFF</color>
+    <color name="AniListDark_Tertiary_Dark">#68E539</color>
+    <color name="AniListDark_Tertiary_Dark_Text">#E4E9E9E9</color>
+    <color name="AniListDark_Inactive">#FF9E9E9E</color>
+
    <!--
    **
    GENERAL COLOR SCHEME
