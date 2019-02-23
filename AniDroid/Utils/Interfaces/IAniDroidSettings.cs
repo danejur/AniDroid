@@ -13,6 +13,7 @@ using AniDroid.Adapters.Base;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
+using AniDroid.Main;
 using AniDroid.Utils.Comparers;
 
 namespace AniDroid.Utils.Interfaces
@@ -38,6 +39,7 @@ namespace AniDroid.Utils.Interfaces
         User LoggedInUser { get; set; }
         bool ShowAllAniListActivity { get; set; }
         bool EnableNotificationService { get; set; }
+        MainActivity.DefaultTab DefaultTab { get; set; }
 
         #endregion
 
@@ -49,9 +51,9 @@ namespace AniDroid.Utils.Interfaces
         MediaListRecyclerAdapter.MediaListItemViewType MediaViewType { get; set; }
         bool HighlightPriorityMediaListItems { get; set; }
         MediaListSortComparer.MediaListSortType AnimeListSortType { get; set; }
-        MediaListSortComparer.MediaListSortDirection AnimeListSortDirection { get; set; }
+        MediaListSortComparer.SortDirection AnimeListSortDirection { get; set; }
         MediaListSortComparer.MediaListSortType MangaListSortType { get; set; }
-        MediaListSortComparer.MediaListSortDirection MangaListSortDirection { get; set; }
+        MediaListSortComparer.SortDirection MangaListSortDirection { get; set; }
         bool UseLongClickForEpisodeAdd { get; set; }
         MediaListRecyclerAdapter.MediaListProgressDisplayType MediaListProgressDisplay { get; set; }
         bool UseSwipeToRefreshOnMediaLists { get; set; }

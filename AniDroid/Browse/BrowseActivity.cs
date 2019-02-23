@@ -35,7 +35,6 @@ namespace AniDroid.Browse
         private const string BrowseDtoIntentKey = "BROWSE_DTO";
 
         private BaseRecyclerAdapter.RecyclerCardType _cardType;
-        private Media.MediaSort _sortType;
         private MediaRecyclerAdapter _adapter;
 
         [InjectView(Resource.Id.Browse_CoordLayout)]
@@ -123,12 +122,17 @@ namespace AniDroid.Browse
         public override async Task OnCreateExtended(Bundle savedInstanceState)
         {
             SetContentView(Resource.Layout.Activity_Browse);
-            var dto = new BrowseMediaDto();
+            var browseModel = new BrowseMediaDto();
 
             try
             {
-                dto = AniListJsonSerializer.Default.Deserialize<BrowseMediaDto>(Intent.GetStringExtra(BrowseDtoIntentKey));
-                _sortType = dto.Sort?.FirstOrDefault() ?? Media.MediaSort.Id;
+                browseModel = AniListJsonSerializer.Default.Deserialize<BrowseMediaDto>(Intent.GetStringExtra(BrowseDtoIntentKey)) ?? new BrowseMediaDto();
+                browseModel.Sort = browseModel.Sort ?? new List<Media.MediaSort>();
+
+                if (!browseModel.Sort.Any())
+                {
+                    browseModel.Sort.Add(Media.MediaSort.PopularityDesc);
+                }
             }
             catch
             {
@@ -139,7 +143,7 @@ namespace AniDroid.Browse
             _cardType = settings.CardType;
 
             await CreatePresenter(savedInstanceState);
-            Presenter.BrowseAniListMedia(dto);
+            Presenter.BrowseAniListMedia(browseModel);
 
             SetupToolbar();
         }
@@ -190,16 +194,36 @@ namespace AniDroid.Browse
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
         }
 
+        public override bool SetupMenu(IMenu menu)
+        {
+            menu?.Clear();
+            MenuInflater.Inflate(Resource.Menu.Browse_ActionBar, menu);
+
+            return true;
+        }
+
         public override bool MenuItemSelected(IMenuItem item)
         {
-            if (item.ItemId == Android.Resource.Id.Home)
+            switch (item.ItemId)
             {
-                SetResult(Result.Ok);
-                Finish();
-                return true;
+                case Android.Resource.Id.Home:
+                    SetResult(Result.Ok);
+                    Finish();
+                    break;
+                case Resource.Id.Menu_Browse_Filter:
+                    BrowseFilterDialog.Create(this, Presenter);
+                    break;
+                case Resource.Id.Menu_Browse_Sort:
+                    BrowseSortDialog.Create(this, Presenter.GetBrowseDto().Sort.FirstOrDefault(), sort =>
+                    {
+                        var browseDto = Presenter.GetBrowseDto();
+                        browseDto.Sort = new List<Media.MediaSort> { sort };
+                        Presenter.BrowseAniListMedia(browseDto);
+                    });
+                    break;
             }
 
-            return false;
+            return true;
         }
 
         #endregion

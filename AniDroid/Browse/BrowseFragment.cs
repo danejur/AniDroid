@@ -37,6 +37,8 @@ namespace AniDroid.Browse
 
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IBrowseView, BrowseFragment>(this));
 
+        public override bool HasMenu => true;
+
         public override void OnError(IAniListError error)
         {
             throw new NotImplementedException();
@@ -130,7 +132,17 @@ namespace AniDroid.Browse
 
         public override void OnViewCreated(View view, Bundle savedInstanceState)
         {
-            Presenter.BrowseAniListMedia(new BrowseMediaDto());
+            var browseModel = new BrowseMediaDto()
+            {
+                Type = Media.MediaType.Anime,
+                Format = Media.MediaFormat.Tv,
+                Status = Media.MediaStatus.Releasing,
+                Season = Media.MediaSeason.GetFromDate(DateTime.UtcNow),
+                Country = Media.MediaCountry.Japan,
+                Year = DateTime.Now.Year,
+                Sort = new List<Media.MediaSort> { Media.MediaSort.PopularityDesc }
+            };
+            Presenter.BrowseAniListMedia(browseModel);
         }
 
         public override void OnConfigurationChanged(Configuration newConfig)
@@ -138,6 +150,33 @@ namespace AniDroid.Browse
             base.OnConfigurationChanged(newConfig);
 
             _adapter.RefreshAdapter();
+        }
+
+        public override void SetupMenu(IMenu menu)
+        {
+            menu?.Clear();
+            var inflater = new MenuInflater(Context);
+            inflater.Inflate(Resource.Menu.BrowseFragment_ActionBar, menu);
+        }
+
+        public override bool OnOptionsItemSelected(IMenuItem item)
+        {
+            switch (item.ItemId)
+            {
+                case Resource.Id.Menu_Browse_Filter:
+                    BrowseFilterDialog.Create(Activity, Presenter);
+                    return true;
+                case Resource.Id.Menu_Browse_Sort:
+                    BrowseSortDialog.Create(Activity, Presenter.GetBrowseDto().Sort.FirstOrDefault(), sort =>
+                    {
+                        var browseDto = Presenter.GetBrowseDto();
+                        browseDto.Sort = new List<Media.MediaSort> {sort};
+                        Presenter.BrowseAniListMedia(browseDto);
+                    });
+                    return true;
+            }
+
+            return base.OnOptionsItemSelected(item);
         }
     }
 }

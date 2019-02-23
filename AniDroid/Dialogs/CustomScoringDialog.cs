@@ -57,11 +57,11 @@ namespace AniDroid.Dialogs
 
                     if (scoreFormat == User.ScoreFormat.Hundred)
                     {
-                        picker.SetMaxValue(100, 0, false, score);
+                        picker.SetNumericValues(100, 0, false, score);
                     }
                     else if (scoreFormat == User.ScoreFormat.TenDecimal)
                     {
-                        picker.SetMaxValue(10, 1, false, score);
+                        picker.SetNumericValues(10, 1, false, score);
                     }
 
                     innerContainer.AddView(scoreWidget);

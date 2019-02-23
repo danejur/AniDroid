@@ -45,7 +45,7 @@ namespace AniDroid.MediaList
         private IList<MediaListRecyclerAdapter> _recyclerAdapters;
         private Media.MediaListCollection _collection;
         private MediaListSortComparer.MediaListSortType _currentSort;
-        private MediaListSortComparer.MediaListSortDirection _currentSortDirection;
+        private MediaListSortComparer.SortDirection _currentSortDirection;
         private IMenu _menu;
 
         private IList<Media.MediaFormat> _filteredMediaFormats = new List<Media.MediaFormat>();
@@ -192,7 +192,7 @@ namespace AniDroid.MediaList
             }
         }
 
-        public void SetMediaListSort(MediaListSortComparer.MediaListSortType sort, MediaListSortComparer.MediaListSortDirection direction)
+        public void SetMediaListSort(MediaListSortComparer.MediaListSortType sort, MediaListSortComparer.SortDirection direction)
         {
             _currentSort = sort;
             _currentSortDirection = direction;

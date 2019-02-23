@@ -425,9 +425,28 @@ namespace AniDroid.Main
                 return;
             }
 
-            _navigationView.Menu.PerformIdentifierAction(Presenter.GetIsUserAuthenticated()
-                ? Resource.Id.Menu_Navigation_Anime
-                : Resource.Id.Menu_Navigation_Discover, MenuPerformFlags.None);
+            if (!Presenter.GetIsUserAuthenticated())
+            {
+                _navigationView.Menu.PerformIdentifierAction(Resource.Id.Menu_Navigation_Discover, MenuPerformFlags.None);
+            }
+            else
+            {
+                switch (Presenter.GetDefaultTab())
+                {
+                    case DefaultTab.Home:
+                        _navigationView.Menu.PerformIdentifierAction(Resource.Id.Menu_Navigation_Home,
+                            MenuPerformFlags.None);
+                        break;
+                    case DefaultTab.Anime:
+                        _navigationView.Menu.PerformIdentifierAction(Resource.Id.Menu_Navigation_Anime,
+                            MenuPerformFlags.None);
+                        break;
+                    case DefaultTab.Manga:
+                        _navigationView.Menu.PerformIdentifierAction(Resource.Id.Menu_Navigation_Manga,
+                            MenuPerformFlags.None);
+                        break;
+                }
+            }
         }
 
         public bool OnNavigationItemSelected(IMenuItem menuItem)
@@ -470,6 +489,13 @@ namespace AniDroid.Main
             }
 
             return true;
+        }
+
+        public enum DefaultTab
+        {
+            Home = 0,
+            Anime = 1,
+            Manga = 2
         }
 
         #endregion

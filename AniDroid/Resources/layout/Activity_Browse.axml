@@ -15,7 +15,8 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
   <android.support.design.widget.AppBarLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+	style="?AppBarLayout_Style">
     <android.support.v7.widget.Toolbar
       android:id="@+id/Browse_Toolbar"
       android:layout_width="match_parent"
@@ -23,6 +24,6 @@
       app:popupTheme="?Toolbar_PopupTheme"
       app:theme="?Toolbar_Theme"
       style="?Toolbar_Style"
-      app:layout_scrollFlags="scroll|enterAlways|snap" />
+      app:layout_scrollFlags="scroll|enterAlways" />
   </android.support.design.widget.AppBarLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -314,7 +314,13 @@ namespace AniDroid.AniListObject.Media
                 var genreView = LayoutInflater.Inflate(Resource.Layout.Item_Category, null);
                 genreView.FindViewById<TextView>(Resource.Id.Category_Text).Text = genre;
                 genreView.Clickable = true;
-                genreView.Click += (sender, eventArgs) => BrowseActivity.StartActivity(this, new BrowseMediaDto { Type = media.Type, IncludedGenres = new List<string> { genre }}, ObjectBrowseRequestCode);
+                genreView.Click += (sender, eventArgs) => BrowseActivity.StartActivity(this,
+                    new BrowseMediaDto
+                    {
+                        Type = media.Type,
+                        IncludedGenres = new List<string> {genre},
+                        Sort = new List<AniList.Models.Media.MediaSort> {AniList.Models.Media.MediaSort.PopularityDesc}
+                    }, ObjectBrowseRequestCode);
                 genreContainer.AddView(genreView);
             }
 
@@ -368,7 +374,13 @@ namespace AniDroid.AniListObject.Media
                 dateRangeView.TextTwo = media.Season.DisplayValue + (media.StartDate?.Year > 0 ? $" {media.StartDate.Year}" : "");
                 dateRangeView.Clickable = true;
                 dateRangeView.Click += (sender, args) => BrowseActivity.StartActivity(this,
-                    new BrowseMediaDto {Season = media.Season, SeasonYear = media.StartDate?.Year, Type = media.Type}, ObjectBrowseRequestCode);
+                    new BrowseMediaDto
+                    {
+                        Season = media.Season,
+                        SeasonYear = media.StartDate?.Year,
+                        Type = media.Type,
+                        Sort = new List<AniList.Models.Media.MediaSort> {AniList.Models.Media.MediaSort.PopularityDesc}
+                    }, ObjectBrowseRequestCode);
             }
 
             var episodesView = retView.FindViewById<DataRow>(Resource.Id.Media_Episodes);
@@ -815,6 +827,7 @@ namespace AniDroid.AniListObject.Media
                     BrowseActivity.StartActivity(this,
                         new BrowseMediaDto
                         {
+                            Type = ranking.Format.MediaType,
                             Year = ranking.Year,
                             Season = ranking.Season,
                             Sort = new List<AniList.Models.Media.MediaSort> {sortType},

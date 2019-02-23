@@ -13,6 +13,7 @@ using AniDroid.Adapters.Base;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
+using AniDroid.Main;
 using AniDroid.Utils.Comparers;
 using AniDroid.Utils.Interfaces;
 using AniDroid.Utils.Storage;
@@ -104,6 +105,12 @@ namespace AniDroid.Utils
             set => _authSettingStorage.Put(AuthenticatedKeys.EnableNotificationServiceKey, value);
         }
 
+        public MainActivity.DefaultTab DefaultTab
+        {
+            get => _authSettingStorage.Get(AuthenticatedKeys.DefaultTabKey, MainActivity.DefaultTab.Anime);
+            set => _authSettingStorage.Put(AuthenticatedKeys.DefaultTabKey, value);
+        }
+
         #endregion
 
         #region Media List Settings
@@ -144,9 +151,9 @@ namespace AniDroid.Utils
             set => _authSettingStorage.Put(MediaListKeys.AnimeListSortTypeKey, value);
         }
 
-        public MediaListSortComparer.MediaListSortDirection AnimeListSortDirection
+        public MediaListSortComparer.SortDirection AnimeListSortDirection
         {
-            get => _authSettingStorage.Get(MediaListKeys.AnimeListSortDirectionKey, MediaListSortComparer.MediaListSortDirection.Descending);
+            get => _authSettingStorage.Get(MediaListKeys.AnimeListSortDirectionKey, MediaListSortComparer.SortDirection.Descending);
             set => _authSettingStorage.Put(MediaListKeys.AnimeListSortDirectionKey, value);
         }
 
@@ -156,9 +163,9 @@ namespace AniDroid.Utils
             set => _authSettingStorage.Put(MediaListKeys.MangaListSortTypeKey, value);
         }
 
-        public MediaListSortComparer.MediaListSortDirection MangaListSortDirection
+        public MediaListSortComparer.SortDirection MangaListSortDirection
         {
-            get => _authSettingStorage.Get(MediaListKeys.MangaListSortDirectionKey, MediaListSortComparer.MediaListSortDirection.Descending);
+            get => _authSettingStorage.Get(MediaListKeys.MangaListSortDirectionKey, MediaListSortComparer.SortDirection.Descending);
             set => _authSettingStorage.Put(MediaListKeys.MangaListSortDirectionKey, value);
         }
 
@@ -264,6 +271,7 @@ namespace AniDroid.Utils
             public const string LoggedInUser = "LOGGED_IN_USER";
             public const string ShowAllActivityKey = "SHOW_ALL_ACTIVITY";
             public const string EnableNotificationServiceKey = "ENABLE_NOTIFICATION_SERVICE";
+            public const string DefaultTabKey = "DEFAULT_TAB";
         }
 
         private static class MediaListKeys

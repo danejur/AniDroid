@@ -74,8 +74,7 @@ namespace AniDroid.Base
                 return true;
             }
 
-            SetupMenu(menu);
-            return base.OnCreateOptionsMenu(menu);
+            return SetupMenu(menu);
         }
 
         public sealed override bool OnOptionsItemSelected(IMenuItem item)
