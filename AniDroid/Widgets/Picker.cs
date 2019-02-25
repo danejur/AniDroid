@@ -127,7 +127,7 @@ namespace AniDroid.Widgets
                 if (!float.TryParse(str, NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture, out var parsedResult) ||
                     parsedResult < min)
                 {
-                    _currentValue = min;
+                    _currentValue = null;
                 }
                 else if (parsedResult > _maxValue)
                 {
@@ -196,7 +196,7 @@ namespace AniDroid.Widgets
                 return;
             }
 
-            _editView.Text = _readOnlyView.Text = _currentValue?.ToString("#" + _precision) ?? "";
+            _editView.Text = _readOnlyView.Text = _currentValue?.ToString("#" + (_precision > 0 ? $".{new string('#', (int)_precision)}" : "")) ?? "";
         }
 
         private void IncrementCounter(object sender, EventArgs eventArgs)
