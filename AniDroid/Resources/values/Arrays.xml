@@ -159,5 +159,7 @@
     <item>02-22-2019|Adding ability to set your default tab when you open the app. Check the settings!</item>
     <item>02-22-2019|Fixed torrent searching (mostly)</item>
     <item>02-22-2019|Fixed bug where activity replies could cover up the reply text box</item>
+    <item>02-24-2019|Added new AniList Dark theme! (Still a work in progress)</item>
+    <item>02-24-2019|Small bug fix for edit media list and browse filter dialogs</item>
   </array>
 </resources>
