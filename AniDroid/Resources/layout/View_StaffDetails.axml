@@ -36,12 +36,14 @@
             android:id="@+id/Staff_Name"
             android:gravity="center"
             android:textColor="?Background_Text"
+			android:textIsSelectable="true"
             android:layout_weight="1" />
         <TextView
             android:text="Language"
             android:id="@+id/Staff_Language"
             android:gravity="center"
             android:textColor="?Background_Text"
+			android:textIsSelectable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp" />
@@ -54,6 +56,7 @@
         android:id="@+id/Staff_Description"
         android:layout_marginTop="10dp"
         android:textColor="?Background_Text"
+		android:textIsSelectable="true"
         android:gravity="center_horizontal" />
   </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
