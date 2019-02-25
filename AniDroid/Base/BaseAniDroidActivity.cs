@@ -136,15 +136,9 @@ namespace AniDroid.Base
         #region Theme
 
         public override Resources.Theme Theme {
-            get {
-                var theme = Resource.Style.AniList;
-
-                switch (_theme)
-                {
-                    case AniDroidTheme.Dark:
-                        theme = Resource.Style.Dark;
-                        break;
-                }
+            get
+            {
+                var theme = GetThemeResource();
 
                 var baseTheme = base.Theme;
                 baseTheme.ApplyStyle(theme, true);
@@ -161,6 +155,9 @@ namespace AniDroid.Base
             {
                 case AniDroidTheme.Dark:
                     theme = Resource.Style.Dark;
+                    break;
+                case AniDroidTheme.AniListDark:
+                    theme = Resource.Style.AniListDark;
                     break;
             }
 
@@ -195,7 +192,8 @@ namespace AniDroid.Base
         public enum AniDroidTheme
         {
             AniList = 0,
-            Dark = 1
+            Dark = 1,
+            AniListDark = 2
         }
 
         #endregion

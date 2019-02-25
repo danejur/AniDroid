@@ -76,7 +76,7 @@ namespace AniDroid.Dialogs
             alert.SetPositiveButton("Save", (sender, e) =>
             {
                 var savedScores = groupedScoringMethods.SelectMany(x => x).Select(x =>
-                    view.FindViewById<Picker>(x.Id).GetValue()).ToList();
+                    view.FindViewById<Picker>(x.Id).GetValue() ?? (float?) 0).ToList();
                 onSaveAction?.Invoke(savedScores);
             });
             alert.SetNegativeButton("Cancel", (sender, e) => { });

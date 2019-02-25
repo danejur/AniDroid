@@ -456,7 +456,7 @@ namespace AniDroid.Dialogs
                 {
                     MediaId = _media.Id,
                     Status = AniListEnum.GetEnum<Media.MediaListStatus>(_statusSpinner.SelectedItemPosition),
-                    Score = _scorePicker.GetValue(),
+                    Score = _scorePicker.GetValue() ?? 0,
                     Progress = (int?) _progressPicker.GetValue(),
                     ProgressVolumes =
                         _media.Type == Media.MediaType.Manga ? (int?) _progressVolumesPicker.GetValue() : null,

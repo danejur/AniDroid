@@ -352,4 +352,175 @@
     <item name="tabSelectedTextColor">@color/AniList_Secondary</item>
     <item name="tabTextColor">@color/AniList_Primary_Text</item>
   </style>
+
+    <!--
+  
+    ANILISTDARK THEME 
+  
+    -->
+    <style name="AniListDark" parent="Theme.AppCompat.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="Toolbar_Style">@style/AniListDark_Toolbar_Style</item>
+        <item name="Toolbar_Theme">@style/AniListDark_Toolbar_Theme</item>
+        <item name="ExpandedToolbar_Theme">@style/AniListDark_ExpandedToolbar_Theme</item>
+        <item name="Toolbar_PopupTheme">@style/AniListDark_Popup_Theme</item>
+        <item name="ListItem_Divider">@color/AniListDark_ListItemDivider</item>
+        <item name="ListItem_Priority">@color/AniListDark_ListItemPriority</item>
+        <item name="ListItem_UpToDate">@color/AniListDark_ListItemUpToDate</item>
+        <item name="ListItem_SlightlyBehind">@color/AniListDark_ListItemSlightlyBehind</item>
+        <item name="ListItem_Behind">@color/AniListDark_ListItemBehind</item>
+        <item name="ListItem_VeryBehind">@color/AniListDark_ListItemVeryBehind</item>
+        <item name="Checkbox_Theme">@style/AniListDark_Checkbox</item>
+        <item name="Switch_Theme">@style/AniListDark_Switch</item>
+        <item name="Radio_Theme">@style/AniListDark_Radio</item>
+        <item name="Dialog_Theme">@style/AniListDark_Dialog</item>
+        <item name="FabSmall_Style">@style/AniListDark_FabSmall</item>
+        <item name="FabLarge_Style">@style/AniListDark_FabLarge</item>
+        <item name="TextInput_Theme">@style/AniListDark_TextInput</item>
+        <item name="Spinner_Theme">@style/AniListDark_Spinner</item>
+        <item name="TabLayout_Style">@style/AniListDark_TabLayout</item>
+        <item name="AppBarLayout_Style">@style/AniListDark_AppBarLayout</item>
+        <item name="android:windowBackground">@color/AniListDark_Background</item>
+        <item name="android:buttonStyle">@style/AniListDark_Button</item>
+        <item name="android:checkboxStyle">@style/AniListDark_Checkbox</item>
+        <item name="NavDrawer_Theme">@style/AniListDark_AppBarLayout</item>
+
+        <item name="Primary">@color/AniListDark_Primary</item>
+        <item name="Primary_Text">@color/AniListDark_Primary_Text</item>
+        <item name="Primary_Dark">@color/AniListDark_Primary_Dark</item>
+        <item name="Primary_Dark_Text">@color/AniListDark_Primary_Dark_Text</item>
+        <item name="Secondary">@color/AniListDark_Secondary</item>
+        <item name="Secondary_Text">@color/AniListDark_Secondary_Text</item>
+        <item name="Secondary_Dark">@color/AniListDark_Secondary_Dark</item>
+        <item name="Secondary_Dark_Text">@color/AniListDark_Secondary_Dark_Text</item>
+        <item name="Tertiary">@color/AniListDark_Tertiary</item>
+        <item name="Tertiary_Text">@color/AniListDark_Tertiary_Text</item>
+        <item name="Tertiary_Dark">@color/AniListDark_Tertiary_Dark</item>
+        <item name="Tertiary_Dark_Text">@color/AniListDark_Tertiary_Dark_Text</item>
+
+        <item name="Background">@color/AniListDark_Background</item>
+        <item name="Background_Alternate">@color/AniListDark_Background_Alternate</item>
+        <item name="Background_Special">@color/AniListDark_Background_Special</item>
+        <item name="Background_Special_Dark">@color/AniListDark_Background_Special_Dark</item>
+        <item name="Background_Text">@color/AniListDark_Background_Text</item>
+        <item name="Background_Text_Alternate">@color/AniListDark_Background_Text_Alternate</item>
+        <item name="Background_Text_Special">@color/AniListDark_Background_Text_Special</item>
+        <item name="Background_TrustedTorrent">@color/AniListDark_TrustedTorrent</item>
+        <item name="Background_RemakeTorrent">@color/AniListDark_RemakeTorrent</item>
+
+        <item name="Ripple_Background">@color/AniListDark_Ripple_Background</item>
+        <item name="Ripple_Highlight">@color/AniListDark_Ripple_Highlight</item>
+        <item name="Ripple_Text">@color/AniListDark_Ripple_Text</item>
+    </style>
+
+    <style name="AniListDark_Toolbar_Style" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:background">@color/AniListDark_Background_Special</item>
+        <item name="contentScrim">@color/AniListDark_Background_Special</item>
+    </style>
+
+    <style name="AniListDark_Toolbar_Theme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlHighlight">@android:color/white</item>
+    </style>
+
+    <style name="AniListDark_ExpandedToolbar_Theme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:textColor">@android:color/transparent</item>
+        <item name="colorControlNormal">@android:color/white</item>
+        <item name="colorControlHighlight">@android:color/white</item>
+        <item name="android:textSize">24dp</item>
+    </style>
+
+    <style name="AniListDark_Popup_Theme" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="android:background">@color/AniListDark_Background_Alternate</item>
+        <item name="android:textColor">@color/AniListDark_Background_Text_Alternate</item>
+    </style>
+
+    <style name="AniListDark_Checkbox" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/AniListDark_Inactive</item>
+        <item name="colorControlActivated">@color/AniListDark_Primary_Dark</item>
+        <item name="android:textColor">@color/AniListDark_Background_Text</item>
+        <item name="android:textSize">14dp</item>
+    </style>
+
+    <style name="AniListDark_Switch" parent="Theme.AppCompat">
+        <item name="colorControlActivated">@color/AniListDark_Primary</item>
+        <item name="colorSwitchThumbNormal">@color/AniListDark_Inactive</item>
+        <item name="android:colorForeground">@color/AniListDark_Inactive</item>
+    </style>
+
+    <style name="AniListDark_Radio" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/AniListDark_Inactive</item>
+        <item name="colorControlActivated">@color/AniListDark_Primary_Dark</item>
+        <item name="android:textColor">@color/AniListDark_Background_Text</item>
+        <item name="android:textSize">14dp</item>
+    </style>
+
+    <style name="AniListDark_Button" parent="@style/Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:textColorPrimary">@color/AniListDark_Secondary</item>
+        <item name="android:textColor">@color/AniListDark_Secondary</item>
+        <item name="android:textSize">14dp</item>
+        <item name="colorControlHighlight">@color/AniListDark_Primary_Dark</item>
+        <item name="colorAccent">@color/AniListDark_Primary</item>
+    </style>
+
+    <style name="AniListDark_Dialog" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:buttonStyle">@style/AniListDark_Button</item>
+        <item name="android:windowBackground">@color/AniListDark_Background_Alternate</item>
+        <item name="android:textColor">@color/AniListDark_Background_Text</item>
+        <item name="android:textColorPrimary">@color/AniListDark_Background_Text</item>
+        <item name="colorAccent">@color/AniListDark_Primary_Dark</item>
+    </style>
+
+    <style name="AniListDark_FabSmall">
+        <item name="backgroundTint">@color/AniListDark_Primary</item>
+        <item name="rippleColor">@color/AniListDark_Primary_Dark</item>
+    </style>
+
+    <style name="AniListDark_FabSmallAlternate">
+        <item name="backgroundTint">@color/AniListDark_Secondary</item>
+        <item name="rippleColor">@color/AniListDark_Secondary_Dark</item>
+    </style>
+
+    <style name="AniListDark_FabLarge">
+        <item name="backgroundTint">@color/AniListDark_Tertiary</item>
+        <item name="rippleColor">@color/AniListDark_Tertiary_Dark</item>
+    </style>
+
+    <style name="AniListDark_TextInput" parent="Theme.AppCompat">
+        <item name="colorControlActivated">@color/AniListDark_Primary_Dark</item>
+        <item name="colorControlNormal">@color/AniListDark_Primary_Dark</item>
+        <item name="colorAccent">@color/AniListDark_Primary_Dark</item>
+        <item name="android:textColorPrimary">@color/AniListDark_Background_Text</item>
+        <item name="android:textColorHint">@color/AniListDark_Background_Text_Alternate</item>
+        <item name="android:textSize">16dp</item>
+    </style>
+
+    <style name="AniListDark_Spinner" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="colorControlActivated">@color/AniListDark_Primary</item>
+        <item name="colorAccent">@color/AniListDark_Primary</item>
+        <item name="android:textColor">@color/AniListDark_Background_Text</item>
+        <item name="android:textSize">16dp</item>
+    </style>
+
+    <style name="AniListDark_TabLayout">
+        <item name="tabIndicatorColor">@color/AniListDark_Primary_Dark</item>
+        <item name="tabBackground">@color/AniListDark_Background_Special</item>
+        <item name="tabSelectedTextColor">@color/AniListDark_Primary_Dark</item>
+        <item name="tabTextColor">@color/AniListDark_Background_Text_Alternate</item>
+    </style>
+
+    <style name="AniListDark_AppBarLayout">
+        <item name="android:background">@color/AniListDark_Background_Special</item>
+    </style>
+
+    <style name="AniListDark_AppBarLayout">
+        <item name="android:background">@color/AniListDark_Background_Special</item>
+        <item name="android:windowBackground">@color/AniListDark_Background_Special</item>
+        <item name="itemTextColor">@color/AniListDark_Background_Text_Alternate</item>
+        <item name="itemIconTint">@color/AniListDark_Background_Text</item>
+        <item name="colorControlHighlight">@color/AniListDark_Secondary_Dark</item>
+    </style>
 </resources>
