@@ -153,11 +153,14 @@ namespace AniDroid.Base
 
             switch (_theme)
             {
-                case AniDroidTheme.Dark:
-                    theme = Resource.Style.Dark;
+                case AniDroidTheme.Black:
+                    theme = Resource.Style.Black;
                     break;
                 case AniDroidTheme.AniListDark:
                     theme = Resource.Style.AniListDark;
+                    break;
+                case AniDroidTheme.Dark:
+                    theme = Resource.Style.Dark;
                     break;
             }
 
@@ -192,8 +195,9 @@ namespace AniDroid.Base
         public enum AniDroidTheme
         {
             AniList = 0,
-            Dark = 1,
-            AniListDark = 2
+            Black = 1,
+            AniListDark = 2,
+            Dark = 3
         }
 
         #endregion

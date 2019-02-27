@@ -74,7 +74,7 @@ namespace AniDroid.Settings
 
         public void CreateAniDroidThemeSettingItem(AniDroidTheme theme)
         {
-            var options = new List<string> { "AniList", "Dark", "AniList Dark" };
+            var options = new List<string> { "AniList", "Black", "AniList Dark", "Dark" };
             _settingsContainer.AddView(
                 CreateSpinnerSettingRow(this, "AniDroid Theme", "Choose the theme you'd like to use", options, (int)theme, (sender, args) =>
                 {

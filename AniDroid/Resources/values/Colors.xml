@@ -84,7 +84,7 @@
   -->
 
   <!-- List Items -->
-  <color name="Dark_ListItemDivider">#FF252525</color>
+  <color name="Dark_ListItemDivider">#FF363636</color>
   <color name="Dark_TrustedTorrent">#06260E</color>
   <color name="Dark_RemakeTorrent">#311806</color>
   <color name="Dark_ListItemPriority">#06260E</color>
@@ -99,27 +99,27 @@
   <color name="Dark_Ripple_Text">#D4C0C0C0</color>
 
   <!-- General -->
-  <color name="Dark_Background">#000</color>
-  <color name="Dark_Background_Alternate">#181818</color>
-  <color name="Dark_Background_Special">#151515</color>
-  <color name="Dark_Background_Special_Dark">#0D0D0D</color>
-  <color name="Dark_Background_Text">#F1E9E9E9</color>
+  <color name="Dark_Background">#212121</color>
+  <color name="Dark_Background_Alternate">#2B2B2B</color>
+  <color name="Dark_Background_Special">#252525</color>
+  <color name="Dark_Background_Special_Dark">#1d1d1d</color>
+  <color name="Dark_Background_Text">#bfbfbf</color>
   <color name="Dark_Background_Text_Alternate">#D4C0C0C0</color>
   <color name="Dark_Background_Text_Special">#fff</color>
 
-  <color name="Dark_Primary">#79E4CC</color>
+  <color name="Dark_Primary">#b368e6</color>
   <color name="Dark_Primary_Text">#A3FFFFFF</color>
-  <color name="Dark_Primary_Dark">#2FBF9F</color>
+  <color name="Dark_Primary_Dark">#7e49a3</color>
   <color name="Dark_Primary_Dark_Text">#A3FFFFFF</color>
-  <color name="Dark_Secondary">#83ACE5</color>
+  <color name="Dark_Secondary">#83E5AD</color>
   <color name="Dark_Secondary_Text">#E4FFFFFF</color>
-  <color name="Dark_Secondary_Dark">#3C74C1</color>
+  <color name="Dark_Secondary_Dark">#66B688</color>
   <color name="Dark_Secondary_Dark_Text">#E4FFFFFF</color>
-  <color name="Dark_Tertiary">#A0F481</color>
+  <color name="Dark_Tertiary">#6B8BD6</color>
   <color name="Dark_Tertiary_Text">#E4FFFFFF</color>
-  <color name="Dark_Tertiary_Dark">#68E539</color>
+  <color name="Dark_Tertiary_Dark">#5A74B3</color>
   <color name="Dark_Tertiary_Dark_Text">#E4E9E9E9</color>
-  <color name="Dark_Inactive">#FF9E9E9E</color>
+  <color name="Dark_Inactive">#FF717171</color>
 
     <!--
     **
@@ -128,7 +128,7 @@
     -->
 
     <!-- List Items -->
-    <color name="AniListDark_ListItemDivider">#FF252525</color>
+    <color name="AniListDark_ListItemDivider">#363C4F</color>
     <color name="AniListDark_TrustedTorrent">#06260E</color>
     <color name="AniListDark_RemakeTorrent">#311806</color>
     <color name="AniListDark_ListItemPriority">#06260E</color>
@@ -159,11 +159,55 @@
     <color name="AniListDark_Secondary_Text">#E4FFFFFF</color>
     <color name="AniListDark_Secondary_Dark">#68C3BD</color>
     <color name="AniListDark_Secondary_Dark_Text">#E4FFFFFF</color>
-    <color name="AniListDark_Tertiary">#A0F481</color>
+    <color name="AniListDark_Tertiary">#9E65F4</color>
     <color name="AniListDark_Tertiary_Text">#E4FFFFFF</color>
-    <color name="AniListDark_Tertiary_Dark">#68E539</color>
+    <color name="AniListDark_Tertiary_Dark">#8253C9</color>
     <color name="AniListDark_Tertiary_Dark_Text">#E4E9E9E9</color>
     <color name="AniListDark_Inactive">#FF9E9E9E</color>
+
+    <!--
+    **
+    BLACK COLOR SCHEME
+    **
+    -->
+
+    <!-- List Items -->
+    <color name="Black_ListItemDivider">#FF252525</color>
+    <color name="Black_TrustedTorrent">#06260E</color>
+    <color name="Black_RemakeTorrent">#311806</color>
+    <color name="Black_ListItemPriority">#06260E</color>
+    <color name="Black_ListItemUpToDate">#ABFF7A</color>
+    <color name="Black_ListItemSlightlyBehind">#F5FF7A</color>
+    <color name="Black_ListItemBehind">#FFB47A</color>
+    <color name="Black_ListItemVeryBehind">#FF3631</color>
+
+    <!-- Ripple Item -->
+    <color name="Black_Ripple_Background">#181818</color>
+    <color name="Black_Ripple_Highlight">#414141</color>
+    <color name="Black_Ripple_Text">#D4C0C0C0</color>
+
+    <!-- General -->
+    <color name="Black_Background">#000</color>
+    <color name="Black_Background_Alternate">#181818</color>
+    <color name="Black_Background_Special">#151515</color>
+    <color name="Black_Background_Special_Dark">#0D0D0D</color>
+    <color name="Black_Background_Text">#F1E9E9E9</color>
+    <color name="Black_Background_Text_Alternate">#D4C0C0C0</color>
+    <color name="Black_Background_Text_Special">#fff</color>
+
+    <color name="Black_Primary">#79E4CC</color>
+    <color name="Black_Primary_Text">#A3FFFFFF</color>
+    <color name="Black_Primary_Dark">#2FBF9F</color>
+    <color name="Black_Primary_Dark_Text">#A3FFFFFF</color>
+    <color name="Black_Secondary">#83ACE5</color>
+    <color name="Black_Secondary_Text">#E4FFFFFF</color>
+    <color name="Black_Secondary_Dark">#3C74C1</color>
+    <color name="Black_Secondary_Dark_Text">#E4FFFFFF</color>
+    <color name="Black_Tertiary">#5ECE35</color>
+    <color name="Black_Tertiary_Text">#E4FFFFFF</color>
+    <color name="Black_Tertiary_Dark">#5ECE35</color>
+    <color name="Black_Tertiary_Dark_Text">#E4E9E9E9</color>
+    <color name="Black_Inactive">#FF9E9E9E</color>
 
    <!--
    **
