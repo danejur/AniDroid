@@ -12,6 +12,7 @@ using Android.Support.V7.App;
 using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using AniDroid.Adapters.General;
 using AniDroid.AniList;
 using AniDroid.AniList.Dto;
 using AniDroid.AniList.Models;
@@ -27,7 +28,7 @@ namespace AniDroid.Dialogs
         public static void Create(BaseAniDroidActivity context, IBrowsePresenter presenter)
         {
             var dialog =
-                new BrowseFilterDialogFragment(presenter)
+                new BrowseFilterDialogFragment(context, presenter)
                 {
                     Cancelable = true
                 };
@@ -42,26 +43,30 @@ namespace AniDroid.Dialogs
             public const string BackstackTag = "BROWSE_FILTER_DIALOG";
             private const int MinimumYear = 1950;
 
+            private readonly BaseAniDroidActivity _context;
             private readonly IBrowsePresenter _presenter;
             private readonly BrowseMediaDto _browseModel;
 
             private bool _pendingDismiss;
             private Toolbar _toolbar;
-            private LinearLayout _animeSection;
             private AppCompatSpinner _typeSpinner;
             private AppCompatSpinner _formatSpinner;
             private AppCompatSpinner _statusSpinner;
             private AppCompatSpinner _countrySpinner;
             private AppCompatSpinner _seasonSpinner;
-            private AppCompatSpinner _sourceSpinner;
-            private Button _genresAndTagsButton;
-            private Button _streamingOnButton;
-            private Picker _yearFromPicker;
-            private Picker _yearToPicker;
             private Picker _yearPicker;
+            private AppCompatSpinner _sourceSpinner;
+            private AppCompatButton _genresButton;
+            private AppCompatButton _tagsButton;
+            private AppCompatButton _streamingOnButton;
 
-            public BrowseFilterDialogFragment(IBrowsePresenter presenter)
+            private ICollection<string> _selectedGenres;
+            private ICollection<string> _selectedTags;
+            private ICollection<string> _selectedStreamingOn;
+
+            public BrowseFilterDialogFragment(BaseAniDroidActivity context, IBrowsePresenter presenter)
             {
+                _context = context;
                 _presenter = presenter;
                 _browseModel = presenter.GetBrowseDto();
             }
@@ -83,10 +88,6 @@ namespace AniDroid.Dialogs
                     false);
 
                 SetupToolbar(_toolbar = view.FindViewById<Toolbar>(Resource.Id.BrowseFilterDialog_Toolbar));
-
-                SetupAnimeSection(
-                    _animeSection = view.FindViewById<LinearLayout>(Resource.Id.BrowseDialog_AnimeSection),
-                    _browseModel.Type);
 
                 SetupTypeSpinner(_typeSpinner = view.FindViewById<AppCompatSpinner>(Resource.Id.BrowseFilterDialog_TypeSpinner),
                     _browseModel.Type);
@@ -115,7 +116,17 @@ namespace AniDroid.Dialogs
                 SetupYearPicker(_yearPicker = view.FindViewById<Picker>(Resource.Id.BrowseFilterDialog_YearPicker),
                     _browseModel.Year);
 
-                //SetupYearRangePickers(_yearFromPicker = view.FindViewById<Picker>(Resource.Id.BrowseFilterDialog_YearFromPicker), _yearToPicker = view.FindViewById<Picker>(Resource.Id.BrowseFilterDialog_YearToPicker), _browseModel.year);
+                _selectedGenres = _browseModel.IncludedGenres;
+                SetupGenresButton(_genresButton =
+                    view.FindViewById<AppCompatButton>(Resource.Id.BrowseFilterDialog_GenresButton));
+
+                _selectedTags = _browseModel.IncludedTags;
+                SetupTagsButton(_tagsButton =
+                    view.FindViewById<AppCompatButton>(Resource.Id.BrowseFilterDialog_TagsButton));
+
+                _selectedStreamingOn = _browseModel.LicensedBy;
+                SetupStreamingOnButton(_streamingOnButton =
+                    view.FindViewById<AppCompatButton>(Resource.Id.BrowseFilterDialog_StreamingOnButton));
 
                 return view;
             }
@@ -130,13 +141,11 @@ namespace AniDroid.Dialogs
                     {
                         ApplyFilters();
                     }
+                    else if (args.Item.ItemId == Resource.Id.Menu_BrowseFilters_Reset)
+                    {
+                        ResetFilters();
+                    }
                 };
-            }
-
-            private void SetupAnimeSection(LinearLayout animeSection, Media.MediaType selectedType)
-            {
-                animeSection.Visibility =
-                    Media.MediaType.Anime.Equals(selectedType) ? ViewStates.Visible : ViewStates.Gone;
             }
 
             private void SetupTypeSpinner(AppCompatSpinner typeSpinner, Media.MediaType selectedType)
@@ -167,7 +176,6 @@ namespace AniDroid.Dialogs
                         typeSpinner.SetTag(Resource.Id.Object_Position, typeSpinner.SelectedItemPosition);
 
                         SetupFormatSpinner(_formatSpinner, type, null);
-                        SetupAnimeSection(_animeSection, type);
                     }
                 };
             }
@@ -244,7 +252,7 @@ namespace AniDroid.Dialogs
                     seasonSpinner.SetSelection(seasons.FindIndex(x => x.Value == selectedSeason.Value) + 1);
                 }
 
-                seasonSpinner.Visibility = Media.MediaType.Anime.Equals(selectedType) ? ViewStates.Visible : ViewStates.Gone;
+                seasonSpinner.Enabled = Media.MediaType.Anime.Equals(selectedType);
             }
 
             private void SetupYearPicker(Picker yearPicker, int? year)
@@ -252,9 +260,116 @@ namespace AniDroid.Dialogs
                 yearPicker.SetNumericValues(DateTime.UtcNow.Year + 2, 0, false, year, MinimumYear);
             }
 
-            private void SetupYearRangePickers(Picker fromYearPicker, Picker toYearPicker, int? fromYear, int? toYear)
+            private void SetupGenresButton(AppCompatButton genresButton)
             {
-                
+                genresButton.Text = _selectedGenres?.Count > 0 ? $"{_selectedGenres.Count} Selected" : "All";
+
+                genresButton.Click -= GenresButton_Click;
+                genresButton.Click += GenresButton_Click;
+            }
+
+            private void GenresButton_Click(object sender, EventArgs e)
+            {
+                var dialog = new Android.Support.V7.App.AlertDialog.Builder(_context,
+                    _context.GetThemedResourceId(Resource.Attribute.Dialog_Theme)).Create();
+                var dialogView = _context.LayoutInflater.Inflate(Resource.Layout.View_List, null);
+                var recycler = dialogView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
+
+                dialog.SetView(dialogView);
+
+                var genres = _presenter.GetGenres().OrderBy(x => x).Select(x =>
+                    new CheckBoxItemRecyclerAdapter.CheckBoxItem
+                    {
+                        Title = x,
+                        IsChecked = _selectedGenres?.Any(y => y == x) == true
+                    }).ToList();
+
+                var adapter = new CheckBoxItemRecyclerAdapter(_context, genres);
+
+                recycler.SetAdapter(adapter);
+
+                dialog.Show();
+
+                dialog.DismissEvent += (disSender, disArgs) =>
+                {
+                    _selectedGenres = adapter.Items.Where(x => x.IsChecked).Select(x => x.Title).ToList();
+                    SetupGenresButton(_genresButton);
+                };
+            }
+
+            private void SetupTagsButton(AppCompatButton tagsButton)
+            {
+                tagsButton.Text = _selectedTags?.Count > 0 ? $"{_selectedTags.Count} Selected" : "All";
+
+                tagsButton.Click -= TagsButton_Click;
+                tagsButton.Click += TagsButton_Click;
+            }
+
+            private void TagsButton_Click(object sender, EventArgs e)
+            {
+                var dialog = new Android.Support.V7.App.AlertDialog.Builder(_context,
+                    _context.GetThemedResourceId(Resource.Attribute.Dialog_Theme)).Create();
+                var dialogView = _context.LayoutInflater.Inflate(Resource.Layout.View_List, null);
+                var recycler = dialogView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
+
+                dialog.SetView(dialogView);
+
+                var tags = _presenter.GetMediaTags().OrderBy(x => x.Name).Select(x =>
+                    new CheckBoxItemRecyclerAdapter.CheckBoxItem
+                    {
+                        Title = x.Name,
+                        IsChecked = _selectedTags?.Any(y => y == x.Name) == true
+                    }).ToList();
+
+                var adapter = new CheckBoxItemRecyclerAdapter(_context, tags);
+
+                recycler.SetAdapter(adapter);
+
+                dialog.Show();
+
+                dialog.DismissEvent += (disSender, disArgs) =>
+                {
+                    _selectedTags = adapter.Items.Where(x => x.IsChecked).Select(x => x.Title).ToList();
+                    SetupTagsButton(_tagsButton);
+                };
+            }
+
+            private void SetupStreamingOnButton(AppCompatButton streamingOnButton)
+            {
+                streamingOnButton.Text = _selectedStreamingOn?.Count > 0 ? $"{_selectedStreamingOn.Count} Selected" : "All";
+
+                streamingOnButton.Click -= StreamingOnButton_Click;
+                streamingOnButton.Click += StreamingOnButton_Click;
+            }
+
+            private void StreamingOnButton_Click(object sender, EventArgs e)
+            {
+                var dialog = new Android.Support.V7.App.AlertDialog.Builder(_context,
+                    _context.GetThemedResourceId(Resource.Attribute.Dialog_Theme)).Create();
+                var dialogView = _context.LayoutInflater.Inflate(Resource.Layout.View_List, null);
+                var recycler = dialogView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
+
+                dialog.SetView(dialogView);
+
+
+                var licensees = AniListEnum.GetEnumValues<Media.MediaLicensee>().Select(x =>
+                    new CheckBoxItemRecyclerAdapter.CheckBoxItem
+                    {
+                        Title = x.DisplayValue,
+                        IsChecked = _selectedStreamingOn?.Any(y => y == x.DisplayValue) == true
+                    }).ToList();
+
+                var adapter = new CheckBoxItemRecyclerAdapter(_context, licensees);
+
+                recycler.SetAdapter(adapter);
+
+                dialog.Show();
+
+                dialog.DismissEvent += (disSender, disArgs) =>
+                {
+                    _selectedStreamingOn = adapter.Items.Where(x => x.IsChecked).Select(x => x.Title).ToList();
+                    SetupStreamingOnButton(_streamingOnButton);
+                };
             }
 
             private void ApplyFilters()
@@ -266,6 +381,9 @@ namespace AniDroid.Dialogs
                 _browseModel.Source = GetSelectedSource();
                 _browseModel.Year = GetSelectedYear();
                 _browseModel.Season = GetSelectedSeason(_browseModel.Type);
+                _browseModel.IncludedTags = GetSelectedTags();
+                _browseModel.IncludedGenres = GetSelectedGenres();
+                _browseModel.LicensedBy = GetSelectedStreamingOn();
 
                 _presenter.BrowseAniListMedia(_browseModel);
 
@@ -283,6 +401,26 @@ namespace AniDroid.Dialogs
                 {
                     _pendingDismiss = true;
                 }
+            }
+
+            private void ResetFilters()
+            {
+                _typeSpinner.SetSelection(0, false);
+                _formatSpinner.SetSelection(0, false);
+                _statusSpinner.SetSelection(0, false);
+                _countrySpinner.SetSelection(0, false);
+                _sourceSpinner.SetSelection(0, false);
+                _yearPicker.SetValue(null);
+                _seasonSpinner.SetSelection(0, false);
+
+                _selectedTags = new List<string>();
+                SetupTagsButton(_tagsButton);
+
+                _selectedGenres = new List<string>();
+                SetupGenresButton(_genresButton);
+
+                _selectedStreamingOn = new List<string>();
+                SetupStreamingOnButton(_streamingOnButton);
             }
 
             private Media.MediaType GetSelectedType()
@@ -330,6 +468,21 @@ namespace AniDroid.Dialogs
                 return position >= 0 && Media.MediaType.Anime.Equals(selectedType)
                     ? AniListEnum.GetEnum<Media.MediaSeason>(position)
                     : null;
+            }
+
+            private ICollection<string> GetSelectedGenres()
+            {
+                return _selectedGenres?.Any() == true ? _selectedGenres : null;
+            }
+
+            private ICollection<string> GetSelectedTags()
+            {
+                return _selectedTags?.Any() == true ? _selectedTags : null;
+            }
+
+            private ICollection<string> GetSelectedStreamingOn()
+            {
+                return _selectedStreamingOn?.Any() == true ? _selectedStreamingOn : null;
             }
         }
     }

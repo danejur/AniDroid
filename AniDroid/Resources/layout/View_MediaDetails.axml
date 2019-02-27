@@ -47,6 +47,7 @@
                     android:textColor="?Background_Text"
                     android:textSize="16dp"
                     android:maxLines="3"
+					android:textIsSelectable="true"
                     android:ellipsize="end"
                     android:textStyle="bold"
                     android:layout_weight="1" />
@@ -69,6 +70,7 @@
                 android:layout_toRightOf="@id/Media_Image"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="10dp"
+				android:textIsSelectable="true"
                 android:textSize="16dp"
                 android:textColor="?Background_Text" />
             <TextView
@@ -80,6 +82,7 @@
                 android:layout_toRightOf="@id/Media_Image"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="10dp"
+				android:textIsSelectable="true"
                 android:textSize="16dp"
                 android:textColor="?Background_Text" />
             <TextView
@@ -91,6 +94,7 @@
                 android:layout_toRightOf="@id/Media_Image"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="10dp"
+				android:textIsSelectable="true"
                 android:textSize="16dp"
                 android:textColor="?Background_Text"
                 android:visibility="gone" />
@@ -103,6 +107,7 @@
                 android:layout_toRightOf="@id/Media_Image"
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="10dp"
+				android:textIsSelectable="true"
                 android:textSize="16dp"
                 android:textColor="?Primary_Dark"
                 android:textStyle="italic"

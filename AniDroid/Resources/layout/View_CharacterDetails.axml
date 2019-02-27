@@ -36,12 +36,14 @@
             android:id="@+id/Character_Name"
             android:gravity="center"
             android:textColor="?Background_Text"
+			android:textIsSelectable="true"
             android:layout_weight="1" />
         <TextView
             android:text="Alt Names"
             android:id="@+id/Character_AltNames"
             android:gravity="center"
             android:textColor="?Background_Text"
+			android:textIsSelectable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp" />
@@ -53,6 +55,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/Character_Description"
         android:layout_marginTop="10dp"
+		android:textIsSelectable="true"
         android:textColor="?Background_Text"
         android:gravity="center_horizontal" />
   </LinearLayout>
