@@ -113,34 +113,6 @@
                     android:paddingRight="10dp"
                     android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:text="Country"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="14dp"
-                        android:textColor="?Primary_Dark"
-                        android:layout_gravity="top" />
-					<android.support.v7.widget.AppCompatSpinner
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_gravity="bottom"
-                        android:id="@+id/BrowseFilterDialog_CountrySpinner" />
-                </LinearLayout>
-            </LinearLayout>
-			<LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-				android:layout_marginTop="20dp">
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
                     android:layout_height="80dp">
                     <TextView
                         android:text="Source"
@@ -157,6 +129,13 @@
                         android:layout_gravity="bottom"
                         android:id="@+id/BrowseFilterDialog_SourceSpinner" />
                 </LinearLayout>
+            </LinearLayout>
+			<LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+				android:layout_marginTop="20dp">
+                
 				<LinearLayout
                     android:layout_weight="1"
                     android:paddingLeft="10dp"
@@ -175,41 +154,10 @@
                         android:id="@+id/BrowseFilterDialog_YearPicker"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_gravity="bottom"
+                        android:layout_gravity="bottom|center_horizontal"
                         android:background="@android:color/transparent" />
                 </LinearLayout>
-                <LinearLayout
-					android:visibility="gone"
-                    android:layout_weight="1"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:text="Genres and Tags"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="14dp"
-                        android:textColor="?Primary_Dark"
-                        android:layout_gravity="top" />
-                    <Button
-						android:text="All"
-						android:layout_width="wrap_content"
-						android:layout_height="wrap_content"
-						android:id="@+id/BrowseFilterDialog_GenresTagsButton"
-						android:layout_gravity="center_horizontal" />
-                </LinearLayout>
-            </LinearLayout>
-			<LinearLayout
-				android:id="@+id/BrowseDialog_AnimeSection"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-				android:layout_marginTop="20dp">
-                <LinearLayout
+				<LinearLayout
                     android:layout_weight="1"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
@@ -231,8 +179,83 @@
                         android:layout_gravity="bottom"
                         android:id="@+id/BrowseFilterDialog_SeasonSpinner" />
                 </LinearLayout>
+            </LinearLayout>
+			<LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+				android:layout_marginTop="20dp">
                 <LinearLayout
-					android:visibility="invisible"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:text="Genres"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="?Primary_Dark"
+                        android:layout_gravity="top" />
+                    <android.support.v7.widget.AppCompatButton
+						android:text="All"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:id="@+id/BrowseFilterDialog_GenresButton"
+						android:layout_gravity="center_horizontal" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:text="Tags"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="?Primary_Dark"
+                        android:layout_gravity="top" />
+                    <android.support.v7.widget.AppCompatButton
+						android:text="All"
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:id="@+id/BrowseFilterDialog_TagsButton"
+						android:layout_gravity="center_horizontal" />
+                </LinearLayout>
+            </LinearLayout>
+			<LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+				android:layout_marginTop="20dp">
+				<LinearLayout
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:text="Country"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="14dp"
+                        android:textColor="?Primary_Dark"
+                        android:layout_gravity="top" />
+					<android.support.v7.widget.AppCompatSpinner
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_gravity="bottom"
+                        android:id="@+id/BrowseFilterDialog_CountrySpinner" />
+                </LinearLayout>
+				<LinearLayout
                     android:layout_weight="1"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
@@ -246,65 +269,12 @@
                         android:textSize="14dp"
                         android:textColor="?Primary_Dark"
                         android:layout_gravity="top" />
-                    <Button
+                    <android.support.v7.widget.AppCompatButton
 						android:text="All"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
 						android:id="@+id/BrowseFilterDialog_StreamingOnButton"
 						android:layout_gravity="center_horizontal" />
-                </LinearLayout>
-            </LinearLayout>
-			<LinearLayout
-				android:visibility="gone"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-				android:layout_marginTop="20dp">
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp">
-                    <TextView
-                        android:text="Year From"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="14dp"
-                        android:textColor="?Primary_Dark"
-                        android:layout_gravity="top" />
-                    <AniDroid.Widgets.Picker
-                        android:id="@+id/BrowseFilterDialog_YearFromPicker"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_gravity="bottom"
-                        android:background="@android:color/transparent" />
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_weight="1"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-					<TextView
-                        android:text="Year To"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textSize="14dp"
-                        android:textColor="?Primary_Dark"
-                        android:layout_gravity="top" />
-                    <AniDroid.Widgets.Picker
-                        android:id="@+id/BrowseFilterDialog_YearToPicker"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="15dp"
-                        android:layout_marginRight="5dp"
-                        android:layout_gravity="bottom"
-                        android:background="@android:color/transparent" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

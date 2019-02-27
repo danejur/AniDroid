@@ -8,6 +8,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Interfaces;
@@ -26,7 +27,7 @@ namespace AniDroid.Main
         {
         }
 
-        public override Task Init()
+        public override async Task Init()
         {
             // TODO: potentially update notifications here, or trigger update at least
 
@@ -39,7 +40,23 @@ namespace AniDroid.Main
                 AniDroidSettings.HighestVersionUsed = View.GetVersionCode();
             }
 
-            return Task.CompletedTask;
+            if ((AniDroidSettings.GenreCache?.Count ?? 0) == 0)
+            {
+                var genreResult = await AniListService.GetGenreCollectionAsync(default);
+
+                genreResult.Switch(genres => AniDroidSettings.GenreCache = genres)
+                    .Switch(error =>
+                        View.DisplaySnackbarMessage("Error occurred while caching genres", Snackbar.LengthLong));
+            }
+
+            if ((AniDroidSettings.MediaTagCache?.Count ?? 0) == 0)
+            {
+                var genreResult = await AniListService.GetMediaTagCollectionAsync(default);
+
+                genreResult.Switch(tags => AniDroidSettings.MediaTagCache = tags)
+                    .Switch(error =>
+                        View.DisplaySnackbarMessage("Error occurred while caching tags", Snackbar.LengthLong));
+            }
         }
 
         public IAsyncEnumerable<OneOf<IPagedData<AniListNotification>, IAniListError>> GetNotificationsEnumerable()

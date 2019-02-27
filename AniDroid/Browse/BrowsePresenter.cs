@@ -81,5 +81,15 @@ namespace AniDroid.Browse
         {
             return _browseDto;
         }
+
+        public IList<Media.MediaTag> GetMediaTags()
+        {
+            return AniDroidSettings.MediaTagCache;
+        }
+
+        public IList<string> GetGenres()
+        {
+            return AniDroidSettings.GenreCache;
+        }
     }
 }

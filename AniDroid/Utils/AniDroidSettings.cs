@@ -69,6 +69,18 @@ namespace AniDroid.Utils
             set => _authSettingStorage.Put(UnauthenticatedKeys.UseSwipeToRefreshHomeScreenKey, value);
         }
 
+        public IList<Media.MediaTag> MediaTagCache
+        {
+            get => _settingStorage.Get(UnauthenticatedKeys.MediaTagCacheKey, new List<Media.MediaTag>());
+            set => _settingStorage.Put(UnauthenticatedKeys.MediaTagCacheKey, value);
+        }
+
+        public IList<string> GenreCache
+        {
+            get => _settingStorage.Get(UnauthenticatedKeys.GenreCacheKey, new List<string>());
+            set => _settingStorage.Put(UnauthenticatedKeys.GenreCacheKey, value);
+        }
+
         #endregion
 
         #region Authenticated Settings
@@ -263,6 +275,8 @@ namespace AniDroid.Utils
             public const string DisplayBannersKey = "DISPLAY_BANNERS";
             public const string UseSwipeToRefreshHomeScreenKey = "USE_SWIPE_TO_REFRESH_HOME_SCREEN";
             public const string DisplayUpcomingEpisodeTimeAsCountdownKey = "DISPLAY_UPCOMING_EPISODE_TIME_AS_COUNTDOWN";
+            public const string MediaTagCacheKey = "MEDIA_TAG_CACHE";
+            public const string GenreCacheKey = "GENRE_CACHE";
         }
 
         private static class AuthenticatedKeys

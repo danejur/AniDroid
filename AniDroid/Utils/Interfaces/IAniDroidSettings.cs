@@ -28,6 +28,8 @@ namespace AniDroid.Utils.Interfaces
         bool DisplayBanners { get; set; }
         bool DisplayUpcomingEpisodeTimeAsCountdown { get; set; }
         bool UseSwipeToRefreshHomeScreen { get; set; }
+        IList<Media.MediaTag> MediaTagCache { get; set; }
+        IList<string> GenreCache { get; set; }
 
         #endregion
 
