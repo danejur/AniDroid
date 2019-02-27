@@ -161,5 +161,8 @@
     <item>02-22-2019|Fixed bug where activity replies could cover up the reply text box</item>
     <item>02-24-2019|Added new AniList Dark theme! (Still a work in progress)</item>
     <item>02-24-2019|Small bug fix for edit media list and browse filter dialogs</item>
+    <item>02-27-2019|Added a new Dark theme! The old Dark theme has been renamed to Black</item>
+    <item>02-27-2019|Finished up Browse support. Try it out!</item>
+    <item>02-27-2019|Added ability to select and copy certain text</item>
   </array>
 </resources>
