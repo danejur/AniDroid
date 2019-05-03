@@ -164,5 +164,6 @@
     <item>02-27-2019|Added a new Dark theme! The old Dark theme has been renamed to Black</item>
     <item>02-27-2019|Finished up Browse support. Try it out!</item>
     <item>02-27-2019|Added ability to select and copy certain text</item>
+    <item>05-03-2019|Fixing crash when trying to get notifications</item>
   </array>
 </resources>
