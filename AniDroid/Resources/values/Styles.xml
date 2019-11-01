@@ -31,7 +31,7 @@
     <item name="android:windowBackground">@color/Dark_Background</item>
     <item name="android:buttonStyle">@style/Dark_Button</item>
     <item name="android:checkboxStyle">@style/Dark_Checkbox</item>
-    <item name="NavDrawer_Theme">@style/Dark_AppBarLayout</item>
+    <item name="NavDrawer_Theme">@style/Dark_NavBarTheme</item>
 
     <item name="Primary">@color/Dark_Primary</item>
     <item name="Primary_Text">@color/Dark_Primary_Text</item>
@@ -163,7 +163,7 @@
         <item name="android:background">@color/Dark_Background_Special</item>
     </style>
 
-  <style name="Dark_AppBarLayout">
+  <style name="Dark_NavBarTheme">
     <item name="android:background">@color/Dark_Background_Special</item>
     <item name="android:windowBackground">@color/Dark_Background_Special</item>
     <item name="itemTextColor">@color/Dark_Background_Text_Alternate</item>
@@ -384,7 +384,7 @@
         <item name="android:windowBackground">@color/AniListDark_Background</item>
         <item name="android:buttonStyle">@style/AniListDark_Button</item>
         <item name="android:checkboxStyle">@style/AniListDark_Checkbox</item>
-        <item name="NavDrawer_Theme">@style/AniListDark_AppBarLayout</item>
+        <item name="NavDrawer_Theme">@style/AniListDark_NavBarTheme</item>
 
         <item name="Primary">@color/AniListDark_Primary</item>
         <item name="Primary_Text">@color/AniListDark_Primary_Text</item>
@@ -516,7 +516,7 @@
         <item name="android:background">@color/AniListDark_Background_Special</item>
     </style>
 
-    <style name="AniListDark_AppBarLayout">
+    <style name="AniListDark_NavBarTheme">
         <item name="android:background">@color/AniListDark_Background_Special</item>
         <item name="android:windowBackground">@color/AniListDark_Background_Special</item>
         <item name="itemTextColor">@color/AniListDark_Background_Text_Alternate</item>
@@ -555,7 +555,7 @@
         <item name="android:windowBackground">@color/Black_Background</item>
         <item name="android:buttonStyle">@style/Black_Button</item>
         <item name="android:checkboxStyle">@style/Black_Checkbox</item>
-        <item name="NavDrawer_Theme">@style/Black_AppBarLayout</item>
+        <item name="NavDrawer_Theme">@style/Black_NavBarTheme</item>
 
         <item name="Primary">@color/Black_Primary</item>
         <item name="Primary_Text">@color/Black_Primary_Text</item>
@@ -687,7 +687,7 @@
         <item name="android:background">@color/Black_Background_Special</item>
     </style>
 
-    <style name="Black_AppBarLayout">
+    <style name="Black_NavBarTheme">
         <item name="android:background">@color/Black_Background_Special</item>
         <item name="android:windowBackground">@color/Black_Background_Special</item>
         <item name="itemTextColor">@color/Black_Background_Text_Alternate</item>
