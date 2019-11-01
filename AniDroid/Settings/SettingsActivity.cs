@@ -140,7 +140,7 @@ namespace AniDroid.Settings
             _settingsContainer.AddView(
                 CreateSettingRow(this, "Privacy Policy", null, (sender, args) =>
                 {
-                    var privacyPolicyUrl = Resources.GetString(Resource.Config.AppPrivacyPolicyUrl);
+                    var privacyPolicyUrl = Resources.GetString(Resource.String.AppPrivacyPolicyUrl);
                     var intent = new Intent(Intent.ActionView);
                     intent.SetData(Android.Net.Uri.Parse(privacyPolicyUrl));
                     StartActivity(intent);

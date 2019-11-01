@@ -98,7 +98,7 @@ namespace AniDroid.Base
         }
     }
 
-    [Activity(Label = "@config/AppName")]
+    [Activity(Label = "@string/AppName")]
     public abstract class BaseAniDroidActivity : AppCompatActivity
     {
         public const int ObjectBrowseRequestCode = 9;

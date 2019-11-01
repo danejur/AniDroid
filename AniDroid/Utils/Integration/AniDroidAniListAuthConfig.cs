@@ -22,9 +22,9 @@ namespace AniDroid.Utils.Integration
             _context = context;
         }
 
-        public string ClientId => _context.Resources.GetString(Resource.Config.ApiClientId);
-        public string ClientSecret => _context.Resources.GetString(Resource.Config.ApiClientSecret);
-        public string RedirectUri => _context.Resources.GetString(Resource.Config.ApiRedirectUri);
-        public string AuthTokenUri => _context.Resources.GetString(Resource.Config.AniListAuthTokenUri);
+        public string ClientId => _context.Resources.GetString(Resource.String.ApiClientId);
+        public string ClientSecret => _context.Resources.GetString(Resource.String.ApiClientSecret);
+        public string RedirectUri => _context.Resources.GetString(Resource.String.ApiRedirectUri);
+        public string AuthTokenUri => _context.Resources.GetString(Resource.String.AniListAuthTokenUri);
     }
 }
