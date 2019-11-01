@@ -9,7 +9,7 @@ using Android.Support.V4.Content;
 using Android.Text;
 using Android.Text.Style;
 using Android.Views;
-using Square.PicassoLib;
+using Square.Picasso;
 
 namespace AniDroid.Utils.Formatting.Markdown
 {
@@ -42,7 +42,7 @@ namespace AniDroid.Utils.Formatting.Markdown
 
             foreach (var match in matches.ToList())
             {
-                var drawable = ContextCompat.GetDrawable(Application.Context, PlaceholderImage);
+                var drawable = ContextCompat.GetDrawable(context, PlaceholderImage);
                 drawable.SetBounds(0, 0, drawable.IntrinsicWidth, drawable.IntrinsicHeight);
 
                 var imageSpan = new ImageSpan(drawable, SpanAlign.Baseline);
@@ -68,7 +68,7 @@ namespace AniDroid.Utils.Formatting.Markdown
 
                 width = Math.Min(width, MaxImageWidth);
 
-                Picasso.Get().Load(match.Groups[2].Value)
+                Picasso.With(context).Load(match.Groups[2].Value)
                     .Into(new DrawableTarget(spannable, match.Index, match.Index + match.Length, (int)(width * context.Resources.DisplayMetrics.Density)));
             }
         }
@@ -90,7 +90,7 @@ namespace AniDroid.Utils.Formatting.Markdown
 
             foreach (var match in matches.ToList())
             {
-                var drawable = ContextCompat.GetDrawable(Application.Context, PlaceholderImage);
+                var drawable = ContextCompat.GetDrawable(context, PlaceholderImage);
                 drawable.SetBounds(0, 0, drawable.IntrinsicWidth, drawable.IntrinsicHeight);
 
                 var imageSpan = new ImageSpan(drawable, SpanAlign.Baseline);
@@ -109,7 +109,7 @@ namespace AniDroid.Utils.Formatting.Markdown
                 spannable.SetSpan(imageSpan, match.Index, match.Index + match.Length,
                     SpanTypes.InclusiveExclusive);
 
-                Picasso.Get().Load(string.Format(YoutubeThumbnailUrl, match.Groups[1].Value))
+                Picasso.With(context).Load(string.Format(YoutubeThumbnailUrl, match.Groups[1].Value))
                     .Into(new DrawableTarget(spannable, match.Index, match.Index + match.Length,
                         (int) (250 * context.Resources.DisplayMetrics.Density), playIcon));
             }
@@ -132,7 +132,7 @@ namespace AniDroid.Utils.Formatting.Markdown
                 _playIcon = playIcon;
             }
 
-            public void OnBitmapFailed(Java.Lang.Exception e, Drawable errorDrawable)
+            public void OnBitmapFailed(Drawable errorDrawable)
             {
             }
 

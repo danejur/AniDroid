@@ -22,7 +22,7 @@ using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
 using AniDroid.Utils.Logging;
 using Ninject;
-using Square.PicassoLib;
+using Square.Picasso;
 
 namespace AniDroid.Base
 {
@@ -211,7 +211,7 @@ namespace AniDroid.Base
                 return;
             }
 
-            var req = Picasso.Get().Load(url);
+            var req = Picasso.With(this).Load(url);
 
             if (showLoading)
             {
