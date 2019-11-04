@@ -32,14 +32,16 @@ namespace AniDroid.Discover
     {
         private LinearLayout _listContainer;
         private MediaRecyclerAdapter _currentlyAiringRecyclerAdapter;
-        private MediaRecyclerAdapter _trendingRecyclerAdapter;
+        private MediaRecyclerAdapter _trendingAnimeRecyclerAdapter;
+        private MediaRecyclerAdapter _trendingMangaRecyclerAdapter;
         private MediaRecyclerAdapter _newAnimeRecyclerAdapter;
         private MediaRecyclerAdapter _newMangaRecyclerAdapter;
 
         private List<MediaRecyclerAdapter> AdapterList => new List<MediaRecyclerAdapter>
         {
             _currentlyAiringRecyclerAdapter,
-            _trendingRecyclerAdapter,
+            _trendingAnimeRecyclerAdapter,
+            _trendingMangaRecyclerAdapter,
             _newAnimeRecyclerAdapter,
             _newMangaRecyclerAdapter
         };
@@ -89,7 +91,8 @@ namespace AniDroid.Discover
             if (item.ItemId == Resource.Id.Menu_Discover_Refresh)
             {
                 _currentlyAiringRecyclerAdapter.ResetAdapter();
-                _trendingRecyclerAdapter.ResetAdapter();
+                _trendingAnimeRecyclerAdapter.ResetAdapter();
+                _trendingMangaRecyclerAdapter.ResetAdapter();
                 _newAnimeRecyclerAdapter.ResetAdapter();
                 _newMangaRecyclerAdapter.ResetAdapter();
                 return true;
@@ -149,7 +152,7 @@ namespace AniDroid.Discover
             };
             adapter.SetHorizontalAdapterCardWidthDip(CardWidth);
 
-            trendingView.RecyclerAdapter = _trendingRecyclerAdapter = adapter;
+            trendingView.RecyclerAdapter = _trendingAnimeRecyclerAdapter = adapter;
 
             _listContainer.AddView(trendingView);
         }
@@ -174,7 +177,7 @@ namespace AniDroid.Discover
             };
             adapter.SetHorizontalAdapterCardWidthDip(CardWidth);
 
-            trendingView.RecyclerAdapter = _trendingRecyclerAdapter = adapter;
+            trendingView.RecyclerAdapter = _trendingMangaRecyclerAdapter = adapter;
 
             _listContainer.AddView(trendingView);
         }
