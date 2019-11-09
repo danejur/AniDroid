@@ -71,7 +71,7 @@ namespace AniDroid.Home
 
             if (settings.UseSwipeToRefreshHomeScreen)
             {
-                _swipeRefreshLayout.SetEnabled(true);
+                _swipeRefreshLayout.Enabled = true;
                 _swipeRefreshLayout.Refresh += (sender, e) =>
                 {
                     RefreshActivity();
@@ -80,7 +80,7 @@ namespace AniDroid.Home
             }
             else
             {
-                _swipeRefreshLayout.SetEnabled(false);
+                _swipeRefreshLayout.Enabled = false;
             }
 
             return listView;

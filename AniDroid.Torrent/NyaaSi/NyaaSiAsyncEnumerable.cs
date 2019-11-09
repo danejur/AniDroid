@@ -18,7 +18,7 @@ namespace AniDroid.Torrent.NyaaSi
             _request = request;
         }
 
-        public IAsyncEnumerator<OneOf<IPagedData<NyaaSiSearchResult>, IAniListError>> GetEnumerator() =>
+        public IAsyncEnumerator<OneOf<IPagedData<NyaaSiSearchResult>, IAniListError>> GetAsyncEnumerator(CancellationToken cancellationToken = default) =>
             new Enumerator(this, _request);
 
         public class Enumerator : IAsyncEnumerator<OneOf<IPagedData<NyaaSiSearchResult>, IAniListError>>
@@ -37,7 +37,7 @@ namespace AniDroid.Torrent.NyaaSi
                 };
             }
 
-            public async Task<bool> MoveNextAsync(CancellationToken ct = default(CancellationToken))
+            public async ValueTask<bool> MoveNextAsync()
             {
                 if (!_pageInfo.HasNextPage)
                 {
@@ -58,9 +58,11 @@ namespace AniDroid.Torrent.NyaaSi
                 return true;
             }
 
-            public void Dispose()
+            public ValueTask DisposeAsync()
             {
                 Current = null;
+
+                return new ValueTask(Task.CompletedTask);
             }
         }
     }

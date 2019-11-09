@@ -15,9 +15,9 @@ using Evernote.AndroidJob;
 namespace AniDroid
 {
 #if DEBUG
-    [Application(AllowBackup = true, Theme = "@style/AniList", Label= "@config/AppName", Icon = "@drawable/IconDebug")]
+    [Application(AllowBackup = true, Theme = "@style/AniList", Label= "@string/AppName", Icon = "@drawable/IconDebug")]
 #else
-    [Application(AllowBackup = true, Theme = "@style/AniList", Label= "@config/AppName", Icon = "@drawable/Icon")]
+    [Application(AllowBackup = true, Theme = "@style/AniList", Label= "@string/AppName", Icon = "@drawable/Icon")]
 #endif
     public class AniDroidApplication : Application
     {
@@ -41,7 +41,7 @@ namespace AniDroid
         {
             if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
             {
-                var channel = new NotificationChannel(Resources.GetString(Resource.Config.NotificationsChannelId), Resources.GetString(Resource.Config.NotificationsChannelName),
+                var channel = new NotificationChannel(Resources.GetString(Resource.String.NotificationsChannelId), Resources.GetString(Resource.String.NotificationsChannelName),
                     NotificationImportance.Default);
 
                 channel.EnableVibration(true);

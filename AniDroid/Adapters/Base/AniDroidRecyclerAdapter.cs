@@ -49,7 +49,7 @@ namespace AniDroid.Adapters.Base
         {
             CreateViewModelFunc = createViewModelFunc;
             _asyncEnumerable = enumerable;
-            _asyncEnumerator = enumerable.GetEnumerator();
+            _asyncEnumerator = enumerable.GetAsyncEnumerator();
         }
 
         protected AniDroidRecyclerAdapter(BaseAniDroidActivity context,
@@ -72,7 +72,7 @@ namespace AniDroid.Adapters.Base
         {
             if (_asyncEnumerable != null)
             {
-                _asyncEnumerator = _asyncEnumerable.GetEnumerator();
+                _asyncEnumerator = _asyncEnumerable.GetAsyncEnumerator();
                 Items.Clear();
                 Items.Add(null);
             }

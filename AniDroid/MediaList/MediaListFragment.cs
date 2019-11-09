@@ -319,7 +319,7 @@ namespace AniDroid.MediaList
 
                 if (Presenter.GetUseSwipeToRefreshOnMediaLists())
                 {
-                    swipeRefreshLayout.SetEnabled(true);
+                    swipeRefreshLayout.Enabled = true;
                     swipeRefreshLayout.Refresh += (sender, e) =>
                     {
                         _collection = null;
@@ -332,7 +332,7 @@ namespace AniDroid.MediaList
                 }
                 else
                 {
-                    swipeRefreshLayout.SetEnabled(false);
+                    swipeRefreshLayout.Enabled = false;
                 }
             }
 

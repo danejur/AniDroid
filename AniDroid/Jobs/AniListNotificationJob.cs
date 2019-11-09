@@ -63,7 +63,7 @@ namespace AniDroid.Jobs
                 {
                     var notificationEnum =
                         aniListService.GetAniListNotifications(false, Math.Min(user.UnreadNotificationCount, 7));
-                    var enumerator = notificationEnum.GetEnumerator();
+                    var enumerator = notificationEnum.GetAsyncEnumerator();
 
                     if (enumerator.MoveNextAsync().Result)
                     {
@@ -122,7 +122,7 @@ namespace AniDroid.Jobs
                 .SetGroup(NotificationGroup)
                 .SetAutoCancel(true)
                 .SetDeleteIntent(AniListNotificationJobDismissReciever.CreatePendingIntent(Context))
-                .SetChannelId(_context.Resources.GetString(Resource.Config.NotificationsChannelId));
+                .SetChannelId(_context.Resources.GetString(Resource.String.NotificationsChannelId));
 
             NotificationManagerCompat.From(_context).Notify(NotificationId, notificationBuilder.Build());
         }
@@ -143,7 +143,7 @@ namespace AniDroid.Jobs
                 .SetContentIntent(MainActivity.CreatePendingIntentToOpenNotifications(_context))
                 .SetAutoCancel(true)
                 .SetGroup(NotificationGroup)
-                .SetChannelId(_context.Resources.GetString(Resource.Config.NotificationsChannelId))
+                .SetChannelId(_context.Resources.GetString(Resource.String.NotificationsChannelId))
                 .SetCategory(Notification.CategorySocial)
                 .SetDeleteIntent(AniListNotificationJobDismissReciever.CreatePendingIntent(Context))
                 .SetStyle(inboxStyle);
@@ -169,9 +169,9 @@ namespace AniDroid.Jobs
                 {
                     var aniListService = new StandardKernel(new ApplicationModule()).Get<IAniListService>();
                     var notificationEnum = aniListService.GetAniListNotifications(true, 1);
-                    var enumerator = notificationEnum.GetEnumerator();
+                    var enumerator = notificationEnum.GetAsyncEnumerator();
 
-                    enumerator.MoveNextAsync().Wait();
+                    enumerator.MoveNextAsync().GetAwaiter().GetResult();
                 }
                 catch
                 {

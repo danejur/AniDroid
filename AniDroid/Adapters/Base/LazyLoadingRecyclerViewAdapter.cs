@@ -40,7 +40,7 @@ namespace AniDroid.Adapters.Base
         protected LazyLoadingRecyclerViewAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<T>, IAniListError>> enumerable, RecyclerCardType cardType) : base(context, new List<T> { null }, cardType)
         {
             _asyncEnumerable = enumerable;
-            _asyncEnumerator = enumerable.GetEnumerator();
+            _asyncEnumerator = enumerable.GetAsyncEnumerator();
         }
 
         protected LazyLoadingRecyclerViewAdapter(BaseAniDroidActivity context,
@@ -52,7 +52,7 @@ namespace AniDroid.Adapters.Base
 
         public void ResetAdapter()
         {
-            _asyncEnumerator = _asyncEnumerable.GetEnumerator();
+            _asyncEnumerator = _asyncEnumerable.GetAsyncEnumerator();
             Items.Clear();
             Items.Add(null);
             NotifyDataSetChanged();
