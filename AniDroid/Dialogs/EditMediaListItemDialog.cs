@@ -61,6 +61,7 @@ namespace AniDroid.Dialogs
             private int _priority;
             private bool _pendingDismiss;
             private List<float?> _advancedScores;
+            private int? _initialProgress;
 
             private CoordinatorLayout _coordLayout;
             private Picker _scorePicker;
@@ -267,13 +268,17 @@ namespace AniDroid.Dialogs
 
                     if (statusEnum.Equals(Media.MediaListStatus.Completed))
                     {
+                        if (!_initialProgress.HasValue)
+                        {
+                            _initialProgress = (int?) _progressPicker.GetValue();
+                        }
+
                         if (!_finishDateView.SelectedDate.HasValue)
                         {
                             _finishDateView.SelectedDate = DateTime.Now;
                         }
 
-                        // TODO: replace this after altering Picker
-                        // _progressPicker.SetValue(_media.Episodes);
+                        _progressPicker.SetValue(_media.Episodes);
                     }
                     else if (statusEnum.Equals(Media.MediaListStatus.Current))
                     {
@@ -282,12 +287,26 @@ namespace AniDroid.Dialogs
                             _startDateView.SelectedDate = DateTime.Now;
                             _finishDateView.SelectedDate = null;
                         }
+
+                        if (_initialProgress.HasValue)
+                        {
+                            _progressPicker.SetValue(_initialProgress);
+                            _initialProgress = null;
+                        }
                     }
                     else if (statusEnum.Equals(Media.MediaListStatus.Planning) && _mediaList == null)
                     {
                         _startDateView.SelectedDate = null;
                         _finishDateView.SelectedDate = null;
                         _scorePicker.SetValue(null);
+                    }
+                    else if (statusEnum.EqualsAny(Media.MediaListStatus.Paused, Media.MediaListStatus.Dropped, Media.MediaListStatus.Repeating, Media.MediaListStatus.Planning))
+                    {
+                        if (_initialProgress.HasValue)
+                        {
+                            _progressPicker.SetValue(_initialProgress);
+                            _initialProgress = null;
+                        }
                     }
                 };
             }
