@@ -11,6 +11,9 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.Jobs;
 using Evernote.AndroidJob;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
 
 namespace AniDroid
 {
@@ -29,10 +32,10 @@ namespace AniDroid
         {
             base.OnCreate();
 
-            JobManager.Create(this).AddJobCreator(new AniDroidJobCreator(this));
+            AppCenter.Start(Resources.GetString(Resource.String.AppCenterId),
+                typeof(Analytics), typeof(Crashes));
 
-            Fabric.Fabric.With(this, new Crashlytics.Crashlytics());
-            Crashlytics.Crashlytics.HandleManagedExceptions();
+            JobManager.Create(this).AddJobCreator(new AniDroidJobCreator(this));
 
             CreateNotificationsChannel();
         }
