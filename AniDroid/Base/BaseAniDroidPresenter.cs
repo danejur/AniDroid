@@ -12,13 +12,14 @@ using Android.Widget;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Utils.Interfaces;
 using AniDroid.Utils.Logging;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AniDroid.Base
 {
     public abstract class BaseAniDroidPresenter
     {
         public IAniDroidView View { get; set; }
-        protected IAniListService AniListService { get; }
+        protected IAniListService AniListService => Startup.ServiceProvider.GetService<IAniListService>();
         protected IAniDroidSettings AniDroidSettings { get; }
         protected IAniDroidLogger Logger { get; }
 
@@ -26,7 +27,6 @@ namespace AniDroid.Base
             IAniDroidLogger logger)
         {
             View = view;
-            AniListService = service;
             AniDroidSettings = settings;
             Logger = logger;
         }

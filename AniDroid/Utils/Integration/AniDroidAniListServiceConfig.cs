@@ -15,6 +15,6 @@ namespace AniDroid.Utils.Integration
 {
     internal class AniDroidAniListServiceConfig : IAniListServiceConfig
     {
-        public string BaseUrl => "https://graphql.anilist.co";
+        public string BaseUrl { get; set; } = "https://graphql.anilist.co";
     }
 }

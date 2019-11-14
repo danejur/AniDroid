@@ -25,8 +25,8 @@ namespace AniDroid.AniListObject.Media
         {
             View.SetLoadingShown();
             var mediaId = View.GetMediaId();
-            var mediaResp = AniListService.GetMediaById(mediaId, default(CancellationToken));
-            var userResp = AniListService.GetCurrentUser(default(CancellationToken));
+            var mediaResp = AniListService.GetMediaById(mediaId, default);
+            var userResp = AniListService.GetCurrentUser(default);
 
             if (AniDroidSettings.IsUserAuthenticated)
             {
