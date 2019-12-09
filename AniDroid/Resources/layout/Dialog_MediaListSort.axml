@@ -64,6 +64,16 @@
                 android:layout_height="wrap_content"
                 android:text="Duration"
                 android:id="@+id/MediaListSort_Duration" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date Started"
+                android:id="@+id/MediaListSort_DateStarted" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date Completed"
+                android:id="@+id/MediaListSort_DateCompleted" />
         </RadioGroup>
         <RadioGroup
             android:layout_width="match_parent"
