@@ -55,6 +55,12 @@ namespace AniDroid.Dialogs
                 case MediaListSortComparer.MediaListSortType.Duration:
                     selectedSort = Resource.Id.MediaListSort_Duration;
                     break;
+                case MediaListSortComparer.MediaListSortType.DateStarted:
+                    selectedSort = Resource.Id.MediaListSort_DateStarted;
+                    break;
+                case MediaListSortComparer.MediaListSortType.DateCompleted:
+                    selectedSort = Resource.Id.MediaListSort_DateCompleted;
+                    break;
             }
 
             // set current selections
@@ -96,6 +102,12 @@ namespace AniDroid.Dialogs
                         break;
                     case Resource.Id.MediaListSort_Duration:
                         sort = MediaListSortComparer.MediaListSortType.Duration;
+                        break;
+                    case Resource.Id.MediaListSort_DateStarted:
+                        sort = MediaListSortComparer.MediaListSortType.DateStarted;
+                        break;
+                    case Resource.Id.MediaListSort_DateCompleted:
+                        sort = MediaListSortComparer.MediaListSortType.DateCompleted;
                         break;
                 }
 
