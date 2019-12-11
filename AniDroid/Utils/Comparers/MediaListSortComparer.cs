@@ -47,9 +47,9 @@ namespace AniDroid.Utils.Comparers
                 case MediaListSortType.Duration:
                     return SortNumber(x, y, m => m.Media.Duration);
                 case MediaListSortType.DateStarted:
-                    return SortDate(x, y, m => m.Media.StartedAt?.GetFuzzyDate() ?? DateTime.MinValue);
+                    return SortDate(x, y, m => m.StartedAt?.GetFuzzyDate() ?? DateTime.MinValue);
                 case MediaListSortType.DateCompleted:
-                    return SortDate(x, y, m => m.Media.CompletedAt?.GetFuzzyDate() ?? DateTime.MinValue);
+                    return SortDate(x, y, m => m.CompletedAt?.GetFuzzyDate() ?? DateTime.MinValue);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
