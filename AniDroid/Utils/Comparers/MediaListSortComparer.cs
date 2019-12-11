@@ -46,6 +46,10 @@ namespace AniDroid.Utils.Comparers
                     return SortDateTime(x, y, m => m.GetDateTimeOffset(m.UpdatedAt).DateTime);
                 case MediaListSortType.Duration:
                     return SortNumber(x, y, m => m.Media.Duration);
+                case MediaListSortType.DateStarted:
+                    return SortDate(x, y, m => m.StartedAt?.GetFuzzyDate() ?? DateTime.MinValue);
+                case MediaListSortType.DateCompleted:
+                    return SortDate(x, y, m => m.CompletedAt?.GetFuzzyDate() ?? DateTime.MinValue);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -62,7 +66,9 @@ namespace AniDroid.Utils.Comparers
             DateReleased = 6,
             DateAdded = 7,
             DateLastUpdated = 8,
-            Duration = 9
+            Duration = 9,
+            DateStarted = 10,
+            DateCompleted = 11
         }
     }
 }
