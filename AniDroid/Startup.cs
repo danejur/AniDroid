@@ -45,11 +45,6 @@ namespace AniDroid
                 .ConfigureServices(ConfigureServices)
                 .ConfigureLogging(l =>
                 {
-                    l.AddAppCenter(options =>
-                    {
-                        options.AppCenterLogLevel = Microsoft.AppCenter.LogLevel.Info;
-                        options.AppCenterAndroidSecret = "458dc79a-8aed-4db4-8597-56d406340c50";
-                    });
                     l.AddConsole(o =>
                     {
                         //setup a console logger and disable colors since they don't have any colors in VS
