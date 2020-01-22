@@ -47,26 +47,22 @@ namespace AniDroid.Adapters.ViewModels
 
         private string GetDetail(MediaDetailType mediaDetailType)
         {
-            string retString = null;
-
-            if (mediaDetailType == MediaDetailType.Format)
+            var retString = mediaDetailType switch
             {
-                retString = $"{Model.Format?.DisplayValue}{(Model.IsAdult ? " (Hentai)" : "")}";
-            }
-            else if (mediaDetailType == MediaDetailType.FormatRating)
-            {
-                retString = Model.Status?.EqualsAny(Media.MediaStatus.NotYetReleased, Media.MediaStatus.Cancelled) == true
-                    ? Model.Format?.DisplayValue
-                    : $"{Model.Format?.DisplayValue}  ({(Model.AverageScore != 0 ? $"{Model.AverageScore}%" : "No Rating Data")})";
-            }
-            else if (mediaDetailType == MediaDetailType.Genres)
-            {
-                retString = Model.Genres?.Any() == true ? string.Join(", ", Model.Genres) : "(No Genres)";
-            }
-            else if (mediaDetailType == MediaDetailType.ListStatusThenGenres)
-            {
-                retString = Model.MediaListEntry?.Status != null ? $"On List: {Model.MediaListEntry?.Status}" : GetDetail(MediaDetailType.Genres);
-            }
+                MediaDetailType.Format => $"{Model.Format?.DisplayValue}{(Model.IsAdult ? " (Hentai)" : "")}",
+                MediaDetailType.FormatRating => (
+                    Model.Status?.EqualsAny(Media.MediaStatus.NotYetReleased, Media.MediaStatus.Cancelled) == true
+                        ? Model.Format?.DisplayValue
+                        : $"{Model.Format?.DisplayValue}  ({(Model.AverageScore != 0 ? $"{Model.AverageScore}%" : "No Rating Data")})"
+                ),
+                MediaDetailType.Genres => (Model.Genres?.Any() == true
+                    ? string.Join(", ", Model.Genres)
+                    : "(No Genres)"),
+                MediaDetailType.ListStatusThenGenres => (Model.MediaListEntry?.Status != null
+                    ? $"On List: {Model.MediaListEntry?.Status}"
+                    : GetDetail(MediaDetailType.Genres)),
+                _ => null
+            };
 
             return retString;
         }
