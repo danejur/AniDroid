@@ -27,6 +27,7 @@
             android:textSize="16dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
+            android:textIsSelectable="true"
             android:textColor="?Background_Text_Alternate" />
     </LinearLayout>
     <LinearLayout
@@ -50,6 +51,7 @@
             android:textSize="16dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
+            android:textIsSelectable="true"
             android:textColor="?Background_Text_Alternate" />
     </LinearLayout>
     <LinearLayout
@@ -73,6 +75,7 @@
             android:textSize="16dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
+            android:textIsSelectable="true"
             android:textColor="?Background_Text_Alternate" />
     </LinearLayout>
     <LinearLayout
@@ -96,6 +99,7 @@
             android:textSize="16dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
+            android:textIsSelectable="true"
             android:textColor="?Background_Text_Alternate" />
     </LinearLayout>
 </LinearLayout>
