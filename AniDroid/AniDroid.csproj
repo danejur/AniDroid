@@ -334,11 +334,12 @@
     <Compile Include="Adapters\Base\LazyLoadingRecyclerViewAdapter.cs" />
     <Compile Include="Adapters\CharacterAdapters\CharacterEdgeRecyclerAdapter.cs" />
     <Compile Include="Adapters\CharacterAdapters\CharacterRecyclerAdapter.cs" />
-    <Compile Include="Adapters\ForumThreadAdapters\ForumThreadAdapter.cs" />
+    <Compile Include="Adapters\ForumThreadAdapters\ForumThreadRecyclerAdapter.cs" />
     <Compile Include="Adapters\FragmentlessViewPagerAdapter.cs" />
     <Compile Include="Adapters\General\CheckBoxItemRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaEdgeRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaListRecyclerAdapter.cs" />
+    <Compile Include="Adapters\RecommendationAdapters\RecommendationEdgeRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaListTabOrderRecyclerAdapter.cs" />
     <Compile Include="Adapters\MediaAdapters\MediaStreamingEpisodesRecyclerAdapter.cs" />
@@ -360,6 +361,7 @@
     <Compile Include="Adapters\ViewModels\MediaEdgeViewModel.cs" />
     <Compile Include="Adapters\ViewModels\MediaListViewModel.cs" />
     <Compile Include="Adapters\ViewModels\MediaViewModel.cs" />
+    <Compile Include="Adapters\ViewModels\RecommendationEdgeViewModel.cs" />
     <Compile Include="Adapters\ViewModels\ReviewViewModel.cs" />
     <Compile Include="Adapters\ViewModels\StaffEdgeViewModel.cs" />
     <Compile Include="Adapters\ViewModels\StaffViewModel.cs" />
@@ -1051,6 +1053,7 @@
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -95,7 +95,7 @@ namespace AniDroid.SearchResults
         public void ShowForumThreadSearchResults(
             IAsyncEnumerable<OneOf<IPagedData<ForumThread>, IAniListError>> forumThreadEnumerable)
         {
-            _recyclerView.SetAdapter(_adapter = new ForumThreadAdapter(this, forumThreadEnumerable,
+            _recyclerView.SetAdapter(_adapter = new ForumThreadRecyclerAdapter(this, forumThreadEnumerable,
                 ForumThreadViewModel.CreateForumThreadViewModel));
         }
 
