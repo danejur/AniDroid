@@ -253,13 +253,9 @@ namespace AniDroid.Dialogs
                 {
                     statusSpinner.SetSelection(Media.MediaListStatus.Current.Index);
                 }
-                else if (_media.Status == Media.MediaStatus.NotYetReleased)
-                {
-                    statusSpinner.SetSelection(Media.MediaListStatus.Planning.Index);
-                }
                 else
                 {
-                    statusSpinner.SetSelection(Media.MediaListStatus.Completed.Index);
+                    statusSpinner.SetSelection(Media.MediaListStatus.Planning.Index);
                 }
 
                 statusSpinner.ItemSelected += (sender, args) =>
