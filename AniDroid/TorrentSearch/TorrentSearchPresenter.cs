@@ -19,8 +19,8 @@ namespace AniDroid.TorrentSearch
 {
     public class TorrentSearchPresenter : BaseAniDroidPresenter<ITorrentSearchView>
     {
-        public TorrentSearchPresenter(ITorrentSearchView view, IAniListService service, IAniDroidSettings settings,
-            IAniDroidLogger logger) : base(view, service, settings, logger)
+        public TorrentSearchPresenter(IAniListService service, IAniDroidSettings settings,
+            IAniDroidLogger logger) : base(service, settings, logger)
         {
         }
 

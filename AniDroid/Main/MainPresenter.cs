@@ -22,8 +22,8 @@ namespace AniDroid.Main
 {
     public class MainPresenter : BaseAniDroidPresenter<IMainView>
     {
-        public MainPresenter(IMainView view, IAniListService service, IAniDroidSettings settings,
-            IAniDroidLogger logger) : base(view, service, settings, logger)
+        public MainPresenter(IAniListService service, IAniDroidSettings settings,
+            IAniDroidLogger logger) : base(service, settings, logger)
         {
         }
 

@@ -23,8 +23,8 @@ namespace AniDroid.AniListObject.User
 {
     public class UserPresenter : BaseAniDroidPresenter<IUserView>, IAniListActivityPresenter
     {
-        public UserPresenter(IUserView view, IAniListService service, IAniDroidSettings settings,
-            IAniDroidLogger logger) : base(view, service, settings, logger)
+        public UserPresenter(IAniListService service, IAniDroidSettings settings,
+            IAniDroidLogger logger) : base(service, settings, logger)
         {
         }
 

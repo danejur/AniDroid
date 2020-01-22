@@ -65,8 +65,8 @@ namespace AniDroid.Main
         private bool _fragmentBeingReplaced;
         private BadgeDrawerToggle _drawerToggle;
         private BadgeImageView _notificationImageView;
-        private IMenuItem _selectedItem;
-        private int _unreadNotificationCount;
+            private IMenuItem _selectedItem;
+            private int _unreadNotificationCount;
 
         protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IMainView, MainActivity>(this));
 

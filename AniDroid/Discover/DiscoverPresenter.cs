@@ -23,8 +23,8 @@ namespace AniDroid.Discover
 {
     public class DiscoverPresenter : BaseAniDroidPresenter<IDiscoverView>, IAniListMediaListEditPresenter
     {
-        public DiscoverPresenter(IDiscoverView view, IAniListService service, IAniDroidSettings settings,
-            IAniDroidLogger logger) : base(view, service, settings, logger)
+        public DiscoverPresenter(IAniListService service, IAniDroidSettings settings,
+            IAniDroidLogger logger) : base(service, settings, logger)
         {
         }
 

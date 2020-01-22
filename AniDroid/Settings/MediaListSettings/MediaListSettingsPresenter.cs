@@ -20,7 +20,7 @@ namespace AniDroid.Settings.MediaListSettings
 {
     public class MediaListSettingsPresenter : BaseAniDroidPresenter<IMediaListSettingsView>
     {
-        public MediaListSettingsPresenter(IMediaListSettingsView view, IAniListService service, IAniDroidSettings settings, IAniDroidLogger logger) : base(view, service, settings, logger)
+        public MediaListSettingsPresenter(IAniListService service, IAniDroidSettings settings, IAniDroidLogger logger) : base(service, settings, logger)
         {
         }
 

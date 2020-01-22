@@ -13,9 +13,24 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Service;
+using AniDroid.AniListObject.Character;
+using AniDroid.AniListObject.Media;
+using AniDroid.AniListObject.Staff;
+using AniDroid.AniListObject.User;
+using AniDroid.Browse;
+using AniDroid.CurrentSeason;
+using AniDroid.Discover;
+using AniDroid.Home;
+using AniDroid.Login;
+using AniDroid.Main;
+using AniDroid.MediaList;
+using AniDroid.SearchResults;
+using AniDroid.Settings;
+using AniDroid.TorrentSearch;
 using AniDroid.Utils;
 using AniDroid.Utils.Integration;
 using AniDroid.Utils.Interfaces;
+using AniDroid.Utils.Logging;
 using AniDroid.Utils.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -61,6 +76,8 @@ namespace AniDroid
         {
             services.AddHttpClient();
 
+            services.TryAddSingleton<IAniListAuthConfig>(x => new AniDroidAniListAuthConfig(Application.Context));
+            services.TryAddSingleton<IAniDroidLogger, AppCenterLogger>();
             services.TryAddSingleton<IAniDroidSettings>(x => new AniDroidSettings(new SettingsStorage(Application.Context), new AuthSettingsStorage(Application.Context)));
             services.TryAddSingleton<IAuthCodeResolver, AniDroidAuthCodeResolver>();
             services.TryAddSingleton<IAniListServiceConfig>(x => new AniDroidAniListServiceConfig
@@ -69,6 +86,26 @@ namespace AniDroid
             });
 
             services.TryAddTransient<IAniListService, AniListService>();
+
+            ConfigurePresenters(services);
+        }
+
+        private static void ConfigurePresenters(IServiceCollection services)
+        {
+            services.TryAddTransient<MainPresenter>();
+            services.TryAddTransient<MediaListPresenter>();
+            services.TryAddTransient<MediaPresenter>();
+            services.TryAddTransient<CharacterPresenter>();
+            services.TryAddTransient<StaffPresenter>();
+            services.TryAddTransient<BrowsePresenter>();
+            services.TryAddTransient<CurrentSeasonPresenter>();
+            services.TryAddTransient<DiscoverPresenter>();
+            services.TryAddTransient<HomePresenter>();
+            services.TryAddTransient<LoginPresenter>();
+            services.TryAddTransient<SearchResultsPresenter>();
+            services.TryAddTransient<SettingsPresenter>();
+            services.TryAddTransient<TorrentSearchPresenter>();
+            services.TryAddTransient<UserPresenter>();
         }
 
         private static string ExtractResource(string filename, string location)

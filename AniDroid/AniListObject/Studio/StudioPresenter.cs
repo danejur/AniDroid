@@ -21,8 +21,8 @@ namespace AniDroid.AniListObject.Studio
 {
     public class StudioPresenter : BaseAniDroidPresenter<IStudioView>
     {
-        public StudioPresenter(IStudioView view, IAniListService service, IAniDroidSettings settings,
-            IAniDroidLogger logger) : base(view, service, settings, logger)
+        public StudioPresenter(IAniListService service, IAniDroidSettings settings,
+            IAniDroidLogger logger) : base(service, settings, logger)
         {
         }
 

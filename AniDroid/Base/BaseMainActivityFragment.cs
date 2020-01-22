@@ -11,6 +11,7 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.Main;
 using Ninject;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AniDroid.Base
 {
@@ -25,8 +26,8 @@ namespace AniDroid.Base
                 return;
             }
 
-            Presenter = Kernel.Get<T>();
-            await Presenter.Init().ConfigureAwait(false);
+            Presenter = Startup.ServiceProvider.GetService<T>();
+            await Presenter.BaseInit(this).ConfigureAwait(false);
         }
     }
 

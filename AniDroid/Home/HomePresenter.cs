@@ -24,8 +24,8 @@ namespace AniDroid.Home
 {
     public class HomePresenter : BaseAniDroidPresenter<IHomeView>, IAniListActivityPresenter
     {
-        public HomePresenter(IHomeView view, IAniListService service, IAniDroidSettings settings,
-            IAniDroidLogger logger) : base(view, service, settings, logger)
+        public HomePresenter(IAniListService service, IAniDroidSettings settings,
+            IAniDroidLogger logger) : base(service, settings, logger)
         {
         }
 

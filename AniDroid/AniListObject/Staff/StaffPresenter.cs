@@ -22,8 +22,8 @@ namespace AniDroid.AniListObject.Staff
 {
     public class StaffPresenter : BaseAniDroidPresenter<IStaffView>
     {
-        public StaffPresenter(IStaffView view, IAniListService service, IAniDroidSettings settings,
-            IAniDroidLogger logger) : base(view, service, settings, logger)
+        public StaffPresenter(IAniListService service, IAniDroidSettings settings,
+            IAniDroidLogger logger) : base(service, settings, logger)
         {
         }
 
