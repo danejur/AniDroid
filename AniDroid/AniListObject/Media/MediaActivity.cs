@@ -20,6 +20,7 @@ using AniDroid.Adapters;
 using AniDroid.Adapters.CharacterAdapters;
 using AniDroid.Adapters.ForumThreadAdapters;
 using AniDroid.Adapters.MediaAdapters;
+using AniDroid.Adapters.RecommendationAdapters;
 using AniDroid.Adapters.ReviewAdapters;
 using AniDroid.Adapters.StaffAdapters;
 using AniDroid.Adapters.StudioAdapters;
@@ -142,6 +143,11 @@ namespace AniDroid.AniListObject.Media
             if (media.Relations?.Data?.Any() == true)
             {
                 adapter.AddView(CreateMediaRelationsView(media.Relations.Data.ToList()), "Relations");
+            }
+
+            if (media.Recommendations?.PageInfo?.Total > 0)
+            {
+                adapter.AddView(CreateMediaRecommendationsView(media.Id), "Recommendations");
             }
 
             if (media.Studios?.Data?.Any() == true)
@@ -573,8 +579,20 @@ namespace AniDroid.AniListObject.Media
             var forumThreadsEnumerable = Presenter.GetMediaForumThreadsEnumerable(mediaId, PageLength);
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
-            var recyclerAdapter = new ForumThreadAdapter(this, forumThreadsEnumerable,
+            var recyclerAdapter = new ForumThreadRecyclerAdapter(this, forumThreadsEnumerable,
                 ForumThreadViewModel.CreateForumThreadViewModel);
+            recycler.SetAdapter(recyclerAdapter);
+
+            return retView;
+        }
+
+        private View CreateMediaRecommendationsView(int mediaId)
+        {
+            var recommendationsEnumerable = Presenter.GetMediaRecommendationsEnumerable(mediaId, PageLength);
+            var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
+            var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
+            var recyclerAdapter = new RecommendationEdgeRecyclerAdapter(this, recommendationsEnumerable, CardType,
+                RecommendationEdgeViewModel.CreateRecommendationViewModel);
             recycler.SetAdapter(recyclerAdapter);
 
             return retView;
