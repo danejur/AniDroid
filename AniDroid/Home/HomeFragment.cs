@@ -18,7 +18,6 @@ using AniDroid.Base;
 using AniDroid.Dialogs;
 using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
-using Ninject;
 using OneOf;
 
 namespace AniDroid.Home
@@ -36,7 +35,6 @@ namespace AniDroid.Home
 
         public override bool HasMenu => true;
         public override string FragmentName => HomeFragmentName;
-        protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IHomeView, HomeFragment>(this));
 
         public static HomeFragment GetInstance() => _instance;
 
@@ -52,11 +50,10 @@ namespace AniDroid.Home
 
         public override View CreateMainActivityFragmentView(ViewGroup container, Bundle savedInstanceState)
         {
-            var settings = Kernel.Get<IAniDroidSettings>();
-            _isAuthenticated = settings.IsUserAuthenticated;
-            _isFollowingOnly = _isAuthenticated && !settings.ShowAllAniListActivity;
-
             CreatePresenter(savedInstanceState).GetAwaiter().GetResult();
+
+            _isAuthenticated = Presenter.AniDroidSettings.IsUserAuthenticated;
+            _isFollowingOnly = _isAuthenticated && !Presenter.AniDroidSettings.ShowAllAniListActivity;
 
             var listView = LayoutInflater.Inflate(Resource.Layout.View_SwipeRefreshList, container, false);
             _recyclerView = listView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
@@ -69,7 +66,7 @@ namespace AniDroid.Home
 
             _recyclerView.SetAdapter(_recyclerAdapter);
 
-            if (settings.UseSwipeToRefreshHomeScreen)
+            if (Presenter.AniDroidSettings.UseSwipeToRefreshHomeScreen)
             {
                 _swipeRefreshLayout.Enabled = true;
                 _swipeRefreshLayout.Refresh += (sender, e) =>

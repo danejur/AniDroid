@@ -18,7 +18,6 @@ using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
 using AniDroid.Main;
 using AniDroid.Utils;
-using Ninject;
 
 namespace AniDroid.Login
 {
@@ -30,8 +29,6 @@ namespace AniDroid.Login
         private bool _loginSequenceStarted;
         private bool _loginSequenceEnded;
         private CancellationTokenSource _tokenSource;
-
-        protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<ILoginView, LoginActivity>(this));
 
         public override async Task OnCreateExtended(Bundle savedInstanceState)
         {

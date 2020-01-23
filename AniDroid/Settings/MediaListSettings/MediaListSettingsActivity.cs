@@ -17,7 +17,6 @@ using AniDroid.Dialogs;
 using AniDroid.Main;
 using AniDroid.Utils;
 using AniDroid.Utils.Comparers;
-using Ninject;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace AniDroid.Settings.MediaListSettings
@@ -33,8 +32,6 @@ namespace AniDroid.Settings.MediaListSettings
         private LinearLayout _settingsContainer;
 
         private bool _recreateActivity;
-
-        protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IMediaListSettingsView, MediaListSettingsActivity>(this));
 
         public override void OnError(IAniListError error)
         {

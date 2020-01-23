@@ -16,15 +16,12 @@ using AniDroid.Base;
 using AniDroid.Login;
 using AniDroid.Main;
 using AniDroid.Utils;
-using Ninject;
 
 namespace AniDroid.Start
 {
     [Activity(MainLauncher = true, LaunchMode = LaunchMode.SingleTop)]
     public class StartActivity : BaseAniDroidActivity
     {
-        protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule());
-
         public override void OnError(IAniListError error)
         {
             // TODO: Implement

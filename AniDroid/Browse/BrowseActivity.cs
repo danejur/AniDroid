@@ -24,7 +24,6 @@ using AniDroid.MediaList;
 using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
 using Newtonsoft.Json;
-using Ninject;
 using OneOf;
 
 namespace AniDroid.Browse
@@ -43,10 +42,6 @@ namespace AniDroid.Browse
         private RecyclerView _recyclerView;
         [InjectView(Resource.Id.Browse_Toolbar)]
         private Toolbar _toolbar;
-
-        protected override IReadOnlyKernel Kernel =>
-            new StandardKernel(new ApplicationModule<IBrowseView, BrowseActivity>(this));
-
 
         public void ShowMediaSearchResults(IAsyncEnumerable<OneOf<IPagedData<Media>, IAniListError>> mediaEnumerable)
         {
@@ -127,7 +122,7 @@ namespace AniDroid.Browse
             try
             {
                 browseModel = AniListJsonSerializer.Default.Deserialize<BrowseMediaDto>(Intent.GetStringExtra(BrowseDtoIntentKey)) ?? new BrowseMediaDto();
-                browseModel.Sort = browseModel.Sort ?? new List<Media.MediaSort>();
+                browseModel.Sort ??= new List<Media.MediaSort>();
 
                 if (!browseModel.Sort.Any())
                 {
@@ -139,8 +134,7 @@ namespace AniDroid.Browse
                 // ignored
             }
 
-            var settings = Kernel.Get<IAniDroidSettings>();
-            _cardType = settings.CardType;
+            _cardType = Presenter.AniDroidSettings.CardType;
 
             await CreatePresenter(savedInstanceState);
             Presenter.BrowseAniListMedia(browseModel);

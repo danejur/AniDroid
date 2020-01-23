@@ -19,7 +19,6 @@ using AniDroid.Adapters.ViewModels;
 using AniDroid.Base;
 using AniDroid.SearchResults;
 using AniDroid.Utils;
-using Ninject;
 
 namespace AniDroid.AniListObject.Studio
 {
@@ -30,9 +29,6 @@ namespace AniDroid.AniListObject.Studio
         public const string StudioIdIntentKey = "STUDIO_ID";
 
         private int _studioId;
-
-        protected override IReadOnlyKernel Kernel =>
-            new StandardKernel(new ApplicationModule<IStudioView, StudioActivity>(this));
 
         public override async Task OnCreateExtended(Bundle savedInstanceState)
         {

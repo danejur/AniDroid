@@ -17,7 +17,6 @@ using AniDroid.Base;
 using AniDroid.Dialogs;
 using AniDroid.Torrent.NyaaSi;
 using AniDroid.Utils;
-using Ninject;
 using OneOf;
 
 namespace AniDroid.TorrentSearch
@@ -29,8 +28,6 @@ namespace AniDroid.TorrentSearch
         private static TorrentSearchFragment _instance;
         private RecyclerView _recycler;
         private NyaaSiSearchRequest _request;
-
-        protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<ITorrentSearchView, TorrentSearchFragment>(this));
 
         public override void OnError(IAniListError error)
         {

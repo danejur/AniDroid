@@ -35,7 +35,6 @@ using AniDroid.Settings;
 using AniDroid.TorrentSearch;
 using AniDroid.Utils;
 using AniDroid.Widgets;
-using Ninject;
 using OneOf;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 
@@ -67,8 +66,6 @@ namespace AniDroid.Main
         private BadgeImageView _notificationImageView;
             private IMenuItem _selectedItem;
             private int _unreadNotificationCount;
-
-        protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IMainView, MainActivity>(this));
 
         public override void OnError(IAniListError error)
         {

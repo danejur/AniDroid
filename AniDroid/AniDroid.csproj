@@ -194,9 +194,6 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\netstandard2.0\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="Ninject, Version=4.0.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ninject.4.0.0-beta-0134\lib\netstandard1.5\Ninject.dll</HintPath>
-    </Reference>
     <Reference Include="RestSharp, Version=106.6.10.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.106.6.10\lib\netstandard2.0\RestSharp.dll</HintPath>
     </Reference>
@@ -563,7 +560,6 @@
     <Compile Include="Utils\Logging\AppCenterLogger.cs" />
     <Compile Include="Utils\Logging\IAniDroidLogger.cs" />
     <Compile Include="Utils\Storage\AniDroidStorage.cs" />
-    <Compile Include="Utils\ApplicationModule.cs" />
     <Compile Include="Base\BaseAniDroidActivity.cs" />
     <Compile Include="Base\BaseAniDroidPresenter.cs" />
     <Compile Include="Adapters\Base\BaseRecyclerAdapter.cs" />

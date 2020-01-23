@@ -23,7 +23,6 @@ using AniDroid.MediaList;
 using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
 using AniDroid.Widgets;
-using Ninject;
 using OneOf;
 
 namespace AniDroid.Discover
@@ -52,7 +51,6 @@ namespace AniDroid.Discover
 
         public override bool HasMenu => true;
         public override string FragmentName => "DISCOVER_FRAGMENT";
-        protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IDiscoverView, DiscoverFragment>(this));
 
         protected override void SetInstance(BaseMainActivityFragment instance)
         {

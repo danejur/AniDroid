@@ -10,7 +10,6 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Main;
-using Ninject;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AniDroid.Base

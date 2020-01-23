@@ -10,7 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Interfaces;
-using Ninject;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AniDroid.Base
 {
@@ -25,8 +25,8 @@ namespace AniDroid.Base
                 return;
             }
 
-            Presenter = Kernel.Get<T>();
-            await Presenter.Init().ConfigureAwait(false);
+            Presenter = Startup.ServiceProvider.GetService<T>();
+            await Presenter.BaseInit(this).ConfigureAwait(false);
         }
     }
 
@@ -38,8 +38,6 @@ namespace AniDroid.Base
         protected new LayoutInflater LayoutInflater => Activity.LayoutInflater;
 
         public abstract string FragmentName { get; }
-
-        protected abstract IReadOnlyKernel Kernel { get; }
 
         public abstract void OnError(IAniListError error);
 

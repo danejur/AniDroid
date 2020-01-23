@@ -22,7 +22,6 @@ using AniDroid.AniList.Service;
 using AniDroid.Base;
 using AniDroid.SearchResults;
 using AniDroid.Utils;
-using Ninject;
 
 namespace AniDroid.AniListObject.Staff
 {
@@ -33,9 +32,6 @@ namespace AniDroid.AniListObject.Staff
         public const string StaffIdIntentKey = "STAFF_ID";
 
         private int _staffId;
-
-        protected override IReadOnlyKernel Kernel =>
-            new StandardKernel(new ApplicationModule<IStaffView, StaffActivity>(this));
 
         public override async Task OnCreateExtended(Bundle savedInstanceState)
         {

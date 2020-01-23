@@ -28,7 +28,6 @@ using AniDroid.Dialogs;
 using AniDroid.Utils;
 using AniDroid.Utils.Comparers;
 using AniDroid.Utils.Interfaces;
-using Ninject;
 
 namespace AniDroid.MediaList
 {
@@ -97,9 +96,6 @@ namespace AniDroid.MediaList
                 _mangaListFragmentInstance = this;
             }
         }
-
-        protected override IReadOnlyKernel Kernel =>
-            new StandardKernel(new ApplicationModule<IMediaListView, MediaListFragment>(this));
 
         public static MediaListFragment CreateMediaListFragment(int userId, Media.MediaType type, Media.MediaSort sort = null)
         {
@@ -345,7 +341,6 @@ namespace AniDroid.MediaList
 
         private List<KeyValuePair<string, bool>> GetListOrder()
         {
-            var settings = Kernel.Get<IAniDroidSettings>();
             var retList = new List<KeyValuePair<string, bool>>();
 
             if (_type == Media.MediaType.Anime)
@@ -353,25 +348,25 @@ namespace AniDroid.MediaList
                 var lists = _collection.User.MediaListOptions?.AnimeList?.SectionOrder?
                                 .Union(_collection.User.MediaListOptions.AnimeList.CustomLists ?? new List<string>()) ?? new List<string>();
 
-                if (settings.AnimeListOrder?.Any() != true)
+                if (Presenter.AniDroidSettings.AnimeListOrder?.Any() != true)
                 {
                     // if we don't have the list order yet, go ahead and store it
-                    settings.AnimeListOrder = lists.Select(x => new KeyValuePair<string, bool>(x, true)).ToList();
+                    Presenter.AniDroidSettings.AnimeListOrder = lists.Select(x => new KeyValuePair<string, bool>(x, true)).ToList();
                 }
 
-                retList = settings.AnimeListOrder;
+                retList = Presenter.AniDroidSettings.AnimeListOrder;
             }
             else if (_type == Media.MediaType.Manga)
             {
                 var lists = _collection.User.MediaListOptions?.MangaList?.SectionOrder?
                                 .Union(_collection.User.MediaListOptions.MangaList.CustomLists ?? new List<string>()) ?? new List<string>();
 
-                if (settings.MangaListOrder?.Any() != true)
+                if (Presenter.AniDroidSettings.MangaListOrder?.Any() != true)
                 {
-                    settings.MangaListOrder = lists.Select(x => new KeyValuePair<string, bool>(x, true)).ToList();
+                    Presenter.AniDroidSettings.MangaListOrder = lists.Select(x => new KeyValuePair<string, bool>(x, true)).ToList();
                 }
 
-                retList = settings.MangaListOrder;
+                retList = Presenter.AniDroidSettings.MangaListOrder;
             }
 
             return retList;

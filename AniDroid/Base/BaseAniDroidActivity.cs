@@ -21,7 +21,6 @@ using AniDroid.AniList.Interfaces;
 using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
 using AniDroid.Utils.Logging;
-using Ninject;
 using Square.Picasso;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -237,8 +236,6 @@ namespace AniDroid.Base
         #endregion
 
         #region Abstract
-
-        protected abstract IReadOnlyKernel Kernel { get; }
 
         public abstract void OnError(IAniListError error);
 
