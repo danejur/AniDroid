@@ -112,7 +112,7 @@ namespace AniDroid.Discover
             var adapter = new MediaRecyclerAdapter(Activity, mediaEnumerable,
                 BaseRecyclerAdapter.RecyclerCardType.Vertical, MediaViewModel.CreateMediaViewModel)
             {
-                LongClickAction = viewModel =>
+                LongClickAction = (viewModel, position) =>
                 {
                     if (Presenter.GetIsUserAuthenticated())
                     {
@@ -137,7 +137,7 @@ namespace AniDroid.Discover
             var adapter = new MediaRecyclerAdapter(Activity, mediaEnumerable,
                 BaseRecyclerAdapter.RecyclerCardType.Vertical, MediaViewModel.CreateMediaViewModel)
             {
-                LongClickAction = viewModel =>
+                LongClickAction = (viewModel, position) =>
                 {
                     if (Presenter.GetIsUserAuthenticated())
                     {
@@ -162,7 +162,7 @@ namespace AniDroid.Discover
             var adapter = new MediaRecyclerAdapter(Activity, mediaEnumerable,
                 BaseRecyclerAdapter.RecyclerCardType.Vertical, MediaViewModel.CreateMediaViewModel)
             {
-                LongClickAction = viewModel =>
+                LongClickAction = (viewModel, position) =>
                 {
                     if (Presenter.GetIsUserAuthenticated())
                     {
@@ -187,7 +187,7 @@ namespace AniDroid.Discover
             var adapter = new MediaRecyclerAdapter(Activity, mediaEnumerable,
                 BaseRecyclerAdapter.RecyclerCardType.Vertical, MediaViewModel.CreateMediaViewModel)
             {
-                LongClickAction = viewModel =>
+                LongClickAction = (viewModel, position) =>
                 {
                     if (Presenter.GetIsUserAuthenticated())
                     {
@@ -212,7 +212,7 @@ namespace AniDroid.Discover
             var adapter = new MediaRecyclerAdapter(Activity, mediaEnumerable,
                 BaseRecyclerAdapter.RecyclerCardType.Vertical, MediaViewModel.CreateMediaViewModel)
             {
-                LongClickAction = viewModel =>
+                LongClickAction = (viewModel, position) =>
                 {
                     if (Presenter.GetIsUserAuthenticated())
                     {

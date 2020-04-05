@@ -27,7 +27,7 @@ namespace AniDroid.Adapters.CharacterAdapters
             Func<Character, CharacterViewModel> createViewModelFunc) : base(context, enumerable, cardType,
             createViewModelFunc)
         {
-            ClickAction = viewModel =>
+            ClickAction = (viewModel, position) =>
                 CharacterActivity.StartActivity(Context, viewModel.Model.Id,
                     BaseAniDroidActivity.ObjectBrowseRequestCode);
         }

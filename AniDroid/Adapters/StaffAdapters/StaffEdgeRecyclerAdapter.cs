@@ -31,7 +31,7 @@ namespace AniDroid.Adapters.StaffAdapters
 
         private void SetupDefaultClickActions()
         {
-            ClickAction = viewModel =>
+            ClickAction = (viewModel, position) =>
                 StaffActivity.StartActivity(Context, viewModel.Model.Node.Id,
                     BaseAniDroidActivity.ObjectBrowseRequestCode);
         }

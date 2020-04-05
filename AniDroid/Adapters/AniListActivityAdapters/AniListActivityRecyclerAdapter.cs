@@ -65,8 +65,13 @@ namespace AniDroid.Adapters.AniListActivityAdapters
 
         public override void BindCustomViewHolder(RecyclerView.ViewHolder holder, int position)
         {
-            var viewHolder = holder as AniListActivityViewHolder;
+            if (!(holder is AniListActivityViewHolder viewHolder))
+            {
+                return;
+            }
+
             var item = Items[position];
+
 
             viewHolder.Timestamp.Text = item.GetAgeString(item.CreatedAt);
 
@@ -136,7 +141,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             viewHolder.ContentImageContainer.Visibility = ViewStates.Gone;
 
             var builder = new SpannableStringBuilder(MarkdownTextCleaner.ConvertToSpanned(item.Text));
-            viewHolder.ContentText.MovementMethod = LinkMovementMethod.Instance;
+            //viewHolder.ContentText.MovementMethod = LinkMovementMethod.Instance;
             viewHolder.ContentText.SetText(builder, TextView.BufferType.Spannable);
             MarkdownSpannableFormatter.FormatMarkdownSpannable(Context, viewHolder.ContentText.TextFormatted as SpannableString);
             viewHolder.ContentText.Visibility = ViewStates.Visible;
@@ -150,7 +155,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             viewHolder.ContentImageContainer.Visibility = ViewStates.Gone;
 
             var builder = new SpannableStringBuilder(MarkdownTextCleaner.ConvertToSpanned(item.Message));
-            viewHolder.ContentText.MovementMethod = LinkMovementMethod.Instance;
+            //viewHolder.ContentText.MovementMethod = LinkMovementMethod.Instance;
             viewHolder.ContentText.SetText(builder, TextView.BufferType.Spannable);
             MarkdownSpannableFormatter.FormatMarkdownSpannable(Context, viewHolder.ContentText.TextFormatted as SpannableString);
             viewHolder.ContentText.Visibility = ViewStates.Visible;
@@ -241,7 +246,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
 
             if (_userId.HasValue || activity.Likes?.Any() == true || activity.Replies?.Any() == true)
             {
-                AniListActivityRepliesDialog.Create(Context, activity, _userId, PostReply, ToggleLikeActivity);
+                AniListActivityRepliesDialog.Create(Context, activity, _presenter, _userId, PostReply, ToggleLikeActivity);
             }
         }
 

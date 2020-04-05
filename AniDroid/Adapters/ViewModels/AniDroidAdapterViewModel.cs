@@ -35,5 +35,10 @@ namespace AniDroid.Adapters.ViewModels
             Model = model;
             LoadImage = true;
         }
+
+        public virtual void RecreateViewModel()
+        {
+
+        }
     }
 }

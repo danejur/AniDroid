@@ -300,7 +300,7 @@ namespace AniDroid.MediaList
                         callback?.Invoke();
                     })
                 {
-                    LongClickAction = viewModel => EditMediaListItemDialog.Create(Activity, Presenter,
+                    LongClickAction = (viewModel, position) => EditMediaListItemDialog.Create(Activity, Presenter,
                         viewModel.Model.Media, viewModel.Model, _collection.User.MediaListOptions)
                 };
 

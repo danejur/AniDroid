@@ -82,11 +82,11 @@ namespace AniDroid.Adapters.MediaAdapters
             _veryBehindTitleColor =
                 ColorStateList.ValueOf(new Color(Context.GetThemedColor(Resource.Attribute.ListItem_VeryBehind)));
 
-            ClickAction = viewModel =>
+            ClickAction = (viewModel, position) =>
                 MediaActivity.StartActivity(Context, viewModel.Model.Media?.Id ?? 0, BaseAniDroidActivity.ObjectBrowseRequestCode);
 
             // leave this as the non-edit action so we can leave the presenter out
-            LongClickAction = viewModel =>
+            LongClickAction = (viewModel, position) =>
                 Context.DisplaySnackbarMessage(viewModel.Model.Media?.Title?.UserPreferred, Snackbar.LengthLong);
 
             if (episodeAddAction != null)

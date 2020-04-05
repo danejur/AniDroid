@@ -22,7 +22,7 @@ namespace AniDroid.Adapters.StudioAdapters
         public StudioEdgeRecyclerAdapter(BaseAniDroidActivity context, List<StudioEdgeViewModel> items) : base(context,
             items, RecyclerCardType.Horizontal)
         {
-            ClickAction = viewModel => StudioActivity.StartActivity(Context, viewModel.Model?.Node?.Id ?? 0,
+            ClickAction = (viewModel, position) => StudioActivity.StartActivity(Context, viewModel.Model?.Node?.Id ?? 0,
                 BaseAniDroidActivity.ObjectBrowseRequestCode);
         }
 

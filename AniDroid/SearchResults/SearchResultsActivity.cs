@@ -54,7 +54,7 @@ namespace AniDroid.SearchResults
         {
             _adapter = new MediaRecyclerAdapter(this, mediaEnumerable, _cardType, MediaViewModel.CreateMediaViewModel)
             {
-                LongClickAction = viewModel =>
+                LongClickAction = (viewModel, position) =>
                 {
                     if (Settings?.IsUserAuthenticated == true)
                     {

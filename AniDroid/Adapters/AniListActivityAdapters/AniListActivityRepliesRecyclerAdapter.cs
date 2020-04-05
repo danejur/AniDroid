@@ -18,17 +18,18 @@ using AniDroid.AniList.Models;
 using AniDroid.AniListObject;
 using AniDroid.AniListObject.User;
 using AniDroid.Base;
-using AniDroid.Dialogs;
 
 namespace AniDroid.Adapters.AniListActivityAdapters
 {
     public class AniListActivityRepliesRecyclerAdapter : AniDroidRecyclerAdapter<AniListActivityReplyViewModel, AniListActivity.ActivityReply>
     {
+        private readonly IAniListActivityPresenter _presenter;
         private readonly Color _userNameColor;
 
-        public AniListActivityRepliesRecyclerAdapter(BaseAniDroidActivity context,
+        public AniListActivityRepliesRecyclerAdapter(BaseAniDroidActivity context, IAniListActivityPresenter presenter,
             List<AniListActivityReplyViewModel> items) : base(context, items, RecyclerCardType.Custom)
         {
+            _presenter = presenter;
             _userNameColor = new Color(Context.GetThemedColor(Resource.Attribute.Primary));
         }
 
@@ -43,6 +44,9 @@ namespace AniDroid.Adapters.AniListActivityAdapters
                 activityHolder.Timestamp.Text = viewModel.TimestampText;
                 activityHolder.LikeCount.Text = viewModel.LikeCount;
                 activityHolder.LikeIcon.ImageTintList = viewModel.LikeIconColor;
+                activityHolder.LikeIcon.SetTag(Resource.Id.Object_Position, position);
+                activityHolder.LikeIcon.Click -= IconClick;
+                activityHolder.LikeIcon.Click += IconClick;
 
                 Context.LoadImage(activityHolder.Image, viewModel.ImageUri);
 
@@ -87,6 +91,17 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             var userPos = (int) senderView.GetTag(Resource.Id.Object_Position);
             var viewModel = Items[userPos];
             UserActivity.StartActivity(Context, viewModel.Model?.User?.Id ?? 0);
+        }
+
+        private async void IconClick(object sender, EventArgs e)
+        {
+            var senderView = sender as View;
+            var position = (int)senderView.GetTag(Resource.Id.Object_Position);
+            var viewModel = Items[position];
+
+            await _presenter.ToggleActivityReplyLikeAsync(viewModel.Model, position);
+            viewModel.RecreateViewModel();
+            NotifyItemChanged(position);
         }
     }
 }

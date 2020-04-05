@@ -173,5 +173,20 @@ namespace AniDroid.AniListObject.User
                     }
                 });
         }
+
+        public async Task ToggleActivityReplyLikeAsync(AniListActivity.ActivityReply activityReply, int activityPosition)
+        {
+            
+        }
+
+        public Task EditActivityReplyAsync(AniListActivity.ActivityReply activityReply, int activityPosition, string updateText)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteActivityReplyAsync(AniListActivity.ActivityReply activityReply, int activityPosition)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
