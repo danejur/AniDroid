@@ -44,9 +44,10 @@ namespace AniDroid
     public static class Startup
     {
         public static IServiceProvider ServiceProvider { get; set; }
-        public static void Init()
+        public static IServiceProvider Init()
         {
             var configFile = ExtractResource("AniDroid.appsettings.json", FileSystem.AppDataDirectory);
+            var secretConfigFile = ExtractResource("AniDroid.appsettings.secret.json", FileSystem.AppDataDirectory);
 
             var host = new HostBuilder()
                 .ConfigureHostConfiguration(c =>
@@ -54,8 +55,9 @@ namespace AniDroid
                     // Tell the host configuration where to file the file (this is required for Xamarin apps)
                     c.AddCommandLine(new[] { $"ContentRoot={FileSystem.AppDataDirectory}" });
 
-                    //read in the configuration file!
                     c.AddJsonFile(configFile);
+
+                    c.AddJsonFile(secretConfigFile);
                 })
                 .ConfigureServices(ConfigureServices)
                 .ConfigureLogging(l =>
@@ -69,21 +71,22 @@ namespace AniDroid
                 .Build();
 
             //Save our service provider so we can use it later.
-            ServiceProvider = host.Services;
+            return ServiceProvider = host.Services;
         }
 
         private static void ConfigureServices(HostBuilderContext ctx, IServiceCollection services)
         {
             services.AddHttpClient();
 
-            services.TryAddSingleton<IAniListAuthConfig>(x => new AniDroidAniListAuthConfig(Application.Context));
+
             services.TryAddSingleton<IAniDroidLogger, AppCenterLogger>();
+
+            services.TryAddSingleton<IAniListAuthConfig>(x => new AniDroidAniListAuthConfig(ctx.Configuration["ApiConfiguration:ClientId"],
+                ctx.Configuration["ApiConfiguration:ClientSecret"], ctx.Configuration["ApiConfiguration:RedirectUrl"],
+                ctx.Configuration["ApiConfiguration:AuthUrl"]));
             services.TryAddSingleton<IAniDroidSettings>(x => new AniDroidSettings(new SettingsStorage(Application.Context), new AuthSettingsStorage(Application.Context)));
             services.TryAddSingleton<IAuthCodeResolver, AniDroidAuthCodeResolver>();
-            services.TryAddSingleton<IAniListServiceConfig>(x => new AniDroidAniListServiceConfig
-            {
-                BaseUrl = ctx.Configuration["AniListApiUrl"]
-            });
+            services.TryAddSingleton<IAniListServiceConfig>(x => new AniDroidAniListServiceConfig(ctx.Configuration["ApiConfiguration:BaseUrl"]));
 
             services.TryAddTransient<IAniListService, AniListService>();
 

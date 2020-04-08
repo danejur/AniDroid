@@ -591,7 +591,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <GoogleServicesJson Include="google-services.json" Condition=" '$(Configuration)' == 'Release' " />
     <EmbeddedResource Include="appsettings.json" />
     <None Include="packages.config" />
     <None Include="Properties\AndroidManifestRelease.xml">
@@ -723,6 +722,7 @@
     </AndroidResource>
     <AndroidResource Include="Resources\layout\View_CardItem_FlatHorizontalCompact.axml" />
     <AndroidResource Include="Resources\layout\View_CardItem_FlatHorizontalTitleOnly.axml" />
+    <None Include="appsettings.secret.json" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />

@@ -33,7 +33,7 @@ namespace AniDroid
             base.OnCreate();
 
             Xamarin.Essentials.Platform.Init(this);
-
+            
             Startup.Init();
 
             AppCenter.Start(Resources.GetString(Resource.String.AppCenterId),
