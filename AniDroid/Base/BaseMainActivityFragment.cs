@@ -25,7 +25,7 @@ namespace AniDroid.Base
                 return;
             }
 
-            Presenter = Startup.ServiceProvider.GetService<T>();
+            Presenter = AniDroidApplication.ServiceProvider.GetService<T>();
             await Presenter.BaseInit(this).ConfigureAwait(false);
         }
     }
