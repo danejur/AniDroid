@@ -32,10 +32,10 @@ using AniDroid.Login;
 using AniDroid.MediaList;
 using AniDroid.SearchResults;
 using AniDroid.Settings;
+using AniDroid.Start;
 using AniDroid.TorrentSearch;
 using AniDroid.Utils;
 using AniDroid.Widgets;
-using Ninject;
 using OneOf;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 
@@ -65,10 +65,8 @@ namespace AniDroid.Main
         private bool _fragmentBeingReplaced;
         private BadgeDrawerToggle _drawerToggle;
         private BadgeImageView _notificationImageView;
-        private IMenuItem _selectedItem;
-        private int _unreadNotificationCount;
-
-        protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IMainView, MainActivity>(this));
+            private IMenuItem _selectedItem;
+            private int _unreadNotificationCount;
 
         public override void OnError(IAniListError error)
         {
@@ -117,6 +115,16 @@ namespace AniDroid.Main
 
             _drawerToggle?.SetBadgeText(countVal);
             _notificationImageView?.SetText(countVal);
+        }
+
+        public void LogoutUser()
+        {
+            Toast.MakeText(this, "Login expired! Please login again!", ToastLength.Short).Show();
+            Settings.ClearUserAuthentication();
+            Finish();
+
+            var intent = new Intent(this, typeof(StartActivity));
+            StartActivity(intent);
         }
 
         public void ShowSearchButton()
@@ -182,7 +190,7 @@ namespace AniDroid.Main
         {
             base.OnResume();
 
-            if (Presenter != null)
+            if (Presenter != null && Settings.IsUserAuthenticated)
             {
                 if (Intent.GetBooleanExtra(DisplayNotificationsIntentKey, false))
                 {

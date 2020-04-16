@@ -22,8 +22,8 @@ namespace AniDroid.CurrentSeason
     {
         private Media.MediaSort _sortType;
 
-        public CurrentSeasonPresenter(ICurrentSeasonView view, IAniListService service, IAniDroidSettings settings,
-            IAniDroidLogger logger) : base(view, service, settings, logger)
+        public CurrentSeasonPresenter(IAniListService service, IAniDroidSettings settings,
+            IAniDroidLogger logger) : base(service, settings, logger)
         {
             var titleLanguage = settings?.LoggedInUser?.Options?.TitleLanguage ??
                              AniList.Models.AniListObject.AniListTitleLanguage.English;

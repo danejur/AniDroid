@@ -18,7 +18,7 @@ using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
 using Evernote.AndroidJob;
 using Java.Util.Concurrent;
-using Ninject;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AniDroid.Jobs
 {
@@ -31,18 +31,21 @@ namespace AniDroid.Jobs
         private const string NotificationGroup = "ANILIST_NOTIFICATION_GROUP";
         private const int NotificationId = 1000;
 
-        protected IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule());
-
         private readonly Context _context;
+
+        private IAniDroidSettings _aniDroidSettings;
+        private IAniListService _aniListService;
 
         public AniListNotificationJob(Context context)
         {
             _context = context;
+            _aniDroidSettings = AniDroidApplication.ServiceProvider.GetService<IAniDroidSettings>();
+            _aniListService = AniDroidApplication.ServiceProvider.GetService<IAniListService>();
         }
 
         protected override Result OnRunJob(Params @params)
         {
-            if (Kernel.Get<IAniDroidSettings>().EnableNotificationService != true)
+            if (AniDroidApplication.ServiceProvider.GetService<IAniDroidSettings>().EnableNotificationService != true)
             {
                 DisableJob();
                 return Result.Reschedule;
@@ -53,16 +56,14 @@ namespace AniDroid.Jobs
                 return Result.Reschedule;
             }
 
-            var aniListService = Kernel.Get<IAniListService>();
-
-            var countResp = aniListService.GetAniListNotificationCount(default).Result;
+            var countResp = _aniListService.GetAniListNotificationCount(default).Result;
 
             countResp.Switch(user =>
             {
                 if (user.UnreadNotificationCount > 0)
                 {
                     var notificationEnum =
-                        aniListService.GetAniListNotifications(false, Math.Min(user.UnreadNotificationCount, 7));
+                        _aniListService.GetAniListNotifications(false, Math.Min(user.UnreadNotificationCount, 7));
                     var enumerator = notificationEnum.GetAsyncEnumerator();
 
                     if (enumerator.MoveNextAsync().Result)
@@ -167,8 +168,8 @@ namespace AniDroid.Jobs
             {
                 try
                 {
-                    var aniListService = new StandardKernel(new ApplicationModule()).Get<IAniListService>();
-                    var notificationEnum = aniListService.GetAniListNotifications(true, 1);
+                    var service = AniDroidApplication.ServiceProvider.GetService<IAniListService>();
+                    var notificationEnum = service.GetAniListNotifications(true, 1);
                     var enumerator = notificationEnum.GetAsyncEnumerator();
 
                     enumerator.MoveNextAsync().GetAwaiter().GetResult();

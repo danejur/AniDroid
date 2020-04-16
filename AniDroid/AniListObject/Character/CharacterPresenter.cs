@@ -14,8 +14,8 @@ namespace AniDroid.AniListObject.Character
 {
     public class CharacterPresenter : BaseAniDroidPresenter<ICharacterView>
     {
-        public CharacterPresenter(ICharacterView view, IAniListService service, IAniDroidSettings settings,
-            IAniDroidLogger logger) : base(view, service, settings, logger)
+        public CharacterPresenter(IAniListService service, IAniDroidSettings settings,
+            IAniDroidLogger logger) : base(service, settings, logger)
         {
         }
 

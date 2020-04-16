@@ -21,8 +21,8 @@ namespace AniDroid.Login
     {
         private readonly IAniListAuthConfig _authConfig;
 
-        public LoginPresenter(ILoginView view, IAniListService service, IAniDroidSettings settings,
-            IAniListAuthConfig authConfig, IAniDroidLogger logger) : base(view, service, settings, logger)
+        public LoginPresenter(IAniListService service, IAniDroidSettings settings,
+            IAniListAuthConfig authConfig, IAniDroidLogger logger) : base(service, settings, logger)
         {
             _authConfig = authConfig;
         }
@@ -48,7 +48,7 @@ namespace AniDroid.Login
             authResp.Switch((IAniListError error) => View.OnErrorAuthorizing())
                 .Switch(async auth =>
                 {
-                    AniDroidSettings.UserAccessCode = auth.Data.AccessToken;
+                    AniDroidSettings.UserAccessCode = auth.AccessToken;
 
                     var currentUser = await AniListService.GetCurrentUser(token);
 
@@ -62,6 +62,11 @@ namespace AniDroid.Login
                         View.OnAuthorized();
                     });
                 });
+        }
+
+        public string GetRedirectUrl(string authUrlTemplate)
+        {
+            return string.Format(authUrlTemplate, _authConfig.ClientId, _authConfig.RedirectUri);
         }
     }
 }

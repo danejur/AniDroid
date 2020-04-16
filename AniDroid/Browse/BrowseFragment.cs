@@ -22,7 +22,6 @@ using AniDroid.Dialogs;
 using AniDroid.MediaList;
 using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
-using Ninject;
 using OneOf;
 
 namespace AniDroid.Browse
@@ -34,8 +33,6 @@ namespace AniDroid.Browse
         private MediaRecyclerAdapter _adapter;
         private BaseRecyclerAdapter.RecyclerCardType _cardType;
         private static BrowseFragment _instance;
-
-        protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IBrowseView, BrowseFragment>(this));
 
         public override bool HasMenu => true;
 
@@ -124,8 +121,7 @@ namespace AniDroid.Browse
         public override View CreateMainActivityFragmentView(ViewGroup container, Bundle savedInstanceState)
         {
             CreatePresenter(savedInstanceState).GetAwaiter().GetResult();
-            var settings = Kernel.Get<IAniDroidSettings>();
-            _cardType = settings.CardType;
+            _cardType = Presenter.AniDroidSettings.CardType;
 
             return LayoutInflater.Inflate(Resource.Layout.View_List, container, false);
         }

@@ -16,8 +16,8 @@ namespace AniDroid.AniListObject.Media
 {
     public class MediaPresenter : BaseAniDroidPresenter<IMediaView>, IAniListMediaListEditPresenter
     {
-        public MediaPresenter(IMediaView view, IAniListService service, IAniDroidSettings settings,
-            IAniDroidLogger logger) : base(view, service, settings, logger)
+        public MediaPresenter(IAniListService service, IAniDroidSettings settings,
+            IAniDroidLogger logger) : base(service, settings, logger)
         {
         }
 

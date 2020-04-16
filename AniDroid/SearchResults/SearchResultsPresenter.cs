@@ -25,8 +25,8 @@ namespace AniDroid.SearchResults
     {
         private const int PageSize = 20;
 
-        public SearchResultsPresenter(ISearchResultsView view, IAniListService service, IAniDroidSettings settings,
-            IAniDroidLogger logger) : base(view, service, settings, logger)
+        public SearchResultsPresenter(IAniListService service, IAniDroidSettings settings,
+            IAniDroidLogger logger) : base(service, settings, logger)
         {
         }
 

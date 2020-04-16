@@ -15,7 +15,6 @@ using Android.Widget;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
-using Ninject;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace AniDroid.Base
@@ -138,8 +137,7 @@ namespace AniDroid.Base
 
         public void SetIsFavorite(bool isFavorite, bool showNotification = false)
         {
-            var settings = Kernel.Get<IAniDroidSettings>();
-            _canFavorite = settings.IsUserAuthenticated;
+            _canFavorite = Presenter.AniDroidSettings.IsUserAuthenticated;
             _isFavorite = isFavorite;
             _menu?.FindItem(Resource.Id.Menu_AniListObject_Favorite)?.SetIcon(_isFavorite
                 ? Resource.Drawable.ic_favorite_white_24px

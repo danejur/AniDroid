@@ -25,7 +25,6 @@ using AniDroid.Dialogs;
 using AniDroid.Utils;
 using AniDroid.Utils.Comparers;
 using AniDroid.Utils.Interfaces;
-using Ninject;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
 
 namespace AniDroid.MediaList
@@ -58,8 +57,6 @@ namespace AniDroid.MediaList
         private IList<Media.MediaFormat> _filteredMediaFormats = new List<Media.MediaFormat>();
         private IList<Media.MediaStatus> _filteredMediaStatuses = new List<Media.MediaStatus>();
         private bool FilteringActive => _filteredMediaFormats?.Any() == true || _filteredMediaStatuses?.Any() == true;
-
-        protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<IMediaListView, MediaListActivity>(this));
 
         public override void OnError(IAniListError error)
         {
@@ -161,7 +158,6 @@ namespace AniDroid.MediaList
 
         private List<KeyValuePair<string, bool>> GetListOrder()
         {
-            var settings = Kernel.Get<IAniDroidSettings>();
             var retList = new List<KeyValuePair<string, bool>>();
 
             if (_mediaType == Media.MediaType.Anime)
@@ -169,14 +165,14 @@ namespace AniDroid.MediaList
                 var lists = _collection.User.MediaListOptions?.AnimeList?.SectionOrder?
                                 .Union(_collection.User.MediaListOptions.AnimeList.CustomLists ?? new List<string>()) ?? new List<string>();
 
-                retList = settings.AnimeListOrder ?? lists.Select(x => new KeyValuePair<string, bool>(x, true)).ToList();
+                retList = Presenter.AniDroidSettings.AnimeListOrder ?? lists.Select(x => new KeyValuePair<string, bool>(x, true)).ToList();
             }
             else if (_mediaType == Media.MediaType.Manga)
             {
                 var lists = _collection.User.MediaListOptions?.MangaList?.SectionOrder?
                                 .Union(_collection.User.MediaListOptions.MangaList.CustomLists ?? new List<string>()) ?? new List<string>();
 
-                retList = settings.MangaListOrder ?? lists.Select(x => new KeyValuePair<string, bool>(x, true)).ToList();
+                retList = Presenter.AniDroidSettings.MangaListOrder ?? lists.Select(x => new KeyValuePair<string, bool>(x, true)).ToList();
             }
 
             return retList;

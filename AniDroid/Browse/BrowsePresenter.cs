@@ -25,8 +25,8 @@ namespace AniDroid.Browse
     {
         private BrowseMediaDto _browseDto;
 
-        public BrowsePresenter(IBrowseView view, IAniListService service, IAniDroidSettings settings,
-            IAniDroidLogger logger) : base(view, service, settings, logger)
+        public BrowsePresenter(IAniListService service, IAniDroidSettings settings,
+            IAniDroidLogger logger) : base(service, settings, logger)
         {
         }
 

@@ -21,8 +21,8 @@ using AniDroid.AniList.Interfaces;
 using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
 using AniDroid.Utils.Logging;
-using Ninject;
 using Square.Picasso;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AniDroid.Base
 {
@@ -42,8 +42,8 @@ namespace AniDroid.Base
             }
             else
             {
-                Presenter = Kernel.Get<T>();
-                await Presenter.Init().ConfigureAwait(false);
+                Presenter = AniDroidApplication.ServiceProvider.GetService<T>();
+                await Presenter.BaseInit(View).ConfigureAwait(false);
             }
         }
 
@@ -83,7 +83,7 @@ namespace AniDroid.Base
             {
                 if (item.ItemId == Resource.Id.Menu_Error_Refresh)
                 {
-                    Presenter.Init().ConfigureAwait(false).GetAwaiter();
+                    Presenter.BaseInit(View).ConfigureAwait(false).GetAwaiter();
                     return true;
                 }
             }
@@ -116,8 +116,8 @@ namespace AniDroid.Base
         {
             base.OnCreate(savedInstanceState);
 
-            Logger = Kernel.Get<IAniDroidLogger>();
-            Settings = Kernel.Get<IAniDroidSettings>();
+            Logger = AniDroidApplication.ServiceProvider.GetService<IAniDroidLogger>();
+            Settings = AniDroidApplication.ServiceProvider.GetService<IAniDroidSettings>();
             _theme = Settings.Theme;
             CardType = Settings.CardType;
             SetTheme(GetThemeResource());
@@ -236,8 +236,6 @@ namespace AniDroid.Base
         #endregion
 
         #region Abstract
-
-        protected abstract IReadOnlyKernel Kernel { get; }
 
         public abstract void OnError(IAniListError error);
 

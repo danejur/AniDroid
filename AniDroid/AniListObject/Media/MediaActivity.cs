@@ -43,7 +43,6 @@ using Com.Google.Android.Flexbox;
 using MikePhil.Charting.Charts;
 using MikePhil.Charting.Components;
 using MikePhil.Charting.Data;
-using Ninject;
 
 namespace AniDroid.AniListObject.Media
 {
@@ -61,9 +60,6 @@ namespace AniDroid.AniListObject.Media
         private View _mediaDetailsView;
         private bool _canEditListItem;
         private IMenuItem _editItem;
-
-        protected override IReadOnlyKernel Kernel =>
-            new StandardKernel(new ApplicationModule<IMediaView, MediaActivity>(this));
 
         public override async Task OnCreateExtended(Bundle savedInstanceState)
         {

@@ -24,7 +24,6 @@ using AniDroid.Dialogs;
 using AniDroid.MediaList;
 using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
-using Ninject;
 using OneOf;
 
 namespace AniDroid.SearchResults
@@ -45,9 +44,6 @@ namespace AniDroid.SearchResults
         private Toolbar _toolbar;
         [InjectView(Resource.Id.SearchResults_SearchFab)]
         private FloatingActionButton _searchButton;
-
-        protected override IReadOnlyKernel Kernel =>
-            new StandardKernel(new ApplicationModule<ISearchResultsView, SearchResultsActivity>(this));
 
         public override void OnError(IAniListError error)
         {
@@ -166,8 +162,7 @@ namespace AniDroid.SearchResults
         {
             SetContentView(Resource.Layout.Activity_SearchResults);
 
-            var settings = Kernel.Get<IAniDroidSettings>();
-            _cardType = settings.CardType;
+            _cardType = Presenter.AniDroidSettings.CardType;
 
             _searchType = Intent.GetStringExtra(IntentKeys.SearchType);
             _searchTerm = Intent.GetStringExtra(IntentKeys.SearchTerm);

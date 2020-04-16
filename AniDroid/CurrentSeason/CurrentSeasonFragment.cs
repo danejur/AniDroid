@@ -15,7 +15,6 @@ using AniDroid.AniList.Models;
 using AniDroid.Base;
 using AniDroid.Utils;
 using AniDroid.Widgets;
-using Ninject;
 using OneOf;
 
 namespace AniDroid.CurrentSeason
@@ -31,7 +30,6 @@ namespace AniDroid.CurrentSeason
         private static CurrentSeasonFragment _instance;
 
         public override string FragmentName => "CURRENTSEASON_FRAGMENT";
-        protected override IReadOnlyKernel Kernel => new StandardKernel(new ApplicationModule<ICurrentSeasonView, CurrentSeasonFragment>(this));
 
         public override void OnError(IAniListError error)
         {

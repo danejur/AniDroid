@@ -16,7 +16,6 @@ using AniDroid.AniList.Service;
 using AniDroid.Base;
 using AniDroid.SearchResults;
 using AniDroid.Utils;
-using Ninject;
 
 namespace AniDroid.AniListObject.Character
 {
@@ -27,9 +26,6 @@ namespace AniDroid.AniListObject.Character
         public const string CharacterIdIntentKey = "CHARACTER_ID";
 
         private int _characterId;
-
-        protected override IReadOnlyKernel Kernel =>
-            new StandardKernel(new ApplicationModule<ICharacterView, CharacterActivity>(this));
 
         public override async Task OnCreateExtended(Bundle savedInstanceState)
         {

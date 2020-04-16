@@ -23,8 +23,8 @@ namespace AniDroid.Settings
 {
     public class SettingsPresenter : BaseAniDroidPresenter<ISettingsView>
     {
-        public SettingsPresenter(ISettingsView view, IAniListService service, IAniDroidSettings settings,
-            IAniDroidLogger logger) : base(view, service, settings, logger)
+        public SettingsPresenter(IAniListService service, IAniDroidSettings settings,
+            IAniDroidLogger logger) : base(service, settings, logger)
         {
         }
 

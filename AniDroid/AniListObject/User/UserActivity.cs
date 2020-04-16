@@ -18,7 +18,6 @@ using AniDroid.Widgets;
 using MikePhil.Charting.Charts;
 using MikePhil.Charting.Components;
 using MikePhil.Charting.Data;
-using Ninject;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -43,9 +42,6 @@ namespace AniDroid.AniListObject.User
         private int? _userId;
         private string _userName;
         private AniListActivityRecyclerAdapter _userActivityRecyclerAdapter;
-
-        protected override IReadOnlyKernel Kernel =>
-            new StandardKernel(new ApplicationModule<IUserView, UserActivity>(this));
 
         public override async Task OnCreateExtended(Bundle savedInstanceState)
         {
