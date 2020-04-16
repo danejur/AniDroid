@@ -162,12 +162,13 @@ namespace AniDroid.SearchResults
         {
             SetContentView(Resource.Layout.Activity_SearchResults);
 
+            await CreatePresenter(savedInstanceState);
+
             _cardType = Presenter.AniDroidSettings.CardType;
 
             _searchType = Intent.GetStringExtra(IntentKeys.SearchType);
             _searchTerm = Intent.GetStringExtra(IntentKeys.SearchTerm);
 
-            await CreatePresenter(savedInstanceState);
             Presenter.SearchAniList(_searchType, _searchTerm);
 
             _searchButton.Clickable = true;
