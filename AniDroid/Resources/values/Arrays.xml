@@ -172,5 +172,8 @@
     <item>01-21-2020|Adding an item to your lists will now have the status set to Planning by default</item>
     <item>04-16-2020|Fixed a big bug where the app would stop working</item>
     <item>04-16-2020|Lots of internal changes to help the app run more smoothly</item>
+    <item>04-18-2020|Added ability to edit, delete, and like activity replies</item>
+    <item>04-18-2020|Fixed bug where shows would show up as non-private when editing them from your list</item>
+    <item>04-18-2020|Fixed several crashes</item>
   </array>
 </resources>

@@ -263,6 +263,4 @@ __pycache__/
 *.rej
 
 # AniDroid Config
-AniDroid/Resources/values/AppConfig.xml
-AniDroid/Properties/AndroidManifestRelease.xml
 AniDroid/appsettings.secret.json
