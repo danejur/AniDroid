@@ -176,22 +176,53 @@ namespace AniDroid.AniListObject.User
 
         public async Task ToggleActivityReplyLikeAsync(AniListActivity.ActivityReply activityReply, int activityPosition)
         {
-            
+            var toggleResp = await AniListService.ToggleLike(activityReply.Id, AniList.Models.AniListObject.LikeableType.ActivityReply, default);
+
+            toggleResp.Switch((IAniListError error) =>
+                {
+                    View.DisplaySnackbarMessage("Error occurred while toggling like", Snackbar.LengthLong);
+                })
+                .Switch(userLikes =>
+                {
+                    activityReply.Likes = userLikes;
+                });
         }
 
-        public Task EditActivityReplyAsync(AniListActivity.ActivityReply activityReply, int activityPosition, string updateText)
+        public async Task EditActivityReplyAsync(AniListActivity.ActivityReply activityReply, int activityPosition, string updateText)
         {
-            throw new NotImplementedException();
+            var editResp = await AniListService.SaveActivityReply(activityReply.Id, updateText, default);
+
+            editResp.Switch((IAniListError error) =>
+                {
+                    View.DisplaySnackbarMessage("Error occurred while updating reply", Snackbar.LengthLong);
+                })
+                .Switch(retReply =>
+                {
+                    activityReply.Text = retReply.Text;
+                    activityReply.Likes = retReply.Likes;
+                });
         }
 
-        public Task<bool> DeleteActivityReplyAsync(AniListActivity.ActivityReply activityReply, int activityPosition)
+        public async Task<bool> DeleteActivityReplyAsync(AniListActivity.ActivityReply activityReply,
+            int activityPosition)
         {
-            throw new NotImplementedException();
+            var editResp = await AniListService.DeleteActivityReply(activityReply.Id, default);
+
+            return editResp.Match((IAniListError error) =>
+                {
+                    View.DisplaySnackbarMessage("Error occurred while deleting reply", Snackbar.LengthLong);
+
+                    return false;
+                })
+                .Match(deletedResponse => deletedResponse.Deleted);
         }
 
-        public Task UpdateActivityAsync(AniListActivity activity, int activityPosition)
+        public async Task UpdateActivityAsync(AniListActivity activity, int activityPosition)
         {
-            throw new NotImplementedException();
+            var activityResp = await AniListService.GetAniListActivityById(activity.Id, default);
+
+            activityResp.Switch((IAniListError error) => View.DisplaySnackbarMessage("Error occurred while refreshing activity", Snackbar.LengthLong))
+                .Switch(updatedAct => View.UpdateActivity(activityPosition, updatedAct));
         }
     }
 }
