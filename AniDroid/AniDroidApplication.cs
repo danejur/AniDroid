@@ -27,6 +27,7 @@ using AniDroid.Main;
 using AniDroid.MediaList;
 using AniDroid.SearchResults;
 using AniDroid.Settings;
+using AniDroid.Settings.MediaListSettings;
 using AniDroid.TorrentSearch;
 using AniDroid.Utils;
 using AniDroid.Utils.Integration;
@@ -156,6 +157,8 @@ namespace AniDroid
             services.TryAddTransient<SettingsPresenter>();
             services.TryAddTransient<TorrentSearchPresenter>();
             services.TryAddTransient<UserPresenter>();
+            services.TryAddTransient<MediaListSettingsPresenter>();
+
         }
 
         private static string ExtractResource(string filename, string location)
