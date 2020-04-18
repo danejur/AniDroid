@@ -543,7 +543,6 @@
     <Compile Include="Settings\SettingsPresenter.cs" />
     <Compile Include="Settings\ISettingsView.cs" />
     <Compile Include="Settings\SettingsActivity.cs" />
-    <Compile Include="Startup.cs" />
     <Compile Include="TorrentSearch\ITorrentSearchView.cs" />
     <Compile Include="TorrentSearch\TorrentSearchFragment.cs" />
     <Compile Include="TorrentSearch\TorrentSearchPresenter.cs" />
@@ -591,7 +590,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <GoogleServicesJson Include="google-services.json" Condition=" '$(Configuration)' == 'Release' " />
     <EmbeddedResource Include="appsettings.json" />
     <None Include="packages.config" />
     <None Include="Properties\AndroidManifestRelease.xml">
@@ -723,6 +721,7 @@
     </AndroidResource>
     <AndroidResource Include="Resources\layout\View_CardItem_FlatHorizontalCompact.axml" />
     <AndroidResource Include="Resources\layout\View_CardItem_FlatHorizontalTitleOnly.axml" />
+    <EmbeddedResource Include="appsettings.secret.json" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />
@@ -924,9 +923,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Config.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\values\AppConfig.xml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_logout_white_24px.xml" />

@@ -15,16 +15,17 @@ namespace AniDroid.Utils.Integration
 {
     public class AniDroidAniListAuthConfig : IAniListAuthConfig
     {
-        private readonly Context _context;
-
-        public AniDroidAniListAuthConfig(Context context)
+        public AniDroidAniListAuthConfig(string clientId, string clientSecret, string redirectUri, string authTokenUri)
         {
-            _context = context;
+            ClientId = clientId;
+            ClientSecret = clientSecret;
+            RedirectUri = redirectUri;
+            AuthTokenUri = authTokenUri;
         }
 
-        public string ClientId => _context.Resources.GetString(Resource.String.ApiClientId);
-        public string ClientSecret => _context.Resources.GetString(Resource.String.ApiClientSecret);
-        public string RedirectUri => _context.Resources.GetString(Resource.String.ApiRedirectUri);
-        public string AuthTokenUri => _context.Resources.GetString(Resource.String.AniListAuthTokenUri);
+        public string ClientId { get; }
+        public string ClientSecret { get; }
+        public string RedirectUri { get; }
+        public string AuthTokenUri { get; }
     }
 }

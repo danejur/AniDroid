@@ -47,15 +47,13 @@ namespace AniDroid.Login
             }
             else if (!_loginSequenceStarted)
             {
-                var authUrl = Resources.GetString(Resource.String.AniListAuthorizeUri);
-                var clientId = Resources.GetString(Resource.String.ApiClientId);
-                var redirectUri = Resources.GetString(Resource.String.ApiRedirectUri);
-
                 var intentBuilder = new CustomTabsIntent.Builder()
                     .Build();
 
+                var authUrlTemplate = Resources.GetString(Resource.String.AniListAuthorizeUri);
+
                 _loginSequenceStarted = true;
-                intentBuilder.LaunchUrl(this, Android.Net.Uri.Parse(string.Format(authUrl, clientId, redirectUri)));
+                intentBuilder.LaunchUrl(this, Android.Net.Uri.Parse(Presenter.GetRedirectUrl(authUrlTemplate)));
             }
             else
             {

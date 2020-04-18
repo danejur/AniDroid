@@ -63,5 +63,10 @@ namespace AniDroid.Login
                     });
                 });
         }
+
+        public string GetRedirectUrl(string authUrlTemplate)
+        {
+            return string.Format(authUrlTemplate, _authConfig.ClientId, _authConfig.RedirectUri);
+        }
     }
 }

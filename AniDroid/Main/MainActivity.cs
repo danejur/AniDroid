@@ -32,6 +32,7 @@ using AniDroid.Login;
 using AniDroid.MediaList;
 using AniDroid.SearchResults;
 using AniDroid.Settings;
+using AniDroid.Start;
 using AniDroid.TorrentSearch;
 using AniDroid.Utils;
 using AniDroid.Widgets;
@@ -116,6 +117,16 @@ namespace AniDroid.Main
             _notificationImageView?.SetText(countVal);
         }
 
+        public void LogoutUser()
+        {
+            Toast.MakeText(this, "Login expired! Please login again!", ToastLength.Short).Show();
+            Settings.ClearUserAuthentication();
+            Finish();
+
+            var intent = new Intent(this, typeof(StartActivity));
+            StartActivity(intent);
+        }
+
         public void ShowSearchButton()
         {
             _searchButton?.Show();
@@ -179,7 +190,7 @@ namespace AniDroid.Main
         {
             base.OnResume();
 
-            if (Presenter != null)
+            if (Presenter != null && Settings.IsUserAuthenticated)
             {
                 if (Intent.GetBooleanExtra(DisplayNotificationsIntentKey, false))
                 {

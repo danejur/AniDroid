@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -68,7 +69,14 @@ namespace AniDroid.Main
         {
             var countResp = await AniListService.GetAniListNotificationCount(default);
 
-            countResp.Switch((IAniListError error) => { })
+            countResp.Switch(error => {
+                    // we're going to force a log out if there was an unauthenticated error on this call
+                    if (error.StatusCode == (int)HttpStatusCode.Unauthorized)
+                    {
+                        View.LogoutUser();
+                    }
+
+                })
                 .Switch(user => View.SetNotificationCount(user.UnreadNotificationCount));
         }
 

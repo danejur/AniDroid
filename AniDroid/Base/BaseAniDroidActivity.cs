@@ -42,7 +42,7 @@ namespace AniDroid.Base
             }
             else
             {
-                Presenter = Startup.ServiceProvider.GetService<T>();
+                Presenter = AniDroidApplication.ServiceProvider.GetService<T>();
                 await Presenter.BaseInit(View).ConfigureAwait(false);
             }
         }
@@ -116,8 +116,8 @@ namespace AniDroid.Base
         {
             base.OnCreate(savedInstanceState);
 
-            Logger = Startup.ServiceProvider.GetService<IAniDroidLogger>();
-            Settings = Startup.ServiceProvider.GetService<IAniDroidSettings>();
+            Logger = AniDroidApplication.ServiceProvider.GetService<IAniDroidLogger>();
+            Settings = AniDroidApplication.ServiceProvider.GetService<IAniDroidSettings>();
             _theme = Settings.Theme;
             CardType = Settings.CardType;
             SetTheme(GetThemeResource());

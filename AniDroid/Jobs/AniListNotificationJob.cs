@@ -39,13 +39,13 @@ namespace AniDroid.Jobs
         public AniListNotificationJob(Context context)
         {
             _context = context;
-            _aniDroidSettings = Startup.ServiceProvider.GetService<IAniDroidSettings>();
-            _aniListService = Startup.ServiceProvider.GetService<IAniListService>();
+            _aniDroidSettings = AniDroidApplication.ServiceProvider.GetService<IAniDroidSettings>();
+            _aniListService = AniDroidApplication.ServiceProvider.GetService<IAniListService>();
         }
 
         protected override Result OnRunJob(Params @params)
         {
-            if (Startup.ServiceProvider.GetService<IAniDroidSettings>().EnableNotificationService != true)
+            if (AniDroidApplication.ServiceProvider.GetService<IAniDroidSettings>().EnableNotificationService != true)
             {
                 DisableJob();
                 return Result.Reschedule;
@@ -168,7 +168,7 @@ namespace AniDroid.Jobs
             {
                 try
                 {
-                    var service = Startup.ServiceProvider.GetService<IAniListService>();
+                    var service = AniDroidApplication.ServiceProvider.GetService<IAniListService>();
                     var notificationEnum = service.GetAniListNotifications(true, 1);
                     var enumerator = notificationEnum.GetAsyncEnumerator();
 
