@@ -20,10 +20,10 @@ namespace AniDroid.Adapters.RecommendationAdapters
 
         private void SetDefaultClickActions()
         {
-            ClickAction = viewModel =>
+            ClickAction = (viewModel, position) =>
                 MediaActivity.StartActivity(Context, viewModel.Model.Node.MediaRecommendation.Id, BaseAniDroidActivity.ObjectBrowseRequestCode);
 
-            LongClickAction = viewModel =>
+            LongClickAction = (viewModel, position) =>
                 Context.DisplaySnackbarMessage(viewModel.Model.Node.MediaRecommendation.Title?.UserPreferred, Snackbar.LengthLong);
         }
     }

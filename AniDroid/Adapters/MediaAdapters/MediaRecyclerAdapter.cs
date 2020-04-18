@@ -43,10 +43,10 @@ namespace AniDroid.Adapters.MediaAdapters
 
         private void SetDefaultClickActions()
         {
-            ClickAction = viewModel =>
+            ClickAction = (viewModel, position) =>
                 MediaActivity.StartActivity(Context, viewModel.Model.Id, BaseAniDroidActivity.ObjectBrowseRequestCode);
 
-            LongClickAction = viewModel =>
+            LongClickAction = (viewModel, position) =>
                 Context.DisplaySnackbarMessage(viewModel.Model.Title?.UserPreferred, Snackbar.LengthLong);
         }
 

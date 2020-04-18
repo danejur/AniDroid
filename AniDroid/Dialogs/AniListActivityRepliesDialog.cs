@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
+using Android.Support.Design.Widget;
 using Android.Support.V7.Widget;
 using Android.Util;
 using Android.Views;
@@ -17,42 +18,60 @@ using AniDroid.Adapters.AniListActivityAdapters;
 using AniDroid.AniList.Models;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.ViewModels;
+using AniDroid.AniListObject;
 using AniDroid.AniListObject.User;
 using AniDroid.Base;
+using AniDroid.Utils.Listeners;
 
 namespace AniDroid.Dialogs
 {
     public class AniListActivityRepliesDialog
     {
-        public static void Create(BaseAniDroidActivity context, AniListActivity activity, int? currentUserId, Action<int, string> replyAction, Action<int> likeAction)
+        public static void Create(BaseAniDroidActivity context, AniListActivity activity, int activityPosition, IAniListActivityPresenter activityPresenter, int? currentUserId, Action<int, string> replyAction, Action<int> likeAction)
         {
             var view = context.LayoutInflater.Inflate(Resource.Layout.Dialog_AniListActivityReply, null);
             var recycler = view.FindViewById<RecyclerView>(Resource.Id.AniListActivityReply_Recycler);
             var likesContainer = view.FindViewById<LinearLayout>(Resource.Id.AniListActivityReply_LikesContainer);
-            var adapter = new AniListActivityRepliesRecyclerAdapter(context,
+            var adapter = new AniListActivityRepliesRecyclerAdapter(context, activityPresenter,
                 activity.Replies.Select(x => AniListActivityReplyViewModel.CreateViewModel(x,
                     new Color(context.GetThemedColor(Resource.Attribute.Secondary_Dark)), currentUserId)).ToList());
-            
-            // TODO: add reply editing and deleting
-            //{
-            //    LongClickAction = viewModel => {
-            //        if (currentUserId.HasValue && viewModel.Model?.User?.Id == currentUserId)
-            //        {
-            //            AniListActivityCreateDialog.CreateEditActivity(context, viewModel.Model.Text,
-            //                async text => await _presenter.EditReplyAsync(viewModel.Model.ActivityId, viewModel.Model.Id, text),
-            //                async () => await _presenter.DeleteReplyAsync(viewModel.Model.ActivityId, viewModel.Model.Id));
-            //        }
-            //    }
-            //};
-
-            PopulateLikesContainer(context, activity, likesContainer);
-
-            recycler.SetAdapter(adapter);
 
             var alert = new Android.Support.V7.App.AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme));
             alert.SetView(view);
 
             var a = alert.Create();
+
+            adapter.LongClickAction = (viewModel, position) =>
+            {
+                if (currentUserId.HasValue && viewModel.Model?.User?.Id == currentUserId)
+                {
+                    CreateEditReply(context, viewModel.Model.Text,
+                        async text =>
+                        {
+                            await activityPresenter.EditActivityReplyAsync(viewModel.Model, position, text);
+                            viewModel.RecreateViewModel();
+                            adapter.NotifyItemChanged(position);
+
+                            a.Dismiss();
+                            await activityPresenter.UpdateActivityAsync(activity, activityPosition);
+                        },
+                        async () =>
+                        {
+                            var resp = await activityPresenter.DeleteActivityReplyAsync(viewModel.Model, position);
+                            if (resp)
+                            {
+                                adapter.RemoveItem(position);
+                            }
+
+                            a.Dismiss();
+                            await activityPresenter.UpdateActivityAsync(activity, activityPosition);
+                        });
+                }
+            };
+
+            PopulateLikesContainer(context, activity, likesContainer);
+
+            recycler.SetAdapter(adapter);
 
             a.SetButton((int)DialogButtonType.Negative, "Close", (send, args) => a.Dismiss());
 
@@ -97,6 +116,60 @@ namespace AniDroid.Dialogs
 
             container.Visibility = activity.Likes.Any() ? ViewStates.Visible : ViewStates.Gone;
             profileImages.ForEach(container.AddView);
+        }
+
+        private static void CreateEditReply(BaseAniDroidActivity context, string oldText, Func<string, Task> saveAction, Func<Task> deleteAction)
+        {
+            var dialog = new Android.Support.V7.App.AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme)).Create();
+            var dialogView = context.LayoutInflater.Inflate(Resource.Layout.Dialog_AniListActivityCreate, null);
+            var replyText = dialogView.FindViewById<EditText>(Resource.Id.AniListActivityCreate_Text);
+            var replyTextLayout = dialogView.FindViewById<TextInputLayout>(Resource.Id.AniListActivityCreate_TextLayout);
+
+            replyTextLayout.Hint = "Reply Text";
+
+            replyText.Text = oldText;
+
+            dialog.SetView(dialogView);
+
+            dialog.SetButton((int)DialogButtonType.Negative, "Cancel", (send, args) => dialog.Dismiss());
+            dialog.SetButton((int)DialogButtonType.Positive, "Save", (send, args) => { });
+            dialog.SetButton((int)DialogButtonType.Neutral, "Delete", (send, args) =>
+            {
+                var confirmationDialog = new Android.Support.V7.App.AlertDialog.Builder(context,
+                    context.GetThemedResourceId(Resource.Attribute.Dialog_Theme)).Create();
+                confirmationDialog.SetTitle("Delete Reply");
+                confirmationDialog.SetMessage("Are you sure you wish to delete this reply?");
+
+                confirmationDialog.SetButton((int)DialogButtonType.Negative, "Cancel",
+                    (cSend, cArgs) => confirmationDialog.Dismiss());
+                confirmationDialog.SetButton((int)DialogButtonType.Positive, "Delete",
+                    (cSend, cArgs) =>
+                    {
+                        confirmationDialog.Dismiss();
+                        dialog.Dismiss();
+                        deleteAction?.Invoke();
+                    });
+
+                confirmationDialog.Show();
+            });
+
+            dialog.ShowEvent += (sender2, e2) =>
+            {
+                var createButton = dialog.GetButton((int)DialogButtonType.Positive);
+                createButton.SetOnClickListener(new InterceptClickListener(async () =>
+                {
+                    if (string.IsNullOrWhiteSpace(replyText.Text))
+                    {
+                        Toast.MakeText(context, "Text can't be empty!", ToastLength.Short).Show();
+                        return;
+                    }
+
+                    await saveAction(replyText.Text);
+                    dialog.Dismiss();
+                }));
+            };
+
+            dialog.Show();
         }
     }
 }

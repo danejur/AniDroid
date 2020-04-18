@@ -551,7 +551,7 @@ namespace AniDroid.AniListObject.Media
             var recyclerAdapter = new MediaListRecyclerAdapter(this, CardType, mediaListEnumerable,
                 MediaListViewModel.CreateUserMediaListViewModel)
             {
-                ClickAction = viewModel => UserActivity.StartActivity(this, viewModel.Model?.User?.Id ?? 0)
+                ClickAction = (viewModel, position) => UserActivity.StartActivity(this, viewModel.Model?.User?.Id ?? 0)
             };
             recycler.SetAdapter(recyclerAdapter);
 

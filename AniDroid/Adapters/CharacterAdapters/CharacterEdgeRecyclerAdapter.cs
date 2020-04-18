@@ -29,7 +29,7 @@ namespace AniDroid.Adapters.CharacterAdapters
             Func<Character.Edge, CharacterEdgeViewModel> createViewModelFunc) : base(context, enumerable, cardType,
             createViewModelFunc)
         {
-            ClickAction = viewModel =>
+            ClickAction = (viewModel, position) =>
                 CharacterActivity.StartActivity(Context, viewModel.Model.Node.Id,
                     BaseAniDroidActivity.ObjectBrowseRequestCode);
         }

@@ -38,7 +38,7 @@ namespace AniDroid.Adapters.UserAdapters
         private void SetDefaultClickActions()
         {
             ClickAction =
-                viewModel => UserActivity.StartActivity(Context, viewModel.Model.Id);
+                (viewModel, position) => UserActivity.StartActivity(Context, viewModel.Model.Id);
         }
     }
 }

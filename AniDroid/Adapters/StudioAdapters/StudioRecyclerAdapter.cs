@@ -28,7 +28,7 @@ namespace AniDroid.Adapters.StudioAdapters
             createViewModelFunc)
         {
             ClickAction =
-                viewModel => StudioActivity.StartActivity(Context, viewModel.Model.Id);
+                (viewModel, position) => StudioActivity.StartActivity(Context, viewModel.Model.Id);
         }
 
         public override void BindCardViewHolder(CardItem holder, int position)

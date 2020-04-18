@@ -48,7 +48,7 @@ namespace AniDroid.Browse
             _recyclerView.SetAdapter(_adapter = new MediaRecyclerAdapter(this, mediaEnumerable, _cardType,
                 MediaViewModel.CreateMediaViewModel)
             {
-                LongClickAction = viewModel =>
+                LongClickAction = (viewModel, position) =>
                 {
                     if (Presenter.GetIsUserAuthenticated())
                     {

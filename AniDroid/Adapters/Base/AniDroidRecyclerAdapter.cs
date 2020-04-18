@@ -37,8 +37,8 @@ namespace AniDroid.Adapters.Base
         public event EventHandler<bool> DataLoaded;
         public Func<TModel, T> CreateViewModelFunc { get; set; }
 
-        public Action<AniDroidAdapterViewModel<TModel>> ClickAction { get; set; }
-        public Action<AniDroidAdapterViewModel<TModel>> LongClickAction { get; set; }
+        public Action<AniDroidAdapterViewModel<TModel>, int> ClickAction { get; set; }
+        public Action<AniDroidAdapterViewModel<TModel>, int> LongClickAction { get; set; }
 
         public Action<AniDroidAdapterViewModel<TModel>, int, Action> ButtonClickAction { get; set; }
         public Action<AniDroidAdapterViewModel<TModel>, int, Action> ButtonLongClickAction { get; set; }
@@ -272,39 +272,39 @@ namespace AniDroid.Adapters.Base
         protected void RowClick(object sender, EventArgs e)
         {
             var senderView = sender as View;
-            var mediaPos = (int)senderView.GetTag(Resource.Id.Object_Position);
-            var viewModel = Items[mediaPos];
+            var position = (int)senderView.GetTag(Resource.Id.Object_Position);
+            var viewModel = Items[position];
 
-            ClickAction?.Invoke(viewModel);
+            ClickAction?.Invoke(viewModel, position);
         }
 
         protected void RowLongClick(object sender, View.LongClickEventArgs longClickEventArgs)
         {
             var senderView = sender as View;
-            var mediaPos = (int)senderView.GetTag(Resource.Id.Object_Position);
-            var viewModel = Items[mediaPos];
+            var position = (int)senderView.GetTag(Resource.Id.Object_Position);
+            var viewModel = Items[position];
 
-            LongClickAction?.Invoke(viewModel);
+            LongClickAction?.Invoke(viewModel, position);
         }
 
         protected void ButtonClick(object sender, EventArgs e)
         {
             var senderView = sender as View;
-            var mediaPos = (int)senderView.GetTag(Resource.Id.Object_Position);
-            var viewModel = Items[mediaPos];
+            var position = (int)senderView.GetTag(Resource.Id.Object_Position);
+            var viewModel = Items[position];
             senderView.Enabled = false;
 
-            ButtonClickAction?.Invoke(viewModel, mediaPos, () => senderView.Enabled = true);
+            ButtonClickAction?.Invoke(viewModel, position, () => senderView.Enabled = true);
         }
 
         protected void ButtonLongClick(object sender, View.LongClickEventArgs longClickEventArgs)
         {
             var senderView = sender as View;
-            var mediaPos = (int)senderView.GetTag(Resource.Id.Object_Position);
-            var viewModel = Items[mediaPos];
+            var position = (int)senderView.GetTag(Resource.Id.Object_Position);
+            var viewModel = Items[position];
             senderView.Enabled = false;
 
-            ButtonLongClickAction?.Invoke(viewModel, mediaPos, () => senderView.Enabled = true);
+            ButtonLongClickAction?.Invoke(viewModel, position, () => senderView.Enabled = true);
         }
 
         public sealed override int GetItemViewType(int position)

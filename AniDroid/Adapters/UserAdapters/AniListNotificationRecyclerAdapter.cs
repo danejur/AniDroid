@@ -30,7 +30,7 @@ namespace AniDroid.Adapters.UserAdapters
         {
             _unreadCount = unreadCount;
             CustomCardUseItemDecoration = true;
-            ClickAction = viewModel => (viewModel as AniListNotificationViewModel)?.ClickAction?.Invoke();
+            ClickAction = (viewModel, position) => (viewModel as AniListNotificationViewModel)?.ClickAction?.Invoke();
         }
 
         public override void BindCustomViewHolder(RecyclerView.ViewHolder holder, int position)

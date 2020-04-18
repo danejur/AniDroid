@@ -25,7 +25,7 @@ namespace AniDroid.Adapters.ForumThreadAdapters
             Func<ForumThread, ForumThreadViewModel> createViewModelFunc) : base(context, enumerable,
             RecyclerCardType.Horizontal, createViewModelFunc)
         {
-            ClickAction = viewModel =>
+            ClickAction = (viewModel, position) =>
             {
                 var intent = new Intent(Intent.ActionView);
                 intent.SetData(Android.Net.Uri.Parse(viewModel.Model.SiteUrl));

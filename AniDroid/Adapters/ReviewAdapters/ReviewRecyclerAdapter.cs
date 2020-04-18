@@ -25,7 +25,7 @@ namespace AniDroid.Adapters.ReviewAdapters
             Func<Review, ReviewViewModel> createViewModelFunc) : base(context, enumerable, cardType,
             createViewModelFunc)
         {
-            ClickAction = viewModel =>
+            ClickAction = (viewModel, position) =>
             {
                 Toast.MakeText(Application.Context, "In-app review viewing coming Soon™", ToastLength.Short).Show();
                 var intent = new Intent(Intent.ActionView, Android.Net.Uri.Parse($"https://anilist.co/review/{viewModel.Model.Id}"));
