@@ -188,5 +188,10 @@ namespace AniDroid.AniListObject.User
         {
             throw new NotImplementedException();
         }
+
+        public Task UpdateActivityAsync(AniListActivity activity, int activityPosition)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

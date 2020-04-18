@@ -23,6 +23,6 @@ namespace AniDroid.AniListObject
         Task EditActivityReplyAsync(AniListActivity.ActivityReply activityReply, int activityPosition,
             string updateText);
         Task<bool> DeleteActivityReplyAsync(AniListActivity.ActivityReply activityReply, int activityPosition);
-
+        Task UpdateActivityAsync(AniListActivity activity, int activityPosition);
     }
 }

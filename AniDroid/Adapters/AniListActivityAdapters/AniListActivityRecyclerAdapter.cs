@@ -246,7 +246,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
 
             if (_userId.HasValue || activity.Likes?.Any() == true || activity.Replies?.Any() == true)
             {
-                AniListActivityRepliesDialog.Create(Context, activity, _presenter, _userId, PostReply, ToggleLikeActivity);
+                AniListActivityRepliesDialog.Create(Context, activity, activityPosition, _presenter, _userId, PostReply, ToggleLikeActivity);
             }
         }
 

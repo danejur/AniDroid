@@ -27,7 +27,7 @@ namespace AniDroid.Dialogs
 {
     public class AniListActivityRepliesDialog
     {
-        public static void Create(BaseAniDroidActivity context, AniListActivity activity, IAniListActivityPresenter activityPresenter, int? currentUserId, Action<int, string> replyAction, Action<int> likeAction)
+        public static void Create(BaseAniDroidActivity context, AniListActivity activity, int activityPosition, IAniListActivityPresenter activityPresenter, int? currentUserId, Action<int, string> replyAction, Action<int> likeAction)
         {
             var view = context.LayoutInflater.Inflate(Resource.Layout.Dialog_AniListActivityReply, null);
             var recycler = view.FindViewById<RecyclerView>(Resource.Id.AniListActivityReply_Recycler);
@@ -35,6 +35,11 @@ namespace AniDroid.Dialogs
             var adapter = new AniListActivityRepliesRecyclerAdapter(context, activityPresenter,
                 activity.Replies.Select(x => AniListActivityReplyViewModel.CreateViewModel(x,
                     new Color(context.GetThemedColor(Resource.Attribute.Secondary_Dark)), currentUserId)).ToList());
+
+            var alert = new Android.Support.V7.App.AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme));
+            alert.SetView(view);
+
+            var a = alert.Create();
 
             adapter.LongClickAction = (viewModel, position) =>
             {
@@ -46,6 +51,9 @@ namespace AniDroid.Dialogs
                             await activityPresenter.EditActivityReplyAsync(viewModel.Model, position, text);
                             viewModel.RecreateViewModel();
                             adapter.NotifyItemChanged(position);
+
+                            a.Dismiss();
+                            await activityPresenter.UpdateActivityAsync(activity, activityPosition);
                         },
                         async () =>
                         {
@@ -54,6 +62,9 @@ namespace AniDroid.Dialogs
                             {
                                 adapter.RemoveItem(position);
                             }
+
+                            a.Dismiss();
+                            await activityPresenter.UpdateActivityAsync(activity, activityPosition);
                         });
                 }
             };
@@ -61,11 +72,6 @@ namespace AniDroid.Dialogs
             PopulateLikesContainer(context, activity, likesContainer);
 
             recycler.SetAdapter(adapter);
-
-            var alert = new Android.Support.V7.App.AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme));
-            alert.SetView(view);
-
-            var a = alert.Create();
 
             a.SetButton((int)DialogButtonType.Negative, "Close", (send, args) => a.Dismiss());
 

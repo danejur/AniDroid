@@ -137,6 +137,14 @@ namespace AniDroid.Home
                 .Match(deletedResponse => deletedResponse.Deleted);
         }
 
+        public async Task UpdateActivityAsync(AniListActivity activity, int activityPosition)
+        {
+            var activityResp = await AniListService.GetAniListActivityById(activity.Id, default);
+
+            activityResp.Switch((IAniListError error) => View.DisplaySnackbarMessage("Error occurred while refreshing activity", Snackbar.LengthLong))
+                .Switch(updatedAct => View.UpdateActivity(activityPosition, updatedAct));
+        }
+
         public async Task PostActivityReplyAsync(AniListActivity activity, int activityPosition, string text)
         {
             var postResp = await AniListService.PostActivityReply(activity.Id, text, default);
