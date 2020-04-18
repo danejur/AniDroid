@@ -16,6 +16,7 @@ using AniDroid.AniList.Service;
 using AniDroid.AniListObject.Character;
 using AniDroid.AniListObject.Media;
 using AniDroid.AniListObject.Staff;
+using AniDroid.AniListObject.Studio;
 using AniDroid.AniListObject.User;
 using AniDroid.Browse;
 using AniDroid.CurrentSeason;
@@ -158,6 +159,7 @@ namespace AniDroid
             services.TryAddTransient<TorrentSearchPresenter>();
             services.TryAddTransient<UserPresenter>();
             services.TryAddTransient<MediaListSettingsPresenter>();
+            services.TryAddTransient<StudioPresenter>();
 
         }
 

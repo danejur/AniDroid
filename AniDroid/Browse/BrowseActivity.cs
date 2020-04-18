@@ -133,10 +133,11 @@ namespace AniDroid.Browse
             {
                 // ignored
             }
+            
+            await CreatePresenter(savedInstanceState);
 
             _cardType = Presenter.AniDroidSettings.CardType;
 
-            await CreatePresenter(savedInstanceState);
             Presenter.BrowseAniListMedia(browseModel);
 
             SetupToolbar();
