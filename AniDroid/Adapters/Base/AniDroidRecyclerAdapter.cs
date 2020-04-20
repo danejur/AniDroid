@@ -36,6 +36,7 @@ namespace AniDroid.Adapters.Base
         public Color? LoadingItemBackgroundColor { get; set; }
         public event EventHandler<bool> DataLoaded;
         public Func<TModel, T> CreateViewModelFunc { get; set; }
+        public Func<TModel, bool> ValidateItemFunc { get; set; }
 
         public Action<AniDroidAdapterViewModel<TModel>, int> ClickAction { get; set; }
         public Action<AniDroidAdapterViewModel<TModel>, int> LongClickAction { get; set; }
@@ -199,7 +200,7 @@ namespace AniDroid.Adapters.Base
                         _dataLoaded = true;
                     }
 
-                    AddItems(data.Data.Select(model => CreateViewModelFunc(model)), data.PageInfo.HasNextPage);
+                    AddItems(data.Data.Where(x => ValidateItemFunc?.Invoke(x) != false).Select(model => CreateViewModelFunc(model)), data.PageInfo.HasNextPage);
                 });
 
             RemoveItem(position);

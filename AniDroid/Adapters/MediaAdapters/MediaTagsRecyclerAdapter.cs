@@ -37,14 +37,19 @@ namespace AniDroid.Adapters.MediaAdapters
             {
                 holder.Name.Text = "SPOILER";
                 holder.DetailPrimary.Text = "Tap view button to show tag";
+                holder.DetailSecondary.Visibility = ViewStates.Gone;
                 holder.Button.Visibility = ViewStates.Visible;
                 holder.Button.SetTag(Resource.Id.Object_Position, position);
+                holder.ContainerCard.Click -= RowClick;
+                holder.Button.Click -= ButtonClick;
                 holder.Button.Click += ButtonClick;
             }
             else
             {
                 holder.Name.Text = item.Name;
                 holder.DetailPrimary.Text = item.Description;
+                holder.DetailSecondary.Visibility = ViewStates.Visible;
+                holder.DetailSecondary.Text = $"{item.Rank}%";
                 holder.Button.Visibility = ViewStates.Gone;
 
                 holder.ContainerCard.SetTag(Resource.Id.Object_Position, position);
@@ -64,7 +69,6 @@ namespace AniDroid.Adapters.MediaAdapters
         public override CardItem SetupCardItemViewHolder(CardItem item)
         {
             item.Image.Visibility = ViewStates.Gone;
-            item.DetailSecondary.Visibility = ViewStates.Gone;
             item.ContainerCard.SetContentPadding(20, 20, 20, 20);
             item.ButtonIcon.SetImageResource(Resource.Drawable.ic_visibility_white_24px);
             return item;

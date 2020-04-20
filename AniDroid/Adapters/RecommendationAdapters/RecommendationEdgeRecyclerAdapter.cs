@@ -16,6 +16,8 @@ namespace AniDroid.Adapters.RecommendationAdapters
         public RecommendationEdgeRecyclerAdapter(BaseAniDroidActivity context, IAsyncEnumerable<OneOf<IPagedData<Recommendation.Edge>, IAniListError>> enumerable, RecyclerCardType cardType, Func<Recommendation.Edge, RecommendationEdgeViewModel> createViewModelFunc) : base(context, enumerable, cardType, createViewModelFunc)
         {
             SetDefaultClickActions();
+
+            ValidateItemFunc = rec => rec.Node?.MediaRecommendation != null;
         }
 
         private void SetDefaultClickActions()

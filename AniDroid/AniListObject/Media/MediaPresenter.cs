@@ -45,6 +45,8 @@ namespace AniDroid.AniListObject.Media
 
             mediaResp.Result.Switch(media =>
                 {
+                    FixMediaData(media);
+
                     View.SetIsFavorite(media.IsFavourite);
                     View.SetShareText(media.Title?.UserPreferred, media.SiteUrl);
                     View.SetContentShown(!string.IsNullOrWhiteSpace(media.BannerImage));
@@ -141,6 +143,16 @@ namespace AniDroid.AniListObject.Media
                 View.DisplaySnackbarMessage("Deleted", Snackbar.LengthShort);
                 View.RemoveMediaListItem();
             }).Switch(error => onError());
+        }
+
+        private void FixMediaData(AniList.Models.Media media)
+        {
+            // small fixes and sorts for what media data we can fix
+
+            if (media.Tags?.Any() == true)
+            {
+                media.Tags = media.Tags.OrderBy(x => x.IsGeneralSpoiler || x.IsMediaSpoiler).ThenByDescending(x => x.Rank).ToList();
+            }
         }
     }
 }
