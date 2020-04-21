@@ -175,5 +175,8 @@
     <item>04-18-2020|Added ability to edit, delete, and like activity replies</item>
     <item>04-18-2020|Fixed bug where shows would show up as non-private when editing them from your list</item>
     <item>04-18-2020|Fixed several crashes</item>
+    <item>04-21-2020|Added better list filtering!</item>
+    <item>04-21-2020|Media tags and characters are now sorted by relevance</item>
+    <item>04-21-2020|Fixed crash when viewing certain anime pages</item>
   </array>
 </resources>
