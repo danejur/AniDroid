@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/Menu_MediaListFilters_Reset"
+        android:title="Reset"
+        app:showAsAction="always" />
+  <item
+      android:id="@+id/Menu_MediaListFilters_Apply"
+      android:title="Apply"
+      app:showAsAction="always" />
+</menu>

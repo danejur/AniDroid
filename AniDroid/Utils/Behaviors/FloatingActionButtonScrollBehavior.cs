@@ -1,3 +1,4 @@
+using System;
 using Android.Content;
 using Android.Runtime;
 using Android.Support.Design.Widget;
@@ -20,16 +21,19 @@ namespace AniDroid.Utils.Behaviors
 
         public override bool OnDependentViewChanged(CoordinatorLayout parent, Java.Lang.Object child, View dependency)
         {
-            var fabChild = child as FloatingActionButton;
+            if (!(child is FloatingActionButton fabChild))
+            {
+                return false;
+            }
 
-            var translationY = System.Math.Min(0, dependency.TranslationY - dependency.Height);
+            var translationY = Math.Min(0, dependency.TranslationY - dependency.Height);
             fabChild.TranslationY = translationY;
             return true;
         }
 
-        public override void OnNestedScroll(CoordinatorLayout coordinatorLayout, Java.Lang.Object child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed)
+        public override void OnNestedScroll(CoordinatorLayout coordinatorLayout, Java.Lang.Object child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type)
         {
-            base.OnNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
+            base.OnNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type);
             var fabChild = JavaObjectExtensions.JavaCast<FloatingActionButton>(child);
 
             if (dyConsumed > 0 && fabChild.Visibility == ViewStates.Visible)
@@ -42,10 +46,30 @@ namespace AniDroid.Utils.Behaviors
             }
         }
 
-        public override bool OnStartNestedScroll(CoordinatorLayout coordinatorLayout, Java.Lang.Object child, View directTargetChild, View target, int nestedScrollAxes)
+        //public override void OnNestedScroll(CoordinatorLayout coordinatorLayout, Java.Lang.Object child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed)
+        //{
+        //    base.OnNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed);
+        //    var fabChild = JavaObjectExtensions.JavaCast<FloatingActionButton>(child);
+
+        //    if (dyConsumed > 0 && fabChild.Visibility == ViewStates.Visible)
+        //    {
+        //        fabChild.Hide(new CustomOnVisibilityChangedListener());
+        //    }
+        //    else if (dyConsumed < 0 && fabChild.Visibility != ViewStates.Visible)
+        //    {
+        //        fabChild.Show();
+        //    }
+        //}
+
+        public override bool OnStartNestedScroll(CoordinatorLayout coordinatorLayout, Java.Lang.Object child, View directTargetChild, View target, int axes, int type)
         {
-            return nestedScrollAxes == ViewCompat.ScrollAxisVertical;
+            return axes == ViewCompat.ScrollAxisVertical;
         }
+
+        //public override bool OnStartNestedScroll(CoordinatorLayout coordinatorLayout, Java.Lang.Object child, View directTargetChild, View target, int nestedScrollAxes)
+        //{
+        //    return nestedScrollAxes == ViewCompat.ScrollAxisVertical;
+        //}
 
         private class CustomOnVisibilityChangedListener : FloatingActionButton.OnVisibilityChangedListener
         {

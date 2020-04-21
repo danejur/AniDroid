@@ -18,6 +18,7 @@ using AniDroid.Adapters;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList;
+using AniDroid.AniList.Dto;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
@@ -53,10 +54,7 @@ namespace AniDroid.MediaList
         private MediaListSortComparer.MediaListSortType _currentSort;
         private MediaListSortComparer.SortDirection _currentSortDirection;
         private IMenu _menu;
-
-        private IList<Media.MediaFormat> _filteredMediaFormats = new List<Media.MediaFormat>();
-        private IList<Media.MediaStatus> _filteredMediaStatuses = new List<Media.MediaStatus>();
-        private bool FilteringActive => _filteredMediaFormats?.Any() == true || _filteredMediaStatuses?.Any() == true;
+        private MediaListFilterModel _filterModel;
 
         public override void OnError(IAniListError error)
         {
@@ -65,7 +63,15 @@ namespace AniDroid.MediaList
 
         public override void DisplaySnackbarMessage(string message, int length = Snackbar.LengthShort)
         {
-            //throw new NotImplementedException();
+            if (_coordLayout != null)
+            {
+                Snackbar.Make(_coordLayout, message, length).Show();
+            }
+            else
+            {
+                // as a fallback (if the coord layout is null for some reason), show a toast
+                Toast.MakeText(this, message, ToastLength.Long);
+            }
         }
 
         public override async Task OnCreateExtended(Bundle savedInstanceState)
@@ -74,6 +80,8 @@ namespace AniDroid.MediaList
 
             _userId = Intent.GetIntExtra(UserIdIntentKey, 0);
             _mediaType = AniListEnum.GetEnum<Media.MediaType>(Intent.GetStringExtra(MediaTypeIntentKey));
+
+            _filterModel = new MediaListFilterModel();
 
             await CreatePresenter(savedInstanceState);
 
@@ -124,6 +132,8 @@ namespace AniDroid.MediaList
                     Presenter.GetMediaListItemViewType(), Presenter.GetHighlightPriorityItems(),
                     Presenter.GetUseLongClickForEpisodeAdd());
 
+                adapter.SetFilter(_filterModel);
+
                 _recyclerAdapters.Add(adapter);
                 var listView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
                 listView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView).SetAdapter(adapter);
@@ -146,6 +156,11 @@ namespace AniDroid.MediaList
 
         public void RemoveMediaListItem(int mediaListId)
         {
+        }
+
+        public MediaListFilterModel GetMediaListFilter()
+        {
+            return _filterModel;
         }
 
         public static void StartActivity(BaseAniDroidActivity context, int userId, Media.MediaType mediaType)
@@ -188,13 +203,14 @@ namespace AniDroid.MediaList
             SupportActionBar.SetDisplayHomeAsUpEnabled(true);
         }
 
-        private void UpdateAdapterFilters(IList<Media.MediaStatus> statusList,
-            IList<Media.MediaFormat> formatList)
+        public void SetMediaListFilter(MediaListFilterModel filterModel)
         {
-            _filteredMediaFormats = formatList ?? new List<Media.MediaFormat>();
-            _filteredMediaStatuses = statusList ?? new List<Media.MediaStatus>();
+            foreach (var adapter in _recyclerAdapters)
+            {
+                adapter.SetFilter(filterModel);
+            }
 
-            if (_filteredMediaStatuses.Any() || _filteredMediaFormats.Any())
+            if (_filterModel.IsFilteringActive)
             {
                 DisplaySnackbarMessage("List filtering is active", Snackbar.LengthLong);
                 _menu?.FindItem(Resource.Id.Menu_MediaLists_Filter)?.Icon?.SetTintList(ColorStateList.ValueOf(Color.LightGreen));
@@ -203,11 +219,6 @@ namespace AniDroid.MediaList
             {
                 DisplaySnackbarMessage("List filtering is not active", Snackbar.LengthShort);
                 _menu?.FindItem(Resource.Id.Menu_MediaLists_Filter)?.Icon?.SetTintList(null);
-            }
-
-            foreach (var adapter in _recyclerAdapters)
-            {
-                adapter.UpdateFilters(_filteredMediaFormats, _filteredMediaStatuses);
             }
         }
 
@@ -234,7 +245,7 @@ namespace AniDroid.MediaList
             _menu = menu;
 
             _menu.FindItem(Resource.Id.Menu_MediaLists_Filter)?.Icon
-                ?.SetTintList(FilteringActive ? ColorStateList.ValueOf(Color.LightGreen) : null);
+                ?.SetTintList(_filterModel.IsFilteringActive ? ColorStateList.ValueOf(Color.LightGreen) : null);
 
             return true;
         }
@@ -259,7 +270,7 @@ namespace AniDroid.MediaList
                     Recreate();
                     break;
                 case Resource.Id.Menu_MediaLists_Filter:
-                    MediaListFilterDialog.Create(this, _mediaType, _filteredMediaStatuses, _filteredMediaFormats, UpdateAdapterFilters);
+                    MediaListFilterDialog.Create(this, this, _mediaType, Presenter.GetGenres(), Presenter.GetMediaTags());
                     return true;
             }
 

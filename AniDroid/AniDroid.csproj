@@ -530,6 +530,7 @@
     <Compile Include="Jobs\AniDroidJobCreator.cs" />
     <Compile Include="Jobs\AniListNotificationJob.cs" />
     <Compile Include="MediaList\MediaListActivity.cs" />
+    <Compile Include="MediaList\MediaListFilterModel.cs" />
     <Compile Include="MediaList\MediaListFragment.cs" />
     <Compile Include="MediaList\IMediaListView.cs" />
     <Compile Include="MediaList\MediaListPresenter.cs" />
@@ -551,6 +552,7 @@
     <Compile Include="Utils\Comparers\BaseAniDroidComparer.cs" />
     <Compile Include="Utils\Comparers\MediaListSortComparer.cs" />
     <Compile Include="Utils\Comparers\MediaSortComparer.cs" />
+    <Compile Include="Utils\Extensions\CollectionExtensions.cs" />
     <Compile Include="Utils\Formatting\Markdown\MarkdownSpannableFormatter.cs" />
     <Compile Include="Utils\Formatting\Markdown\MarkdownTextCleaner.cs" />
     <Compile Include="Utils\Formatting\NumberFormatters.cs" />
@@ -1157,6 +1159,19 @@
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Fragment_MediaListFilterDialog.axml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\MediaListFilters_ActionBar.xml">
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

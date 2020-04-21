@@ -16,11 +16,14 @@ using Android.Views.Animations;
 using Android.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.ViewModels;
+using AniDroid.AniList.Dto;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 using AniDroid.Dialogs;
+using AniDroid.MediaList;
+using AniDroid.Utils.Extensions;
 using OneOf;
 
 namespace AniDroid.Adapters.MediaAdapters
@@ -184,24 +187,65 @@ namespace AniDroid.Adapters.MediaAdapters
             NotifyDataSetChanged();
         }
 
-        public void UpdateFilters(IList<Media.MediaFormat> filteredFormats, IList<Media.MediaStatus> filteredStatuses)
+        public void SetFilter(MediaListFilterModel filterModel)
         {
-            _filteredFormats = filteredFormats;
-            _filteredStatuses = filteredStatuses;
-
-            var items = _unfilteredItems.AsEnumerable();
-
-            if (_filteredFormats?.Any() == true)
+            if (_unfilteredItems?.Any() != true)
             {
-                items = items.Where(x => x.Model.Media?.Format?.EqualsAny(_filteredFormats) == true);
+                return;
             }
 
-            if (_filteredStatuses?.Any() == true)
+            if (filterModel?.IsFilteringActive != true)
             {
-                items = items.Where(x => x.Model.Media?.Status?.EqualsAny(_filteredStatuses) == true);
+                Items = _unfilteredItems;
             }
+            else
+            {
+                var items = _unfilteredItems.AsEnumerable();
 
-            Items = items.ToList();
+                if (!string.IsNullOrWhiteSpace(filterModel.Title))
+                {
+                    var loweredTitle = filterModel.Title.ToLowerInvariant();
+
+                    items = items.Where(x =>
+                        x.Model.Media?.Title?.English?.ToLowerInvariant().Contains(loweredTitle) == true ||
+                        x.Model.Media?.Title?.Romaji?.ToLowerInvariant().Contains(loweredTitle) == true ||
+                        x.Model.Media?.Title?.Native?.ToLowerInvariant().Contains(loweredTitle) == true);
+                }
+                if (filterModel.Format != null)
+                {
+                    items = items.Where(x => x.Model.Media?.Format == filterModel.Format);
+                }
+                if (filterModel.Status != null)
+                {
+                    items = items.Where(x => x.Model.Media?.Status == filterModel.Status);
+                }
+                if (filterModel.Season != null)
+                {
+                    items = items.Where(x => x.Model.Media?.Season == filterModel.Season);
+                }
+                if (filterModel.Year != null)
+                {
+                    items = items.Where(x => x.Model.Media?.SeasonYear == filterModel.Year || x.Model?.Media?.StartDate?.Year == filterModel.Year);
+                }
+                if (filterModel.Source != null)
+                {
+                    items = items.Where(x => x.Model.Media?.Source == filterModel.Source);
+                }
+                if (filterModel.LicensedBy?.Any() == true)
+                {
+                    items = items.Where(x => x.Model.Media?.ExternalLinks?.Select(y => y.Site).ContainsAny(filterModel.LicensedBy) == true);
+                }
+                if (filterModel.IncludedGenres?.Any() == true)
+                {
+                    items = items.Where(x => x.Model.Media?.Genres.ContainsAny(filterModel.IncludedGenres) == true);
+                }
+                if (filterModel.IncludedTags?.Any() == true)
+                {
+                    items = items.Where(x => x.Model.Media?.Tags?.Select(x => x.Name).ContainsAny(filterModel.IncludedTags) == true);
+                }
+
+                Items = items.ToList();
+            }
 
             NotifyDataSetChanged();
         }

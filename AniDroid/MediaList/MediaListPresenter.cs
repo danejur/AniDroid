@@ -186,7 +186,8 @@ namespace AniDroid.MediaList
             {
                 return AniDroidSettings.AnimeListSortType;
             }
-            else if (Media.MediaType.Manga.Equals(mediaType))
+
+            if (Media.MediaType.Manga.Equals(mediaType))
             {
                 return AniDroidSettings.MangaListSortType;
             }
@@ -207,6 +208,16 @@ namespace AniDroid.MediaList
                 AniDroidSettings.MangaListSortType = sort;
                 AniDroidSettings.MangaListSortDirection = direction;
             }
+        }
+
+        public IList<Media.MediaTag> GetMediaTags()
+        {
+            return AniDroidSettings.MediaTagCache;
+        }
+
+        public IList<string> GetGenres()
+        {
+            return AniDroidSettings.GenreCache;
         }
     }
 }

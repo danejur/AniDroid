@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using AniDroid.AniList.Dto;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.AniListObject.Media;
@@ -23,5 +24,7 @@ namespace AniDroid.MediaList
         void UpdateMediaListItem(Media.MediaList mediaList);
         void ResetMediaListItem(int mediaId);
         void RemoveMediaListItem(int mediaListId);
+        MediaListFilterModel GetMediaListFilter();
+        void SetMediaListFilter(MediaListFilterModel filterModel);
     }
 }
