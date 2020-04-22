@@ -172,7 +172,7 @@ namespace AniDroid.Jobs
                     var notificationEnum = service.GetAniListNotifications(true, 1);
                     var enumerator = notificationEnum.GetAsyncEnumerator();
 
-                    enumerator.MoveNextAsync().GetAwaiter().GetResult();
+                    enumerator.MoveNextAsync().AsTask().Start();
                 }
                 catch
                 {
