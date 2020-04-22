@@ -178,5 +178,9 @@
     <item>04-21-2020|Added better list filtering!</item>
     <item>04-21-2020|Media tags and characters are now sorted by relevance</item>
     <item>04-21-2020|Fixed crash when viewing certain anime pages</item>
+    <item>04-22-2020|Tapping on tags in the browse or media list filter window now shows their description</item>
+    <item>04-22-2020|Added About screen</item>
+    <item>04-22-2020|Fixed bug where app would freeze when notification was dismissed</item>
+    <item>04-22-2020|Fixed tag sorting on Anime and Manga</item>
   </array>
 </resources>
