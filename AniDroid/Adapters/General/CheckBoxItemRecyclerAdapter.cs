@@ -17,6 +17,8 @@ namespace AniDroid.Adapters.General
 {
     public class CheckBoxItemRecyclerAdapter : BaseRecyclerAdapter<CheckBoxItemRecyclerAdapter.CheckBoxItem>
     {
+        public bool ToggleDescription { get; set; }
+
         public CheckBoxItemRecyclerAdapter(BaseAniDroidActivity context, List<CheckBoxItem> items) : base(context,
             items, RecyclerCardType.Custom)
         {
@@ -29,7 +31,6 @@ namespace AniDroid.Adapters.General
 
         public override void BindCustomViewHolder(RecyclerView.ViewHolder holder, int position)
         {
-
             if (!(holder is CheckBoxItemViewHolder checkBoxHolder))
             {
                 return;
@@ -44,11 +45,28 @@ namespace AniDroid.Adapters.General
             checkBoxHolder.TitleView.Visibility =
                 string.IsNullOrWhiteSpace(item.Title) ? ViewStates.Gone : ViewStates.Visible;
             checkBoxHolder.DescriptionView.Visibility =
-                string.IsNullOrWhiteSpace(item.Description) ? ViewStates.Gone : ViewStates.Visible;
+                string.IsNullOrWhiteSpace(item.Description) || ToggleDescription ? ViewStates.Gone : ViewStates.Visible;
 
             checkBoxHolder.CheckBox.SetTag(Resource.Id.Object_Position, position);
             checkBoxHolder.CheckBox.CheckedChange -= CheckBox_CheckedChange;
             checkBoxHolder.CheckBox.CheckedChange += CheckBox_CheckedChange;
+
+            if (ToggleDescription)
+            {
+                checkBoxHolder.Container.Click -= Container_Click;
+                checkBoxHolder.Container.Click += Container_Click;
+            }
+        }
+
+        private void Container_Click(object sender, EventArgs e)
+        {
+            var view = sender as View;
+            var details = view?.FindViewById(Resource.Id.SettingItem_Details);
+
+            if (details != null)
+            {
+                details.Visibility = details.Visibility == ViewStates.Visible ? ViewStates.Gone : ViewStates.Visible;
+            }
         }
 
         private void CheckBox_CheckedChange(object sender, CompoundButton.CheckedChangeEventArgs e)
@@ -72,12 +90,14 @@ namespace AniDroid.Adapters.General
             public CheckBox CheckBox { get; set; }
             public TextView TitleView { get; set; }
             public TextView DescriptionView { get; set; }
+            public View Container { get; set; }
 
             public CheckBoxItemViewHolder(View itemView) : base(itemView)
             {
                 CheckBox = itemView.FindViewById<CheckBox>(Resource.Id.SettingItem_Checkbox);
                 TitleView = itemView.FindViewById<TextView>(Resource.Id.SettingItem_Name);
                 DescriptionView = itemView.FindViewById<TextView>(Resource.Id.SettingItem_Details);
+                Container = itemView.FindViewById(Resource.Id.SettingItem_Container);
             }
         }
     }

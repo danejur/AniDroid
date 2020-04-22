@@ -274,10 +274,14 @@ namespace AniDroid.Dialogs
                     new CheckBoxItemRecyclerAdapter.CheckBoxItem
                     {
                         Title = x.Name,
+                        Description = x.Description,
                         IsChecked = _selectedTags?.Any(y => y == x.Name) == true
                     }).ToList();
 
-                var adapter = new CheckBoxItemRecyclerAdapter(_context, tags);
+                var adapter = new CheckBoxItemRecyclerAdapter(_context, tags)
+                {
+                    ToggleDescription = true
+                };
 
                 recycler.SetAdapter(adapter);
 
