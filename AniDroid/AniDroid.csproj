@@ -434,6 +434,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="About\AboutActivity.cs" />
     <Compile Include="Adapters\AniListActivityAdapters\AniListActivityRecyclerAdapter.cs" />
     <Compile Include="Adapters\AniListActivityAdapters\AniListActivityRepliesRecyclerAdapter.cs" />
     <Compile Include="Adapters\Base\BaseDraggableRecyclerAdapter.cs" />
@@ -639,7 +640,7 @@
     <AndroidResource Include="Resources\layout\View_SettingItem_Spinner.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\layout\Activity_AniListObject.axml">
+    <AndroidResource Include="Resources\layout\Activity_AniListObject.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\Activity_Loading.axml">
@@ -1169,6 +1170,12 @@
     <AndroidResource Include="Resources\menu\MediaListFilters_ActionBar.xml">
       <Generator>MSBuild:UpdateGeneratedFiles</Generator>
       <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\Activity_About.xml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateGeneratedFiles</Generator>
     </AndroidResource>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

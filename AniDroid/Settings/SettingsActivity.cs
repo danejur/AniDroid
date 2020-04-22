@@ -14,6 +14,7 @@ using Android.Support.V7.Widget;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using AniDroid.About;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.AniList.Interfaces;
@@ -142,6 +143,14 @@ namespace AniDroid.Settings
                     intent.SetData(Android.Net.Uri.Parse(privacyPolicyUrl));
                     StartActivity(intent);
                 }));
+            _settingsContainer.AddView(CreateSettingDivider(this));
+        }
+
+        public void CreateAboutSettingItem()
+        {
+            _settingsContainer.AddView(
+                CreateSettingRow(this, "About", null, (sender, args) =>
+                    AboutActivity.StartActivity(this)));
             _settingsContainer.AddView(CreateSettingDivider(this));
         }
 

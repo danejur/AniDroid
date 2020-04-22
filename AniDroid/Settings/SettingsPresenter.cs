@@ -46,6 +46,7 @@ namespace AniDroid.Settings
 
             View.CreatePrivacyPolicyLinkItem();
             View.CreateWhatsNewSettingItem();
+            View.CreateAboutSettingItem();
 
             return Task.CompletedTask;
         }

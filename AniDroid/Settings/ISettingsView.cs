@@ -26,6 +26,7 @@ namespace AniDroid.Settings
         void CreateUseSwipeToRefreshHomeScreen(bool useSwipeToRefreshHomeScreen);
         void CreateWhatsNewSettingItem();
         void CreatePrivacyPolicyLinkItem();
+        void CreateAboutSettingItem();
 
         // Auth settings
         void CreateMediaListSettingsItem();

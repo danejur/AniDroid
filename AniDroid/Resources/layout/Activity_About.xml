@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.design.widget.CoordinatorLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/About_CoordLayout"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+  <android.support.design.widget.AppBarLayout
+    android:id="@+id/AniListObject_AppBar"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="?AppBarLayout_Style">
+    <android.support.v7.widget.Toolbar
+      android:id="@+id/About_Toolbar"
+      android:layout_width="match_parent"
+      android:layout_height="56dp"
+      app:popupTheme="?Toolbar_PopupTheme"
+      app:theme="?Toolbar_Theme"
+      style="?Toolbar_Style"
+      app:layout_scrollFlags="scroll|enterAlways" />
+  </android.support.design.widget.AppBarLayout>
+    <LinearLayout
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="40dp"
+        android:gravity="center_horizontal">
+        <ImageView
+            android:src="@drawable/icon"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:id="@+id/About_Logo" />
+        <TextView
+            android:text="Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?Background_Text"
+            android:id="@+id/About_AppVersion" />
+
+
+    </LinearLayout>
+</android.support.design.widget.CoordinatorLayout>
