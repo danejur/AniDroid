@@ -151,7 +151,7 @@ namespace AniDroid.AniListObject.Media
 
             if (media.Tags?.Any() == true)
             {
-                media.Tags = media.Tags.OrderBy(x => x.Rank).ToList();
+                media.Tags = media.Tags.OrderByDescending(x => x.Rank).ToList();
             }
         }
     }
