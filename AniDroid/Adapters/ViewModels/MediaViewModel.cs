@@ -51,7 +51,7 @@ namespace AniDroid.Adapters.ViewModels
             {
                 MediaDetailType.Format => $"{Model.Format?.DisplayValue}{(Model.IsAdult ? " (Hentai)" : "")}",
                 MediaDetailType.FormatRating => (
-                    Model.Status?.EqualsAny(Media.MediaStatus.NotYetReleased, Media.MediaStatus.Cancelled) == true
+                    Model.Status?.EqualsAny(Media.MediaStatus.NotYetReleased, Media.MediaStatus.Cancelled, Media.MediaStatus.Hiatus) == true
                         ? Model.Format?.DisplayValue
                         : $"{Model.Format?.DisplayValue}  ({(Model.AverageScore != 0 ? $"{Model.AverageScore}%" : "No Rating Data")})"
                 ),

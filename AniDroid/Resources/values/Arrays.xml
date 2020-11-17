@@ -182,5 +182,7 @@
     <item>04-22-2020|Added About screen</item>
     <item>04-22-2020|Fixed bug where app would freeze when notification was dismissed</item>
     <item>04-22-2020|Fixed tag sorting on Anime and Manga</item>
+    <item>11-16-2020|Bug fix for viewing Anime and Manga</item>
+    <item>11-16-2020|Adding support for Hiatus media status</item>
   </array>
 </resources>
