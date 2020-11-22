@@ -1,23 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Support.V7.Widget;
+﻿using System.Collections.Generic;
 using Android.Views;
 using Android.Widget;
+using AndroidX.AppCompat.Widget;
+using AndroidX.RecyclerView.Widget;
 using AniDroid.Base;
-using Com.H6ah4i.Android.Widget.Advrecyclerview.Draggable;
-using Com.H6ah4i.Android.Widget.Advrecyclerview.Utils;
 using Object = Java.Lang.Object;
 
 namespace AniDroid.Adapters.Base
 {
-    public abstract class BaseDraggableRecyclerAdapter<T> : BaseRecyclerAdapter<T>, IDraggableItemAdapter where T : BaseRecyclerAdapter.IStableIdItem
+    public abstract class BaseDraggableRecyclerAdapter<T> : BaseRecyclerAdapter<T>/*, IDraggableItemAdapter where T : BaseRecyclerAdapter.IStableIdItem*/
     {
         protected BaseDraggableRecyclerAdapter(BaseAniDroidActivity context, List<T> items) : base(context, items, RecyclerCardType.Custom)
         {
@@ -44,10 +35,10 @@ namespace AniDroid.Adapters.Base
                    (p3 >= handleTop) && (p3 < handleTop + handleHeight);
         }
 
-        public ItemDraggableRange OnGetItemDraggableRange(Object p0, int p1)
-        {
-            return null;
-        }
+        //public ItemDraggableRange OnGetItemDraggableRange(Object p0, int p1)
+        //{
+        //    return null;
+        //}
 
         public void OnItemDragFinished(int p0, int p1, bool p2)
         {
@@ -62,10 +53,10 @@ namespace AniDroid.Adapters.Base
             MoveItem(p0, p1);
         }
 
-        public override long GetItemId(int position)
-        {
-            return Items[position].StableId;
-        }
+        //public override long GetItemId(int position)
+        //{
+        //    return Items[position].StableId;
+        //}
 
         public sealed override RecyclerView.ViewHolder CreateCustomViewHolder(ViewGroup parent, int viewType)
         {
@@ -73,7 +64,7 @@ namespace AniDroid.Adapters.Base
                 Context.LayoutInflater.Inflate(Resource.Layout.View_DraggableCardItem, parent, false));
         }
 
-        public class DraggableCardItemViewHolder : AbstractDraggableItemViewHolder
+        public class DraggableCardItemViewHolder : RecyclerView.ViewHolder // AbstractDraggableItemViewHolder
         {
             public TextView Name { get; set; }
             public AppCompatCheckBox Checkbox { get; set; }

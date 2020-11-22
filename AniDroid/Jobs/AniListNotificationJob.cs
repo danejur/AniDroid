@@ -1,20 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
 using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Support.V4.App;
-using Android.Views;
-using Android.Widget;
+using AndroidX.Core.App;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
 using AniDroid.Main;
-using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
 using Evernote.AndroidJob;
 using Java.Util.Concurrent;

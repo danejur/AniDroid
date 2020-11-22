@@ -1,17 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
 using Android.Graphics;
-using Android.OS;
-using Android.Runtime;
-using Android.Support.V4.Content;
-using Android.Support.V7.Widget;
-using Android.Views;
-using Android.Widget;
+using AndroidX.AppCompat.App;
+using AndroidX.RecyclerView.Widget;
 using AniDroid.Adapters.UserAdapters;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Interfaces;
@@ -37,7 +28,7 @@ namespace AniDroid.Dialogs
                 };
             adapter.DataLoaded += (sender, b) => dataLoadedAction?.Invoke();
             recycler.SetAdapter(adapter);
-            var dialog = new Android.Support.V7.App.AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme))
+            var dialog = new AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme))
                 .SetView(dialogView)
                 .Create();
             

@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
+using AndroidX.AppCompat.App;
 using AniDroid.Base;
 using AniDroid.Torrent.NyaaSi;
 
@@ -34,7 +28,7 @@ namespace AniDroid.Dialogs
                     NyaaSiConstants.TorrentFilterTuples.FindIndex(x => x.Key == previousSearchRequest.Filter));
             }
 
-            var a = new Android.Support.V7.App.AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme)).Create();
+            var a = new AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme)).Create();
             a.SetView(dialogue);
             a.SetTitle("Search Torrents");
             a.SetButton((int)DialogButtonType.Positive, "Search", async (aS, ev) =>

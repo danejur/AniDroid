@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Android.App;
-using Android.Content;
+﻿using System.Threading.Tasks;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
-using Android.Widget;
+using AndroidX.Fragment.App;
 using AniDroid.AniList.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -30,7 +23,7 @@ namespace AniDroid.Base
         }
     }
 
-    public abstract class BaseAniDroidFragment : Android.Support.V4.App.Fragment, IAniDroidView
+    public abstract class BaseAniDroidFragment : Fragment, IAniDroidView
     {
         private bool _pendingRecreate;
 

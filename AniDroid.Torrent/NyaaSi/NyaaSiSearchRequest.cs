@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AniDroid.Torrent.NyaaSi
+﻿namespace AniDroid.Torrent.NyaaSi
 {
     public class NyaaSiSearchRequest
     {

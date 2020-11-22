@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using Android.App;
 using Android.Content;
 using Android.Graphics;
-using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using AndroidX.AppCompat.App;
 using AniDroid.Base;
 
 namespace AniDroid.Dialogs
@@ -37,7 +32,7 @@ namespace AniDroid.Dialogs
             view.SetBackgroundColor(Color.Transparent);
             view.FindViewById<LinearLayout>(Resource.Id.Scroll_Container).AddView(textView);
 
-            var dialog = new Android.Support.V7.App.AlertDialog.Builder(context,
+            var dialog = new AlertDialog.Builder(context,
                 context.GetThemedResourceId(Resource.Attribute.Dialog_Theme));
             dialog.SetCancelable(true);
             dialog.SetView(view);

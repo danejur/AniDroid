@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
 using Android.Runtime;
-using Android.Speech;
-using Android.Support.Design.Widget;
-using Android.Support.V7.Widget;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using AndroidX.AppCompat.Widget;
+using AndroidX.CoordinatorLayout.Widget;
 using AniDroid.About;
 using AniDroid.Adapters.Base;
-using AniDroid.Adapters.MediaAdapters;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
 using AniDroid.Dialogs;
@@ -24,8 +21,9 @@ using AniDroid.Jobs;
 using AniDroid.Main;
 using AniDroid.Settings.MediaListSettings;
 using AniDroid.Utils;
-using AniDroid.Utils.Comparers;
-using Toolbar = Android.Support.V7.Widget.Toolbar;
+using Google.Android.Material.Snackbar;
+using AlertDialog = AndroidX.AppCompat.App.AlertDialog;
+using Toolbar = AndroidX.AppCompat.Widget.Toolbar;
 
 namespace AniDroid.Settings
 {
@@ -465,7 +463,7 @@ namespace AniDroid.Settings
 
         private void DisplayLogoutDialog()
         {
-            var alert = new Android.Support.V7.App.AlertDialog.Builder(this,
+            var alert = new AlertDialog.Builder(this,
                     GetThemedResourceId(Resource.Attribute.Dialog_Theme))
                 .SetMessage(Resource.String.LoginLogout_LogoutDialogMessage)
                 .SetCancelable(true).Create();

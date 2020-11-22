@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Android.Support.Design.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.AniListObject.Media;
 using AniDroid.Base;
+using Google.Android.Material.Snackbar;
 using OneOf;
 
 namespace AniDroid.Adapters.RecommendationAdapters

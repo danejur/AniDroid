@@ -1,10 +1,12 @@
 using System;
 using Android.Content;
 using Android.Runtime;
-using Android.Support.Design.Widget;
-using Android.Support.V4.View;
 using Android.Util;
 using Android.Views;
+using AndroidX.CoordinatorLayout.Widget;
+using AndroidX.Core.View;
+using Google.Android.Material.FloatingActionButton;
+using Google.Android.Material.Snackbar;
 using Java.Interop;
 
 namespace AniDroid.Utils.Behaviors

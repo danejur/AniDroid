@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.Content.Res;
 using Android.OS;
 using Android.Runtime;
-using Android.Support.Design.Widget;
-using Android.Support.V7.Widget;
 using Android.Views;
+using AndroidX.AppCompat.Widget;
+using AndroidX.CoordinatorLayout.Widget;
+using AndroidX.RecyclerView.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Adapters.ViewModels;
@@ -22,8 +22,7 @@ using AniDroid.Base;
 using AniDroid.Dialogs;
 using AniDroid.MediaList;
 using AniDroid.Utils;
-using AniDroid.Utils.Interfaces;
-using Newtonsoft.Json;
+using Google.Android.Material.Snackbar;
 using OneOf;
 
 namespace AniDroid.Browse

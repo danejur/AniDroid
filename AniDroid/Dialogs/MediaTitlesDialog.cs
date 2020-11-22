@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using AndroidX.AppCompat.App;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
 
@@ -44,7 +38,7 @@ namespace AniDroid.Dialogs
                 dialogView.FindViewById<TextView>(Resource.Id.MediaTitles_AlsoKnownAs).Text = string.Join("\n", alternateNames);
             }
 
-            var dialog = new Android.Support.V7.App.AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme));
+            var dialog = new AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme));
             dialog.SetView(dialogView);
             dialog.Show();
         }

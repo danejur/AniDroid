@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
+using AndroidX.AppCompat.App;
 using AniDroid.Base;
 using AniDroid.Utils.Listeners;
 
@@ -18,7 +12,7 @@ namespace AniDroid.Dialogs
     {
         public static void CreateNewActivity(BaseAniDroidActivity context, Func<string, Task> saveAction)
         {
-            var dialog = new Android.Support.V7.App.AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme)).Create();
+            var dialog = new AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme)).Create();
             var dialogView = context.LayoutInflater.Inflate(Resource.Layout.Dialog_AniListActivityCreate, null);
             dialog.SetView(dialogView);
 
@@ -47,7 +41,7 @@ namespace AniDroid.Dialogs
 
         public static void CreateEditActivity(BaseAniDroidActivity context, string oldText, Func<string, Task> saveAction, Func<Task> deleteAction)
         {
-            var dialog = new Android.Support.V7.App.AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme)).Create();
+            var dialog = new AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme)).Create();
             var dialogView = context.LayoutInflater.Inflate(Resource.Layout.Dialog_AniListActivityCreate, null);
             var activityText = dialogView.FindViewById<EditText>(Resource.Id.AniListActivityCreate_Text);
 
@@ -59,7 +53,7 @@ namespace AniDroid.Dialogs
             dialog.SetButton((int)DialogButtonType.Positive, "Save", (send, args) => { });
             dialog.SetButton((int) DialogButtonType.Neutral, "Delete", (send, args) =>
             {
-                var confirmationDialog = new Android.Support.V7.App.AlertDialog.Builder(context,
+                var confirmationDialog = new AlertDialog.Builder(context,
                     context.GetThemedResourceId(Resource.Attribute.Dialog_Theme)).Create();
                 confirmationDialog.SetTitle("Delete Activity");
                 confirmationDialog.SetMessage("Are you sure you wish to delete this activity?");

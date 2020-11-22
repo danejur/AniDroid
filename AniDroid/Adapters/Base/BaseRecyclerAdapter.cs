@@ -5,11 +5,12 @@ using Android.Content;
 using Android.Content.Res;
 using Android.Graphics;
 using Android.Graphics.Drawables;
-using Android.Support.V4.Content;
-using Android.Support.V7.Widget;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using AndroidX.CardView.Widget;
+using AndroidX.Core.Content;
+using AndroidX.RecyclerView.Widget;
 using AniDroid.Base;
 
 namespace AniDroid.Adapters.Base
