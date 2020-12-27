@@ -184,5 +184,6 @@
     <item>04-22-2020|Fixed tag sorting on Anime and Manga</item>
     <item>11-16-2020|Bug fix for viewing Anime and Manga</item>
     <item>11-16-2020|Adding support for Hiatus media status</item>
+    <item>12-26-2020|Adding ability to sort Media lists by the date of the next episode</item>
   </array>
 </resources>
