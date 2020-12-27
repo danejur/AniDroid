@@ -61,6 +61,9 @@ namespace AniDroid.Dialogs
                 case MediaListSortComparer.MediaListSortType.DateCompleted:
                     selectedSort = Resource.Id.MediaListSort_DateCompleted;
                     break;
+                case MediaListSortComparer.MediaListSortType.NextEpisodeDate:
+                    selectedSort = Resource.Id.MediaListSort_NextEpisodeDate;
+                    break;
             }
 
             // set current selections
@@ -108,6 +111,9 @@ namespace AniDroid.Dialogs
                         break;
                     case Resource.Id.MediaListSort_DateCompleted:
                         sort = MediaListSortComparer.MediaListSortType.DateCompleted;
+                        break;
+                    case Resource.Id.MediaListSort_NextEpisodeDate:
+                        sort = MediaListSortComparer.MediaListSortType.NextEpisodeDate;
                         break;
                 }
 

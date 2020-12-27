@@ -50,6 +50,8 @@ namespace AniDroid.Utils.Comparers
                     return SortDate(x, y, m => m.StartedAt?.GetFuzzyDate() ?? DateTime.MinValue);
                 case MediaListSortType.DateCompleted:
                     return SortDate(x, y, m => m.CompletedAt?.GetFuzzyDate() ?? DateTime.MinValue);
+                case MediaListSortType.NextEpisodeDate:
+                    return SortDateTime(x, y, m => m.Media?.NextAiringEpisode?.GetAiringAtDateTime() ?? m.Media?.StartDate?.GetDate() ?? DateTime.MinValue);
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -68,7 +70,8 @@ namespace AniDroid.Utils.Comparers
             DateLastUpdated = 8,
             Duration = 9,
             DateStarted = 10,
-            DateCompleted = 11
+            DateCompleted = 11,
+            NextEpisodeDate = 12
         }
     }
 }

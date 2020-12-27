@@ -43,7 +43,7 @@
     <AndroidSupportedAbis />
     <LangVersion>latest</LangVersion>
     <AndroidEnableProfiledAot>true</AndroidEnableProfiledAot>
-    <AndroidDexTool>dx</AndroidDexTool>
+    <AndroidDexTool>d8</AndroidDexTool>
     <AndroidEnableSGenConcurrent>true</AndroidEnableSGenConcurrent>
     <AndroidHttpClientHandlerType>Xamarin.Android.Net.AndroidClientHandler</AndroidHttpClientHandlerType>
   </PropertyGroup>

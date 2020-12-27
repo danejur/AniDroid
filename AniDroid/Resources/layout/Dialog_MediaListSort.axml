@@ -74,6 +74,11 @@
                 android:layout_height="wrap_content"
                 android:text="Date Completed"
                 android:id="@+id/MediaListSort_DateCompleted" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next Episode Date"
+                android:id="@+id/MediaListSort_NextEpisodeDate" />
         </RadioGroup>
         <RadioGroup
             android:layout_width="match_parent"
