@@ -29,7 +29,6 @@ using AniDroid.Dialogs;
 using AniDroid.Utils;
 using AniDroid.Utils.Comparers;
 using AniDroid.Utils.Interfaces;
-using SearchView = Android.Support.V7.Widget.SearchView;
 
 namespace AniDroid.MediaList
 {
@@ -111,7 +110,12 @@ namespace AniDroid.MediaList
 
         public override void OnError(IAniListError error)
         {
-            // TODO: show error fragment here
+            if (error.StatusCode >= 400 && error.StatusCode <= 403)
+            {
+                Toast.MakeText(Activity, "Please log in again", ToastLength.Long)?.Show();
+                Presenter.AniDroidSettings.ClearUserAuthentication();
+                Activity.RestartAniDroid();
+            }
         }
 
         protected override void SetInstance(BaseMainActivityFragment instance)

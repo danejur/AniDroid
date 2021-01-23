@@ -185,5 +185,6 @@
     <item>11-16-2020|Bug fix for viewing Anime and Manga</item>
     <item>11-16-2020|Adding support for Hiatus media status</item>
     <item>12-26-2020|Adding ability to sort Media lists by the date of the next episode</item>
+    <item>01-22-2021|Fixed very old bug that caused the app to stop working after the user authorization token expired</item>
   </array>
 </resources>

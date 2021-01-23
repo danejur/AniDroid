@@ -18,6 +18,7 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.AniList.Interfaces;
+using AniDroid.Start;
 using AniDroid.Utils;
 using AniDroid.Utils.Interfaces;
 using AniDroid.Utils.Logging;
@@ -231,6 +232,13 @@ namespace AniDroid.Base
         public float GetDimensionFromDp(float dpVal)
         {
             return TypedValue.ApplyDimension(ComplexUnitType.Dip, dpVal, Resources.DisplayMetrics);
+        }
+
+        public void RestartAniDroid()
+        {
+            var intent = new Intent(this, typeof(StartActivity));
+            FinishAffinity();
+            StartActivity(intent);
         }
 
         #endregion

@@ -104,7 +104,6 @@ namespace AniDroid.MediaList
 
         public async Task CompleteMedia(Media.MediaList mediaListToComplete)
         {
-
             var editDto = new MediaListEditDto
             {
                 MediaId = mediaListToComplete.Media.Id,

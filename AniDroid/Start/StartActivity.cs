@@ -51,7 +51,5 @@ namespace AniDroid.Start
             // will never be invoked as of now
             throw new NotImplementedException();
         }
-
-        
     }
 }
