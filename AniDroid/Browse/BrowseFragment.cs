@@ -15,8 +15,10 @@ using AniDroid.Adapters.Base;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Dto;
+using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.MediaModels;
 using AniDroid.Base;
 using AniDroid.Dialogs;
 using AniDroid.MediaList;
@@ -60,15 +62,15 @@ namespace AniDroid.Browse
             });
         }
 
-        public void UpdateMediaListItem(Media.MediaList mediaList)
+        public void UpdateMediaListItem(AniList.Models.MediaModels.MediaList mediaList)
         {
-            if (mediaList.Media?.Type == Media.MediaType.Anime)
+            if (mediaList.Media?.Type == MediaType.Anime)
             {
                 var instance = MediaListFragment.GetInstance(MediaListFragment.AnimeMediaListFragmentName);
 
                 (instance as MediaListFragment)?.UpdateMediaListItem(mediaList);
             }
-            else if (mediaList.Media?.Type == Media.MediaType.Manga)
+            else if (mediaList.Media?.Type == MediaType.Manga)
             {
                 (MediaListFragment.GetInstance(MediaListFragment.MangaMediaListFragmentName) as MediaListFragment)
                     ?.UpdateMediaListItem(mediaList);
@@ -130,13 +132,13 @@ namespace AniDroid.Browse
         {
             var browseModel = new BrowseMediaDto()
             {
-                Type = Media.MediaType.Anime,
-                Format = Media.MediaFormat.Tv,
-                Status = Media.MediaStatus.Releasing,
-                Season = Media.MediaSeason.GetFromDate(DateTime.UtcNow),
-                Country = Media.MediaCountry.Japan,
+                Type = MediaType.Anime,
+                Format = MediaFormat.Tv,
+                Status = MediaStatus.Releasing,
+                Season = MediaSeason.GetFromDate(DateTime.UtcNow),
+                Country = MediaCountry.Japan,
                 Year = DateTime.Now.Year,
-                Sort = new List<Media.MediaSort> { Media.MediaSort.PopularityDesc }
+                Sort = new List<MediaSort> { MediaSort.PopularityDesc }
             };
             Presenter.BrowseAniListMedia(browseModel);
         }
@@ -166,7 +168,7 @@ namespace AniDroid.Browse
                     BrowseSortDialog.Create(Activity, Presenter.GetBrowseDto().Sort.FirstOrDefault(), sort =>
                     {
                         var browseDto = Presenter.GetBrowseDto();
-                        browseDto.Sort = new List<Media.MediaSort> {sort};
+                        browseDto.Sort = new List<MediaSort> {sort};
                         Presenter.BrowseAniListMedia(browseDto);
                     });
                     return true;

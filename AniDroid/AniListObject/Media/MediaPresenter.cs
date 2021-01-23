@@ -5,8 +5,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using Android.Support.Design.Widget;
 using AniDroid.AniList.Dto;
+using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.CharacterModels;
+using AniDroid.AniList.Models.ForumModels;
+using AniDroid.AniList.Models.RecommendationModels;
+using AniDroid.AniList.Models.ReviewModels;
+using AniDroid.AniList.Models.StaffModels;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
 using AniDroid.Utils.Logging;
@@ -56,17 +62,17 @@ namespace AniDroid.AniListObject.Media
                 .Switch(error => View.OnError(error));
         }
 
-        public IAsyncEnumerable<OneOf<IPagedData<AniList.Models.Character.Edge>, IAniListError>> GetMediaCharactersEnumerable(int mediaId, int perPage)
+        public IAsyncEnumerable<OneOf<IPagedData<CharacterEdge>, IAniListError>> GetMediaCharactersEnumerable(int mediaId, int perPage)
         {
             return AniListService.GetMediaCharacters(mediaId, perPage);
         }
 
-        public IAsyncEnumerable<OneOf<IPagedData<AniList.Models.Staff.Edge>, IAniListError>> GetMediaStaffEnumerable(int mediaId, int perPage)
+        public IAsyncEnumerable<OneOf<IPagedData<StaffEdge>, IAniListError>> GetMediaStaffEnumerable(int mediaId, int perPage)
         {
             return AniListService.GetMediaStaff(mediaId, perPage);
         }
 
-        public IAsyncEnumerable<OneOf<IPagedData<AniList.Models.Media.MediaList>, IAniListError>>
+        public IAsyncEnumerable<OneOf<IPagedData<AniList.Models.MediaModels.MediaList>, IAniListError>>
             GetMediaFollowingUsersMediaListsEnumerable(int mediaId, int perPage)
         {
             return AniListService.GetMediaFollowingUsersMediaLists(mediaId, perPage);
@@ -84,7 +90,7 @@ namespace AniDroid.AniListObject.Media
             return AniListService.GetMediaForumThreads(mediaId, perPage);
         }
 
-        public IAsyncEnumerable<OneOf<IPagedData<Recommendation.Edge>, IAniListError>>
+        public IAsyncEnumerable<OneOf<IPagedData<ConnectionEdge<Recommendation>>, IAniListError>>
             GetMediaRecommendationsEnumerable(int mediaId, int perPage)
         {
             return AniListService.GetMediaRecommendations(mediaId, perPage);
@@ -97,7 +103,7 @@ namespace AniDroid.AniListObject.Media
 
             var favDto = new FavoriteDto();
 
-            if (mediaType == AniList.Models.Media.MediaType.Anime)
+            if (mediaType == MediaType.Anime)
             {
                 favDto.AnimeId = mediaId;
             }
@@ -112,7 +118,7 @@ namespace AniDroid.AniListObject.Media
             favResp.Switch(error => View.OnError(error))
                 .Switch(favorites =>
                     View.SetIsFavorite(
-                        (mediaType == AniList.Models.Media.MediaType.Anime
+                        (mediaType == MediaType.Anime
                             ? favorites.Anime?.Nodes?.Any(x => x.Id == mediaId)
                             : favorites.Manga?.Nodes?.Any(x => x.Id == mediaId)) == true, true));
         }
@@ -145,7 +151,7 @@ namespace AniDroid.AniListObject.Media
             }).Switch(error => onError());
         }
 
-        private void FixMediaData(AniList.Models.Media media)
+        private void FixMediaData(AniList.Models.MediaModels.Media media)
         {
             // small fixes and sorts for what media data we can fix
 

@@ -15,8 +15,10 @@ using Android.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Adapters.ViewModels;
+using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.MediaModels;
 using AniDroid.Base;
 using AniDroid.Dialogs;
 using AniDroid.MediaList;
@@ -230,15 +232,15 @@ namespace AniDroid.Discover
             _listContainer.AddView(newMangaView);
         }
 
-        public void UpdateMediaListItem(Media.MediaList mediaList)
+        public void UpdateMediaListItem(AniList.Models.MediaModels.MediaList mediaList)
         {
-            if (mediaList.Media?.Type == Media.MediaType.Anime)
+            if (mediaList.Media?.Type == MediaType.Anime)
             {
                 var instance = MediaListFragment.GetInstance(MediaListFragment.AnimeMediaListFragmentName);
 
                 (instance as MediaListFragment)?.UpdateMediaListItem(mediaList);
             }
-            else if (mediaList.Media?.Type == Media.MediaType.Manga)
+            else if (mediaList.Media?.Type == MediaType.Manga)
             {
                 (MediaListFragment.GetInstance(MediaListFragment.MangaMediaListFragmentName) as MediaListFragment)
                     ?.UpdateMediaListItem(mediaList);
@@ -257,7 +259,7 @@ namespace AniDroid.Discover
             DeleteMediaListOnAdapters(mediaListId);
         }
 
-        private void UpdateMediaListOnAdapters(Media.MediaList mediaList)
+        private void UpdateMediaListOnAdapters(AniList.Models.MediaModels.MediaList mediaList)
         {
             AdapterList.ForEach(adapter => {
                 var itemPosition =

@@ -12,6 +12,7 @@ using Android.Widget;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.MediaModels;
 using AniDroid.Base;
 using AniDroid.Utils;
 using AniDroid.Widgets;

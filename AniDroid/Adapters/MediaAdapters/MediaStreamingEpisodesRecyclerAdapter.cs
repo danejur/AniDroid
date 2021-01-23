@@ -12,13 +12,14 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.MediaModels;
 using AniDroid.Base;
 
 namespace AniDroid.Adapters.MediaAdapters
 {
-    public class MediaStreamingEpisodesRecyclerAdapter : BaseRecyclerAdapter<Media.MediaStreamingEpisode>
+    public class MediaStreamingEpisodesRecyclerAdapter : BaseRecyclerAdapter<MediaStreaming>
     {
-        public MediaStreamingEpisodesRecyclerAdapter(BaseAniDroidActivity context, List<Media.MediaStreamingEpisode> items) : base(context, items, RecyclerCardType.Vertical)
+        public MediaStreamingEpisodesRecyclerAdapter(BaseAniDroidActivity context, List<MediaStreaming> items) : base(context, items, RecyclerCardType.Vertical)
         {
         }
 

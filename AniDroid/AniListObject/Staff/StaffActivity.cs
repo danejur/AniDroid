@@ -17,6 +17,7 @@ using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Adapters.StaffAdapters;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList;
+using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Models;
 using AniDroid.AniList.Service;
 using AniDroid.Base;
@@ -82,7 +83,7 @@ namespace AniDroid.AniListObject.Staff
 
         protected override Func<Task> ToggleFavorite => () => Presenter.ToggleFavorite();
 
-        public void SetupStaffView(AniList.Models.Staff staff)
+        public void SetupStaffView(AniList.Models.StaffModels.Staff staff)
         {
             var adapter = new FragmentlessViewPagerAdapter();
             adapter.AddView(CreateStaffDetailsView(staff), "Details");
@@ -94,12 +95,12 @@ namespace AniDroid.AniListObject.Staff
 
             if (staff.Anime?.PageInfo?.Total > 0)
             {
-                adapter.AddView(CreateStaffMediaView(staff.Id, AniList.Models.Media.MediaType.Anime), "Anime");
+                adapter.AddView(CreateStaffMediaView(staff.Id, MediaType.Anime), "Anime");
             }
 
             if (staff.Manga?.PageInfo?.Total > 0)
             {
-                adapter.AddView(CreateStaffMediaView(staff.Id, AniList.Models.Media.MediaType.Manga), "Manga");
+                adapter.AddView(CreateStaffMediaView(staff.Id, MediaType.Manga), "Manga");
             }
 
             ViewPager.OffscreenPageLimit = adapter.Count - 1;
@@ -108,7 +109,7 @@ namespace AniDroid.AniListObject.Staff
             TabLayout.SetupWithViewPager(ViewPager);
         }
 
-        private View CreateStaffDetailsView(AniList.Models.Staff staff)
+        private View CreateStaffDetailsView(AniList.Models.StaffModels.Staff staff)
         {
             var retView = LayoutInflater.Inflate(Resource.Layout.View_StaffDetails, null);
             var imageView = retView.FindViewById<ImageView>(Resource.Id.Staff_Image);
@@ -136,7 +137,7 @@ namespace AniDroid.AniListObject.Staff
             return retView;
         }
 
-        private View CreateStaffMediaView(int staffId, AniList.Models.Media.MediaType mediaType)
+        private View CreateStaffMediaView(int staffId, MediaType mediaType)
         {
             var staffMediaEnumerable = Presenter.GetStaffMediaEnumerable(staffId, mediaType, PageLength);
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);

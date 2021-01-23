@@ -10,12 +10,13 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.CharacterModels;
 
 namespace AniDroid.Adapters.ViewModels
 {
-    public class CharacterEdgeViewModel : AniDroidAdapterViewModel<Character.Edge>
+    public class CharacterEdgeViewModel : AniDroidAdapterViewModel<CharacterEdge>
     {
-        public CharacterEdgeViewModel(Character.Edge model, CharacterEdgeDetailType primaryCharacterEdgeDetailType,
+        public CharacterEdgeViewModel(CharacterEdge model, CharacterEdgeDetailType primaryCharacterEdgeDetailType,
             CharacterEdgeDetailType secondaryCharacterEdgeDetailType, bool isButtonVisible, int? buttonIcon) : base(model)
         {
             TitleText = $"{Model.Node?.Name?.FormattedName}";
@@ -33,13 +34,13 @@ namespace AniDroid.Adapters.ViewModels
             Role
         }
 
-        public static CharacterEdgeViewModel CreateMediaCharacterEdgeViewModel(Character.Edge model, int? buttonIcon = null)
+        public static CharacterEdgeViewModel CreateMediaCharacterEdgeViewModel(CharacterEdge model, int? buttonIcon = null)
         {
             return new CharacterEdgeViewModel(model, CharacterEdgeDetailType.NativeName, CharacterEdgeDetailType.Role,
                 model.VoiceActors?.Any() == true, buttonIcon);
         }
 
-        public static CharacterEdgeViewModel CreateStaffCharacterEdgeViewModel(Character.Edge model)
+        public static CharacterEdgeViewModel CreateStaffCharacterEdgeViewModel(CharacterEdge model)
         {
             return new CharacterEdgeViewModel(model, CharacterEdgeDetailType.NativeName, CharacterEdgeDetailType.Role,
                 false, null);

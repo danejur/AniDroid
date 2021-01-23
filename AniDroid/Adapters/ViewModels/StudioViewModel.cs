@@ -10,12 +10,13 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.StudioModels;
 
 namespace AniDroid.Adapters.ViewModels
 {
     public class StudioViewModel : AniDroidAdapterViewModel<Studio>
     {
-        public Studio.Edge StudioEdge { get; protected set; }
+        public StudioEdge StudioEdge { get; protected set; }
 
         public StudioViewModel(Studio model, StudioDetailType primaryStudioDetailType, StudioDetailType secondaryStudioDetailType, bool isButtonVisible) : base(model)
         {

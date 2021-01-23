@@ -12,6 +12,7 @@ using AniDroid.Adapters;
 using AniDroid.Adapters.CharacterAdapters;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Adapters.ViewModels;
+using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Service;
 using AniDroid.Base;
 using AniDroid.SearchResults;
@@ -74,19 +75,19 @@ namespace AniDroid.AniListObject.Character
             return _characterId;
         }
 
-        public void SetupCharacterView(AniList.Models.Character character)
+        public void SetupCharacterView(AniList.Models.CharacterModels.Character character)
         {
             var adapter = new FragmentlessViewPagerAdapter();
             adapter.AddView(CreateCharacterDetailsView(character), "Details");
 
             if (character.Anime?.PageInfo?.Total > 0)
             {
-                adapter.AddView(CreateCharacterMediaView(character.Id, AniList.Models.Media.MediaType.Anime), "Anime");
+                adapter.AddView(CreateCharacterMediaView(character.Id, MediaType.Anime), "Anime");
             }
 
             if (character.Manga?.PageInfo?.Total > 0)
             {
-                adapter.AddView(CreateCharacterMediaView(character.Id, AniList.Models.Media.MediaType.Manga), "Manga");
+                adapter.AddView(CreateCharacterMediaView(character.Id, MediaType.Manga), "Manga");
             }
 
             ViewPager.OffscreenPageLimit = adapter.Count - 1;
@@ -97,7 +98,7 @@ namespace AniDroid.AniListObject.Character
 
         protected override Func<Task> ToggleFavorite => () => Presenter.ToggleFavorite();
 
-        private View CreateCharacterDetailsView(AniList.Models.Character character)
+        private View CreateCharacterDetailsView(AniList.Models.CharacterModels.Character character)
         {
             var retView = LayoutInflater.Inflate(Resource.Layout.View_CharacterDetails, null);
             var imageView = retView.FindViewById<ImageView>(Resource.Id.Character_Image);
@@ -117,7 +118,7 @@ namespace AniDroid.AniListObject.Character
             return retView;
         }
 
-        private View CreateCharacterMediaView(int characterId, AniList.Models.Media.MediaType mediaType)
+        private View CreateCharacterMediaView(int characterId, MediaType mediaType)
         {
             var characterAnimeEnumerable = Presenter.GetCharacterMediaEnumerable(characterId, mediaType, PageLength);
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);

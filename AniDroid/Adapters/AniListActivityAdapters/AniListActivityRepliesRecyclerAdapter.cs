@@ -15,13 +15,14 @@ using Android.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.ActivityModels;
 using AniDroid.AniListObject;
 using AniDroid.AniListObject.User;
 using AniDroid.Base;
 
 namespace AniDroid.Adapters.AniListActivityAdapters
 {
-    public class AniListActivityRepliesRecyclerAdapter : AniDroidRecyclerAdapter<AniListActivityReplyViewModel, AniListActivity.ActivityReply>
+    public class AniListActivityRepliesRecyclerAdapter : AniDroidRecyclerAdapter<AniListActivityReplyViewModel, ActivityReply>
     {
         private readonly IAniListActivityPresenter _presenter;
         private readonly Color _userNameColor;

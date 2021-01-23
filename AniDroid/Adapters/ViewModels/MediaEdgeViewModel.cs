@@ -10,12 +10,13 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.MediaModels;
 
 namespace AniDroid.Adapters.ViewModels
 {
-    public class MediaEdgeViewModel : AniDroidAdapterViewModel<Media.Edge>
+    public class MediaEdgeViewModel : AniDroidAdapterViewModel<MediaEdge>
     {
-        public MediaEdgeViewModel(Media.Edge model, MediaEdgeDetailType primaryMediaEdgeDetailType,
+        public MediaEdgeViewModel(MediaEdge model, MediaEdgeDetailType primaryMediaEdgeDetailType,
             MediaEdgeDetailType secondaryMediaEdgeDetailType) : base(model)
         {
             TitleText = Model.Node?.Title?.UserPreferred;
@@ -34,27 +35,27 @@ namespace AniDroid.Adapters.ViewModels
             IsMainStudio
         }
 
-        public static MediaEdgeViewModel CreateMediaEdgeViewModel(Media.Edge model)
+        public static MediaEdgeViewModel CreateMediaEdgeViewModel(MediaEdge model)
         {
             return new MediaEdgeViewModel(model, MediaEdgeDetailType.Format, MediaEdgeDetailType.None);
         }
 
-        public static MediaEdgeViewModel CreateMediaRelationViewModel(Media.Edge model)
+        public static MediaEdgeViewModel CreateMediaRelationViewModel(MediaEdge model)
         {
             return new MediaEdgeViewModel(model, MediaEdgeDetailType.Format, MediaEdgeDetailType.Relation);
         }
 
-        public static MediaEdgeViewModel CreateStaffMediaViewModel(Media.Edge model)
+        public static MediaEdgeViewModel CreateStaffMediaViewModel(MediaEdge model)
         {
             return new MediaEdgeViewModel(model, MediaEdgeDetailType.Format, MediaEdgeDetailType.StaffRole);
         }
 
-        public static MediaEdgeViewModel CreateCharacterMediaViewModel(Media.Edge model)
+        public static MediaEdgeViewModel CreateCharacterMediaViewModel(MediaEdge model)
         {
             return new MediaEdgeViewModel(model, MediaEdgeDetailType.Format, MediaEdgeDetailType.CharacterRole);
         }
 
-        public static MediaEdgeViewModel CreateStudioMediaViewModel(Media.Edge model)
+        public static MediaEdgeViewModel CreateStudioMediaViewModel(MediaEdge model)
         {
             return new MediaEdgeViewModel(model, MediaEdgeDetailType.Format, MediaEdgeDetailType.IsMainStudio);
         }

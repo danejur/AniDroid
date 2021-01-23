@@ -22,8 +22,10 @@ using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList;
 using AniDroid.AniList.Dto;
+using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.MediaModels;
 using AniDroid.Base;
 using AniDroid.Dialogs;
 using AniDroid.Utils;
@@ -41,9 +43,9 @@ namespace AniDroid.MediaList
         private const string UserIdKey = "USER_ID";
 
         private int _userId;
-        private Media.MediaType _type;
+        private MediaType _type;
         private IList<MediaListRecyclerAdapter> _recyclerAdapters;
-        private Media.MediaListCollection _collection;
+        private MediaListCollection _collection;
         private MediaListSortComparer.MediaListSortType _currentSort;
         private MediaListSortComparer.SortDirection _currentSortDirection;
         private IMenu _menu;
@@ -55,12 +57,12 @@ namespace AniDroid.MediaList
         public override bool HasMenu => true;
         public override string FragmentName {
             get {
-                if (_type == Media.MediaType.Anime)
+                if (_type == MediaType.Anime)
                 {
                     return AnimeMediaListFragmentName;
                 }
 
-                return _type == Media.MediaType.Manga ? MangaMediaListFragmentName : "";
+                return _type == MediaType.Manga ? MangaMediaListFragmentName : "";
             }
         }
 
@@ -82,14 +84,14 @@ namespace AniDroid.MediaList
             base.OnCreate(savedInstanceState);
 
             var typeString = Arguments.GetString(MediaTypeKey);
-            _type = AniListEnum.GetEnum<Media.MediaType>(typeString);
+            _type = AniListEnum.GetEnum<MediaType>(typeString);
             _userId = Arguments.GetInt(UserIdKey);
 
-            if (_type == Media.MediaType.Anime)
+            if (_type == MediaType.Anime)
             {
                 _animeListFragmentInstance = this;
             }
-            else if (_type == Media.MediaType.Manga)
+            else if (_type == MediaType.Manga)
             {
                 _mangaListFragmentInstance = this;
             }
@@ -97,7 +99,7 @@ namespace AniDroid.MediaList
             _filterModel = new MediaListFilterModel();
         }
 
-        public static MediaListFragment CreateMediaListFragment(int userId, Media.MediaType type, Media.MediaSort sort = null)
+        public static MediaListFragment CreateMediaListFragment(int userId, MediaType type, MediaSort sort = null)
         {
             var frag = new MediaListFragment();
             var bundle = new Bundle(6);
@@ -124,11 +126,11 @@ namespace AniDroid.MediaList
 
         public override void ClearState()
         {
-            if (_type == Media.MediaType.Anime)
+            if (_type == MediaType.Anime)
             {
                 _animeListFragmentInstance = null;
             }
-            else if (_type == Media.MediaType.Manga)
+            else if (_type == MediaType.Manga)
             {
                 _mangaListFragmentInstance = null;
             }
@@ -152,18 +154,18 @@ namespace AniDroid.MediaList
             return LayoutInflater.Inflate(Resource.Layout.View_IndeterminateProgressIndicator, container, false);
         }
 
-        public Media.MediaType GetMediaType()
+        public MediaType GetMediaType()
         {
             return _type;
         }
 
-        public void SetCollection(Media.MediaListCollection collection)
+        public void SetCollection(MediaListCollection collection)
         {
             _collection = collection;
             RecreateFragment();
         }
 
-        public void UpdateMediaListItem(Media.MediaList mediaList)
+        public void UpdateMediaListItem(AniList.Models.MediaModels.MediaList mediaList)
         {
             foreach (var adapter in _recyclerAdapters)
             {
@@ -349,7 +351,7 @@ namespace AniDroid.MediaList
         {
             var retList = new List<KeyValuePair<string, bool>>();
 
-            if (_type == Media.MediaType.Anime)
+            if (_type == MediaType.Anime)
             {
                 var lists = _collection.User.MediaListOptions?.AnimeList?.SectionOrder?
                                 .Union(_collection.User.MediaListOptions.AnimeList.CustomLists ?? new List<string>()) ?? new List<string>();
@@ -362,7 +364,7 @@ namespace AniDroid.MediaList
 
                 retList = Presenter.AniDroidSettings.AnimeListOrder;
             }
-            else if (_type == Media.MediaType.Manga)
+            else if (_type == MediaType.Manga)
             {
                 var lists = _collection.User.MediaListOptions?.MangaList?.SectionOrder?
                                 .Union(_collection.User.MediaListOptions.MangaList.CustomLists ?? new List<string>()) ?? new List<string>();

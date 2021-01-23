@@ -14,6 +14,8 @@ using Android.Widget;
 using AniDroid.AniList.Dto;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.MediaModels;
+using AniDroid.AniList.Models.UserModels;
 using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
@@ -82,7 +84,7 @@ namespace AniDroid.Browse
             return _browseDto;
         }
 
-        public IList<Media.MediaTag> GetMediaTags()
+        public IList<MediaTag> GetMediaTags()
         {
             return AniDroidSettings.MediaTagCache;
         }

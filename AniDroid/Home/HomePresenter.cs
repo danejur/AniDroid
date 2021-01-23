@@ -12,8 +12,10 @@ using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Dto;
+using AniDroid.AniList.Enums;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.ActivityModels;
 using AniDroid.AniListObject;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
@@ -47,7 +49,7 @@ namespace AniDroid.Home
 
         public async Task ToggleActivityLikeAsync(AniListActivity activity, int activityPosition)
         {
-            var toggleResp = await AniListService.ToggleLike(activity.Id, AniList.Models.AniListObject.LikeableType.Activity, default);
+            var toggleResp = await AniListService.ToggleLike(activity.Id, LikeableType.Activity, default);
 
             toggleResp.Switch((IAniListError error) =>
                 {
@@ -94,9 +96,9 @@ namespace AniDroid.Home
                 });
         }
 
-        public async Task ToggleActivityReplyLikeAsync(AniListActivity.ActivityReply activityReply, int activityPosition)
+        public async Task ToggleActivityReplyLikeAsync(ActivityReply activityReply, int activityPosition)
         {
-            var toggleResp = await AniListService.ToggleLike(activityReply.Id, AniList.Models.AniListObject.LikeableType.ActivityReply, default);
+            var toggleResp = await AniListService.ToggleLike(activityReply.Id, LikeableType.ActivityReply, default);
 
             toggleResp.Switch((IAniListError error) =>
                 {
@@ -108,7 +110,7 @@ namespace AniDroid.Home
                 });
         }
 
-        public async Task EditActivityReplyAsync(AniListActivity.ActivityReply activityReply, int activityPosition, string updateText)
+        public async Task EditActivityReplyAsync(ActivityReply activityReply, int activityPosition, string updateText)
         {
             var editResp = await AniListService.SaveActivityReply(activityReply.Id, updateText, default);
 
@@ -123,7 +125,7 @@ namespace AniDroid.Home
                 });
         }
 
-        public async Task<bool> DeleteActivityReplyAsync(AniListActivity.ActivityReply activityReply,
+        public async Task<bool> DeleteActivityReplyAsync(ActivityReply activityReply,
             int activityPosition)
         {
             var editResp = await AniListService.DeleteActivityReply(activityReply.Id, default);

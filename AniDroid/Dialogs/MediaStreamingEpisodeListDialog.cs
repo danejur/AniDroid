@@ -12,13 +12,14 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.MediaModels;
 using AniDroid.Base;
 
 namespace AniDroid.Dialogs
 {
     public class MediaStreamingEpisodeListDialog
     {
-        public static void Create(BaseAniDroidActivity context, List<Media.MediaStreamingEpisode> streamingEpisodes)
+        public static void Create(BaseAniDroidActivity context, List<MediaStreaming> streamingEpisodes)
         {
             var dialogView = context.LayoutInflater.Inflate(Resource.Layout.View_List, null);
             dialogView.LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent,

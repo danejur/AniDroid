@@ -10,12 +10,13 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.StaffModels;
 
 namespace AniDroid.Adapters.ViewModels
 {
-    public class StaffEdgeViewModel : AniDroidAdapterViewModel<Staff.Edge>
+    public class StaffEdgeViewModel : AniDroidAdapterViewModel<StaffEdge>
     {
-        public StaffEdgeViewModel(Staff.Edge model, StaffEdgeDetailType primaryStaffEdgeDetailType,
+        public StaffEdgeViewModel(StaffEdge model, StaffEdgeDetailType primaryStaffEdgeDetailType,
             StaffEdgeDetailType secondaryStaffEdgeDetailType) : base(model)
         {
             TitleText = $"{Model.Node?.Name?.FormattedName}";
@@ -31,7 +32,7 @@ namespace AniDroid.Adapters.ViewModels
             Role
         }
 
-        public static StaffEdgeViewModel CreateStaffEdgeViewModel(Staff.Edge model)
+        public static StaffEdgeViewModel CreateStaffEdgeViewModel(StaffEdge model)
         {
             return new StaffEdgeViewModel(model, StaffEdgeDetailType.NativeName, StaffEdgeDetailType.Role);
         }

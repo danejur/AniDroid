@@ -19,8 +19,10 @@ using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList;
 using AniDroid.AniList.Dto;
+using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.MediaModels;
 using AniDroid.Base;
 using AniDroid.Dialogs;
 using AniDroid.Utils;
@@ -48,8 +50,8 @@ namespace AniDroid.MediaList
         private ViewPager _viewPager;
 
         private int _userId;
-        private Media.MediaType _mediaType;
-        private Media.MediaListCollection _collection;
+        private MediaType _mediaType;
+        private MediaListCollection _collection;
         private IList<MediaListRecyclerAdapter> _recyclerAdapters;
         private MediaListSortComparer.MediaListSortType _currentSort;
         private MediaListSortComparer.SortDirection _currentSortDirection;
@@ -79,7 +81,7 @@ namespace AniDroid.MediaList
             SetLoadingShown();
 
             _userId = Intent.GetIntExtra(UserIdIntentKey, 0);
-            _mediaType = AniListEnum.GetEnum<Media.MediaType>(Intent.GetStringExtra(MediaTypeIntentKey));
+            _mediaType = AniListEnum.GetEnum<MediaType>(Intent.GetStringExtra(MediaTypeIntentKey));
 
             _filterModel = new MediaListFilterModel();
 
@@ -88,12 +90,12 @@ namespace AniDroid.MediaList
             await Presenter.GetMediaLists(_userId);
         }
 
-        public Media.MediaType GetMediaType()
+        public MediaType GetMediaType()
         {
             return _mediaType;
         }
 
-        public void SetCollection(Media.MediaListCollection collection)
+        public void SetCollection(MediaListCollection collection)
         {
             SetContentView(Resource.Layout.Activity_MediaLists);
 
@@ -146,7 +148,7 @@ namespace AniDroid.MediaList
             SetupToolbar(_collection.User.Name);
         }
 
-        public void UpdateMediaListItem(Media.MediaList mediaList)
+        public void UpdateMediaListItem(AniList.Models.MediaModels.MediaList mediaList)
         {
         }
 
@@ -163,7 +165,7 @@ namespace AniDroid.MediaList
             return _filterModel;
         }
 
-        public static void StartActivity(BaseAniDroidActivity context, int userId, Media.MediaType mediaType)
+        public static void StartActivity(BaseAniDroidActivity context, int userId, MediaType mediaType)
         {
             var intent = new Intent(context, typeof(MediaListActivity));
             intent.PutExtra(UserIdIntentKey, userId);
@@ -175,14 +177,14 @@ namespace AniDroid.MediaList
         {
             var retList = new List<KeyValuePair<string, bool>>();
 
-            if (_mediaType == Media.MediaType.Anime)
+            if (_mediaType == MediaType.Anime)
             {
                 var lists = _collection.User.MediaListOptions?.AnimeList?.SectionOrder?
                                 .Union(_collection.User.MediaListOptions.AnimeList.CustomLists ?? new List<string>()) ?? new List<string>();
 
                 retList = Presenter.AniDroidSettings.AnimeListOrder ?? lists.Select(x => new KeyValuePair<string, bool>(x, true)).ToList();
             }
-            else if (_mediaType == Media.MediaType.Manga)
+            else if (_mediaType == MediaType.Manga)
             {
                 var lists = _collection.User.MediaListOptions?.MangaList?.SectionOrder?
                                 .Union(_collection.User.MediaListOptions.MangaList.CustomLists ?? new List<string>()) ?? new List<string>();

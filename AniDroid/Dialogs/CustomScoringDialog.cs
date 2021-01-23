@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using AniDroid.AniList.Enums.UserEnums;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
 using AniDroid.Widgets;
@@ -19,7 +20,7 @@ namespace AniDroid.Dialogs
     public static class CustomScoringDialog
     {
         public static void Create(BaseAniDroidActivity context, List<string> customScoringMethods,
-            User.ScoreFormat scoreFormat, List<float?> scores, Action<List<float?>> onSaveAction)
+            ScoreFormat scoreFormat, List<float?> scores, Action<List<float?>> onSaveAction)
         {
             var random = new Random();
 
@@ -55,11 +56,11 @@ namespace AniDroid.Dialogs
 
                     var score = scores?.ElementAtOrDefault(customScoringMethods.IndexOf(method.Value)) ?? 0;
 
-                    if (scoreFormat == User.ScoreFormat.Hundred)
+                    if (scoreFormat == ScoreFormat.Hundred)
                     {
                         picker.SetNumericValues(100, 0, false, score);
                     }
-                    else if (scoreFormat == User.ScoreFormat.TenDecimal)
+                    else if (scoreFormat == ScoreFormat.TenDecimal)
                     {
                         picker.SetNumericValues(10, 1, false, score);
                     }

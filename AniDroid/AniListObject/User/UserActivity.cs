@@ -25,6 +25,8 @@ using System.Threading.Tasks;
 using Android.Text;
 using Android.Text.Method;
 using AniDroid.Adapters.ReviewAdapters;
+using AniDroid.AniList.Enums.MediaEnums;
+using AniDroid.AniList.Models.ActivityModels;
 using AniDroid.Utils.Formatting.Markdown;
 
 namespace AniDroid.AniListObject.User
@@ -115,7 +117,7 @@ namespace AniDroid.AniListObject.User
             _canMessage = true;
         }
 
-        public void SetupUserView(AniList.Models.User user)
+        public void SetupUserView(AniList.Models.UserModels.User user)
         {
             var adapter = new FragmentlessViewPagerAdapter();
 
@@ -164,7 +166,7 @@ namespace AniDroid.AniListObject.User
             return retView;
         }
 
-        private View CreateUserDetailsView(AniList.Models.User user)
+        private View CreateUserDetailsView(AniList.Models.UserModels.User user)
         {
             var retView = LayoutInflater.Inflate(Resource.Layout.View_UserDetails, null);
             LoadImage(retView.FindViewById<ImageView>(Resource.Id.User_Image), user.Avatar.Large);
@@ -201,7 +203,7 @@ namespace AniDroid.AniListObject.User
                 userAnimeView.ButtonClickable = false;
                 userAnimeView.ButtonVisible = true;
                 userAnimeView.Click += (sender, args) =>
-                    MediaListActivity.StartActivity(this, user.Id, AniList.Models.Media.MediaType.Anime);
+                    MediaListActivity.StartActivity(this, user.Id, MediaType.Anime);
             }
 
             var userMangaView = retView.FindViewById<DataRow>(Resource.Id.User_MangaSummary);
@@ -215,7 +217,7 @@ namespace AniDroid.AniListObject.User
                 userMangaView.ButtonClickable = false;
                 userMangaView.ButtonVisible = true;
                 userMangaView.Click += (sender, args) =>
-                    MediaListActivity.StartActivity(this, user.Id, AniList.Models.Media.MediaType.Manga);
+                    MediaListActivity.StartActivity(this, user.Id, MediaType.Manga);
             }
 
             return retView;
@@ -254,7 +256,7 @@ namespace AniDroid.AniListObject.User
             return retView;
         }
 
-        private View CreateUserStatsView(AniList.Models.User user)
+        private View CreateUserStatsView(AniList.Models.UserModels.User user)
         {
             var retView = LayoutInflater.Inflate(Resource.Layout.View_NestedScrollLayout, null);
             var containerView = retView.FindViewById<LinearLayout>(Resource.Id.Scroll_Container);
@@ -277,8 +279,8 @@ namespace AniDroid.AniListObject.User
         }
 
         private View CreateStatusDistributionView(
-            IReadOnlyList<AniList.Models.AniListObject.AniListStatusDistribution> animeStatusDistributions,
-            IReadOnlyList<AniList.Models.AniListObject.AniListStatusDistribution> mangaStatusDistributions)
+            IReadOnlyList<AniListStatusDistribution> animeStatusDistributions,
+            IReadOnlyList<AniListStatusDistribution> mangaStatusDistributions)
         {
             var chartHeight = Resources.GetDimensionPixelSize(Resource.Dimension.Details_ChartHeight);
             var textColor = GetThemedColor(Resource.Attribute.Background_Text);
@@ -327,7 +329,7 @@ namespace AniDroid.AniListObject.User
             statusDistChart.XAxis.Position = XAxis.XAxisPosition.BottomInside;
             statusDistChart.XAxis.Granularity = 1;
             statusDistChart.XAxis.LabelCount = 5;
-            statusDistChart.XAxis.ValueFormatter = new ChartUtils.AxisAniListEnumFormatter<AniList.Models.Media.MediaListStatus>();
+            statusDistChart.XAxis.ValueFormatter = new ChartUtils.AxisAniListEnumFormatter<MediaListStatus>();
             statusDistChart.XAxis.TextColor = animeDataSet.ValueTextColor = mangaDataSet.ValueTextColor = statusDistChart.Legend.TextColor = textColor;
 
             detailContainer.AddView(statusDistChart);
@@ -336,8 +338,8 @@ namespace AniDroid.AniListObject.User
         }
 
         private View CreateScoreDistributionView(
-            IReadOnlyList<AniList.Models.AniListObject.AniListScoreDistribution> animeScoreDistributions,
-            IReadOnlyList<AniList.Models.AniListObject.AniListScoreDistribution> mangaScoreDistributions)
+            IReadOnlyList<AniListScoreDistribution> animeScoreDistributions,
+            IReadOnlyList<AniListScoreDistribution> mangaScoreDistributions)
         {
             var chartHeight = Resources.GetDimensionPixelSize(Resource.Dimension.Details_ChartHeight);
             var textColor = GetThemedColor(Resource.Attribute.Background_Text);

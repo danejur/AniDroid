@@ -18,6 +18,7 @@ using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.AniListActivityAdapters;
+using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.AniListObject.User;
@@ -476,11 +477,11 @@ namespace AniDroid.Main
                     break;
                 case Resource.Id.Menu_Navigation_Anime:
                     ChangeFragment(MediaListFragment.GetInstance(MediaListFragment.AnimeMediaListFragmentName) ??
-                                   MediaListFragment.CreateMediaListFragment(Settings.LoggedInUser?.Id ?? 0, Media.MediaType.Anime));
+                                   MediaListFragment.CreateMediaListFragment(Settings.LoggedInUser?.Id ?? 0, MediaType.Anime));
                     break;
                 case Resource.Id.Menu_Navigation_Manga:
                     ChangeFragment(MediaListFragment.GetInstance(MediaListFragment.MangaMediaListFragmentName) ??
-                                   MediaListFragment.CreateMediaListFragment(Settings.LoggedInUser?.Id ?? 0, Media.MediaType.Manga));
+                                   MediaListFragment.CreateMediaListFragment(Settings.LoggedInUser?.Id ?? 0, MediaType.Manga));
                     break;
                 case Resource.Id.Menu_Navigation_Discover:
                     ChangeFragment(new DiscoverFragment());

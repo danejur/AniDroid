@@ -28,7 +28,12 @@ using AniDroid.Adapters.UserAdapters;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList;
 using AniDroid.AniList.Dto;
+using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Interfaces;
+using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.MediaModels;
+using AniDroid.AniList.Models.StudioModels;
+using AniDroid.AniList.Models.UserModels;
 using AniDroid.AniListObject.Staff;
 using AniDroid.AniListObject.User;
 using AniDroid.Base;
@@ -54,9 +59,9 @@ namespace AniDroid.AniListObject.Media
         public const string MediaIdIntentKey = "MEDIA_ID";
 
         private int _mediaId;
-        private AniList.Models.Media _media;
-        private AniList.Models.Media.MediaList _mediaList;
-        private AniList.Models.User.UserMediaListOptions _mediaListOptions;
+        private AniList.Models.MediaModels.Media _media;
+        private AniList.Models.MediaModels.MediaList _mediaList;
+        private UserMediaListOptions _mediaListOptions;
         private View _mediaDetailsView;
         private bool _canEditListItem;
         private IMenuItem _editItem;
@@ -108,7 +113,7 @@ namespace AniDroid.AniListObject.Media
             return _mediaId;
         }
 
-        public AniList.Models.Media.MediaType GetMediaType()
+        public MediaType GetMediaType()
         {
             return _media.Type;
         }
@@ -118,7 +123,7 @@ namespace AniDroid.AniListObject.Media
             _canEditListItem = true;
         }
 
-        public void SetupMediaView(AniList.Models.Media media)
+        public void SetupMediaView(AniList.Models.MediaModels.Media media)
         {
             _media = media;
             _mediaList = media.MediaListEntry;
@@ -184,18 +189,18 @@ namespace AniDroid.AniListObject.Media
             TabLayout.SetupWithViewPager(ViewPager);
         }
 
-        public void SetCurrentUserMediaListOptions(AniList.Models.User.UserMediaListOptions mediaListOptions)
+        public void SetCurrentUserMediaListOptions(UserMediaListOptions mediaListOptions)
         {
             _mediaListOptions = mediaListOptions;
         }
 
-        public void ShowMediaListEditDialog(AniList.Models.Media.MediaList mediaList)
+        public void ShowMediaListEditDialog(AniList.Models.MediaModels.MediaList mediaList)
         {
             _editItem?.SetEnabled(true);
             EditMediaListItemDialog.Create(this, Presenter, _media, mediaList, _mediaListOptions);
         }
 
-        public void UpdateMediaListItem(AniList.Models.Media.MediaList mediaList)
+        public void UpdateMediaListItem(AniList.Models.MediaModels.MediaList mediaList)
         {
             // this whole method is predicated on the fact that deletions from media lists are currently not possible throught he app
             // this logic will need to be updated once that functionality has been added
@@ -218,12 +223,12 @@ namespace AniDroid.AniListObject.Media
                 mediaListSummaryView.Visibility = ViewStates.Visible;
                 mediaListSummaryView.TextOne = $"Rating:  {mediaList.GetScoreString(_mediaListOptions.ScoreFormat)}";
 
-                if (_media?.Type == AniList.Models.Media.MediaType.Anime)
+                if (_media?.Type == MediaType.Anime)
                 {
                     mediaListSummaryView.TextTwo =
                         mediaList.GetFormattedProgressString(_media.Type, _media.Episodes);
                 }
-                else if (_media?.Type == AniList.Models.Media.MediaType.Manga)
+                else if (_media?.Type == MediaType.Manga)
                 {
 
                     mediaListSummaryView.TextTwo =
@@ -233,13 +238,13 @@ namespace AniDroid.AniListObject.Media
 
             InvalidateOptionsMenu();
 
-            if (_media.Type == AniList.Models.Media.MediaType.Anime)
+            if (_media.Type == MediaType.Anime)
             {
                 var instance = MediaListFragment.GetInstance(MediaListFragment.AnimeMediaListFragmentName);
 
                 (instance as MediaListFragment)?.UpdateMediaListItem(mediaList);
             }
-            else if (_media.Type == AniList.Models.Media.MediaType.Manga)
+            else if (_media.Type == MediaType.Manga)
             {
                 (MediaListFragment.GetInstance(MediaListFragment.MangaMediaListFragmentName) as MediaListFragment)
                     ?.UpdateMediaListItem(mediaList);
@@ -280,7 +285,7 @@ namespace AniDroid.AniListObject.Media
 
         #region Media Data
 
-        private View CreateMediaDetailsView(AniList.Models.Media media)
+        private View CreateMediaDetailsView(AniList.Models.MediaModels.Media media)
         {
             var retView = LayoutInflater.Inflate(Resource.Layout.View_MediaDetails, null);
             retView.FindViewById<TextView>(Resource.Id.Media_Title).Text = media.Title?.UserPreferred;
@@ -325,7 +330,7 @@ namespace AniDroid.AniListObject.Media
                     {
                         Type = media.Type,
                         IncludedGenres = new List<string> {genre},
-                        Sort = new List<AniList.Models.Media.MediaSort> {AniList.Models.Media.MediaSort.PopularityDesc}
+                        Sort = new List<MediaSort> {MediaSort.PopularityDesc}
                     }, ObjectBrowseRequestCode);
                 genreContainer.AddView(genreView);
             }
@@ -337,12 +342,12 @@ namespace AniDroid.AniListObject.Media
                 mediaListSummaryView.Visibility = ViewStates.Visible;
                 mediaListSummaryView.TextOne = $"Rating:  {media.MediaListEntry.GetScoreString(_mediaListOptions.ScoreFormat)}";
 
-                if (media.Type == AniList.Models.Media.MediaType.Anime)
+                if (media.Type == MediaType.Anime)
                 {
                     mediaListSummaryView.TextTwo =
                         media.MediaListEntry.GetFormattedProgressString(media.Type, media.Episodes);
                 }
-                else if (media.Type == AniList.Models.Media.MediaType.Manga)
+                else if (media.Type == MediaType.Manga)
                 {
 
                     mediaListSummaryView.TextTwo =
@@ -358,7 +363,7 @@ namespace AniDroid.AniListObject.Media
 
                 var startDate = media.StartDate?.GetDate();
 
-                if (AniList.Models.Media.MediaStatus.NotYetReleased.Equals(media.Status) && startDate.HasValue &&
+                if (MediaStatus.NotYetReleased.Equals(media.Status) && startDate.HasValue &&
                     startDate.Value > DateTime.Now.Date)
                 {
                     dateRangeView.ButtonVisible = true;
@@ -385,12 +390,12 @@ namespace AniDroid.AniListObject.Media
                         Season = media.Season,
                         SeasonYear = media.StartDate?.Year,
                         Type = media.Type,
-                        Sort = new List<AniList.Models.Media.MediaSort> {AniList.Models.Media.MediaSort.PopularityDesc}
+                        Sort = new List<MediaSort> {MediaSort.PopularityDesc}
                     }, ObjectBrowseRequestCode);
             }
 
             var episodesView = retView.FindViewById<DataRow>(Resource.Id.Media_Episodes);
-            if (AniList.Models.Media.MediaType.Anime.Equals(media.Type))
+            if (MediaType.Anime.Equals(media.Type))
             {
                 episodesView.TextOne = media.Episodes > 0 ? (media.Episodes > 1 ? $"{media.Episodes} episodes" : "Single episode") : "";
                 episodesView.TextTwo = media.Duration > 0 ? $"{media.Duration} minutes" : "";
@@ -409,7 +414,7 @@ namespace AniDroid.AniListObject.Media
                         MediaStreamingEpisodeListDialog.Create(this, media.StreamingEpisodes);
                 }
             }
-            else if (AniList.Models.Media.MediaType.Manga.Equals(media.Type))
+            else if (MediaType.Manga.Equals(media.Type))
             {
                 episodesView.TextOne = media.Volumes > 0 ? $"{media.Volumes} Volumes" : "";
                 episodesView.TextTwo = media.Chapters > 0 ? $"{media.Chapters} Chapters" : "";
@@ -434,7 +439,7 @@ namespace AniDroid.AniListObject.Media
                     {
                         Type = media.Type,
                         AverageGreaterThan = media.AverageScore,
-                        Sort = new List<AniList.Models.Media.MediaSort> {AniList.Models.Media.MediaSort.ScoreDesc}
+                        Sort = new List<MediaSort> {MediaSort.ScoreDesc}
                     }, ObjectBrowseRequestCode);
 
                 var popContainer = retView.FindViewById(Resource.Id.Media_PopularityContainer);
@@ -445,7 +450,7 @@ namespace AniDroid.AniListObject.Media
                     {
                         Type = media.Type,
                         PopularityGreaterThan = media.Popularity,
-                        Sort = new List<AniList.Models.Media.MediaSort> {AniList.Models.Media.MediaSort.PopularityDesc}
+                        Sort = new List<MediaSort> {MediaSort.PopularityDesc}
                     }, ObjectBrowseRequestCode);
             }
             else
@@ -488,7 +493,7 @@ namespace AniDroid.AniListObject.Media
             return retView;
         }
 
-        private View CreateMediaRelationsView(List<AniList.Models.Media.Edge> mediaEdgeList)
+        private View CreateMediaRelationsView(List<MediaEdge> mediaEdgeList)
         {
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
@@ -499,7 +504,7 @@ namespace AniDroid.AniListObject.Media
             return retView;
         }
 
-        private View CreateMediaStudiosView(List<AniList.Models.Studio.Edge> studioEdgeList)
+        private View CreateMediaStudiosView(List<StudioEdge> studioEdgeList)
         {
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
@@ -509,7 +514,7 @@ namespace AniDroid.AniListObject.Media
             return retView;
         }
 
-        private View CreateMediaTagsView(List<AniList.Models.Media.MediaTag> tagList, AniList.Models.Media.MediaType type)
+        private View CreateMediaTagsView(List<MediaTag> tagList, MediaType type)
         {
             var retView = LayoutInflater.Inflate(Resource.Layout.View_List, null);
             var recycler = retView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
@@ -519,7 +524,7 @@ namespace AniDroid.AniListObject.Media
             return retView;
         }
 
-        private View CreateMediaUserDataView(AniList.Models.Media media)
+        private View CreateMediaUserDataView(AniList.Models.MediaModels.Media media)
         {
             var retView = LayoutInflater.Inflate(Resource.Layout.View_NestedScrollLayout, null);
             var containerView = retView.FindViewById<LinearLayout>(Resource.Id.Scroll_Container);
@@ -529,7 +534,7 @@ namespace AniDroid.AniListObject.Media
                 containerView.AddView(CreateUserRankingView(media.Rankings));
             }
 
-            if (media.Stats?.ScoreDistribution?.Count(x => x.Amount > 0) >= 3 && !AniList.Models.Media.MediaStatus.NotYetReleased.Equals(media.Status))
+            if (media.Stats?.ScoreDistribution?.Count(x => x.Amount > 0) >= 3 && !MediaStatus.NotYetReleased.Equals(media.Status))
             {
                 containerView.AddView(CreateUserScoresView(media.Stats.ScoreDistribution));
             }
@@ -602,7 +607,7 @@ namespace AniDroid.AniListObject.Media
 
         #region User Data
 
-        private View CreateUserScoresView(IEnumerable<AniList.Models.AniListObject.AniListScoreDistribution> scores)
+        private View CreateUserScoresView(IEnumerable<AniListScoreDistribution> scores)
         {
             var detailView = LayoutInflater.Inflate(Resource.Layout.View_AniListObjectDetail, null);
             var detailContainer = detailView.FindViewById<LinearLayout>(Resource.Id.AniListObjectDetail_InnerContainer);
@@ -650,7 +655,7 @@ namespace AniDroid.AniListObject.Media
         }
 
         private View CreateUserScoreProgressionView(
-            IEnumerable<AniList.Models.Media.MediaAiringProgression> scoreProgression)
+            IEnumerable<MediaAiringProgression> scoreProgression)
         {
             var detailView = LayoutInflater.Inflate(Resource.Layout.View_AniListObjectDetail, null);
             var detailContainer = detailView.FindViewById<LinearLayout>(Resource.Id.AniListObjectDetail_InnerContainer);
@@ -737,7 +742,7 @@ namespace AniDroid.AniListObject.Media
             return detailView;
         }
 
-        private View CreateUserListStatusView(IReadOnlyList<AniList.Models.AniListObject.AniListStatusDistribution> statusDistribution)
+        private View CreateUserListStatusView(IReadOnlyList<AniListStatusDistribution> statusDistribution)
         {
             var detailView = LayoutInflater.Inflate(Resource.Layout.View_AniListObjectDetail, null);
             var detailContainer = detailView.FindViewById<LinearLayout>(Resource.Id.AniListObjectDetail_InnerContainer);
@@ -813,7 +818,7 @@ namespace AniDroid.AniListObject.Media
             return detailView;
         }
 
-        private View CreateUserRankingView(IEnumerable<AniList.Models.Media.MediaRank> rankings)
+        private View CreateUserRankingView(IEnumerable<MediaRank> rankings)
         {
             var detailView = LayoutInflater.Inflate(Resource.Layout.View_AniListObjectDetail, null);
             var detailContainer = detailView.FindViewById<LinearLayout>(Resource.Id.AniListObjectDetail_InnerContainer);
@@ -826,17 +831,17 @@ namespace AniDroid.AniListObject.Media
                 var rankingIcon = view.FindViewById<ImageView>(Resource.Id.MediaRank_Image);
 
                 rankingTextView.Text = ranking.GetFormattedRankString();
-                var sortType = AniList.Models.Media.MediaSort.Id;
+                var sortType = MediaSort.Id;
 
-                if (AniList.Models.Media.MediaRankType.Rated.Equals(ranking.Type))
+                if (MediaRankType.Rated.Equals(ranking.Type))
                 {
-                    sortType = AniList.Models.Media.MediaSort.ScoreDesc;
+                    sortType = MediaSort.ScoreDesc;
                     rankingIcon.SetImageResource(Resource.Drawable.svg_star);
                     rankingIcon.SetColorFilter(new Color(ContextCompat.GetColor(this, Resource.Color.Favorite_Yellow)), PorterDuff.Mode.SrcIn);
                 }
-                else if (AniList.Models.Media.MediaRankType.Popular.Equals(ranking.Type))
+                else if (MediaRankType.Popular.Equals(ranking.Type))
                 {
-                    sortType = AniList.Models.Media.MediaSort.PopularityDesc;
+                    sortType = MediaSort.PopularityDesc;
                     rankingIcon.SetImageResource(Resource.Drawable.ic_favorite_white_24px);
                     rankingIcon.SetColorFilter(new Color(ContextCompat.GetColor(this, Resource.Color.Favorite_Red)), PorterDuff.Mode.SrcIn);
                 }
@@ -848,7 +853,7 @@ namespace AniDroid.AniListObject.Media
                             Type = ranking.Format.MediaType,
                             Year = ranking.Year,
                             Season = ranking.Season,
-                            Sort = new List<AniList.Models.Media.MediaSort> {sortType},
+                            Sort = new List<MediaSort> {sortType},
                             Format = ranking.Format
                         },
                         ObjectBrowseRequestCode);

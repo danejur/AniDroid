@@ -17,8 +17,10 @@ using Android.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Dto;
+using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.MediaModels;
 using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 using AniDroid.Dialogs;
@@ -28,11 +30,11 @@ using OneOf;
 
 namespace AniDroid.Adapters.MediaAdapters
 {
-    public class MediaListRecyclerAdapter : AniDroidRecyclerAdapter<MediaListViewModel, Media.MediaList>
+    public class MediaListRecyclerAdapter : AniDroidRecyclerAdapter<MediaListViewModel, AniList.Models.MediaModels.MediaList>
     {
         private readonly bool _isCustomList;
         private readonly string _listName;
-        private readonly Media.MediaListStatus _listStatus;
+        private readonly MediaListStatus _listStatus;
         private readonly bool _highlightPriorityItems;
         private readonly MediaListItemViewType _viewType;
 
@@ -44,8 +46,8 @@ namespace AniDroid.Adapters.MediaAdapters
 
         private readonly List<MediaListViewModel> _unfilteredItems;
 
-        private IList<Media.MediaFormat> _filteredFormats = new List<Media.MediaFormat>();
-        private IList<Media.MediaStatus> _filteredStatuses = new List<Media.MediaStatus>();
+        private IList<MediaFormat> _filteredFormats = new List<MediaFormat>();
+        private IList<MediaStatus> _filteredStatuses = new List<MediaStatus>();
 
         public enum MediaListItemViewType
         {
@@ -62,8 +64,8 @@ namespace AniDroid.Adapters.MediaAdapters
             Always
         }
 
-        public MediaListRecyclerAdapter(BaseAniDroidActivity context, Media.MediaListGroup mediaListGroup,
-            RecyclerCardType cardType, Func<Media.MediaList, MediaListViewModel> createViewModelFunc, MediaListItemViewType viewType, bool highlightPriorityItems, bool useLongClickForEpisodeAdd, Action<MediaListViewModel, Action> episodeAddAction = null) : base(context,
+        public MediaListRecyclerAdapter(BaseAniDroidActivity context, MediaListGroup mediaListGroup,
+            RecyclerCardType cardType, Func<AniList.Models.MediaModels.MediaList, MediaListViewModel> createViewModelFunc, MediaListItemViewType viewType, bool highlightPriorityItems, bool useLongClickForEpisodeAdd, Action<MediaListViewModel, Action> episodeAddAction = null) : base(context,
             mediaListGroup.Entries.Select(createViewModelFunc).ToList(), cardType)
         {
             CreateViewModelFunc = createViewModelFunc;
@@ -116,8 +118,8 @@ namespace AniDroid.Adapters.MediaAdapters
         }
 
         public MediaListRecyclerAdapter(BaseAniDroidActivity context, RecyclerCardType cardType,
-            IAsyncEnumerable<OneOf<IPagedData<Media.MediaList>, IAniListError>> enumerable,
-            Func<Media.MediaList, MediaListViewModel> createViewModelFunc) : base(context, enumerable, cardType, createViewModelFunc)
+            IAsyncEnumerable<OneOf<IPagedData<AniList.Models.MediaModels.MediaList>, IAniListError>> enumerable,
+            Func<AniList.Models.MediaModels.MediaList, MediaListViewModel> createViewModelFunc) : base(context, enumerable, cardType, createViewModelFunc)
         {
 
 
@@ -141,7 +143,7 @@ namespace AniDroid.Adapters.MediaAdapters
             }
         }
 
-        public void UpdateMediaListItem(int mediaId, Media.MediaList updatedMediaList)
+        public void UpdateMediaListItem(int mediaId, AniList.Models.MediaModels.MediaList updatedMediaList)
         {
             var position = Items.FindIndex(x => x.Model.Media?.Id == mediaId);
 

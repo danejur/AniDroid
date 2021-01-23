@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
 using AniDroid.Utils.Comparers;
@@ -17,8 +18,8 @@ namespace AniDroid.Dialogs
 {
     public class BrowseSortDialog
     {
-        public static void Create(BaseAniDroidActivity context, Media.MediaSort currentSort,
-            Action<Media.MediaSort> onSelectSortAction)
+        public static void Create(BaseAniDroidActivity context, MediaSort currentSort,
+            Action<MediaSort> onSelectSortAction)
         {
             var view = context.LayoutInflater.Inflate(Resource.Layout.Dialog_BrowseSort, null);
             var dialog = new Android.Support.V7.App.AlertDialog.Builder(context,
@@ -29,32 +30,32 @@ namespace AniDroid.Dialogs
             var selectedSort = Resource.Id.BrowseSort_Popularity;
             var selectedDirection = Resource.Id.BrowseSort_Descending;
 
-            if (Media.MediaSort.Popularity.Equals(currentSort))
+            if (MediaSort.Popularity.Equals(currentSort))
             {
                 selectedSort = Resource.Id.BrowseSort_Popularity;
                 selectedDirection = Resource.Id.BrowseSort_Ascending;
             }
-            else if (Media.MediaSort.PopularityDesc.Equals(currentSort))
+            else if (MediaSort.PopularityDesc.Equals(currentSort))
             {
                 selectedSort = Resource.Id.BrowseSort_Popularity;
                 selectedDirection = Resource.Id.BrowseSort_Descending;
             }
-            else if (Media.MediaSort.Score.Equals(currentSort))
+            else if (MediaSort.Score.Equals(currentSort))
             {
                 selectedSort = Resource.Id.BrowseSort_Score;
                 selectedDirection = Resource.Id.BrowseSort_Ascending;
             }
-            else if (Media.MediaSort.ScoreDesc.Equals(currentSort))
+            else if (MediaSort.ScoreDesc.Equals(currentSort))
             {
                 selectedSort = Resource.Id.BrowseSort_Score;
                 selectedDirection = Resource.Id.BrowseSort_Descending;
             }
-            else if (Media.MediaSort.StartDate.Equals(currentSort))
+            else if (MediaSort.StartDate.Equals(currentSort))
             {
                 selectedSort = Resource.Id.BrowseSort_StartDate;
                 selectedDirection = Resource.Id.BrowseSort_Ascending;
             }
-            else if (Media.MediaSort.StartDateDesc.Equals(currentSort))
+            else if (MediaSort.StartDateDesc.Equals(currentSort))
             {
                 selectedSort = Resource.Id.BrowseSort_StartDate;
                 selectedDirection = Resource.Id.BrowseSort_Descending;
@@ -70,18 +71,18 @@ namespace AniDroid.Dialogs
             dialog.SetPositiveButton("Set", (sender, args) =>
             {
                 var ascending = directionRadioGroup.CheckedRadioButtonId == Resource.Id.BrowseSort_Ascending;
-                Media.MediaSort sort = null;
+                MediaSort sort = null;
 
                 switch (sortRadioGroup.CheckedRadioButtonId)
                 {
                     case Resource.Id.BrowseSort_Score:
-                        sort = ascending ? Media.MediaSort.Score : Media.MediaSort.ScoreDesc;
+                        sort = ascending ? MediaSort.Score : MediaSort.ScoreDesc;
                         break;
                     case Resource.Id.BrowseSort_Popularity:
-                        sort = ascending ? Media.MediaSort.Popularity : Media.MediaSort.PopularityDesc;
+                        sort = ascending ? MediaSort.Popularity : MediaSort.PopularityDesc;
                         break;
                     case Resource.Id.BrowseSort_StartDate:
-                        sort = ascending ? Media.MediaSort.StartDate : Media.MediaSort.StartDateDesc;
+                        sort = ascending ? MediaSort.StartDate : MediaSort.StartDateDesc;
                         break;
                 }
 

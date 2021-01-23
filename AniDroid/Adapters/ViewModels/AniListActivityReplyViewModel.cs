@@ -13,11 +13,12 @@ using Android.Text;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.ActivityModels;
 using AniDroid.Base;
 
 namespace AniDroid.Adapters.ViewModels
 {
-    public class AniListActivityReplyViewModel : AniDroidAdapterViewModel<AniListActivity.ActivityReply>
+    public class AniListActivityReplyViewModel : AniDroidAdapterViewModel<ActivityReply>
     {
         public ISpanned DetailFormatted { get; protected set; }
         public string TimestampText { get; protected set; }
@@ -27,7 +28,7 @@ namespace AniDroid.Adapters.ViewModels
         private readonly int? _userId;
         private readonly Color _defaultIconColor;
 
-        public AniListActivityReplyViewModel(AniListActivity.ActivityReply model, Color defaultIconColor, int? userId) : base(model)
+        public AniListActivityReplyViewModel(ActivityReply model, Color defaultIconColor, int? userId) : base(model)
         {
             _userId = userId;
             _defaultIconColor = defaultIconColor;
@@ -35,7 +36,7 @@ namespace AniDroid.Adapters.ViewModels
             SetupViewModel();
         }
 
-        public static AniListActivityReplyViewModel CreateViewModel(AniListActivity.ActivityReply model, Color defaultIconColor, int? userId)
+        public static AniListActivityReplyViewModel CreateViewModel(ActivityReply model, Color defaultIconColor, int? userId)
         {
             return new AniListActivityReplyViewModel(model, defaultIconColor, userId);
         }

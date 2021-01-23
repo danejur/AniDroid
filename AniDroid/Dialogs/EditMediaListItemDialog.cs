@@ -20,7 +20,11 @@ using Android.Widget;
 using AniDroid.AniList;
 using AniDroid.AniList.DataTypes;
 using AniDroid.AniList.Dto;
+using AniDroid.AniList.Enums.MediaEnums;
+using AniDroid.AniList.Enums.UserEnums;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.MediaModels;
+using AniDroid.AniList.Models.UserModels;
 using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 using AniDroid.Settings;
@@ -33,7 +37,7 @@ namespace AniDroid.Dialogs
 {
     public static class EditMediaListItemDialog
     {
-        public static void Create(BaseAniDroidActivity context, IAniListMediaListEditPresenter presenter, Media media, Media.MediaList mediaList, User.UserMediaListOptions mediaListOptions, bool completeMedia = false)
+        public static void Create(BaseAniDroidActivity context, IAniListMediaListEditPresenter presenter, Media media, AniList.Models.MediaModels.MediaList mediaList, UserMediaListOptions mediaListOptions, bool completeMedia = false)
         {
             var dialog = new EditMediaListItemDialogFragment(presenter, media, mediaList, mediaListOptions, completeMedia) {Cancelable = true};
             var transaction = context.SupportFragmentManager.BeginTransaction();
@@ -49,8 +53,8 @@ namespace AniDroid.Dialogs
 
             private readonly IAniListMediaListEditPresenter _presenter;
             private readonly Media _media;
-            private readonly Media.MediaList _mediaList;
-            private readonly User.UserMediaListOptions _mediaListOptions;
+            private readonly AniList.Models.MediaModels.MediaList _mediaList;
+            private readonly UserMediaListOptions _mediaListOptions;
             private readonly List<string> _mediaStatusList;
             private readonly HashSet<string> _customLists;
             private readonly bool _completeMedia;
@@ -74,7 +78,7 @@ namespace AniDroid.Dialogs
             private DatePickerTextView _finishDateView;
 
 
-            public EditMediaListItemDialogFragment(IAniListMediaListEditPresenter presenter, Media media, Media.MediaList mediaList, User.UserMediaListOptions mediaListOptions, bool completeMedia)
+            public EditMediaListItemDialogFragment(IAniListMediaListEditPresenter presenter, Media media, AniList.Models.MediaModels.MediaList mediaList, UserMediaListOptions mediaListOptions, bool completeMedia)
             {
                 _presenter = presenter;
                 _media = media;
@@ -89,7 +93,7 @@ namespace AniDroid.Dialogs
                 _customScoringEnabled = mediaListOptions.AnimeList?.AdvancedScoringEnabled ??
                                  mediaListOptions.MangaList?.AdvancedScoringEnabled == true;
 
-                _mediaStatusList = AniListEnum.GetEnumValues<Media.MediaListStatus>().OrderBy(x => x.Index)
+                _mediaStatusList = AniListEnum.GetEnumValues<MediaListStatus>().OrderBy(x => x.Index)
                     .Select(x => x.DisplayValue).ToList();
             }
 
@@ -182,26 +186,26 @@ namespace AniDroid.Dialogs
 
             private void SetupScore(Picker scorePicker, Button customScoresButton)
             {
-                if (_mediaListOptions.ScoreFormat == User.ScoreFormat.FiveStars)
+                if (_mediaListOptions.ScoreFormat == ScoreFormat.FiveStars)
                 {
                     var list = new List<string> { "★", "★★", "★★★", "★★★★", "★★\n★★★" };
                     scorePicker.SetStringItems(list, (int)(_mediaList?.Score ?? 3) - 1);
                     _customScoringEnabled = false;
                 }
-                else if (_mediaListOptions.ScoreFormat == User.ScoreFormat.Hundred)
+                else if (_mediaListOptions.ScoreFormat == ScoreFormat.Hundred)
                 {
                     scorePicker.SetNumericValues(100, 0, false, _mediaList?.Score);
                 }
-                else if (_mediaListOptions.ScoreFormat == User.ScoreFormat.Ten)
+                else if (_mediaListOptions.ScoreFormat == ScoreFormat.Ten)
                 {
                     scorePicker.SetNumericValues(10, 0, false, _mediaList?.Score);
                     _customScoringEnabled = false;
                 }
-                else if (_mediaListOptions.ScoreFormat == User.ScoreFormat.TenDecimal)
+                else if (_mediaListOptions.ScoreFormat == ScoreFormat.TenDecimal)
                 {
                     scorePicker.SetNumericValues(10, 1, false, _mediaList?.Score);
                 }
-                else if (_mediaListOptions.ScoreFormat == User.ScoreFormat.ThreeSmileys)
+                else if (_mediaListOptions.ScoreFormat == ScoreFormat.ThreeSmileys)
                 {
                     scorePicker.SetDrawableItems(new List<int> { Resource.Drawable.svg_sad, Resource.Drawable.svg_neutral, Resource.Drawable.svg_happy }, (int)(_mediaList?.Score ?? 2) - 1);
                     _customScoringEnabled = false;
@@ -243,26 +247,26 @@ namespace AniDroid.Dialogs
 
                 if (_completeMedia)
                 {
-                    statusSpinner.SetSelection(Media.MediaListStatus.Completed.Index);
+                    statusSpinner.SetSelection(MediaListStatus.Completed.Index);
                 }
                 else if (_mediaList?.Status != null)
                 { 
                     statusSpinner.SetSelection(_mediaList.Status.Index);
                 }
-                else if (_media.Status == Media.MediaStatus.Releasing  || _media.Status == Media.MediaStatus.Cancelled)
+                else if (_media.Status == MediaStatus.Releasing  || _media.Status == MediaStatus.Cancelled)
                 {
-                    statusSpinner.SetSelection(Media.MediaListStatus.Current.Index);
+                    statusSpinner.SetSelection(MediaListStatus.Current.Index);
                 }
                 else
                 {
-                    statusSpinner.SetSelection(Media.MediaListStatus.Planning.Index);
+                    statusSpinner.SetSelection(MediaListStatus.Planning.Index);
                 }
 
                 statusSpinner.ItemSelected += (sender, args) =>
                 {
-                    var statusEnum = AniListEnum.GetEnum<Media.MediaListStatus>(args.Position);
+                    var statusEnum = AniListEnum.GetEnum<MediaListStatus>(args.Position);
 
-                    if (statusEnum.Equals(Media.MediaListStatus.Completed))
+                    if (statusEnum.Equals(MediaListStatus.Completed))
                     {
                         if (!_initialProgress.HasValue)
                         {
@@ -276,7 +280,7 @@ namespace AniDroid.Dialogs
 
                         _progressPicker.SetValue(_media.Episodes);
                     }
-                    else if (statusEnum.Equals(Media.MediaListStatus.Current))
+                    else if (statusEnum.Equals(MediaListStatus.Current))
                     {
                         if (!_startDateView.SelectedDate.HasValue)
                         {
@@ -290,13 +294,13 @@ namespace AniDroid.Dialogs
                             _initialProgress = null;
                         }
                     }
-                    else if (statusEnum.Equals(Media.MediaListStatus.Planning) && _mediaList == null)
+                    else if (statusEnum.Equals(MediaListStatus.Planning) && _mediaList == null)
                     {
                         _startDateView.SelectedDate = null;
                         _finishDateView.SelectedDate = null;
                         _scorePicker.SetValue(null);
                     }
-                    else if (statusEnum.EqualsAny(Media.MediaListStatus.Paused, Media.MediaListStatus.Dropped, Media.MediaListStatus.Repeating, Media.MediaListStatus.Planning))
+                    else if (statusEnum.EqualsAny(MediaListStatus.Paused, MediaListStatus.Dropped, MediaListStatus.Repeating, MediaListStatus.Planning))
                     {
                         if (_initialProgress.HasValue)
                         {
@@ -309,7 +313,7 @@ namespace AniDroid.Dialogs
 
             private void SetupProgress(Picker progressPicker, TextView progressLabel)
             {
-                if (_media.Type == Media.MediaType.Anime)
+                if (_media.Type == MediaType.Anime)
                 {
                     var episodes = _media.Episodes > 0
                         ? _media.Episodes.Value
@@ -317,7 +321,7 @@ namespace AniDroid.Dialogs
 
                     progressPicker.SetNumericValues(episodes, 0, false, _completeMedia ? episodes : _mediaList?.Progress);
                 }
-                else if (_media.Type == Media.MediaType.Manga)
+                else if (_media.Type == MediaType.Manga)
                 {
                     progressLabel.Text = "Chapters";
                     progressPicker.SetNumericValues(_media.Chapters > 0 ? _media.Chapters.Value : DefaultMaxPickerValue, 0, false, _completeMedia ? _media.Chapters : _mediaList?.Progress);
@@ -326,7 +330,7 @@ namespace AniDroid.Dialogs
 
             private void SetupVolumeProgress(View volumeProgressContainer, Picker volumeProgressPicker)
             {
-                if (_media.Type != Media.MediaType.Manga)
+                if (_media.Type != MediaType.Manga)
                 {
                     volumeProgressContainer.Visibility = ViewStates.Gone;
                     return;
@@ -338,7 +342,7 @@ namespace AniDroid.Dialogs
 
             private void SetupRepeat(Picker rewatchedPicker, TextView rewatchedLabel)
             {
-                if (_media.Type == Media.MediaType.Manga)
+                if (_media.Type == MediaType.Manga)
                 {
                     rewatchedLabel.Text = "Reread";
                 }
@@ -381,7 +385,7 @@ namespace AniDroid.Dialogs
 
             private void SetupCustomLists(View customListsContainer, LinearLayout customLists)
             {
-                var lists = _media.Type == Media.MediaType.Anime
+                var lists = _media.Type == MediaType.Anime
                     ? _mediaListOptions?.AnimeList?.CustomLists
                     : _mediaListOptions?.MangaList?.CustomLists;
 
@@ -470,11 +474,11 @@ namespace AniDroid.Dialogs
                 var editDto = new MediaListEditDto
                 {
                     MediaId = _media.Id,
-                    Status = AniListEnum.GetEnum<Media.MediaListStatus>(_statusSpinner.SelectedItemPosition),
+                    Status = AniListEnum.GetEnum<MediaListStatus>(_statusSpinner.SelectedItemPosition),
                     Score = _scorePicker.GetValue() ?? 0,
                     Progress = (int?) _progressPicker.GetValue(),
                     ProgressVolumes =
-                        _media.Type == Media.MediaType.Manga ? (int?) _progressVolumesPicker.GetValue() : null,
+                        _media.Type == MediaType.Manga ? (int?) _progressVolumesPicker.GetValue() : null,
                     Repeat = (int?) _repeatPicker.GetValue(),
                     Notes = _notesView.Text,
                     Private = _isPrivate,
@@ -486,8 +490,8 @@ namespace AniDroid.Dialogs
                     AdvancedScores = _advancedScores
                 };
 
-                if ((_mediaListOptions.ScoreFormat == User.ScoreFormat.FiveStars ||
-                     _mediaListOptions.ScoreFormat == User.ScoreFormat.ThreeSmileys) && editDto.Score.HasValue)
+                if ((_mediaListOptions.ScoreFormat == ScoreFormat.FiveStars ||
+                     _mediaListOptions.ScoreFormat == ScoreFormat.ThreeSmileys) && editDto.Score.HasValue)
                 {
                     editDto.Score += 1;
                 }

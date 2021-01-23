@@ -10,14 +10,15 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.StudioModels;
 
 namespace AniDroid.Adapters.ViewModels
 {
-    public class StudioEdgeViewModel : AniDroidAdapterViewModel<Studio.Edge>
+    public class StudioEdgeViewModel : AniDroidAdapterViewModel<StudioEdge>
     {
         public override ViewStates ImageVisibility => ViewStates.Gone;
 
-        public StudioEdgeViewModel(Studio.Edge model, StudioEdgeDetailType primaryStudioEdgeDetailType,
+        public StudioEdgeViewModel(StudioEdge model, StudioEdgeDetailType primaryStudioEdgeDetailType,
             StudioEdgeDetailType secondaryStudioEdgeDetailType) : base(model)
         {
             TitleText = Model.Node?.Name;
@@ -31,7 +32,7 @@ namespace AniDroid.Adapters.ViewModels
             IsMainStudio
         }
 
-        public static StudioEdgeViewModel CreateStudioEdgeViewModel(Studio.Edge model)
+        public static StudioEdgeViewModel CreateStudioEdgeViewModel(StudioEdge model)
         {
             return new StudioEdgeViewModel(model, StudioEdgeDetailType.IsMainStudio, StudioEdgeDetailType.None);
         }

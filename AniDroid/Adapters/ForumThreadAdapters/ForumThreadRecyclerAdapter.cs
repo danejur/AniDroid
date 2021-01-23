@@ -13,6 +13,7 @@ using AniDroid.Adapters.Base;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.ForumModels;
 using AniDroid.Base;
 using OneOf;
 

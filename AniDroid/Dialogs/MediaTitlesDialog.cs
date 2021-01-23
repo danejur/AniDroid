@@ -10,13 +10,14 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.MediaModels;
 using AniDroid.Base;
 
 namespace AniDroid.Dialogs
 {
     public class MediaTitlesDialog
     {
-        public static void Create(BaseAniDroidActivity context, Media.MediaTitle title, ICollection<string> alternateNames)
+        public static void Create(BaseAniDroidActivity context, MediaTitle title, ICollection<string> alternateNames)
         {
             var dialogView = context.LayoutInflater.Inflate(Resource.Layout.Dialog_MediaTitles, null);
 

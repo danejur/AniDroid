@@ -16,6 +16,8 @@ using AniDroid.Adapters.Base;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.MediaModels;
+using AniDroid.AniList.Models.UserModels;
 using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 using OneOf;
@@ -24,7 +26,7 @@ namespace AniDroid.Adapters.MediaAdapters
 {
     public class MediaRecyclerAdapter : AniDroidRecyclerAdapter<MediaViewModel, Media>
     {
-        public User.UserMediaListOptions UserMediaListOptions { get; set; }
+        public UserMediaListOptions UserMediaListOptions { get; set; }
 
         private int? _cardWidth;
 

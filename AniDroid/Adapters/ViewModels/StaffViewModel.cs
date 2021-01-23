@@ -10,12 +10,13 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.StaffModels;
 
 namespace AniDroid.Adapters.ViewModels
 {
     public class StaffViewModel : AniDroidAdapterViewModel<Staff>
     {
-        public Staff.Edge ModelEdge { get; protected set; }
+        public StaffEdge ModelEdge { get; protected set; }
 
         public StaffViewModel(Staff model, StaffDetailType primaryStaffDetailType, StaffDetailType secondaryStaffDetailType, bool isButtonVisible) : base(model)
         {

@@ -14,6 +14,7 @@ using AniDroid.Adapters.Base;
 using AniDroid.Adapters.StaffAdapters;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.StaffModels;
 using AniDroid.AniList.Utils.Internal;
 using AniDroid.Base;
 

@@ -11,6 +11,7 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Dto;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.MediaModels;
 
 namespace AniDroid.Browse
 {
@@ -18,7 +19,7 @@ namespace AniDroid.Browse
     {
         void BrowseAniListMedia(BrowseMediaDto browseDto);
         BrowseMediaDto GetBrowseDto();
-        IList<Media.MediaTag> GetMediaTags();
+        IList<MediaTag> GetMediaTags();
         IList<string> GetGenres();
     }
 }

@@ -12,6 +12,8 @@ using Android.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.MediaModels;
+using AniDroid.AniList.Models.UserModels;
 using AniDroid.Base;
 using AniDroid.Main;
 using AniDroid.Utils.Comparers;
@@ -69,9 +71,9 @@ namespace AniDroid.Utils
             set => _authSettingStorage.Put(UnauthenticatedKeys.UseSwipeToRefreshHomeScreenKey, value);
         }
 
-        public IList<Media.MediaTag> MediaTagCache
+        public IList<MediaTag> MediaTagCache
         {
-            get => _settingStorage.Get(UnauthenticatedKeys.MediaTagCacheKey, new List<Media.MediaTag>());
+            get => _settingStorage.Get(UnauthenticatedKeys.MediaTagCacheKey, new List<MediaTag>());
             set => _settingStorage.Put(UnauthenticatedKeys.MediaTagCacheKey, value);
         }
 
@@ -234,7 +236,7 @@ namespace AniDroid.Utils
             UpdateUserMediaListTabs(user.MediaListOptions);
         }
 
-        public void UpdateUserMediaListTabs(User.UserMediaListOptions mediaListOptions)
+        public void UpdateUserMediaListTabs(UserMediaListOptions mediaListOptions)
         {
             if (AnimeListOrder == null)
             {

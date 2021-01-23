@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.ActivityModels;
 using AniDroid.Base;
 
 namespace AniDroid.AniListObject.User
@@ -21,7 +22,7 @@ namespace AniDroid.AniListObject.User
         void SetIsFollowing(bool isFollowing, bool showNotification);
         void SetCanFollow();
         void SetCanMessage();
-        void SetupUserView(AniList.Models.User user);
+        void SetupUserView(AniList.Models.UserModels.User user);
         void RefreshUserActivity();
         void UpdateActivity(int activityPosition, AniListActivity activity);
         void RemoveActivity(int activityPosition);

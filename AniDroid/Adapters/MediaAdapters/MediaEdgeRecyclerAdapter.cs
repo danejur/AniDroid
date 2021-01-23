@@ -14,17 +14,18 @@ using AniDroid.Adapters.Base;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.MediaModels;
 using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 using OneOf;
 
 namespace AniDroid.Adapters.MediaAdapters
 {
-    public class MediaEdgeRecyclerAdapter : AniDroidRecyclerAdapter<MediaEdgeViewModel, Media.Edge>
+    public class MediaEdgeRecyclerAdapter : AniDroidRecyclerAdapter<MediaEdgeViewModel, MediaEdge>
     {
         public MediaEdgeRecyclerAdapter(BaseAniDroidActivity context,
-            IAsyncEnumerable<OneOf<IPagedData<Media.Edge>, IAniListError>> enumerable, RecyclerCardType cardType,
-            Func<Media.Edge, MediaEdgeViewModel> createViewModelFunc) : base(context, enumerable, cardType,
+            IAsyncEnumerable<OneOf<IPagedData<MediaEdge>, IAniListError>> enumerable, RecyclerCardType cardType,
+            Func<MediaEdge, MediaEdgeViewModel> createViewModelFunc) : base(context, enumerable, cardType,
             createViewModelFunc)
         {
             SetDefaultClickActions();

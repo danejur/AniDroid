@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Models;
 
 namespace AniDroid.MediaList
@@ -7,11 +8,11 @@ namespace AniDroid.MediaList
     public class MediaListFilterModel
     {
         public string Title { get; set; }
-        public Media.MediaSeason Season { get; set; }
-        public Media.MediaStatus Status { get; set; } = null;
-        public Media.MediaFormat Format { get; set; }
+        public MediaSeason Season { get; set; }
+        public MediaStatus Status { get; set; } = null;
+        public MediaFormat Format { get; set; }
         public int? Year { get; set; }
-        public Media.MediaSource Source { get; set; }
+        public MediaSource Source { get; set; }
 
         public ICollection<string> IncludedGenres { get; set; }
         public ICollection<string> IncludedTags { get; set; }

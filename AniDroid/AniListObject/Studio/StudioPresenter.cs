@@ -12,6 +12,7 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Dto;
 using AniDroid.AniList.Interfaces;
+using AniDroid.AniList.Models.MediaModels;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
 using AniDroid.Utils.Logging;
@@ -43,7 +44,7 @@ namespace AniDroid.AniListObject.Studio
                 .Switch(error => View.OnError(error));
         }
 
-        public IAsyncEnumerable<OneOf<IPagedData<AniList.Models.Media.Edge>, IAniListError>> GetStudioMediaEnumerable(int studioId, int perPage)
+        public IAsyncEnumerable<OneOf<IPagedData<MediaEdge>, IAniListError>> GetStudioMediaEnumerable(int studioId, int perPage)
         {
             return AniListService.GetStudioMedia(studioId, perPage);
         }

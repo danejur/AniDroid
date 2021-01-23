@@ -18,6 +18,7 @@ using AniDroid.Adapters.AniListActivityAdapters;
 using AniDroid.AniList.Models;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.ViewModels;
+using AniDroid.AniList.Models.ActivityModels;
 using AniDroid.AniListObject;
 using AniDroid.AniListObject.User;
 using AniDroid.Base;

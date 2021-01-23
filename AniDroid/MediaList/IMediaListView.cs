@@ -10,8 +10,10 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Dto;
+using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.MediaModels;
 using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 
@@ -19,9 +21,9 @@ namespace AniDroid.MediaList
 {
     public interface IMediaListView : IAniDroidView
     {
-        Media.MediaType GetMediaType();
-        void SetCollection(Media.MediaListCollection collection);
-        void UpdateMediaListItem(Media.MediaList mediaList);
+        MediaType GetMediaType();
+        void SetCollection(MediaListCollection collection);
+        void UpdateMediaListItem(AniList.Models.MediaModels.MediaList mediaList);
         void ResetMediaListItem(int mediaId);
         void RemoveMediaListItem(int mediaListId);
         MediaListFilterModel GetMediaListFilter();

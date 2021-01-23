@@ -12,6 +12,8 @@ using Android.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.MediaModels;
+using AniDroid.AniList.Models.UserModels;
 using AniDroid.Base;
 using AniDroid.Main;
 using AniDroid.Utils.Comparers;
@@ -28,7 +30,7 @@ namespace AniDroid.Utils.Interfaces
         bool DisplayBanners { get; set; }
         bool DisplayUpcomingEpisodeTimeAsCountdown { get; set; }
         bool UseSwipeToRefreshHomeScreen { get; set; }
-        IList<Media.MediaTag> MediaTagCache { get; set; }
+        IList<MediaTag> MediaTagCache { get; set; }
         IList<string> GenreCache { get; set; }
 
         #endregion
@@ -75,7 +77,7 @@ namespace AniDroid.Utils.Interfaces
         #region Methods
 
         void UpdateLoggedInUser(User user);
-        void UpdateUserMediaListTabs(User.UserMediaListOptions mediaListOptions);
+        void UpdateUserMediaListTabs(UserMediaListOptions mediaListOptions);
 
         #endregion
         

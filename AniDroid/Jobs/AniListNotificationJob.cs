@@ -12,6 +12,7 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.ActivityModels;
 using AniDroid.Base;
 using AniDroid.Main;
 using AniDroid.Utils;

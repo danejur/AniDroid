@@ -10,12 +10,13 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.RecommendationModels;
 
 namespace AniDroid.Adapters.ViewModels
 {
-    public class RecommendationEdgeViewModel : AniDroidAdapterViewModel<Recommendation.Edge>
+    public class RecommendationEdgeViewModel : AniDroidAdapterViewModel<ConnectionEdge<Recommendation>>
     {
-        private RecommendationEdgeViewModel(Recommendation.Edge model, RecommendationDetailType primaryRecommendationDetailType, RecommendationDetailType secondaryRecommendationDetailType) : base(model)
+        private RecommendationEdgeViewModel(ConnectionEdge<Recommendation> model, RecommendationDetailType primaryRecommendationDetailType, RecommendationDetailType secondaryRecommendationDetailType) : base(model)
         {
             TitleText = Model.Node.MediaRecommendation.Title?.UserPreferred;
             DetailPrimaryText = GetDetail(primaryRecommendationDetailType);
@@ -30,7 +31,7 @@ namespace AniDroid.Adapters.ViewModels
             Rating
         }
 
-        public static RecommendationEdgeViewModel CreateRecommendationViewModel(Recommendation.Edge model)
+        public static RecommendationEdgeViewModel CreateRecommendationViewModel(ConnectionEdge<Recommendation> model)
         {
             return new RecommendationEdgeViewModel(model, RecommendationDetailType.Genres, RecommendationDetailType.Rating);
         }

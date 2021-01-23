@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.CharacterModels;
 
 namespace AniDroid.Adapters.ViewModels
 {

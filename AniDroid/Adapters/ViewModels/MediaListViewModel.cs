@@ -11,24 +11,26 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.MediaAdapters;
+using AniDroid.AniList.Enums.MediaEnums;
+using AniDroid.AniList.Enums.UserEnums;
 using AniDroid.AniList.Models;
 
 namespace AniDroid.Adapters.ViewModels
 {
-    public class MediaListViewModel : AniDroidAdapterViewModel<Media.MediaList>
+    public class MediaListViewModel : AniDroidAdapterViewModel<AniList.Models.MediaModels.MediaList>
     {
         public bool IsPriority { get; protected set; }
         public MediaListWatchingStatus WatchingStatus { get; protected set; }
         public Color ImageColor { get; protected set; }
 
         private readonly bool _displayTimeUntilAiringCountdown;
-        private readonly User.ScoreFormat _scoreFormat;
+        private readonly ScoreFormat _scoreFormat;
         private readonly MediaListRecyclerAdapter.MediaListProgressDisplayType _progressDisplayType;
 
-        public MediaListViewModel(Media.MediaList model, MediaListDetailType primaryMediaListDetailType,
+        public MediaListViewModel(AniList.Models.MediaModels.MediaList model, MediaListDetailType primaryMediaListDetailType,
             MediaListDetailType secondaryMediaListDetailType, bool displayTimeUntilAiringCountdown,
             MediaListRecyclerAdapter.MediaListProgressDisplayType progressDisplayType,
-            User.ScoreFormat scoreFormat) : base(model)
+            ScoreFormat scoreFormat) : base(model)
         {
             _displayTimeUntilAiringCountdown = displayTimeUntilAiringCountdown;
             _scoreFormat = scoreFormat;
@@ -44,16 +46,16 @@ namespace AniDroid.Adapters.ViewModels
             WatchingStatus = GetWatchingStatus();
         }
 
-        public static MediaListViewModel CreateViewModel(Media.MediaList model, User.ScoreFormat scoreFormat, bool displayTimeUntilAiringCountdown,
+        public static MediaListViewModel CreateViewModel(AniList.Models.MediaModels.MediaList model, ScoreFormat scoreFormat, bool displayTimeUntilAiringCountdown,
             MediaListRecyclerAdapter.MediaListProgressDisplayType progressDisplayType, bool readOnly, bool showEpisodeAddButtonForRepeatingMedia)
         {
             var secondaryDetail = MediaListDetailType.Progress;
 
-            if (model.Status?.Equals(Media.MediaListStatus.Planning) == true)
+            if (model.Status?.Equals(MediaListStatus.Planning) == true)
             {
                 secondaryDetail = MediaListDetailType.EpisodeCountOrMovieLength;
             }
-            else if (model.Status?.Equals(Media.MediaListStatus.Completed) == true)
+            else if (model.Status?.Equals(MediaListStatus.Completed) == true)
             {
                 secondaryDetail = MediaListDetailType.Rating;
             }
@@ -61,11 +63,11 @@ namespace AniDroid.Adapters.ViewModels
             return new MediaListViewModel(model, MediaListDetailType.FormatAndAiringInfo, secondaryDetail, displayTimeUntilAiringCountdown,
                 progressDisplayType, scoreFormat)
             {
-                IsButtonVisible = !readOnly && (model.Status?.Equals(Media.MediaListStatus.Current) == true || showEpisodeAddButtonForRepeatingMedia && model.Status?.Equals(Media.MediaListStatus.Repeating) == true)
+                IsButtonVisible = !readOnly && (model.Status?.Equals(MediaListStatus.Current) == true || showEpisodeAddButtonForRepeatingMedia && model.Status?.Equals(MediaListStatus.Repeating) == true)
             };
         }
 
-        public static MediaListViewModel CreateUserMediaListViewModel(Media.MediaList model)
+        public static MediaListViewModel CreateUserMediaListViewModel(AniList.Models.MediaModels.MediaList model)
         {
             var retModel = new MediaListViewModel(model, MediaListDetailType.None, MediaListDetailType.None, false,
                 MediaListRecyclerAdapter.MediaListProgressDisplayType.Never, null)
@@ -75,10 +77,10 @@ namespace AniDroid.Adapters.ViewModels
                 ImageUri = model.User?.Avatar?.Large ?? model.User?.Avatar?.Medium
             };
 
-            retModel.DetailSecondaryText = model.Media?.Status?.Equals(Media.MediaStatus.Releasing) == true &&
-                                           model.Status?.EqualsAny(Media.MediaListStatus.Current,
-                                               Media.MediaListStatus.Paused, Media.MediaListStatus.Dropped,
-                                               Media.MediaListStatus.Planning) == true
+            retModel.DetailSecondaryText = model.Media?.Status?.Equals(MediaStatus.Releasing) == true &&
+                                           model.Status?.EqualsAny(MediaListStatus.Current,
+                                               MediaListStatus.Paused, MediaListStatus.Dropped,
+                                               MediaListStatus.Planning) == true
                 ? retModel.GetDetailString(model.Media.Type, MediaListDetailType.Progress)
                 : model.GetScoreString(model.User?.MediaListOptions?.ScoreFormat);
 
@@ -107,11 +109,11 @@ namespace AniDroid.Adapters.ViewModels
         {
             int? totalCount = 0;
 
-            if (Model.Media?.Type?.Equals(Media.MediaType.Anime) == true)
+            if (Model.Media?.Type?.Equals(MediaType.Anime) == true)
             {
                 totalCount = Model.Media.Episodes;
             }
-            else if (Model.Media?.Type?.Equals(Media.MediaType.Manga) == true)
+            else if (Model.Media?.Type?.Equals(MediaType.Manga) == true)
             {
                 totalCount = Model.Media.Chapters;
             }
@@ -121,15 +123,15 @@ namespace AniDroid.Adapters.ViewModels
                 : Resource.Drawable.svg_plus_circle_outline;
         }
 
-        private string GetDetailString(Media.MediaType mediaType, MediaListDetailType detailType)
+        private string GetDetailString(MediaType mediaType, MediaListDetailType detailType)
         {
             string retString = null;
 
-            if (mediaType?.Equals(Media.MediaType.Anime) == true)
+            if (mediaType?.Equals(MediaType.Anime) == true)
             {
                 retString = GetAnimeDetailString(detailType);
             }
-            else if (mediaType?.Equals(Media.MediaType.Manga) == true)
+            else if (mediaType?.Equals(MediaType.Manga) == true)
             {
                 retString = GetMangaDetailString(detailType);
             }
@@ -160,7 +162,7 @@ namespace AniDroid.Adapters.ViewModels
             }
             else if (detailType == MediaListDetailType.EpisodeCountOrMovieLength)
             {
-                if (Model.Media?.Format?.Equals(Media.MediaFormat.Movie) == true)
+                if (Model.Media?.Format?.Equals(MediaFormat.Movie) == true)
                 {
                     retString = Model.Media.Duration.HasValue
                         ? Model.Media.GetExactDurationString(Model.Media.Duration.Value * 60)
@@ -244,15 +246,15 @@ namespace AniDroid.Adapters.ViewModels
             var shouldDisplayStatus = _progressDisplayType == MediaListRecyclerAdapter.MediaListProgressDisplayType.Always;
             shouldDisplayStatus |= _progressDisplayType ==
                                   MediaListRecyclerAdapter.MediaListProgressDisplayType.Releasing &&
-                                  Model.Media?.Status?.Equals(Media.MediaStatus.Releasing) == true;
+                                  Model.Media?.Status?.Equals(MediaStatus.Releasing) == true;
             shouldDisplayStatus |= _progressDisplayType ==
                                    MediaListRecyclerAdapter.MediaListProgressDisplayType.ReleasingExtended &&
-                                   (Model.Media?.Status?.Equals(Media.MediaStatus.Releasing) == true ||
-                                   Model.Media?.Status?.Equals(Media.MediaStatus.Finished) == true &&
+                                   (Model.Media?.Status?.Equals(MediaStatus.Releasing) == true ||
+                                   Model.Media?.Status?.Equals(MediaStatus.Finished) == true &&
                                    Model.Media?.EndDate?.GetDate() > DateTime.Now.AddDays(-7));
 
-            if (!shouldDisplayStatus || Model.Media?.Type?.Equals(Media.MediaType.Anime) != true ||
-                Model.Status?.Equals(Media.MediaListStatus.Current) != true)
+            if (!shouldDisplayStatus || Model.Media?.Type?.Equals(MediaType.Anime) != true ||
+                Model.Status?.Equals(MediaListStatus.Current) != true)
             {
                 return MediaListWatchingStatus.None;
             }

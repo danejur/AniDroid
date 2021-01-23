@@ -11,8 +11,10 @@ using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Dto;
+using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.UserModels;
 using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
@@ -37,32 +39,32 @@ namespace AniDroid.Discover
         {
             View.ShowCurrentlyAiringResults(AniListService.BrowseMedia(new BrowseMediaDto
             {
-                Season = Media.MediaSeason.GetFromDate(DateTime.Now),
+                Season = MediaSeason.GetFromDate(DateTime.Now),
                 SeasonYear = DateTime.Now.Year,
-                Type = Media.MediaType.Anime,
-                Sort = new List<Media.MediaSort> { Media.MediaSort.PopularityDesc }
+                Type = MediaType.Anime,
+                Sort = new List<MediaSort> { MediaSort.PopularityDesc }
             }, 5));
             View.ShowTrendingAnimeResults(AniListService.BrowseMedia(new BrowseMediaDto
             {
-                Type = Media.MediaType.Anime,
-                Sort = new List<Media.MediaSort> {Media.MediaSort.TrendingDesc}
+                Type = MediaType.Anime,
+                Sort = new List<MediaSort> {MediaSort.TrendingDesc}
             }, 5));
             View.ShowTrendingMangaResults(AniListService.BrowseMedia(new BrowseMediaDto
             {
-                Type = Media.MediaType.Manga,
-                Sort = new List<Media.MediaSort> { Media.MediaSort.TrendingDesc }
+                Type = MediaType.Manga,
+                Sort = new List<MediaSort> { MediaSort.TrendingDesc }
             }, 5));
             View.ShowNewAnimeResults(AniListService.BrowseMedia(
                 new BrowseMediaDto
                 {
-                    Type = Media.MediaType.Anime,
-                    Sort = new List<Media.MediaSort> { Media.MediaSort.IdDesc }
+                    Type = MediaType.Anime,
+                    Sort = new List<MediaSort> { MediaSort.IdDesc }
                 }, 5));
             View.ShowNewMangaResults(AniListService.BrowseMedia(
                 new BrowseMediaDto
                 {
-                    Type = Media.MediaType.Manga,
-                    Sort = new List<Media.MediaSort> { Media.MediaSort.IdDesc }
+                    Type = MediaType.Manga,
+                    Sort = new List<MediaSort> { MediaSort.IdDesc }
                 }, 5));
         }
 

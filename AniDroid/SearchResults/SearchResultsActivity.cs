@@ -17,8 +17,15 @@ using AniDroid.Adapters.StaffAdapters;
 using AniDroid.Adapters.StudioAdapters;
 using AniDroid.Adapters.UserAdapters;
 using AniDroid.Adapters.ViewModels;
+using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.CharacterModels;
+using AniDroid.AniList.Models.ForumModels;
+using AniDroid.AniList.Models.MediaModels;
+using AniDroid.AniList.Models.StaffModels;
+using AniDroid.AniList.Models.StudioModels;
+using AniDroid.AniList.Models.UserModels;
 using AniDroid.Base;
 using AniDroid.Dialogs;
 using AniDroid.MediaList;
@@ -101,15 +108,15 @@ namespace AniDroid.SearchResults
                 new StudioRecyclerAdapter(this, studioEnumerable, StudioViewModel.CreateStudioViewModel));
         }
 
-        public void UpdateMediaListItem(Media.MediaList mediaList)
+        public void UpdateMediaListItem(AniList.Models.MediaModels.MediaList mediaList)
         {
-            if (mediaList.Media?.Type == Media.MediaType.Anime)
+            if (mediaList.Media?.Type == MediaType.Anime)
             {
                 var instance = MediaListFragment.GetInstance(MediaListFragment.AnimeMediaListFragmentName);
 
                 (instance as MediaListFragment)?.UpdateMediaListItem(mediaList);
             }
-            else if (mediaList.Media?.Type == Media.MediaType.Manga)
+            else if (mediaList.Media?.Type == MediaType.Manga)
             {
                 (MediaListFragment.GetInstance(MediaListFragment.MangaMediaListFragmentName) as MediaListFragment)
                     ?.UpdateMediaListItem(mediaList);

@@ -18,8 +18,10 @@ using Android.Views.Animations;
 using Android.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.AniList;
+using AniDroid.AniList.Enums.ActivityEnums;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.ActivityModels;
 using AniDroid.AniListObject;
 using AniDroid.AniListObject.Media;
 using AniDroid.AniListObject.User;
@@ -107,16 +109,16 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             viewHolder.Container.LongClick -= RowLongClick;
             viewHolder.Container.LongClick += RowLongClick;
 
-            if (item.Type == AniListActivity.ActivityType.Text)
+            if (item.Type == ActivityType.Text)
             {
                 BindTextActivityViewHolder(viewHolder, item);
             }
-            else if (item.Type == AniListActivity.ActivityType.Message)
+            else if (item.Type == ActivityType.Message)
             {
                 BindMessageActivityViewHolder(viewHolder, item);
             }
-            else if (item.Type == AniListActivity.ActivityType.AnimeList ||
-                     item.Type == AniListActivity.ActivityType.MangaList)
+            else if (item.Type == ActivityType.AnimeList ||
+                     item.Type == ActivityType.MangaList)
             {
                 BindListActivityViewHolder(viewHolder, item);
             }
@@ -179,7 +181,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             var position = (int)image.GetTag(Resource.Id.Object_Position);
             var item = Items[position];
 
-            if (item.Type == AniListActivity.ActivityType.Text)
+            if (item.Type == ActivityType.Text)
             {
                 if (item.User?.Id == null)
                 {
@@ -188,7 +190,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
 
                 UserActivity.StartActivity(Context, item.User.Id);
             }
-            else if (item.Type == AniListActivity.ActivityType.Message)
+            else if (item.Type == ActivityType.Message)
             {
                 if (item.Messenger?.Id == null)
                 {
@@ -197,7 +199,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
 
                 UserActivity.StartActivity(Context, item.Messenger.Id);
             }
-            else if (item.Type == AniListActivity.ActivityType.AnimeList || item.Type == AniListActivity.ActivityType.MangaList)
+            else if (item.Type == ActivityType.AnimeList || item.Type == ActivityType.MangaList)
             {
                 if (item.Media?.Id == null)
                 {
@@ -214,11 +216,11 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             var position = (int)view.GetTag(Resource.Id.Object_Position);
             var item = Items[position];
 
-            if (item.Type == AniListActivity.ActivityType.Text || item.Type == AniListActivity.ActivityType.AnimeList || item.Type == AniListActivity.ActivityType.MangaList)
+            if (item.Type == ActivityType.Text || item.Type == ActivityType.AnimeList || item.Type == ActivityType.MangaList)
             {
                 UserActivity.StartActivity(Context, item.User.Id);
             }
-            else if (item.Type == AniListActivity.ActivityType.Message)
+            else if (item.Type == ActivityType.Message)
             {
                 UserActivity.StartActivity(Context, item.Messenger.Id);
             }
@@ -230,7 +232,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             var position = (int)view.GetTag(Resource.Id.Object_Position);
             var item = Items[position];
 
-            if (item.Type == AniListActivity.ActivityType.Text && item.UserId == _userId)
+            if (item.Type == ActivityType.Text && item.UserId == _userId)
             {
                 AniListActivityCreateDialog.CreateEditActivity(Context, item.Text,
                     text => _presenter.EditStatusActivityAsync(item, position, text),

@@ -11,18 +11,20 @@ using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.AniList.Dto;
+using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.MediaModels;
 using AniDroid.Base;
 using AniDroid.Browse;
 
 namespace AniDroid.Adapters.MediaAdapters
 {
-    public class MediaTagsRecyclerAdapter : BaseRecyclerAdapter<Media.MediaTag>
+    public class MediaTagsRecyclerAdapter : BaseRecyclerAdapter<MediaTag>
     {
         private readonly List<bool> _spoilerTags;
-        private readonly Media.MediaType _mediaType;
+        private readonly MediaType _mediaType;
 
-        public MediaTagsRecyclerAdapter(BaseAniDroidActivity context, List<Media.MediaTag> items, Media.MediaType mediaType) : base(context, items, RecyclerCardType.Horizontal)
+        public MediaTagsRecyclerAdapter(BaseAniDroidActivity context, List<MediaTag> items, MediaType mediaType) : base(context, items, RecyclerCardType.Horizontal)
         {
             _spoilerTags = items.Select(x => x.IsGeneralSpoiler || x.IsMediaSpoiler).ToList();
             _mediaType = mediaType;

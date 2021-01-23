@@ -10,6 +10,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.ActivityModels;
 
 namespace AniDroid.AniListObject
 {
@@ -19,10 +20,10 @@ namespace AniDroid.AniListObject
         Task PostActivityReplyAsync(AniListActivity activity, int activityPosition, string activityText);
         Task EditStatusActivityAsync(AniListActivity activity, int activityPosition, string updateText);
         Task DeleteActivityAsync(int activityId, int activityPosition);
-        Task ToggleActivityReplyLikeAsync(AniListActivity.ActivityReply activityReply, int activityPosition);
-        Task EditActivityReplyAsync(AniListActivity.ActivityReply activityReply, int activityPosition,
+        Task ToggleActivityReplyLikeAsync(ActivityReply activityReply, int activityPosition);
+        Task EditActivityReplyAsync(ActivityReply activityReply, int activityPosition,
             string updateText);
-        Task<bool> DeleteActivityReplyAsync(AniListActivity.ActivityReply activityReply, int activityPosition);
+        Task<bool> DeleteActivityReplyAsync(ActivityReply activityReply, int activityPosition);
         Task UpdateActivityAsync(AniListActivity activity, int activityPosition);
     }
 }

@@ -11,7 +11,9 @@ using Android.Runtime;
 using Android.Text;
 using Android.Views;
 using Android.Widget;
+using AniDroid.AniList.Enums.ActivityEnums;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.ActivityModels;
 using AniDroid.AniListObject.Media;
 using AniDroid.AniListObject.User;
 using AniDroid.Base;
@@ -46,19 +48,19 @@ namespace AniDroid.Adapters.ViewModels
             Action retAction = () => { };
             var actionType = Model.GetNotificationActionType();
 
-            if (actionType.Equals(AniListNotification.NotificationActionType.Media))
+            if (actionType.Equals(NotificationActionType.Media))
             {
                 retAction = () => MediaActivity.StartActivity(_context, Model.Media.Id);
             }
-            else if (actionType.Equals(AniListNotification.NotificationActionType.User))
+            else if (actionType.Equals(NotificationActionType.User))
             {
                 retAction = () => UserActivity.StartActivity(_context, Model.User.Id);
             }
-            else if (actionType.Equals(AniListNotification.NotificationActionType.Activity))
+            else if (actionType.Equals(NotificationActionType.Activity))
             {
                 retAction = () => _context.StartActivity(new Intent(Intent.ActionView, Android.Net.Uri.Parse($"https://anilist.co/activity/{Model.ActivityId}")));
             }
-            else if (actionType.EqualsAny(AniListNotification.NotificationActionType.Thread, AniListNotification.NotificationActionType.Comment))
+            else if (actionType.EqualsAny(NotificationActionType.Thread, NotificationActionType.Comment))
             {
                 retAction = () => _context.StartActivity(new Intent(Intent.ActionView,
                     Android.Net.Uri.Parse(

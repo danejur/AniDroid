@@ -10,6 +10,8 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Dto;
+using AniDroid.AniList.Enums;
+using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
@@ -20,27 +22,27 @@ namespace AniDroid.CurrentSeason
 {
     public class CurrentSeasonPresenter : BaseAniDroidPresenter<ICurrentSeasonView>
     {
-        private Media.MediaSort _sortType;
+        private MediaSort _sortType;
 
         public CurrentSeasonPresenter(IAniListService service, IAniDroidSettings settings,
             IAniDroidLogger logger) : base(service, settings, logger)
         {
             var titleLanguage = settings?.LoggedInUser?.Options?.TitleLanguage ??
-                             AniList.Models.AniListObject.AniListTitleLanguage.English;
+                             MediaTitleLanguage.English;
 
-            if (titleLanguage.Equals(AniList.Models.AniListObject.AniListTitleLanguage.Native) ||
-                titleLanguage.Equals(AniList.Models.AniListObject.AniListTitleLanguage.NativeStylised))
+            if (titleLanguage.Equals(MediaTitleLanguage.Native) ||
+                titleLanguage.Equals(MediaTitleLanguage.NativeStylised))
             {
-                _sortType = Media.MediaSort.TitleEnglish;
+                _sortType = MediaSort.TitleEnglish;
             }
-            else if (titleLanguage.Equals(AniList.Models.AniListObject.AniListTitleLanguage.Romaji) ||
-                     titleLanguage.Equals(AniList.Models.AniListObject.AniListTitleLanguage.RomajiStylised))
+            else if (titleLanguage.Equals(MediaTitleLanguage.Romaji) ||
+                     titleLanguage.Equals(MediaTitleLanguage.RomajiStylised))
             {
-                _sortType = Media.MediaSort.TitleRomaji;
+                _sortType = MediaSort.TitleRomaji;
             }
             else
             {
-                _sortType = Media.MediaSort.TitleEnglish;
+                _sortType = MediaSort.TitleEnglish;
             }
         }
 
@@ -53,11 +55,11 @@ namespace AniDroid.CurrentSeason
         {
             View.ShowCurrentTv(AniListService.BrowseMedia(new BrowseMediaDto
             {
-                Season = Media.MediaSeason.Fall,
+                Season = MediaSeason.Fall,
                 SeasonYear = 2018,
-                Type = Media.MediaType.Anime,
-                Format = Media.MediaFormat.Tv,
-                Sort = new List<Media.MediaSort> { _sortType }
+                Type = MediaType.Anime,
+                Format = MediaFormat.Tv,
+                Sort = new List<MediaSort> { _sortType }
             }, 5));
 
         }

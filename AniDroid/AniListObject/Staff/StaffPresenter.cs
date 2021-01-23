@@ -12,7 +12,11 @@ using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Dto;
+using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Interfaces;
+using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.CharacterModels;
+using AniDroid.AniList.Models.MediaModels;
 using AniDroid.Base;
 using AniDroid.Utils.Interfaces;
 using AniDroid.Utils.Logging;
@@ -44,12 +48,12 @@ namespace AniDroid.AniListObject.Staff
                 .Switch(error => View.OnError(error));
         }
 
-        public IAsyncEnumerable<OneOf<IPagedData<AniList.Models.Character.Edge>, IAniListError>> GetStaffCharactersEnumerable(int staffId, int perPage)
+        public IAsyncEnumerable<OneOf<IPagedData<CharacterEdge>, IAniListError>> GetStaffCharactersEnumerable(int staffId, int perPage)
         {
             return AniListService.GetStaffCharacters(staffId, perPage);
         }
 
-        public IAsyncEnumerable<OneOf<IPagedData<AniList.Models.Media.Edge>, IAniListError>> GetStaffMediaEnumerable(int staffId, AniList.Models.Media.MediaType mediaType, int perPage)
+        public IAsyncEnumerable<OneOf<IPagedData<MediaEdge>, IAniListError>> GetStaffMediaEnumerable(int staffId, MediaType mediaType, int perPage)
         {
             return AniListService.GetStaffMedia(staffId, mediaType, perPage);
         }

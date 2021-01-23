@@ -15,6 +15,7 @@ using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.StaffModels;
 using AniDroid.AniListObject.Staff;
 using AniDroid.Base;
 using OneOf;

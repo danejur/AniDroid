@@ -13,7 +13,7 @@ using AniDroid.AniList.Models;
 
 namespace AniDroid.Utils.Comparers
 {
-    public class MediaListSortComparer : BaseAniDroidComparer<Media.MediaList>
+    public class MediaListSortComparer : BaseAniDroidComparer<AniList.Models.MediaModels.MediaList>
     {
         private readonly MediaListSortType _sort;
 
@@ -22,7 +22,7 @@ namespace AniDroid.Utils.Comparers
             _sort = sort;
         }
 
-        public override int CompareInternal(Media.MediaList x, Media.MediaList y)
+        public override int CompareInternal(AniList.Models.MediaModels.MediaList x, AniList.Models.MediaModels.MediaList y)
         {
             switch (_sort)
             {

@@ -15,6 +15,7 @@ using Android.Widget;
 using AniDroid.Adapters.General;
 using AniDroid.AniList;
 using AniDroid.AniList.Dto;
+using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Models;
 using AniDroid.Base;
 using AniDroid.Browse;
@@ -148,9 +149,9 @@ namespace AniDroid.Dialogs
                 };
             }
 
-            private void SetupTypeSpinner(AppCompatSpinner typeSpinner, Media.MediaType selectedType)
+            private void SetupTypeSpinner(AppCompatSpinner typeSpinner, MediaType selectedType)
             {
-                var types = AniListEnum.GetEnumValues<Media.MediaType>();
+                var types = AniListEnum.GetEnumValues<MediaType>();
 
                 var displayTypes = types.Select(x => x.DisplayValue).Prepend("All").ToList();
 
@@ -171,7 +172,7 @@ namespace AniDroid.Dialogs
                     if (previousPos != args.Position)
                     {
                         var position = args.Position - 1;
-                        var type = position >= 0 ? AniListEnum.GetEnum<Media.MediaType>(position) : null;
+                        var type = position >= 0 ? AniListEnum.GetEnum<MediaType>(position) : null;
 
                         typeSpinner.SetTag(Resource.Id.Object_Position, typeSpinner.SelectedItemPosition);
 
@@ -180,10 +181,10 @@ namespace AniDroid.Dialogs
                 };
             }
 
-            private void SetupFormatSpinner(AppCompatSpinner formatSpinner, Media.MediaType selectedType,
-                Media.MediaFormat selectedFormat)
+            private void SetupFormatSpinner(AppCompatSpinner formatSpinner, MediaType selectedType,
+                MediaFormat selectedFormat)
             {
-                var formats = AniListEnum.GetEnumValues<Media.MediaFormat>()
+                var formats = AniListEnum.GetEnumValues<MediaFormat>()
                     .Where(x => selectedType == null || x.MediaType == selectedType)
                     .ToList();
 
@@ -197,9 +198,9 @@ namespace AniDroid.Dialogs
                 }
             }
 
-            private void SetupStatusSpinner(AppCompatSpinner statusSpinner, Media.MediaStatus selectedStatus)
+            private void SetupStatusSpinner(AppCompatSpinner statusSpinner, MediaStatus selectedStatus)
             {
-                var statuses = AniListEnum.GetEnumValues<Media.MediaStatus>();
+                var statuses = AniListEnum.GetEnumValues<MediaStatus>();
 
                 var displayStatuses = statuses.Select(x => x.DisplayValue).Prepend("All").ToList();
 
@@ -211,9 +212,9 @@ namespace AniDroid.Dialogs
                 }
             }
 
-            private void SetupCountrySpinner(AppCompatSpinner countrySpinner, Media.MediaCountry selectedCountry)
+            private void SetupCountrySpinner(AppCompatSpinner countrySpinner, MediaCountry selectedCountry)
             {
-                var countries = AniListEnum.GetEnumValues<Media.MediaCountry>();
+                var countries = AniListEnum.GetEnumValues<MediaCountry>();
 
                 var displayCountries = countries.Select(x => x.DisplayValue).ToList();
 
@@ -225,9 +226,9 @@ namespace AniDroid.Dialogs
                 }
             }
 
-            private void SetupSourceSpinner(AppCompatSpinner sourceSpinner, Media.MediaSource selectedSource)
+            private void SetupSourceSpinner(AppCompatSpinner sourceSpinner, MediaSource selectedSource)
             {
-                var sources = AniListEnum.GetEnumValues<Media.MediaSource>();
+                var sources = AniListEnum.GetEnumValues<MediaSource>();
 
                 var displaySources = sources.Select(x => x.DisplayValue).Prepend("All").ToList();
 
@@ -239,9 +240,9 @@ namespace AniDroid.Dialogs
                 }
             }
 
-            private void SetupSeasonSpinner(AppCompatSpinner seasonSpinner, Media.MediaType selectedType, Media.MediaSeason selectedSeason)
+            private void SetupSeasonSpinner(AppCompatSpinner seasonSpinner, MediaType selectedType, MediaSeason selectedSeason)
             {
-                var seasons = AniListEnum.GetEnumValues<Media.MediaSeason>();
+                var seasons = AniListEnum.GetEnumValues<MediaSeason>();
 
                 var displaySeasons = seasons.Select(x => x.DisplayValue).Prepend("All").ToList();
 
@@ -252,7 +253,7 @@ namespace AniDroid.Dialogs
                     seasonSpinner.SetSelection(seasons.FindIndex(x => x.Value == selectedSeason.Value) + 1);
                 }
 
-                seasonSpinner.Enabled = Media.MediaType.Anime.Equals(selectedType);
+                seasonSpinner.Enabled = MediaType.Anime.Equals(selectedType);
             }
 
             private void SetupYearPicker(Picker yearPicker, int? year)
@@ -356,7 +357,7 @@ namespace AniDroid.Dialogs
                 dialog.SetView(dialogView);
 
 
-                var licensees = AniListEnum.GetEnumValues<Media.MediaLicensee>().Select(x =>
+                var licensees = AniListEnum.GetEnumValues<MediaLicensee>().Select(x =>
                     new CheckBoxItemRecyclerAdapter.CheckBoxItem
                     {
                         Title = x.DisplayValue,
@@ -427,15 +428,15 @@ namespace AniDroid.Dialogs
                 SetupStreamingOnButton(_streamingOnButton);
             }
 
-            private Media.MediaType GetSelectedType()
+            private MediaType GetSelectedType()
             {
                 var position = _typeSpinner.SelectedItemPosition - 1;
-                return position >= 0 ? AniListEnum.GetEnum<Media.MediaType>(position) : null;
+                return position >= 0 ? AniListEnum.GetEnum<MediaType>(position) : null;
             }
 
-            private Media.MediaFormat GetSelectedFormat(Media.MediaType selectedType)
+            private MediaFormat GetSelectedFormat(MediaType selectedType)
             {
-                var formats = AniListEnum.GetEnumValues<Media.MediaFormat>()
+                var formats = AniListEnum.GetEnumValues<MediaFormat>()
                     .Where(x => selectedType == null || x.MediaType == selectedType)
                     .ToList();
 
@@ -444,21 +445,21 @@ namespace AniDroid.Dialogs
                 return formats.ElementAtOrDefault(position);
             }
 
-            private Media.MediaStatus GetSelectedStatus()
+            private MediaStatus GetSelectedStatus()
             {
                 var position = _statusSpinner.SelectedItemPosition - 1;
-                return position >= 0 ? AniListEnum.GetEnum<Media.MediaStatus>(position) : null;
+                return position >= 0 ? AniListEnum.GetEnum<MediaStatus>(position) : null;
             }
 
-            private Media.MediaCountry GetSelectedCountry()
+            private MediaCountry GetSelectedCountry()
             {
-                return AniListEnum.GetEnum<Media.MediaCountry>(_countrySpinner.SelectedItemPosition);
+                return AniListEnum.GetEnum<MediaCountry>(_countrySpinner.SelectedItemPosition);
             }
 
-            private Media.MediaSource GetSelectedSource()
+            private MediaSource GetSelectedSource()
             {
                 var position = _sourceSpinner.SelectedItemPosition - 1;
-                return position >= 0 ? AniListEnum.GetEnum<Media.MediaSource>(position) : null;
+                return position >= 0 ? AniListEnum.GetEnum<MediaSource>(position) : null;
             }
 
             private int? GetSelectedYear()
@@ -466,11 +467,11 @@ namespace AniDroid.Dialogs
                 return (int?) _yearPicker.GetValue();
             }
 
-            private Media.MediaSeason GetSelectedSeason(Media.MediaType selectedType)
+            private MediaSeason GetSelectedSeason(MediaType selectedType)
             {
                 var position = _seasonSpinner.SelectedItemPosition - 1;
-                return position >= 0 && Media.MediaType.Anime.Equals(selectedType)
-                    ? AniListEnum.GetEnum<Media.MediaSeason>(position)
+                return position >= 0 && MediaType.Anime.Equals(selectedType)
+                    ? AniListEnum.GetEnum<MediaSeason>(position)
                     : null;
             }
 

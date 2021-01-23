@@ -12,6 +12,7 @@ using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
 using AniDroid.AniList.Dto;
+using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.AniListObject.Media;
@@ -35,11 +36,11 @@ namespace AniDroid.SearchResults
             switch (searchType)
             {
                 case SearchResultsActivity.AniListSearchTypes.Anime:
-                    View.ShowMediaSearchResults(AniListService.SearchMedia(searchTerm, Media.MediaType.Anime,
+                    View.ShowMediaSearchResults(AniListService.SearchMedia(searchTerm, MediaType.Anime,
                         PageSize));
                     break;
                 case SearchResultsActivity.AniListSearchTypes.Manga:
-                    View.ShowMediaSearchResults(AniListService.SearchMedia(searchTerm, Media.MediaType.Manga,
+                    View.ShowMediaSearchResults(AniListService.SearchMedia(searchTerm, MediaType.Manga,
                         PageSize));
                     break;
                 case SearchResultsActivity.AniListSearchTypes.Characters:

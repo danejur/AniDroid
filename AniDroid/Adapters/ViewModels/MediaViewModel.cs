@@ -10,13 +10,15 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.MediaModels;
 
 namespace AniDroid.Adapters.ViewModels
 {
     public class MediaViewModel : AniDroidAdapterViewModel<Media>
     {
-        public Media.Edge ModelEdge { get; protected set; }
+        public MediaEdge ModelEdge { get; protected set; }
         public Color ImageColor { get; protected set; }
 
         private MediaViewModel(Media model, MediaDetailType primaryMediaDetailType, MediaDetailType secondaryMediaDetailType, bool isButtonVisible) : base(model)
@@ -51,7 +53,7 @@ namespace AniDroid.Adapters.ViewModels
             {
                 MediaDetailType.Format => $"{Model.Format?.DisplayValue}{(Model.IsAdult ? " (Hentai)" : "")}",
                 MediaDetailType.FormatRating => (
-                    Model.Status?.EqualsAny(Media.MediaStatus.NotYetReleased, Media.MediaStatus.Cancelled, Media.MediaStatus.Hiatus) == true
+                    Model.Status?.EqualsAny(MediaStatus.NotYetReleased, MediaStatus.Cancelled, MediaStatus.Hiatus) == true
                         ? Model.Format?.DisplayValue
                         : $"{Model.Format?.DisplayValue}  ({(Model.AverageScore != 0 ? $"{Model.AverageScore}%" : "No Rating Data")})"
                 ),

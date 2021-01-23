@@ -14,8 +14,10 @@ using Android.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.AniList.Dto;
+using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.MediaModels;
 using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 using AniDroid.Dialogs;
@@ -80,7 +82,7 @@ namespace AniDroid.MediaList
                 onError());
         }
 
-        public async Task IncreaseMediaProgress(Media.MediaList mediaListToUpdate)
+        public async Task IncreaseMediaProgress(AniList.Models.MediaModels.MediaList mediaListToUpdate)
         {
             var editDto = new MediaListEditDto
             {
@@ -102,13 +104,13 @@ namespace AniDroid.MediaList
                 });
         }
 
-        public async Task CompleteMedia(Media.MediaList mediaListToComplete)
+        public async Task CompleteMedia(AniList.Models.MediaModels.MediaList mediaListToComplete)
         {
             var editDto = new MediaListEditDto
             {
                 MediaId = mediaListToComplete.Media.Id,
                 Progress = mediaListToComplete.Media.Episodes,
-                Status = Media.MediaListStatus.Completed
+                Status = MediaListStatus.Completed
             };
 
             var mediaUpdateResp = await AniListService.UpdateMediaListEntry(editDto, default);
@@ -165,13 +167,13 @@ namespace AniDroid.MediaList
             return AniDroidSettings.ShowEpisodeAddButtonForRepeatingMedia;
         }
 
-        public MediaListSortComparer.SortDirection GetMediaListSortDirection(Media.MediaType mediaType)
+        public MediaListSortComparer.SortDirection GetMediaListSortDirection(MediaType mediaType)
         {
-            if (Media.MediaType.Anime.Equals(mediaType))
+            if (MediaType.Anime.Equals(mediaType))
             {
                 return AniDroidSettings.AnimeListSortDirection;
             }
-            else if (Media.MediaType.Manga.Equals(mediaType))
+            else if (MediaType.Manga.Equals(mediaType))
             {
                 return AniDroidSettings.MangaListSortDirection;
             }
@@ -179,14 +181,14 @@ namespace AniDroid.MediaList
             return MediaListSortComparer.SortDirection.Ascending;
         }
 
-        public MediaListSortComparer.MediaListSortType GetMediaListSortType(Media.MediaType mediaType)
+        public MediaListSortComparer.MediaListSortType GetMediaListSortType(MediaType mediaType)
         {
-            if (Media.MediaType.Anime.Equals(mediaType))
+            if (MediaType.Anime.Equals(mediaType))
             {
                 return AniDroidSettings.AnimeListSortType;
             }
 
-            if (Media.MediaType.Manga.Equals(mediaType))
+            if (MediaType.Manga.Equals(mediaType))
             {
                 return AniDroidSettings.MangaListSortType;
             }
@@ -194,22 +196,22 @@ namespace AniDroid.MediaList
             return MediaListSortComparer.MediaListSortType.NoSort;
         }
 
-        public void SetMediaListSortSettings(Media.MediaType mediaType, MediaListSortComparer.MediaListSortType sort,
+        public void SetMediaListSortSettings(MediaType mediaType, MediaListSortComparer.MediaListSortType sort,
             MediaListSortComparer.SortDirection direction)
         {
-            if (Media.MediaType.Anime.Equals(mediaType))
+            if (MediaType.Anime.Equals(mediaType))
             {
                 AniDroidSettings.AnimeListSortType = sort;
                 AniDroidSettings.AnimeListSortDirection = direction;
             }
-            else if (Media.MediaType.Manga.Equals(mediaType))
+            else if (MediaType.Manga.Equals(mediaType))
             {
                 AniDroidSettings.MangaListSortType = sort;
                 AniDroidSettings.MangaListSortDirection = direction;
             }
         }
 
-        public IList<Media.MediaTag> GetMediaTags()
+        public IList<MediaTag> GetMediaTags()
         {
             return AniDroidSettings.MediaTagCache;
         }

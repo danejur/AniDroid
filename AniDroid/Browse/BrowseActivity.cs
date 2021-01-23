@@ -15,8 +15,10 @@ using AniDroid.Adapters.Base;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Dto;
+using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.MediaModels;
 using AniDroid.AniList.Utils;
 using AniDroid.Base;
 using AniDroid.Dialogs;
@@ -61,15 +63,15 @@ namespace AniDroid.Browse
             });
         }
 
-        public void UpdateMediaListItem(Media.MediaList mediaList)
+        public void UpdateMediaListItem(AniList.Models.MediaModels.MediaList mediaList)
         {
-            if (mediaList.Media?.Type == Media.MediaType.Anime)
+            if (mediaList.Media?.Type == MediaType.Anime)
             {
                 var instance = MediaListFragment.GetInstance(MediaListFragment.AnimeMediaListFragmentName);
 
                 (instance as MediaListFragment)?.UpdateMediaListItem(mediaList);
             }
-            else if (mediaList.Media?.Type == Media.MediaType.Manga)
+            else if (mediaList.Media?.Type == MediaType.Manga)
             {
                 (MediaListFragment.GetInstance(MediaListFragment.MangaMediaListFragmentName) as MediaListFragment)
                     ?.UpdateMediaListItem(mediaList);
@@ -122,11 +124,11 @@ namespace AniDroid.Browse
             try
             {
                 browseModel = AniListJsonSerializer.Default.Deserialize<BrowseMediaDto>(Intent.GetStringExtra(BrowseDtoIntentKey)) ?? new BrowseMediaDto();
-                browseModel.Sort ??= new List<Media.MediaSort>();
+                browseModel.Sort ??= new List<MediaSort>();
 
                 if (!browseModel.Sort.Any())
                 {
-                    browseModel.Sort.Add(Media.MediaSort.PopularityDesc);
+                    browseModel.Sort.Add(MediaSort.PopularityDesc);
                 }
             }
             catch
@@ -212,7 +214,7 @@ namespace AniDroid.Browse
                     BrowseSortDialog.Create(this, Presenter.GetBrowseDto().Sort.FirstOrDefault(), sort =>
                     {
                         var browseDto = Presenter.GetBrowseDto();
-                        browseDto.Sort = new List<Media.MediaSort> { sort };
+                        browseDto.Sort = new List<MediaSort> { sort };
                         Presenter.BrowseAniListMedia(browseDto);
                     });
                     break;

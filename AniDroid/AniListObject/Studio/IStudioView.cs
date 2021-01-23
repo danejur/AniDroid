@@ -16,6 +16,6 @@ namespace AniDroid.AniListObject.Studio
     public interface IStudioView : IAniListObjectView
     {
         int GetStudioId();
-        void SetupStudioView(AniList.Models.Studio studio);
+        void SetupStudioView(AniList.Models.StudioModels.Studio studio);
     }
 }

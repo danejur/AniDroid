@@ -13,17 +13,18 @@ using AniDroid.Adapters.Base;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.StaffModels;
 using AniDroid.AniListObject.Staff;
 using AniDroid.Base;
 using OneOf;
 
 namespace AniDroid.Adapters.StaffAdapters
 {
-    public class StaffEdgeRecyclerAdapter : AniDroidRecyclerAdapter<StaffEdgeViewModel, Staff.Edge>
+    public class StaffEdgeRecyclerAdapter : AniDroidRecyclerAdapter<StaffEdgeViewModel, StaffEdge>
     {
         public StaffEdgeRecyclerAdapter(BaseAniDroidActivity context,
-            IAsyncEnumerable<OneOf<IPagedData<Staff.Edge>, IAniListError>> enumerable, RecyclerCardType cardType,
-            Func<Staff.Edge, StaffEdgeViewModel> createViewModelFunc) : base(context, enumerable, cardType,
+            IAsyncEnumerable<OneOf<IPagedData<StaffEdge>, IAniListError>> enumerable, RecyclerCardType cardType,
+            Func<StaffEdge, StaffEdgeViewModel> createViewModelFunc) : base(context, enumerable, cardType,
             createViewModelFunc)
         {
             SetupDefaultClickActions();

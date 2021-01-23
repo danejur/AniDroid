@@ -12,12 +12,13 @@ using Android.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Models;
+using AniDroid.AniList.Models.StudioModels;
 using AniDroid.AniListObject.Studio;
 using AniDroid.Base;
 
 namespace AniDroid.Adapters.StudioAdapters
 {
-    public class StudioEdgeRecyclerAdapter : AniDroidRecyclerAdapter<StudioEdgeViewModel, Studio.Edge>
+    public class StudioEdgeRecyclerAdapter : AniDroidRecyclerAdapter<StudioEdgeViewModel, StudioEdge>
     {
         public StudioEdgeRecyclerAdapter(BaseAniDroidActivity context, List<StudioEdgeViewModel> items) : base(context,
             items, RecyclerCardType.Horizontal)

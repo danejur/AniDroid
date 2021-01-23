@@ -79,7 +79,7 @@ namespace AniDroid.AniListObject.Studio
 
         protected override Func<Task> ToggleFavorite => () => Presenter.ToggleFavorite();
 
-        public void SetupStudioView(AniList.Models.Studio studio)
+        public void SetupStudioView(AniList.Models.StudioModels.Studio studio)
         {
             var adapter = new FragmentlessViewPagerAdapter();
 
