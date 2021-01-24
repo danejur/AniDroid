@@ -42,6 +42,7 @@ using AniDroid.Dialogs;
 using AniDroid.MediaList;
 using AniDroid.SearchResults;
 using AniDroid.Utils;
+using AniDroid.Utils.Extensions;
 using AniDroid.Utils.Formatting;
 using AniDroid.Widgets;
 using Com.Google.Android.Flexbox;
@@ -129,6 +130,9 @@ namespace AniDroid.AniListObject.Media
             _mediaList = media.MediaListEntry;
 
             var adapter = new FragmentlessViewPagerAdapter();
+
+            
+
             adapter.AddView(_mediaDetailsView = CreateMediaDetailsView(media), "Details");
 
             //if (media.Characters?.PageInfo?.Total > 0)
@@ -138,7 +142,6 @@ namespace AniDroid.AniListObject.Media
 
             // TODO: add character pageinfo check back in once api is fixed
             adapter.AddView(CreateMediaCharactersView(media.Id), "Characters");
-
 
             if (media.Staff?.PageInfo?.Total > 0)
             {
@@ -168,6 +171,11 @@ namespace AniDroid.AniListObject.Media
             if (media.Rankings?.Any() == true || media.Stats?.AreStatsValid() == true)
             {
                 adapter.AddView(CreateMediaUserDataView(media), "User Data");
+            }
+
+            if (media.Trends?.PageInfo?.Total > 4 || media.AiringTrends?.PageInfo?.Total >= 2)
+            {
+                adapter.AddView(CreateMediaTrendsView(media.Trends?.Data?.ToList(), media.AiringTrends?.Data?.Where(x => x.Node.Episode.HasValue).ToList()), "Trends");
             }
 
             // TODO: see if there's a better way of determining whether to display this or not
@@ -539,11 +547,6 @@ namespace AniDroid.AniListObject.Media
                 containerView.AddView(CreateUserScoresView(media.Stats.ScoreDistribution));
             }
 
-            if (media.Stats?.AiringProgression?.Count >= 3)
-            {
-                containerView.AddView(CreateUserScoreProgressionView(media.Stats.AiringProgression.TakeLast(15)));
-            }
-
             if (media.Stats?.StatusDistribution?.Any() == true)
             {
                 containerView.AddView(CreateUserListStatusView(media.Stats.StatusDistribution));
@@ -651,94 +654,6 @@ namespace AniDroid.AniListObject.Media
             scoresChart.XAxis.TextColor = dataSet.ValueTextColor = textColor;
 
             detailContainer.AddView(scoresChart);
-            return detailView;
-        }
-
-        private View CreateUserScoreProgressionView(
-            IEnumerable<MediaAiringProgression> scoreProgression)
-        {
-            var detailView = LayoutInflater.Inflate(Resource.Layout.View_AniListObjectDetail, null);
-            var detailContainer = detailView.FindViewById<LinearLayout>(Resource.Id.AniListObjectDetail_InnerContainer);
-            detailView.FindViewById<TextView>(Resource.Id.AniListObjectDetail_Name).Text = "Airing Score Progression";
-            var orderedStats = scoreProgression.OrderBy(x => x.Episode).ToList();
-
-            var chartHeight = Resources.GetDimensionPixelSize(Resource.Dimension.Details_ChartHeight);
-            var textColor = GetThemedColor(Resource.Attribute.Background_Text);
-            var legendMargin = Resources.GetDimensionPixelSize(Resource.Dimension.Details_MarginSmall);
-
-
-            detailContainer.SetPadding(legendMargin, 0, legendMargin, 0);
-
-            var typedColorArray = Resources.ObtainTypedArray(Resource.Array.Chart_Colors);
-            var colorList = new List<int>();
-
-            for (var i = 0; i < typedColorArray.Length(); i++)
-            {
-                colorList.Add(typedColorArray.GetColor(i, 0));
-            }
-
-            var scoresChart = new LineChart(this)
-            {
-                LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, chartHeight),
-
-            };
-
-            var data = new LineData();
-
-            var scorePoints = orderedStats.Where(x => x.Score > 0).Select(x => new Entry(x.Episode, x.Score)).ToList();
-            if (scorePoints.Any())
-            {
-                var scoreDataSet = new LineDataSet(scorePoints, "Score")
-                {
-                    AxisDependency = scoresChart.AxisLeft.GetAxisDependency(),
-                    Color = colorList[0]
-                };
-                scoreDataSet.SetDrawCircleHole(false);
-                scoreDataSet.SetCircleColor(colorList[0]);
-                scoreDataSet.SetMode(LineDataSet.Mode.CubicBezier);
-                scoreDataSet.ValueTextColor = textColor;
-
-                data.AddDataSet(scoreDataSet);
-            }
-
-            var watchingPoints = orderedStats.Select(x => new Entry(x.Episode, x.Watching)).ToList();
-            if (watchingPoints.Any())
-            {
-                var watchingDataSet = new LineDataSet(watchingPoints, "Watching")
-                {
-                    AxisDependency = scoresChart.AxisRight.GetAxisDependency(),
-                    Color = colorList[1]
-                };
-                watchingDataSet.SetDrawCircleHole(false);
-                watchingDataSet.SetCircleColor(colorList[1]);
-                watchingDataSet.SetMode(LineDataSet.Mode.CubicBezier);
-                watchingDataSet.ValueTextColor = textColor;
-
-                data.AddDataSet(watchingDataSet);
-            }
-
-            data.SetDrawValues(false);
-            scoresChart.Data = data;
-            scoresChart.FitScreen();
-            scoresChart.SetDrawGridBackground(false);
-            scoresChart.SetTouchEnabled(false);
-            scoresChart.Description.Enabled = false;
-            scoresChart.XAxis.SetDrawGridLines(false);
-            scoresChart.XAxis.Position = XAxis.XAxisPosition.Bottom;
-            scoresChart.XAxis.ValueFormatter = new ChartUtils.AxisValueCeilingFormatter(1);
-            scoresChart.XAxis.Granularity = 1;
-            scoresChart.XAxis.LabelCount = Math.Min(orderedStats.Count, 12);
-            scoresChart.AxisLeft.SetDrawGridLines(false);
-            scoresChart.AxisLeft.Granularity = 1;
-            scoresChart.AxisLeft.LabelCount = 5;
-            scoresChart.AxisRight.SetDrawGridLines(false);
-            scoresChart.AxisRight.Granularity = 1;
-
-            scoresChart.XAxis.TextColor = scoresChart.AxisLeft.TextColor =
-                    scoresChart.AxisRight.TextColor = scoresChart.Legend.TextColor = textColor;
-
-            detailContainer.AddView(scoresChart);
-
             return detailView;
         }
 
@@ -861,6 +776,246 @@ namespace AniDroid.AniListObject.Media
 
                 detailContainer.AddView(view);
             }
+
+            return detailView;
+        }
+
+        #endregion
+
+        #region Trends
+
+        private View CreateMediaTrendsView(List<ConnectionEdge<MediaTrend>> trendEdgeList, List<ConnectionEdge<MediaTrend>> airingTrendEdgeList)
+        {
+            var retView = LayoutInflater.Inflate(Resource.Layout.View_NestedScrollLayout, null);
+            var containerView = retView.FindViewById<LinearLayout>(Resource.Id.Scroll_Container);
+
+            if (trendEdgeList.Any())
+            {
+                containerView.AddView(CreateRecentActivityView(trendEdgeList.OrderByDescending(x => x.Node.Date).ToList().EveryNthReverse(Math.Max(1, trendEdgeList.Count / 8)).Select(x => x.Node).ToList()));
+            }
+
+            if (airingTrendEdgeList.Count > 4)
+            {
+                var airingTrendList = airingTrendEdgeList.EveryNthReverse(Math.Max(1, airingTrendEdgeList.Count / 8)).Select(x => x.Node).ToList();
+
+                containerView.AddView(CreateAiringWatchingProgressionView(airingTrendList));
+                containerView.AddView(CreateAiringScoreProgressionView(airingTrendList));
+            }
+
+            return retView;
+        }
+
+        private View CreateRecentActivityView(
+            List<MediaTrend> trends)
+        {
+            var detailView = LayoutInflater.Inflate(Resource.Layout.View_AniListObjectDetail, null);
+            var detailContainer = detailView.FindViewById<LinearLayout>(Resource.Id.AniListObjectDetail_InnerContainer);
+            detailView.FindViewById<TextView>(Resource.Id.AniListObjectDetail_Name).Text =
+                "Recent Activity";
+
+            var chartHeight = Resources.GetDimensionPixelSize(Resource.Dimension.Details_ChartHeight);
+            var textColor = GetThemedColor(Resource.Attribute.Background_Text);
+            var legendMargin = Resources.GetDimensionPixelSize(Resource.Dimension.Details_MarginSmall);
+
+            detailContainer.SetPadding(legendMargin, 0, legendMargin, 0);
+
+            var typedColorArray = Resources.ObtainTypedArray(Resource.Array.Chart_Colors);
+            var colorList = new List<int>();
+
+            for (var i = 0; i < typedColorArray.Length(); i++)
+            {
+                colorList.Add(typedColorArray.GetColor(i, 0));
+            }
+
+            var scoresChart = new LineChart(this)
+            {
+                LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, chartHeight),
+
+            };
+
+            var data = new LineData();
+
+            var watchingPoints = trends.Select(x => new Entry(x.Date, x.Trending)).ToList();
+            var watchingDataSet = new LineDataSet(watchingPoints, "Trending")
+            {
+                Color = colorList[0],
+                ValueFormatter = new ChartUtils.NumberValueFormatter(),
+            };
+
+            watchingDataSet.ValueTextSize = 12;
+            watchingDataSet.SetDrawCircleHole(false);
+            watchingDataSet.SetCircleColor(colorList[0]);
+            watchingDataSet.SetMode(LineDataSet.Mode.Linear);
+            watchingDataSet.ValueTextColor = textColor;
+            watchingDataSet.SetDrawValues(true);
+
+            data.AddDataSet(watchingDataSet);
+
+            scoresChart.Data = data;
+            scoresChart.FitScreen();
+            scoresChart.SetTouchEnabled(false);
+            scoresChart.Description.Enabled = false;
+            scoresChart.XAxis.Position = XAxis.XAxisPosition.Bottom;
+            scoresChart.XAxis.ValueFormatter = new ChartUtils.DateValueFormatter("MMM d");
+            scoresChart.XAxis.LabelRotationAngle = 60;
+            scoresChart.XAxis.Granularity = 1;
+            scoresChart.XAxis.AxisMaximum = trends.Max(x => x.Date);
+            scoresChart.XAxis.AxisMinimum = trends.Min(x => x.Date);
+            scoresChart.XAxis.SetLabelCount(trends.Count, true);
+
+            scoresChart.Legend.Enabled = false;
+            scoresChart.SetDrawGridBackground(false);
+            scoresChart.XAxis.SetDrawGridLines(false);
+            scoresChart.AxisLeft.Enabled = false;
+            scoresChart.AxisRight.Enabled = false;
+
+            scoresChart.XAxis.TextColor = scoresChart.AxisLeft.TextColor = scoresChart.Legend.TextColor = textColor;
+            scoresChart.ExtraLeftOffset = scoresChart.ExtraRightOffset = 15;
+
+            detailContainer.AddView(scoresChart);
+
+            return detailView;
+        }
+
+        private View CreateAiringWatchingProgressionView(
+            List<MediaTrend> trends)
+        {
+            var detailView = LayoutInflater.Inflate(Resource.Layout.View_AniListObjectDetail, null);
+            var detailContainer = detailView.FindViewById<LinearLayout>(Resource.Id.AniListObjectDetail_InnerContainer);
+            detailView.FindViewById<TextView>(Resource.Id.AniListObjectDetail_Name).Text =
+                "Airing Watching Progression";
+
+            var chartHeight = Resources.GetDimensionPixelSize(Resource.Dimension.Details_ChartHeight);
+            var textColor = GetThemedColor(Resource.Attribute.Background_Text);
+            var legendMargin = Resources.GetDimensionPixelSize(Resource.Dimension.Details_MarginSmall);
+
+
+            detailContainer.SetPadding(legendMargin, 0, legendMargin, 0);
+
+            var typedColorArray = Resources.ObtainTypedArray(Resource.Array.Chart_Colors);
+            var colorList = new List<int>();
+
+            for (var i = 0; i < typedColorArray.Length(); i++)
+            {
+                colorList.Add(typedColorArray.GetColor(i, 0));
+            }
+
+            var scoresChart = new LineChart(this)
+            {
+                LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, chartHeight),
+
+            };
+
+            var data = new LineData();
+
+            var watchingPoints = trends.Select(x => new Entry(x.Episode.Value, x.InProgress ?? 0)).ToList();
+            var watchingDataSet = new LineDataSet(watchingPoints, "Watching")
+            {
+                Color = colorList[0],
+                ValueFormatter = new ChartUtils.NumberValueFormatter(),
+            };
+
+            watchingDataSet.ValueTextSize = 12;
+            watchingDataSet.SetDrawCircleHole(false);
+            watchingDataSet.SetCircleColor(colorList[0]);
+            watchingDataSet.SetMode(LineDataSet.Mode.Linear);
+            watchingDataSet.ValueTextColor = textColor;
+            watchingDataSet.SetDrawValues(true);
+
+            data.AddDataSet(watchingDataSet);
+
+            scoresChart.Data = data;
+            scoresChart.FitScreen();
+            scoresChart.SetTouchEnabled(false);
+            scoresChart.Description.Enabled = false;
+            scoresChart.XAxis.Position = XAxis.XAxisPosition.Bottom;
+            scoresChart.XAxis.ValueFormatter = new ChartUtils.AxisValueCeilingFormatter(1);
+            scoresChart.XAxis.Granularity = 1;
+            scoresChart.XAxis.AxisMaximum = trends.Max(x => x.Episode.Value);
+            scoresChart.XAxis.AxisMinimum = trends.Min(x => x.Episode.Value);
+            scoresChart.XAxis.SetLabelCount(Math.Min(trends.Count, 8), true);
+
+            scoresChart.Legend.Enabled = false;
+            scoresChart.SetDrawGridBackground(false);
+            scoresChart.XAxis.SetDrawGridLines(false);
+            scoresChart.AxisLeft.Enabled = false;
+            scoresChart.AxisRight.Enabled = false;
+
+            scoresChart.XAxis.TextColor = scoresChart.AxisLeft.TextColor = scoresChart.Legend.TextColor = textColor;
+            scoresChart.ExtraLeftOffset = scoresChart.ExtraRightOffset = 15;
+
+            detailContainer.AddView(scoresChart);
+
+            return detailView;
+        }
+
+        private View CreateAiringScoreProgressionView(
+            List<MediaTrend> trends)
+        {
+            var detailView = LayoutInflater.Inflate(Resource.Layout.View_AniListObjectDetail, null);
+            var detailContainer = detailView.FindViewById<LinearLayout>(Resource.Id.AniListObjectDetail_InnerContainer);
+            detailView.FindViewById<TextView>(Resource.Id.AniListObjectDetail_Name).Text = "Airing Score Progression";
+
+            var chartHeight = Resources.GetDimensionPixelSize(Resource.Dimension.Details_ChartHeight);
+            var textColor = GetThemedColor(Resource.Attribute.Background_Text);
+            var legendMargin = Resources.GetDimensionPixelSize(Resource.Dimension.Details_MarginSmall);
+
+
+            detailContainer.SetPadding(legendMargin, 0, legendMargin, 0);
+
+            var typedColorArray = Resources.ObtainTypedArray(Resource.Array.Chart_Colors);
+            var colorList = new List<int>();
+
+            for (var i = 0; i < typedColorArray.Length(); i++)
+            {
+                colorList.Add(typedColorArray.GetColor(i, 0));
+            }
+
+            var scoresChart = new LineChart(this)
+            {
+                LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, chartHeight),
+
+            };
+
+            var data = new LineData();
+
+            var scorePoints = trends.Select(x => new Entry(x.Episode.Value, x.AverageScore ?? 0)).ToList();
+            var scoreDataSet = new LineDataSet(scorePoints, "Score")
+            {
+                Color = colorList[0],
+                ValueFormatter = new ChartUtils.IntegerValueFormatter(),
+            };
+
+            scoreDataSet.ValueTextSize = 12;
+            scoreDataSet.SetDrawCircleHole(false);
+            scoreDataSet.SetCircleColor(colorList[0]);
+            scoreDataSet.SetMode(LineDataSet.Mode.Linear);
+            scoreDataSet.ValueTextColor = textColor;
+            scoreDataSet.SetDrawValues(true);
+
+            data.AddDataSet(scoreDataSet);
+
+            scoresChart.Data = data;
+            scoresChart.FitScreen();
+            scoresChart.SetTouchEnabled(false);
+            scoresChart.Description.Enabled = false;
+            scoresChart.XAxis.Position = XAxis.XAxisPosition.Bottom;
+            scoresChart.XAxis.ValueFormatter = new ChartUtils.AxisValueCeilingFormatter(1);
+            scoresChart.XAxis.Granularity = 1;
+            scoresChart.XAxis.AxisMaximum = trends.Max(x => x.Episode.Value);
+            scoresChart.XAxis.AxisMinimum = trends.Min(x => x.Episode.Value);
+            scoresChart.XAxis.SetLabelCount(Math.Min(trends.Count, 8), true);
+
+            scoresChart.Legend.Enabled = false;
+            scoresChart.SetDrawGridBackground(false);
+            scoresChart.XAxis.SetDrawGridLines(false);
+            scoresChart.AxisLeft.Enabled = false;
+            scoresChart.AxisRight.Enabled = false;
+
+            scoresChart.ExtraLeftOffset = scoresChart.ExtraRightOffset = 15;
+            scoresChart.XAxis.TextColor = scoresChart.AxisLeft.TextColor = scoresChart.Legend.TextColor = textColor;
+
+            detailContainer.AddView(scoresChart);
 
             return detailView;
         }

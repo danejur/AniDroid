@@ -185,8 +185,8 @@
       <HintPath>..\packages\Microsoft.Extensions.Primitives.3.0.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Android.Export" />
-    <Reference Include="MPAndroidChart, Version=3.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MPAndroidChart.3.0.3\lib\MonoAndroid\MPAndroidChart.dll</HintPath>
+    <Reference Include="MPAndroidChart, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MPAndroidChart.3.1.0\lib\MonoAndroid\MPAndroidChart.dll</HintPath>
     </Reference>
     <Reference Include="Naxam.Flexbox.Droid, Version=0.3.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Naxam.Flexbox.Droid.0.3.1\lib\MonoAndroid10\Naxam.Flexbox.Droid.dll</HintPath>
@@ -368,9 +368,6 @@
     </Reference>
     <Reference Include="Xamarin.Android.Support.ViewPager, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Xamarin.Android.Support.ViewPager.28.0.0.3\lib\monoandroid90\Xamarin.Android.Support.ViewPager.dll</HintPath>
-    </Reference>
-    <Reference Include="Xamarin.Bindings.AdvancedRecyclerView, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Xamarin.Bindings.AdvancedRecyclerView.1.11.0.0\lib\MonoAndroid\Xamarin.Bindings.AdvancedRecyclerView.dll</HintPath>
     </Reference>
     <Reference Include="Xamarin.Essentials, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Xamarin.Essentials.1.3.1\lib\monoandroid90\Xamarin.Essentials.dll</HintPath>
@@ -554,6 +551,8 @@
     <Compile Include="Utils\Comparers\MediaListSortComparer.cs" />
     <Compile Include="Utils\Comparers\MediaSortComparer.cs" />
     <Compile Include="Utils\Extensions\CollectionExtensions.cs" />
+    <Compile Include="Utils\Extensions\NumberExtensions.cs" />
+    <Compile Include="Utils\Extensions\RecyclerViewExtensions.cs" />
     <Compile Include="Utils\Formatting\Markdown\MarkdownSpannableFormatter.cs" />
     <Compile Include="Utils\Formatting\Markdown\MarkdownTextCleaner.cs" />
     <Compile Include="Utils\Formatting\NumberFormatters.cs" />

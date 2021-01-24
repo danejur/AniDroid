@@ -10,6 +10,7 @@ using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models;
 using AniDroid.AniList.Models.CharacterModels;
 using AniDroid.AniList.Models.ForumModels;
+using AniDroid.AniList.Models.MediaModels;
 using AniDroid.AniList.Models.RecommendationModels;
 using AniDroid.AniList.Models.ReviewModels;
 using AniDroid.AniList.Models.StaffModels;
@@ -94,6 +95,15 @@ namespace AniDroid.AniListObject.Media
             GetMediaRecommendationsEnumerable(int mediaId, int perPage)
         {
             return AniListService.GetMediaRecommendations(mediaId, perPage);
+        }
+
+        public IAsyncEnumerable<OneOf<IPagedData<ConnectionEdge<MediaTrend>>, IAniListError>> GetMediaTrendsEnumerable(
+            int mediaId)
+        {
+            return AniListService.GetMediaTrends(mediaId, true, new[]
+            {
+                MediaTrendSort.DateDesc
+            }, 25);
         }
 
         public async Task ToggleFavorite()

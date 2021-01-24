@@ -32,6 +32,8 @@ namespace AniDroid.Adapters.MediaAdapters
             cardItem.Checkbox.CheckedChange -= CheckChanged;
             cardItem.Checkbox.CheckedChange += CheckChanged;
             cardItem.Checkbox.SetTag(Resource.Id.Object_Position, position);
+
+            base.BindCustomViewHolder(holder, position);
         }
 
         private void CheckChanged(object sender, CompoundButton.CheckedChangeEventArgs checkedChangeEventArgs)

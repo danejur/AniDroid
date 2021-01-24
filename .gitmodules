@@ -1,3 +1,3 @@
 [submodule "AniDroid.AniList"]
 	path = AniDroid.AniList
-url=git@github.com:anidroid-app/AniDroid.AniList.git
+url=../AniDroid.AniList.git

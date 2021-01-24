@@ -8,58 +8,23 @@ using Android.Content;
 using Android.OS;
 using Android.Runtime;
 using Android.Support.V7.Widget;
+using Android.Support.V7.Widget.Helper;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Base;
-using Com.H6ah4i.Android.Widget.Advrecyclerview.Draggable;
-using Com.H6ah4i.Android.Widget.Advrecyclerview.Utils;
-using Object = Java.Lang.Object;
+using AniDroid.Utils.Extensions;
 
 namespace AniDroid.Adapters.Base
 {
-    public abstract class BaseDraggableRecyclerAdapter<T> : BaseRecyclerAdapter<T>, IDraggableItemAdapter where T : BaseRecyclerAdapter.IStableIdItem
+    public abstract class BaseDraggableRecyclerAdapter<T> : BaseRecyclerAdapter<T> where T : BaseRecyclerAdapter.IStableIdItem
     {
+        private readonly ItemTouchHelper _touchHelper;
+
         protected BaseDraggableRecyclerAdapter(BaseAniDroidActivity context, List<T> items) : base(context, items, RecyclerCardType.Custom)
         {
             HasStableIds = true;
-        }
 
-        public bool OnCheckCanDrop(int p0, int p1)
-        {
-            return true;
-        }
-
-        public bool OnCheckCanStartDrag(Object p0, int p1, int p2, int p3)
-        {
-            var holder = p0 as DraggableCardItemViewHolder;
-
-            var dragHandle = holder?.DragHandle;
-
-            var handleWidth = dragHandle.Width;
-            var handleHeight = dragHandle.Height;
-            var handleLeft = dragHandle.Left;
-            var handleTop = dragHandle.Top;
-
-            return (p2 >= handleLeft) && (p2 < handleLeft + handleWidth) &&
-                   (p3 >= handleTop) && (p3 < handleTop + handleHeight);
-        }
-
-        public ItemDraggableRange OnGetItemDraggableRange(Object p0, int p1)
-        {
-            return null;
-        }
-
-        public void OnItemDragFinished(int p0, int p1, bool p2)
-        {
-        }
-
-        public void OnItemDragStarted(int p0)
-        {
-        }
-
-        public void OnMoveItem(int p0, int p1)
-        {
-            MoveItem(p0, p1);
+            _touchHelper = RecyclerView.AddDragAndDropSupport(false);
         }
 
         public override long GetItemId(int position)
@@ -73,7 +38,56 @@ namespace AniDroid.Adapters.Base
                 Context.LayoutInflater.Inflate(Resource.Layout.View_DraggableCardItem, parent, false));
         }
 
-        public class DraggableCardItemViewHolder : AbstractDraggableItemViewHolder
+        public override void BindCustomViewHolder(RecyclerView.ViewHolder holder, int position)
+        {
+            var dragHolder = holder as DraggableCardItemViewHolder;
+
+            if (dragHolder == null)
+            {
+                return;
+            }
+
+
+            dragHolder.DragHandle.SetTag(Resource.Id.Object_Position, position);
+            //dragHolder.DragHandle.Touch -= StartDrag;
+            //dragHolder.DragHandle.Touch += StartDrag;
+
+            dragHolder.DragHandle.Touch += (sender, e) =>
+            {
+                if (e.Event?.Action == MotionEventActions.Down)
+                {
+                    var view = sender as View;
+
+                    if (view == null)
+                    {
+                        return;
+                    }
+
+
+                    _touchHelper.StartDrag(dragHolder);
+                }
+            };
+        }
+
+        //private void StartDrag(object sender, View.TouchEventArgs e)
+        //{
+        //    if (e.Event?.Action == MotionEventActions.Down)
+        //    {
+        //        var view = sender as View;
+
+        //        if (view == null)
+        //        {
+        //            return;
+        //        }
+
+        //        var position = (int) view.GetTag(Resource.Id.Object_Position);
+        //        var holder = RecyclerView.FindV(position);
+
+        //        _touchHelper.StartDrag(holder);
+        //    }
+        //}
+
+        public class DraggableCardItemViewHolder : RecyclerView.ViewHolder
         {
             public TextView Name { get; set; }
             public AppCompatCheckBox Checkbox { get; set; }

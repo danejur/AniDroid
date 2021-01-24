@@ -23,5 +23,20 @@ namespace AniDroid.Utils.Extensions
         {
             return values.Any(collection.Contains);
         }
+
+        public static IEnumerable<T> EveryNth<T>(this IEnumerable<T> collection,
+            int nStep)
+        {
+            return collection.Where((x, i) => (i + 1) % nStep == 0);
+        }
+
+        public static IEnumerable<T> EveryNthReverse<T>(this List<T> collection,
+            int nStep)
+        {
+            for (var i = collection.Count - 1; i >= 0; i -= nStep)
+            {
+                yield return collection[i];
+            }
+        }
     }
 }
