@@ -18,6 +18,8 @@ namespace AniDroid.MediaList
         public ICollection<string> IncludedTags { get; set; }
         public ICollection<string> LicensedBy { get; set; }
 
+        public bool FilteringPreviouslyActive { get; set; }
+
         public bool IsFilteringActive => Season != null || Status != null || Format != null || Year != null ||
                                          Source != null || IncludedGenres?.Any() == true ||
                                          IncludedTags?.Any() == true || LicensedBy?.Any() == true ||

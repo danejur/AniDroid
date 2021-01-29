@@ -49,6 +49,9 @@ namespace AniDroid.Main
         public const string NotificationTextIntentKey = "NOTIFICATION_TEXT";
         public const string DisplayNotificationsIntentKey = "DISPLAY_NOTIFICATIONS";
 
+        [InjectView(Resource.Id.Main_ToolbarSearch)]
+        public EditText ToolbarSearch;
+
         [InjectView(Resource.Id.Main_CoordLayout)]
         private CoordinatorLayout _coordLayout;
         [InjectView(Resource.Id.Main_NavigationView)]
@@ -382,6 +385,7 @@ namespace AniDroid.Main
             if (_fragmentBeingReplaced)
             {
                 ReplaceFragment();
+                ToolbarSearch.Visibility = ViewStates.Gone;
             }
             else if (_navClosedAction != null)
             {
@@ -498,6 +502,11 @@ namespace AniDroid.Main
             }
 
             return true;
+        }
+
+        public void SetToolbarSearchVisible(bool isVisible)
+        {
+            ToolbarSearch.Visibility = isVisible ? ViewStates.Visible : ViewStates.Gone;
         }
 
         public enum DefaultTab

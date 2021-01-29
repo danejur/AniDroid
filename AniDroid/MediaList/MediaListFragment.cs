@@ -41,6 +41,7 @@ namespace AniDroid.MediaList
         private const string MediaTypeKey = "MEDIA_TYPE";
         private const string MediaSortKey = "MEDIA_SORT";
         private const string UserIdKey = "USER_ID";
+        private const int FilterTextUpdateHandlerMessage = 1;
 
         private int _userId;
         private MediaType _type;
@@ -53,6 +54,7 @@ namespace AniDroid.MediaList
 
         private static MediaListFragment _animeListFragmentInstance;
         private static MediaListFragment _mangaListFragmentInstance;
+        private static Handler _filterTextHandler;
 
         public override bool HasMenu => true;
         public override string FragmentName {
@@ -97,6 +99,39 @@ namespace AniDroid.MediaList
             }
 
             _filterModel = new MediaListFilterModel();
+            _filterTextHandler = new Handler(UpdateFilterText);
+        }
+
+        public override void OnResume()
+        {
+            base.OnResume();
+
+            if (Activity.ToolbarSearch == null)
+            {
+                return;
+            }
+
+            Activity.ToolbarSearch.Text = _filterModel.Title;
+            Activity.ToolbarSearch.Visibility = ViewStates.Visible;
+            Activity.ToolbarSearch.Hint = "Search lists...";
+
+            Activity.ToolbarSearch.AfterTextChanged -= ToolbarSearchTextChanged;
+            Activity.ToolbarSearch.AfterTextChanged += ToolbarSearchTextChanged;
+        }
+
+        private void ToolbarSearchTextChanged(object sender, Android.Text.AfterTextChangedEventArgs e)
+        {
+            _filterTextHandler.RemoveMessages(FilterTextUpdateHandlerMessage);
+            _filterTextHandler.SendEmptyMessageDelayed(FilterTextUpdateHandlerMessage, 500);
+        }
+
+        private void UpdateFilterText(Message message)
+        {
+            if (!string.Equals(_filterModel.Title, Activity.ToolbarSearch.Text))
+            {
+                _filterModel.Title = Activity.ToolbarSearch.Text;
+                SetMediaListFilter(_filterModel);
+            }
         }
 
         public static MediaListFragment CreateMediaListFragment(int userId, MediaType type, MediaSort sort = null)
@@ -207,14 +242,29 @@ namespace AniDroid.MediaList
                 adapter.SetFilter(filterModel);
             }
 
+            if (!string.Equals(_filterModel.Title, Activity.ToolbarSearch.Text))
+            {
+                Activity.ToolbarSearch.Text = _filterModel.Title;
+            }
+
             if (_filterModel.IsFilteringActive)
             {
-                DisplaySnackbarMessage("List filtering is active", Snackbar.LengthLong);
+                if (!_filterModel.FilteringPreviouslyActive)
+                {
+                    DisplaySnackbarMessage("List filtering is active", Snackbar.LengthLong);
+                }
+
+                _filterModel.FilteringPreviouslyActive = true;
                 _menu?.FindItem(Resource.Id.Menu_MediaLists_Filter)?.Icon?.SetTintList(ColorStateList.ValueOf(Color.LightGreen));
             }
             else
             {
-                DisplaySnackbarMessage("List filtering is not active", Snackbar.LengthShort);
+                if (_filterModel.FilteringPreviouslyActive)
+                {
+                    DisplaySnackbarMessage("List filtering is not active", Snackbar.LengthShort);
+                }
+
+                _filterModel.FilteringPreviouslyActive = false;
                 _menu?.FindItem(Resource.Id.Menu_MediaLists_Filter)?.Icon?.SetTintList(null);
             }
         }

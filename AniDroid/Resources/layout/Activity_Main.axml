@@ -18,7 +18,13 @@
           android:layout_height="56dp"
           app:popupTheme="?Toolbar_PopupTheme"
           app:theme="?Toolbar_Theme"
-          style="?Toolbar_Style"/>
+          style="?Toolbar_Style">
+        <EditText
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:visibility="visible"
+          android:id="@+id/Main_ToolbarSearch"/>
+      </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
     <FrameLayout
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
