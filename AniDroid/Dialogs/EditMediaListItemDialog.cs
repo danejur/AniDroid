@@ -188,8 +188,8 @@ namespace AniDroid.Dialogs
             {
                 if (_mediaListOptions.ScoreFormat == ScoreFormat.FiveStars)
                 {
-                    var list = new List<string> { "★", "★★", "★★★", "★★★★", "★★\n★★★" };
-                    scorePicker.SetStringItems(list, (int)(_mediaList?.Score ?? 3) - 1);
+                    var list = new List<string> { "", "★", "★★", "★★★", "★★★★", "★★\n★★★" };
+                    scorePicker.SetStringItems(list, (int)(_mediaList?.Score ?? 3));
                     _customScoringEnabled = false;
                 }
                 else if (_mediaListOptions.ScoreFormat == ScoreFormat.Hundred)
@@ -207,7 +207,7 @@ namespace AniDroid.Dialogs
                 }
                 else if (_mediaListOptions.ScoreFormat == ScoreFormat.ThreeSmileys)
                 {
-                    scorePicker.SetDrawableItems(new List<int> { Resource.Drawable.svg_sad, Resource.Drawable.svg_neutral, Resource.Drawable.svg_happy }, (int)(_mediaList?.Score ?? 2) - 1);
+                    scorePicker.SetDrawableItems(new List<int> { 0, Resource.Drawable.svg_sad, Resource.Drawable.svg_neutral, Resource.Drawable.svg_happy }, (int)(_mediaList?.Score ?? 2));
                     _customScoringEnabled = false;
                 }
 
@@ -475,7 +475,7 @@ namespace AniDroid.Dialogs
                 {
                     MediaId = _media.Id,
                     Status = AniListEnum.GetEnum<MediaListStatus>(_statusSpinner.SelectedItemPosition),
-                    Score = _scorePicker.GetValue() ?? 0,
+                    Score = _scorePicker.GetValue(),
                     Progress = (int?) _progressPicker.GetValue(),
                     ProgressVolumes =
                         _media.Type == MediaType.Manga ? (int?) _progressVolumesPicker.GetValue() : null,
@@ -491,9 +491,9 @@ namespace AniDroid.Dialogs
                 };
 
                 if ((_mediaListOptions.ScoreFormat == ScoreFormat.FiveStars ||
-                     _mediaListOptions.ScoreFormat == ScoreFormat.ThreeSmileys) && editDto.Score.HasValue)
+                     _mediaListOptions.ScoreFormat == ScoreFormat.ThreeSmileys) && !editDto.Score.HasValue)
                 {
-                    editDto.Score += 1;
+                    editDto.Score = 0;
                 }
 
                 var transition = new Fade(Visibility.ModeOut);

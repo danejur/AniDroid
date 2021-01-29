@@ -95,7 +95,7 @@ namespace AniDroid.Widgets
 
             if (defaultPosition < 0 || defaultPosition >= _stringItems.Count)
             {
-                defaultPosition = null;
+                defaultPosition = 0;
             }
 
             _currentValue = defaultPosition;

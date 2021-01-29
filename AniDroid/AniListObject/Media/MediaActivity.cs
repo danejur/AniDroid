@@ -131,17 +131,12 @@ namespace AniDroid.AniListObject.Media
 
             var adapter = new FragmentlessViewPagerAdapter();
 
-            
-
             adapter.AddView(_mediaDetailsView = CreateMediaDetailsView(media), "Details");
 
-            //if (media.Characters?.PageInfo?.Total > 0)
-            //{
-            //    adapter.AddView(CreateMediaCharactersView(media.Id), "Characters");
-            //}
-
-            // TODO: add character pageinfo check back in once api is fixed
-            adapter.AddView(CreateMediaCharactersView(media.Id), "Characters");
+            if (media.Characters?.PageInfo?.Total > 0)
+            {
+                adapter.AddView(CreateMediaCharactersView(media.Id), "Characters");
+            }
 
             if (media.Staff?.PageInfo?.Total > 0)
             {
