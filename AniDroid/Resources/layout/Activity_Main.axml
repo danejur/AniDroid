@@ -19,11 +19,13 @@
           app:popupTheme="?Toolbar_PopupTheme"
           app:theme="?Toolbar_Theme"
           style="?Toolbar_Style">
-        <EditText
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:visibility="visible"
-          android:id="@+id/Main_ToolbarSearch"/>
+            <EditText
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:visibility="visible"
+              app:theme="?ToolbarTextInput_Theme"
+              android:id="@+id/Main_ToolbarSearch"
+              android:inputType="text" />
       </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
     <FrameLayout

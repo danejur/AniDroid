@@ -99,6 +99,7 @@ namespace AniDroid.Main
             _searchButton.Click -= SearchButtonOnClick;
             _searchButton.Click += SearchButtonOnClick;
 
+            ToolbarSearch.Visibility = ViewStates.Gone;
             SelectDefaultFragment();
         }
 
@@ -502,11 +503,6 @@ namespace AniDroid.Main
             }
 
             return true;
-        }
-
-        public void SetToolbarSearchVisible(bool isVisible)
-        {
-            ToolbarSearch.Visibility = isVisible ? ViewStates.Visible : ViewStates.Gone;
         }
 
         public enum DefaultTab
