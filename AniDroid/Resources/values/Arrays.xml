@@ -186,5 +186,8 @@
     <item>11-16-2020|Adding support for Hiatus media status</item>
     <item>12-26-2020|Adding ability to sort Media lists by the date of the next episode</item>
     <item>01-22-2021|Fixed very old bug that caused the app to stop working after the user authorization token expired</item>
+    <item>01-29-2021|Added the ability to quickly filter your lists by title from the toolbar. Filtering on other user\'s lists is coming soon!</item>
+    <item>01-29-2021|Fixed media scoring bug when using stars or smileys</item>
+    <item>01-29-2021|Various backend changes and small tweaks</item>
   </array>
 </resources>
