@@ -54,7 +54,7 @@ namespace AniDroid.MediaList
 
         private static MediaListFragment _animeListFragmentInstance;
         private static MediaListFragment _mangaListFragmentInstance;
-        private static Handler _filterTextHandler;
+        private Handler _filterTextHandler;
 
         public override bool HasMenu => true;
         public override string FragmentName {
@@ -98,8 +98,8 @@ namespace AniDroid.MediaList
                 _mangaListFragmentInstance = this;
             }
 
+            _filterTextHandler ??= new Handler(UpdateFilterText);
             _filterModel = new MediaListFilterModel();
-            _filterTextHandler = new Handler(UpdateFilterText);
         }
 
         public override void OnResume()
@@ -119,6 +119,14 @@ namespace AniDroid.MediaList
             Activity.ToolbarSearch.AfterTextChanged += ToolbarSearchTextChanged;
         }
 
+        public override void OnPause()
+        {
+            base.OnPause();
+
+            // need to manually remove this event since ToolbarSearch exists in the parent context
+            Activity.ToolbarSearch.AfterTextChanged -= ToolbarSearchTextChanged;
+        }
+
         private void ToolbarSearchTextChanged(object sender, Android.Text.AfterTextChangedEventArgs e)
         {
             _filterTextHandler.RemoveMessages(FilterTextUpdateHandlerMessage);
@@ -127,7 +135,7 @@ namespace AniDroid.MediaList
 
         private void UpdateFilterText(Message message)
         {
-            if (!string.Equals(_filterModel.Title, Activity.ToolbarSearch.Text))
+            if (Activity?.ToolbarSearch?.Text != null && !string.Equals(_filterModel.Title, Activity.ToolbarSearch.Text))
             {
                 _filterModel.Title = Activity.ToolbarSearch.Text;
                 SetMediaListFilter(_filterModel);
