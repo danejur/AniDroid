@@ -242,7 +242,7 @@ namespace AniDroid.MediaList
                 adapter.SetFilter(filterModel);
             }
 
-            if (!string.Equals(_filterModel.Title, Activity.ToolbarSearch.Text))
+            if (Activity?.ToolbarSearch != null && !string.Equals(_filterModel.Title, Activity.ToolbarSearch.Text))
             {
                 Activity.ToolbarSearch.Text = _filterModel.Title;
             }
