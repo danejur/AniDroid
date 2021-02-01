@@ -170,7 +170,7 @@ namespace AniDroid.AniListObject.Media
 
             if (media.Trends?.PageInfo?.Total > 4 || media.AiringTrends?.PageInfo?.Total >= 2)
             {
-                adapter.AddView(CreateMediaTrendsView(media.Trends?.Data?.ToList(), media.AiringTrends?.Data?.Where(x => x.Node.Episode.HasValue).ToList()), "Trends");
+                adapter.AddView(CreateMediaTrendsView(media.Trends?.Data?.ToList(), media.AiringTrends?.Data?.Where(x => x.Node.Episode.HasValue).DistinctBy(x => x.Node.Episode).ToList()), "Trends");
             }
 
             // TODO: see if there's a better way of determining whether to display this or not
@@ -791,7 +791,7 @@ namespace AniDroid.AniListObject.Media
 
             if (airingTrendEdgeList.Count > 4)
             {
-                var airingTrendList = airingTrendEdgeList.EveryNthReverse(Math.Max(1, airingTrendEdgeList.Count / 8)).Select(x => x.Node).ToList();
+                var airingTrendList = airingTrendEdgeList.EveryNth(Math.Max(1, (int)Math.Ceiling((decimal)airingTrendEdgeList.Count / 8))).Reverse().Select(x => x.Node).ToList();
 
                 containerView.AddView(CreateAiringWatchingProgressionView(airingTrendList));
                 containerView.AddView(CreateAiringScoreProgressionView(airingTrendList));
@@ -822,7 +822,7 @@ namespace AniDroid.AniListObject.Media
                 colorList.Add(typedColorArray.GetColor(i, 0));
             }
 
-            var scoresChart = new LineChart(this)
+            var activityChart = new LineChart(this)
             {
                 LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, chartHeight),
 
@@ -830,44 +830,48 @@ namespace AniDroid.AniListObject.Media
 
             var data = new LineData();
 
-            var watchingPoints = trends.Select(x => new Entry(x.Date, x.Trending)).ToList();
-            var watchingDataSet = new LineDataSet(watchingPoints, "Trending")
+            var activityPoints = trends.Select(x => new Entry(x.Date, x.Trending)).ToList();
+            var activityDataSet = new LineDataSet(activityPoints, "Trending")
             {
                 Color = colorList[0],
                 ValueFormatter = new ChartUtils.NumberValueFormatter(),
             };
 
-            watchingDataSet.ValueTextSize = 12;
-            watchingDataSet.SetDrawCircleHole(false);
-            watchingDataSet.SetCircleColor(colorList[0]);
-            watchingDataSet.SetMode(LineDataSet.Mode.Linear);
-            watchingDataSet.ValueTextColor = textColor;
-            watchingDataSet.SetDrawValues(true);
+            var activityRange = trends.Max(x => x.Trending) - trends.Min(x => x.Trending);
 
-            data.AddDataSet(watchingDataSet);
+            activityDataSet.ValueTextSize = 12;
+            activityDataSet.SetDrawCircleHole(false);
+            activityDataSet.SetCircleColor(colorList[0]);
+            activityDataSet.SetMode(LineDataSet.Mode.Linear);
+            activityDataSet.ValueTextColor = textColor;
+            activityDataSet.SetDrawValues(true);
 
-            scoresChart.Data = data;
-            scoresChart.FitScreen();
-            scoresChart.SetTouchEnabled(false);
-            scoresChart.Description.Enabled = false;
-            scoresChart.XAxis.Position = XAxis.XAxisPosition.Bottom;
-            scoresChart.XAxis.ValueFormatter = new ChartUtils.DateValueFormatter("MMM d");
-            scoresChart.XAxis.LabelRotationAngle = 60;
-            scoresChart.XAxis.Granularity = 1;
-            scoresChart.XAxis.AxisMaximum = trends.Max(x => x.Date);
-            scoresChart.XAxis.AxisMinimum = trends.Min(x => x.Date);
-            scoresChart.XAxis.SetLabelCount(trends.Count, true);
+            data.AddDataSet(activityDataSet);
 
-            scoresChart.Legend.Enabled = false;
-            scoresChart.SetDrawGridBackground(false);
-            scoresChart.XAxis.SetDrawGridLines(false);
-            scoresChart.AxisLeft.Enabled = false;
-            scoresChart.AxisRight.Enabled = false;
+            activityChart.Data = data;
+            activityChart.FitScreen();
+            activityChart.SetTouchEnabled(false);
+            activityChart.Description.Enabled = false;
+            activityChart.XAxis.Position = XAxis.XAxisPosition.Bottom;
+            activityChart.XAxis.ValueFormatter = new ChartUtils.DateValueFormatter("MMM d");
+            activityChart.XAxis.LabelRotationAngle = 60;
+            activityChart.XAxis.Granularity = 1;
+            activityChart.XAxis.AxisMaximum = trends.Max(x => x.Date);
+            activityChart.XAxis.AxisMinimum = trends.Min(x => x.Date);
+            activityChart.XAxis.SetLabelCount(trends.Count, true);
 
-            scoresChart.XAxis.TextColor = scoresChart.AxisLeft.TextColor = scoresChart.Legend.TextColor = textColor;
-            scoresChart.ExtraLeftOffset = scoresChart.ExtraRightOffset = 15;
+            activityChart.AxisLeft.AxisMinimum = Math.Max(trends.Min(x => x.Trending) - activityRange / 2, 0);
+            activityChart.AxisLeft.AxisMaximum = trends.Max(x => x.Trending) + activityRange / 2;
+            activityChart.Legend.Enabled = false;
+            activityChart.SetDrawGridBackground(false);
+            activityChart.XAxis.SetDrawGridLines(false);
+            activityChart.AxisLeft.Enabled = false;
+            activityChart.AxisRight.Enabled = false;
 
-            detailContainer.AddView(scoresChart);
+            activityChart.XAxis.TextColor = activityChart.AxisLeft.TextColor = activityChart.Legend.TextColor = textColor;
+            activityChart.ExtraLeftOffset = activityChart.ExtraRightOffset = 15;
+
+            detailContainer.AddView(activityChart);
 
             return detailView;
         }
@@ -895,7 +899,7 @@ namespace AniDroid.AniListObject.Media
                 colorList.Add(typedColorArray.GetColor(i, 0));
             }
 
-            var scoresChart = new LineChart(this)
+            var watchingChart = new LineChart(this)
             {
                 LayoutParameters = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MatchParent, chartHeight),
 
@@ -910,6 +914,8 @@ namespace AniDroid.AniListObject.Media
                 ValueFormatter = new ChartUtils.NumberValueFormatter(),
             };
 
+            var watchingRange = trends.Max(x => x.InProgress ?? 0) - trends.Min(x => x.InProgress ?? 0);
+
             watchingDataSet.ValueTextSize = 12;
             watchingDataSet.SetDrawCircleHole(false);
             watchingDataSet.SetCircleColor(colorList[0]);
@@ -919,27 +925,29 @@ namespace AniDroid.AniListObject.Media
 
             data.AddDataSet(watchingDataSet);
 
-            scoresChart.Data = data;
-            scoresChart.FitScreen();
-            scoresChart.SetTouchEnabled(false);
-            scoresChart.Description.Enabled = false;
-            scoresChart.XAxis.Position = XAxis.XAxisPosition.Bottom;
-            scoresChart.XAxis.ValueFormatter = new ChartUtils.AxisValueCeilingFormatter(1);
-            scoresChart.XAxis.Granularity = 1;
-            scoresChart.XAxis.AxisMaximum = trends.Max(x => x.Episode.Value);
-            scoresChart.XAxis.AxisMinimum = trends.Min(x => x.Episode.Value);
-            scoresChart.XAxis.SetLabelCount(Math.Min(trends.Count, 8), true);
+            watchingChart.Data = data;
+            watchingChart.FitScreen();
+            watchingChart.SetTouchEnabled(false);
+            watchingChart.Description.Enabled = false;
+            watchingChart.XAxis.Position = XAxis.XAxisPosition.Bottom;
+            watchingChart.XAxis.ValueFormatter = new ChartUtils.AxisValueCeilingFormatter(1);
+            watchingChart.XAxis.Granularity = 1;
+            watchingChart.XAxis.AxisMaximum = trends.Max(x => x.Episode.Value);
+            watchingChart.XAxis.AxisMinimum = trends.Min(x => x.Episode.Value);
+            watchingChart.XAxis.SetLabelCount(trends.Count, true);
 
-            scoresChart.Legend.Enabled = false;
-            scoresChart.SetDrawGridBackground(false);
-            scoresChart.XAxis.SetDrawGridLines(false);
-            scoresChart.AxisLeft.Enabled = false;
-            scoresChart.AxisRight.Enabled = false;
+            watchingChart.AxisLeft.AxisMinimum = Math.Max(trends.Min(x => x.InProgress ?? 0) - watchingRange / 2, 0);
+            watchingChart.AxisLeft.AxisMaximum = trends.Max(x => x.InProgress ?? 0) + watchingRange / 2;
+            watchingChart.Legend.Enabled = false;
+            watchingChart.SetDrawGridBackground(false);
+            watchingChart.XAxis.SetDrawGridLines(false);
+            watchingChart.AxisLeft.Enabled = false;
+            watchingChart.AxisRight.Enabled = false;
 
-            scoresChart.XAxis.TextColor = scoresChart.AxisLeft.TextColor = scoresChart.Legend.TextColor = textColor;
-            scoresChart.ExtraLeftOffset = scoresChart.ExtraRightOffset = 15;
+            watchingChart.XAxis.TextColor = watchingChart.AxisLeft.TextColor = watchingChart.Legend.TextColor = textColor;
+            watchingChart.ExtraLeftOffset = watchingChart.ExtraRightOffset = 15;
 
-            detailContainer.AddView(scoresChart);
+            detailContainer.AddView(watchingChart);
 
             return detailView;
         }
@@ -999,8 +1007,10 @@ namespace AniDroid.AniListObject.Media
             scoresChart.XAxis.Granularity = 1;
             scoresChart.XAxis.AxisMaximum = trends.Max(x => x.Episode.Value);
             scoresChart.XAxis.AxisMinimum = trends.Min(x => x.Episode.Value);
-            scoresChart.XAxis.SetLabelCount(Math.Min(trends.Count, 8), true);
+            scoresChart.XAxis.SetLabelCount(trends.Count, true);
 
+            scoresChart.AxisLeft.AxisMinimum = 0;
+            scoresChart.AxisLeft.AxisMaximum = 100;
             scoresChart.Legend.Enabled = false;
             scoresChart.SetDrawGridBackground(false);
             scoresChart.XAxis.SetDrawGridLines(false);
