@@ -237,35 +237,43 @@ namespace AniDroid.MediaList
 
         public void SetMediaListFilter(MediaListFilterModel filterModel)
         {
-            foreach (var adapter in _recyclerAdapters)
+            try
             {
-                adapter.SetFilter(filterModel);
-            }
-
-            if (Activity?.ToolbarSearch != null && !string.Equals(_filterModel.Title, Activity.ToolbarSearch.Text))
-            {
-                Activity.ToolbarSearch.Text = _filterModel.Title;
-            }
-
-            if (_filterModel.IsFilteringActive)
-            {
-                if (!_filterModel.FilteringPreviouslyActive)
+                foreach (var adapter in _recyclerAdapters)
                 {
-                    DisplaySnackbarMessage("List filtering is active", Snackbar.LengthLong);
+                    adapter.SetFilter(filterModel);
                 }
 
-                _filterModel.FilteringPreviouslyActive = true;
-                _menu?.FindItem(Resource.Id.Menu_MediaLists_Filter)?.Icon?.SetTintList(ColorStateList.ValueOf(Color.LightGreen));
-            }
-            else
-            {
-                if (_filterModel.FilteringPreviouslyActive)
+                if (Activity?.ToolbarSearch != null && !string.Equals(_filterModel.Title, Activity.ToolbarSearch.Text))
                 {
-                    DisplaySnackbarMessage("List filtering is not active", Snackbar.LengthShort);
+                    Activity.ToolbarSearch.Text = _filterModel.Title;
                 }
 
-                _filterModel.FilteringPreviouslyActive = false;
-                _menu?.FindItem(Resource.Id.Menu_MediaLists_Filter)?.Icon?.SetTintList(null);
+                if (_filterModel.IsFilteringActive)
+                {
+                    if (!_filterModel.FilteringPreviouslyActive)
+                    {
+                        DisplaySnackbarMessage("List filtering is active", Snackbar.LengthLong);
+                    }
+
+                    _filterModel.FilteringPreviouslyActive = true;
+                    _menu?.FindItem(Resource.Id.Menu_MediaLists_Filter)?.Icon
+                        ?.SetTintList(ColorStateList.ValueOf(Color.LightGreen));
+                }
+                else
+                {
+                    if (_filterModel.FilteringPreviouslyActive)
+                    {
+                        DisplaySnackbarMessage("List filtering is not active", Snackbar.LengthShort);
+                    }
+
+                    _filterModel.FilteringPreviouslyActive = false;
+                    _menu?.FindItem(Resource.Id.Menu_MediaLists_Filter)?.Icon?.SetTintList(null);
+                }
+            }
+            catch (Exception e)
+            {
+                Activity?.Logger?.Error("SetMediaListFilter", "Error occurred while setting media list filter", e);
             }
         }
 
