@@ -12,4 +12,5 @@
   
   <!-- MediaList -->
   <string name="MediaList_LongPressEnabledAlert">You are currently set to use long presses for adding episodes"</string>
+  <string name="MediaList_SearchListsHintText">Search lists...</string>
 </resources>

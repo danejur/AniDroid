@@ -37,6 +37,7 @@ namespace AniDroid.MediaList
     {
         public const string UserIdIntentKey = "USER_ID";
         public const string MediaTypeIntentKey = "MEDIA_TYPE";
+        private const int FilterTextUpdateHandlerMessage = 1;
 
         [InjectView(Resource.Id.MediaLists_CoordLayout)]
         private CoordinatorLayout _coordLayout;
@@ -48,6 +49,8 @@ namespace AniDroid.MediaList
         private TabLayout _tabLayout;
         [InjectView(Resource.Id.MediaLists_ViewPager)]
         private ViewPager _viewPager;
+        [InjectView(Resource.Id.MediaLists_ToolbarSearch)]
+        private EditText _toolbarSearch;
 
         private int _userId;
         private MediaType _mediaType;
@@ -57,6 +60,7 @@ namespace AniDroid.MediaList
         private MediaListSortComparer.SortDirection _currentSortDirection;
         private IMenu _menu;
         private MediaListFilterModel _filterModel;
+        private Handler _filterTextHandler;
 
         public override void OnError(IAniListError error)
         {
@@ -88,11 +92,32 @@ namespace AniDroid.MediaList
             await CreatePresenter(savedInstanceState);
 
             await Presenter.GetMediaLists(_userId);
+
+
+            _filterTextHandler = new Handler(UpdateFilterText);
+
+            _toolbarSearch.AfterTextChanged -= ToolbarSearchTextChanged;
+            _toolbarSearch.AfterTextChanged += ToolbarSearchTextChanged;
         }
 
         public MediaType GetMediaType()
         {
             return _mediaType;
+        }
+
+        private void ToolbarSearchTextChanged(object sender, Android.Text.AfterTextChangedEventArgs e)
+        {
+            _filterTextHandler.RemoveMessages(FilterTextUpdateHandlerMessage);
+            _filterTextHandler.SendEmptyMessageDelayed(FilterTextUpdateHandlerMessage, 500);
+        }
+
+        private void UpdateFilterText(Message message)
+        {
+            if (_toolbarSearch?.Text != null && !string.Equals(_filterModel.Title, _toolbarSearch.Text))
+            {
+                _filterModel.Title = _toolbarSearch.Text;
+                SetMediaListFilter(_filterModel);
+            }
         }
 
         public void SetCollection(MediaListCollection collection)
@@ -212,14 +237,30 @@ namespace AniDroid.MediaList
                 adapter.SetFilter(filterModel);
             }
 
+            if (!string.Equals(_filterModel.Title, _toolbarSearch.Text))
+            {
+                _toolbarSearch.Text = _filterModel.Title;
+            }
+
             if (_filterModel.IsFilteringActive)
             {
-                DisplaySnackbarMessage("List filtering is active", Snackbar.LengthLong);
-                _menu?.FindItem(Resource.Id.Menu_MediaLists_Filter)?.Icon?.SetTintList(ColorStateList.ValueOf(Color.LightGreen));
+                if (!_filterModel.FilteringPreviouslyActive)
+                {
+                    DisplaySnackbarMessage("List filtering is active", Snackbar.LengthLong);
+                }
+
+                _filterModel.FilteringPreviouslyActive = true;
+                _menu?.FindItem(Resource.Id.Menu_MediaLists_Filter)?.Icon
+                    ?.SetTintList(ColorStateList.ValueOf(Color.LightGreen));
             }
             else
             {
-                DisplaySnackbarMessage("List filtering is not active", Snackbar.LengthShort);
+                if (_filterModel.FilteringPreviouslyActive)
+                {
+                    DisplaySnackbarMessage("List filtering is not active", Snackbar.LengthShort);
+                }
+
+                _filterModel.FilteringPreviouslyActive = false;
                 _menu?.FindItem(Resource.Id.Menu_MediaLists_Filter)?.Icon?.SetTintList(null);
             }
         }

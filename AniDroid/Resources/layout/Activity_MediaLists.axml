@@ -16,7 +16,15 @@
             app:popupTheme="?Toolbar_PopupTheme"
             app:theme="?Toolbar_Theme"
             style="?Toolbar_Style"
-            app:layout_scrollFlags="enterAlways" />
+            app:layout_scrollFlags="enterAlways">
+            <EditText
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              app:theme="?ToolbarTextInput_Theme"
+              android:id="@+id/MediaLists_ToolbarSearch"
+              android:hint="@string/MediaList_SearchListsHintText"
+              android:inputType="text" />
+        </android.support.v7.widget.Toolbar>
         <android.support.design.widget.TabLayout
             app:tabMode="scrollable"
             android:id="@+id/MediaLists_Tabs"
