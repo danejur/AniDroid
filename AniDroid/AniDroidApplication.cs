@@ -21,6 +21,7 @@ using AniDroid.AniListObject.User;
 using AniDroid.Browse;
 using AniDroid.CurrentSeason;
 using AniDroid.Discover;
+using AniDroid.Favorites;
 using AniDroid.Home;
 using AniDroid.Jobs;
 using AniDroid.Login;
@@ -160,6 +161,7 @@ namespace AniDroid
             services.TryAddTransient<UserPresenter>();
             services.TryAddTransient<MediaListSettingsPresenter>();
             services.TryAddTransient<StudioPresenter>();
+            services.TryAddTransient<FavoritesPresenter>();
 
         }
 

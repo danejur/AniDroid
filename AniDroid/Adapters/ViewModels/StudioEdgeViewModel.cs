@@ -37,6 +37,11 @@ namespace AniDroid.Adapters.ViewModels
             return new StudioEdgeViewModel(model, StudioEdgeDetailType.IsMainStudio, StudioEdgeDetailType.None);
         }
 
+        public static StudioEdgeViewModel CreateFavoriteStudioEdgeViewModel(StudioEdge model)
+        {
+            return new StudioEdgeViewModel(model, StudioEdgeDetailType.None, StudioEdgeDetailType.None);
+        }
+
         private string GetDetailString(StudioEdgeDetailType detailType)
         {
             string retString = null;

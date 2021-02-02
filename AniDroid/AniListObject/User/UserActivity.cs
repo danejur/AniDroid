@@ -27,6 +27,7 @@ using Android.Text.Method;
 using AniDroid.Adapters.ReviewAdapters;
 using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Models.ActivityModels;
+using AniDroid.Favorites;
 using AniDroid.Utils.Formatting.Markdown;
 
 namespace AniDroid.AniListObject.User
@@ -218,6 +219,17 @@ namespace AniDroid.AniListObject.User
                 userMangaView.ButtonVisible = true;
                 userMangaView.Click += (sender, args) =>
                     MediaListActivity.StartActivity(this, user.Id, MediaType.Manga);
+            }
+
+            var userFavorites = retView.FindViewById<DataRow>(Resource.Id.User_Favorites);
+            if (true)
+            {
+                userFavorites.Visibility = ViewStates.Visible;
+                userFavorites.TextOne = "View Favorites";
+                userFavorites.ButtonClickable = false;
+                userFavorites.ButtonVisible = true;
+                userFavorites.Click += (sender, args) =>
+                    FavoritesActivity.StartActivity(this, user.Id);
             }
 
             return retView;

@@ -19,7 +19,7 @@ namespace AniDroid.Adapters.ViewModels
         public CharacterEdgeViewModel(CharacterEdge model, CharacterEdgeDetailType primaryCharacterEdgeDetailType,
             CharacterEdgeDetailType secondaryCharacterEdgeDetailType, bool isButtonVisible, int? buttonIcon) : base(model)
         {
-            TitleText = $"{Model.Node?.Name?.FormattedName}";
+            TitleText = $"{Model.Node?.Name?.Full ?? Model.Node?.Name?.FormattedName}";
             DetailPrimaryText = GetDetail(primaryCharacterEdgeDetailType);
             DetailSecondaryText = GetDetail(secondaryCharacterEdgeDetailType);
             ImageUri = Model.Node?.Image?.Large ?? Model?.Node?.Image?.Medium;
@@ -43,6 +43,12 @@ namespace AniDroid.Adapters.ViewModels
         public static CharacterEdgeViewModel CreateStaffCharacterEdgeViewModel(CharacterEdge model)
         {
             return new CharacterEdgeViewModel(model, CharacterEdgeDetailType.NativeName, CharacterEdgeDetailType.Role,
+                false, null);
+        }
+
+        public static CharacterEdgeViewModel CreateFavoriteCharacterEdgeViewModel(CharacterEdge model)
+        {
+            return new CharacterEdgeViewModel(model, CharacterEdgeDetailType.NativeName, CharacterEdgeDetailType.None,
                 false, null);
         }
         

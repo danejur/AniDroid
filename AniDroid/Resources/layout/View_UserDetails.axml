@@ -100,5 +100,21 @@
             android:layout_alignParentLeft="true"
             android:layout_below="@id/User_AnimeSummary"
             android:gravity="center_vertical|left" />
+        <AniDroid.Widgets.DataRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/User_Favorites"
+            android:background="@drawable/Background_Alternate_Ripple"
+            app:Icon="@drawable/svg_star"
+            app:TextOneColor="?Primary"
+            app:TextTwoColor="?Background_Text"
+            app:ButtonVisible="false"
+            app:ButtonIcon="@drawable/svg_chevron_right"
+            app:ButtonColor="?Background_Text"
+            android:visibility="gone"
+            android:layout_marginTop="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/User_MangaSummary"
+            android:gravity="center_vertical|left" />
     </RelativeLayout>
 </android.support.v4.widget.NestedScrollView>
