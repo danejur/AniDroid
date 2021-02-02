@@ -24,7 +24,7 @@ namespace AniDroid.Dialogs
             var whatsNewVals = context.Resources.GetStringArray(Resource.Array.Application_WhatsNew);
             var whatsNewSplitVals = whatsNewVals
                 .Select(x =>
-                    new {Date = DateTime.ParseExact(x.Split('|')[0], "MM-dd-yyyy", null), Val = x.Split('|')[1]})
+                    new {Date = DateTime.TryParseExact(x.Split('|')[0], "MM-dd-yyyy", null, System.Globalization.DateTimeStyles.None, out var parsedDate) ? parsedDate : DateTime.Now, Val = x.Split('|')[1]})
                 .GroupBy(x => x.Date).OrderByDescending(x => x.Key);
             foreach (var date in whatsNewSplitVals)
             {
