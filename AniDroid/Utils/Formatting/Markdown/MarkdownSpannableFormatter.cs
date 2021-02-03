@@ -10,6 +10,7 @@ using Android.Text.Style;
 using Android.Views;
 using AndroidX.Core.Content;
 using Square.Picasso;
+using Exception = Java.Lang.Exception;
 
 namespace AniDroid.Utils.Formatting.Markdown
 {
@@ -132,8 +133,9 @@ namespace AniDroid.Utils.Formatting.Markdown
                 _playIcon = playIcon;
             }
 
-            public void OnBitmapFailed(Drawable errorDrawable)
+            public void OnBitmapFailed(Exception errorDrawable, Drawable p1)
             {
+                
             }
 
             public void OnBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom @from)

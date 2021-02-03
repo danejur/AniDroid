@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="DiscU" Version="1.0.0.9" />
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.16" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.30" />
   </ItemGroup>
 
   <ItemGroup>

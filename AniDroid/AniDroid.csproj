@@ -76,43 +76,43 @@
     <PackageReference Include="Microsoft.AppCenter" Version="4.1.0" />
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="4.1.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="4.1.0" />
-    <PackageReference Include="Markdig" Version="0.18.0.0" />
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.0.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.0.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.0.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="3.0.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="3.0.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="3.0.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.0.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.0.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.0.0.0" />
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Abstractions" Version="3.0.0.0" />
-    <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="3.0.0.0" />
-    <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="3.0.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.0.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.0.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="3.0.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.0.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.0.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="3.0.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.0.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.0.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.EventLog" Version="3.0.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.EventSource" Version="3.0.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="3.0.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.0.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Primitives" Version="3.0.0.0" />
+    <PackageReference Include="Markdig" Version="0.23.0" />
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.CommandLine" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Physical" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.FileSystemGlobbing" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.EventLog" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.EventSource" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Primitives" Version="5.0.0" />
     <PackageReference Include="MPAndroidChart" Version="3.1.0.0" />
     <!--<PackageReference Include="Naxam.Flexbox.Droid" Version="0.3.1.0" />!-->
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.0.0" />
-    <PackageReference Include="RestSharp" Version="106.6.10.0" />
-    <PackageReference Include="Square.OkHttp" Version="2.0.0.0" />
-    <PackageReference Include="Square.OkIO" Version="2.0.0.0" />
-    <PackageReference Include="Square.Picasso" Version="2.0.0.0" />
-    <PackageReference Include="System.Diagnostics.EventLog" Version="4.0.1.0" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="4.0.5.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+    <PackageReference Include="RestSharp" Version="106.11.7" />
+    <PackageReference Include="Square.OkHttp" Version="2.7.5.1" />
+    <PackageReference Include="Square.OkIO" Version="2.8.0" />
+    <PackageReference Include="Square.Picasso" Version="2.71828.0" />
+    <PackageReference Include="System.Diagnostics.EventLog" Version="5.0.0" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="5.0.0" />
     <PackageReference Include="Xamarin.AndroidX.AppCompat">
       <Version>1.2.0.6</Version>
     </PackageReference>
@@ -128,21 +128,23 @@
     <PackageReference Include="Xamarin.AndroidX.Room.Runtime">
       <Version>2.2.6</Version>
     </PackageReference>
+    <PackageReference Include="Xamarin.AndroidX.SwipeRefreshLayout">
+      <Version>1.1.0.1</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.VectorDrawable">
       <Version>1.1.0.6</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.AndroidX.Work.Runtime" Version="2.4.0" />
-    <PackageReference Include="Xamarin.AndroidX.Browser" Version="1.3.0.3-alpha01" />
+    <PackageReference Include="Xamarin.AndroidX.Work.Runtime" Version="2.4.0.1" />
+    <PackageReference Include="Xamarin.AndroidX.Browser" Version="1.3.0.4" />
     <PackageReference Include="Xamarin.Essentials">
       <Version>1.6.1</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.1.0.5-rc3" />
-    <PackageReference Include="Xamarin.AndroidX.ExifInterface" Version="1.3.1" />
-    <PackageReference Include="Xamarin.AndroidX.Legacy.Support.V4" Version="1.0.0.5" />
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.16.0" />
-    <PackageReference Include="System.Security.Principal.Windows" Version="4.1.2.0" />
-    <PackageReference Include="System.Text.Encodings.Web" Version="4.0.4.0" />
-    <PackageReference Include="System.Text.Json" Version="4.0.0.0" />
+    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.2.1.1" />
+    <PackageReference Include="Xamarin.AndroidX.ExifInterface" Version="1.3.2.1" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.30" />
+    <PackageReference Include="System.Security.Principal.Windows" Version="5.0.0" />
+    <PackageReference Include="System.Text.Encodings.Web" Version="5.0.0" />
+    <PackageReference Include="System.Text.Json" Version="5.0.1" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Java.Interop" />
@@ -325,7 +327,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <EmbeddedResource Include="appsettings.json" />
-    <None Include="packages.config" />
     <None Include="Properties\AndroidManifestRelease.xml">
       <SubType>Designer</SubType>
     </None>
@@ -914,6 +915,7 @@
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
 		Other similar extension points exist, see Microsoft.Common.targets.
