@@ -123,6 +123,9 @@
       <Version>1.1.0.6</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.Browser" Version="1.3.0.4" />
+    <PackageReference Include="Xamarin.AndroidX.Work.Runtime">
+      <Version>2.4.0.1</Version>
+    </PackageReference>
     <PackageReference Include="Xamarin.Essentials">
       <Version>1.6.1</Version>
     </PackageReference>
@@ -243,8 +246,8 @@
     <Compile Include="Home\HomeFragment.cs" />
     <Compile Include="Home\HomePresenter.cs" />
     <Compile Include="Home\IHomeView.cs" />
-    <Compile Include="Jobs\AniDroidJobCreator.cs" />
-    <Compile Include="Jobs\AniListNotificationJob.cs" />
+    <Compile Include="Jobs\AniDroidJobManager.cs" />
+    <Compile Include="Jobs\AniListNotificationJobWorker.cs" />
     <Compile Include="MediaList\MediaListActivity.cs" />
     <Compile Include="MediaList\MediaListFilterModel.cs" />
     <Compile Include="MediaList\MediaListFragment.cs" />

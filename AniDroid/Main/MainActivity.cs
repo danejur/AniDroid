@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Android.App;
+using Android.App.Job;
 using Android.Content;
 using Android.Graphics;
 using Android.OS;
@@ -11,6 +12,7 @@ using AndroidX.AppCompat.App;
 using AndroidX.CoordinatorLayout.Widget;
 using AndroidX.Core.View;
 using AndroidX.DrawerLayout.Widget;
+using AndroidX.Work;
 using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniListObject.User;
@@ -204,11 +206,11 @@ namespace AniDroid.Main
 
             if (Settings.EnableNotificationService && Settings.IsUserAuthenticated)
             {
-                //AniListNotificationJob.EnableJob();
+                AniDroidJobManager.EnableAniListNotificationJob(this);
             }
             else
             {
-                //AniListNotificationJob.DisableJob();
+                AniDroidJobManager.DisableAniListNotificationJob(this);
             }
         }
 

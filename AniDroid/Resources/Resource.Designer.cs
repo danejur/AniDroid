@@ -2676,7 +2676,19 @@ namespace AniDroid
 			public const int abc_config_actionMenuItemAllCaps = 2131034114;
 			
 			// aapt resource value: 0x7F050003
-			public const int mtrl_btn_textappearance_all_caps = 2131034115;
+			public const int enable_system_alarm_service_default = 2131034115;
+			
+			// aapt resource value: 0x7F050004
+			public const int enable_system_foreground_service_default = 2131034116;
+			
+			// aapt resource value: 0x7F050005
+			public const int enable_system_job_service_default = 2131034117;
+			
+			// aapt resource value: 0x7F050006
+			public const int mtrl_btn_textappearance_all_caps = 2131034118;
+			
+			// aapt resource value: 0x7F050007
+			public const int workmanager_test_configuration = 2131034119;
 			
 			static Boolean()
 			{

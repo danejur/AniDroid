@@ -12,6 +12,7 @@ using Android.Views;
 using Android.Widget;
 using AndroidX.AppCompat.Widget;
 using AndroidX.CoordinatorLayout.Widget;
+using AndroidX.Work;
 using AniDroid.About;
 using AniDroid.Adapters.Base;
 using AniDroid.AniList.Interfaces;
@@ -173,11 +174,11 @@ namespace AniDroid.Settings
 
                         if (args.IsChecked)
                         {
-                            //AniListNotificationJob.EnableJob();
+                            AniDroidJobManager.EnableAniListNotificationJob(this);
                         }
                         else
                         {
-                            //AniListNotificationJob.DisableJob();
+                            AniDroidJobManager.DisableAniListNotificationJob(this);
                         }
                     }));
             _settingsContainer.AddView(CreateSettingDivider(this));

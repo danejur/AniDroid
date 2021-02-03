@@ -67,8 +67,6 @@ namespace AniDroid
             AppCenter.Start(appCenterId,
                 typeof(Analytics), typeof(Crashes));
 
-            //JobManager.Create(this).AddJobCreator(new AniDroidJobCreator(this));
-
             CreateNotificationsChannel();
         }
 
