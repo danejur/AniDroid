@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.Content.Res;
 using Android.OS;
-using Android.Support.Design.Widget;
-using Android.Support.V7.Widget;
 using Android.Views;
+using AndroidX.AppCompat.Widget;
+using AndroidX.CoordinatorLayout.Widget;
+using AndroidX.RecyclerView.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.CharacterAdapters;
 using AniDroid.Adapters.ForumThreadAdapters;
@@ -19,7 +19,6 @@ using AniDroid.Adapters.UserAdapters;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Interfaces;
-using AniDroid.AniList.Models;
 using AniDroid.AniList.Models.CharacterModels;
 using AniDroid.AniList.Models.ForumModels;
 using AniDroid.AniList.Models.MediaModels;
@@ -30,7 +29,8 @@ using AniDroid.Base;
 using AniDroid.Dialogs;
 using AniDroid.MediaList;
 using AniDroid.Utils;
-using AniDroid.Utils.Interfaces;
+using Google.Android.Material.FloatingActionButton;
+using Google.Android.Material.Snackbar;
 using OneOf;
 
 namespace AniDroid.SearchResults

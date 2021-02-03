@@ -1,29 +1,24 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
 using Android.Views;
-using Android.Widget;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Android.Support.Design.Widget;
-using Android.Support.V4.View;
-using Android.Support.V7.Widget;
+using AndroidX.AppCompat.Widget;
+using AndroidX.RecyclerView.Widget;
 using AniDroid.Adapters;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.CharacterAdapters;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Adapters.StaffAdapters;
 using AniDroid.Adapters.StudioAdapters;
-using AniDroid.Adapters.UserAdapters;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
 using AniDroid.Utils;
-using Toolbar = Android.Support.V7.Widget.Toolbar;
+using Google.Android.Material.Snackbar;
+using Google.Android.Material.Tabs;
+using AndroidX.ViewPager.Widget;
+using AndroidX.CoordinatorLayout.Widget;
 
 namespace AniDroid.Favorites
 {

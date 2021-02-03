@@ -1,21 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
-using Android.Graphics;
-using Android.OS;
 using Android.Runtime;
-using Android.Support.Design.Widget;
-using Android.Support.V4.View;
 using Android.Views;
 using Android.Widget;
+using AndroidX.CoordinatorLayout.Widget;
+using AndroidX.ViewPager.Widget;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Utils;
-using AniDroid.Utils.Interfaces;
-using Toolbar = Android.Support.V7.Widget.Toolbar;
+using Google.Android.Material.AppBar;
+using Google.Android.Material.Snackbar;
+using Google.Android.Material.Tabs;
+using Toolbar = AndroidX.AppCompat.Widget.Toolbar;
 
 namespace AniDroid.Base
 {

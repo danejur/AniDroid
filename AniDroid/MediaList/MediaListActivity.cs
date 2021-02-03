@@ -1,34 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.Content.Res;
 using Android.Graphics;
 using Android.OS;
-using Android.Runtime;
-using Android.Support.Design.Widget;
-using Android.Support.V4.View;
-using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using AndroidX.CoordinatorLayout.Widget;
+using AndroidX.RecyclerView.Widget;
+using AndroidX.ViewPager.Widget;
 using AniDroid.Adapters;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList;
-using AniDroid.AniList.Dto;
 using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Interfaces;
-using AniDroid.AniList.Models;
 using AniDroid.AniList.Models.MediaModels;
 using AniDroid.Base;
 using AniDroid.Dialogs;
 using AniDroid.Utils;
 using AniDroid.Utils.Comparers;
-using AniDroid.Utils.Interfaces;
-using Toolbar = Android.Support.V7.Widget.Toolbar;
+using Google.Android.Material.AppBar;
+using Google.Android.Material.Snackbar;
+using Google.Android.Material.Tabs;
+using Toolbar = AndroidX.AppCompat.Widget.Toolbar;
 
 namespace AniDroid.MediaList
 {

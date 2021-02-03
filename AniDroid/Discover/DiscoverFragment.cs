@@ -1,15 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Support.Design.Widget;
-using Android.Support.V7.Widget;
-using Android.Util;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters.Base;
@@ -17,13 +8,10 @@ using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Interfaces;
-using AniDroid.AniList.Models;
 using AniDroid.AniList.Models.MediaModels;
 using AniDroid.Base;
 using AniDroid.Dialogs;
 using AniDroid.MediaList;
-using AniDroid.Utils;
-using AniDroid.Utils.Interfaces;
 using AniDroid.Widgets;
 using OneOf;
 

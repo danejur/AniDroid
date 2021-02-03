@@ -1,26 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
 using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Support.Transitions;
-using Android.Support.V7.App;
-using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using AndroidX.AppCompat.App;
+using AndroidX.AppCompat.Widget;
+using AndroidX.RecyclerView.Widget;
+using AndroidX.Transitions;
 using AniDroid.Adapters.General;
 using AniDroid.AniList;
 using AniDroid.AniList.Dto;
 using AniDroid.AniList.Enums.MediaEnums;
-using AniDroid.AniList.Models;
 using AniDroid.Base;
 using AniDroid.Browse;
 using AniDroid.Widgets;
-using Toolbar = Android.Support.V7.Widget.Toolbar;
+using AlertDialog = AndroidX.AppCompat.App.AlertDialog;
+using Toolbar = AndroidX.AppCompat.Widget.Toolbar;
 
 namespace AniDroid.Dialogs
 {
@@ -271,7 +268,7 @@ namespace AniDroid.Dialogs
 
             private void GenresButton_Click(object sender, EventArgs e)
             {
-                var dialog = new Android.Support.V7.App.AlertDialog.Builder(_context,
+                var dialog = new AlertDialog.Builder(_context,
                     _context.GetThemedResourceId(Resource.Attribute.Dialog_Theme)).Create();
                 var dialogView = _context.LayoutInflater.Inflate(Resource.Layout.View_List, null);
                 var recycler = dialogView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
@@ -308,7 +305,7 @@ namespace AniDroid.Dialogs
 
             private void TagsButton_Click(object sender, EventArgs e)
             {
-                var dialog = new Android.Support.V7.App.AlertDialog.Builder(_context,
+                var dialog = new AlertDialog.Builder(_context,
                     _context.GetThemedResourceId(Resource.Attribute.Dialog_Theme)).Create();
                 var dialogView = _context.LayoutInflater.Inflate(Resource.Layout.View_List, null);
                 var recycler = dialogView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);
@@ -349,7 +346,7 @@ namespace AniDroid.Dialogs
 
             private void StreamingOnButton_Click(object sender, EventArgs e)
             {
-                var dialog = new Android.Support.V7.App.AlertDialog.Builder(_context,
+                var dialog = new AlertDialog.Builder(_context,
                     _context.GetThemedResourceId(Resource.Attribute.Dialog_Theme)).Create();
                 var dialogView = _context.LayoutInflater.Inflate(Resource.Layout.View_List, null);
                 var recycler = dialogView.FindViewById<RecyclerView>(Resource.Id.List_RecyclerView);

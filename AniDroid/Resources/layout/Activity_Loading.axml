@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout 
+<androidx.coordinatorlayout.widget.CoordinatorLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/Loading_CoordLayout"
     android:background="?Background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-  <android.support.design.widget.AppBarLayout
+  <com.google.android.material.appbar.AppBarLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     style="?AppBarLayout_Style">
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
       android:id="@+id/Loading_Toolbar"
       android:layout_width="match_parent"
       android:layout_height="56dp"
@@ -18,10 +18,10 @@
       app:theme="?Toolbar_Theme"
       style="?Toolbar_Style"
       app:layout_scrollFlags="scroll|enterAlways" />
-  </android.support.design.widget.AppBarLayout>
+  </com.google.android.material.appbar.AppBarLayout>
   <ProgressBar
     android:indeterminateTint="?Primary"
     android:layout_width="60dp"
     android:layout_height="60dp"
     android:layout_gravity="center" />
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using AniDroid.Base;
+﻿using AniDroid.Base;
 
 namespace AniDroid.AniListObject.Staff
 {

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   android:id="@+id/SearchResults_CoordLayout"
   android:background="?Background"
   android:layout_width="match_parent"
   android:layout_height="match_parent">
-  <android.support.v7.widget.RecyclerView
+  <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/SearchResults_RecyclerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:scrollbars="vertical"
     android:layoutAnimation="@anim/Layout_Animation_Falldown"
     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
-  <android.support.design.widget.AppBarLayout
+  <com.google.android.material.appbar.AppBarLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
       android:id="@+id/SearchResults_Toolbar"
       android:layout_width="match_parent"
       android:layout_height="?attr/actionBarSize"
@@ -24,8 +24,8 @@
       app:theme="?Toolbar_Theme"
       style="?Toolbar_Style"
       app:layout_scrollFlags="scroll|enterAlways|snap" />
-  </android.support.design.widget.AppBarLayout>
-  <android.support.design.widget.FloatingActionButton
+  </com.google.android.material.appbar.AppBarLayout>
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
     android:id="@+id/SearchResults_SearchFab"
     app:srcCompat="@drawable/ic_search_white_24px"
     style="?FabLarge_Style"
@@ -34,4 +34,4 @@
     android:layout_gravity="bottom|right"
     android:layout_marginBottom="12dp"
     android:layout_marginRight="16dp" />
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

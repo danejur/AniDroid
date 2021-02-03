@@ -5,7 +5,7 @@
       android:layout_height="match_parent"
       android:minWidth="25px"
       android:minHeight="25px">
-	<android.support.v7.widget.RecyclerView
+	<androidx.recyclerview.widget.RecyclerView
 		android:id="@+id/AniListActivityReply_Recycler"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="5dp" />
-  <android.support.design.widget.TextInputLayout
+  <com.google.android.material.textfield.TextInputLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="5dp"
@@ -28,5 +28,5 @@
       android:id="@+id/AniListActivityReply_Reply"
       style="?TextInput_Theme"
       android:hint="Reply" />
-  </android.support.design.widget.TextInputLayout>
+  </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>

@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Support.Design.Widget;
 using Android.Views;
 using Android.Widget;
+using AndroidX.CoordinatorLayout.Widget;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
@@ -17,7 +14,8 @@ using AniDroid.Dialogs;
 using AniDroid.Main;
 using AniDroid.Utils;
 using AniDroid.Utils.Comparers;
-using Toolbar = Android.Support.V7.Widget.Toolbar;
+using Google.Android.Material.Snackbar;
+using Toolbar = AndroidX.AppCompat.Widget.Toolbar;
 
 namespace AniDroid.Settings.MediaListSettings
 {

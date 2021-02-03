@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/MediaListFilterDialog_CoordLayout"
     android:theme="?Dialog_Theme"
     android:background="?Background_Alternate"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/MediaListFilterDialog_AppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="?AppBarLayout_Style">
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/MediaListFilterDialog_Toolbar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
@@ -19,8 +19,8 @@
             app:theme="?Toolbar_Theme"
             style="?Toolbar_Style"
             app:layout_scrollFlags="enterAlways" />
-    </android.support.design.widget.AppBarLayout>
-    <android.support.v4.widget.NestedScrollView
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.core.widget.NestedScrollView
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -42,7 +42,7 @@
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:gravity="center_vertical">
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:theme="?TextInput_Theme">
@@ -53,7 +53,7 @@
                     android:singleLine="true"
                     android:id="@+id/MediaListFilterDialog_Title"
                     android:hint="Filter by Title" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
               </LinearLayout>
           </LinearLayout>
           <LinearLayout
@@ -75,7 +75,7 @@
                         android:textSize="14dp"
                         android:textColor="?Primary_Dark"
                         android:layout_gravity="top" />
-                    <android.support.v7.widget.AppCompatSpinner
+                    <androidx.appcompat.widget.AppCompatSpinner
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="5dp"
@@ -97,7 +97,7 @@
                     android:textSize="14dp"
                     android:textColor="?Primary_Dark"
                     android:layout_gravity="top" />
-                  <android.support.v7.widget.AppCompatSpinner
+                  <androidx.appcompat.widget.AppCompatSpinner
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
@@ -126,7 +126,7 @@
                         android:textSize="14dp"
                         android:textColor="?Primary_Dark"
                         android:layout_gravity="top" />
-                    <android.support.v7.widget.AppCompatSpinner
+                    <androidx.appcompat.widget.AppCompatSpinner
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="5dp"
@@ -148,7 +148,7 @@
                   android:textSize="14dp"
                   android:textColor="?Primary_Dark"
                   android:layout_gravity="top" />
-                <android.support.v7.widget.AppCompatButton
+                <androidx.appcompat.widget.AppCompatButton
                   android:text="All"
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
@@ -197,7 +197,7 @@
                         android:textSize="14dp"
                         android:textColor="?Primary_Dark"
                         android:layout_gravity="top" />
-                    <android.support.v7.widget.AppCompatSpinner
+                    <androidx.appcompat.widget.AppCompatSpinner
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="5dp"
@@ -225,7 +225,7 @@
                         android:textSize="14dp"
                         android:textColor="?Primary_Dark"
                         android:layout_gravity="top" />
-                    <android.support.v7.widget.AppCompatButton
+                    <androidx.appcompat.widget.AppCompatButton
 						android:text="All"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
@@ -246,7 +246,7 @@
                         android:textSize="14dp"
                         android:textColor="?Primary_Dark"
                         android:layout_gravity="top" />
-                    <android.support.v7.widget.AppCompatButton
+                    <androidx.appcompat.widget.AppCompatButton
 						android:text="All"
 						android:layout_width="wrap_content"
 						android:layout_height="wrap_content"
@@ -255,5 +255,5 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-</android.support.design.widget.CoordinatorLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

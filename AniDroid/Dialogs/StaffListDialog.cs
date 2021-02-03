@@ -1,21 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Support.V7.Widget;
 using Android.Views;
-using Android.Widget;
+using AndroidX.AppCompat.App;
+using AndroidX.RecyclerView.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.StaffAdapters;
 using AniDroid.Adapters.ViewModels;
-using AniDroid.AniList.Models;
 using AniDroid.AniList.Models.StaffModels;
-using AniDroid.AniList.Utils.Internal;
 using AniDroid.Base;
 
 namespace AniDroid.Dialogs
@@ -33,7 +24,7 @@ namespace AniDroid.Dialogs
                 BaseRecyclerAdapter.RecyclerCardType.FlatHorizontal);
             dialogRecycler.SetAdapter(recyclerAdapter);
 
-            var dialog = new Android.Support.V7.App.AlertDialog.Builder(context,
+            var dialog = new AlertDialog.Builder(context,
                 context.GetThemedResourceId(Resource.Attribute.Dialog_Theme));
             dialog.SetView(dialogView);
             dialog.Show();

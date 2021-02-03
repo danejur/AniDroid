@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     android:background="?Background"
     android:id="@+id/CardItem_Container">
-  <android.support.v7.widget.CardView
+  <androidx.cardview.widget.CardView
         android:foreground="?android:attr/selectableItemBackground"
         app:cardBackgroundColor="?Background"
         android:clickable="true"
@@ -63,5 +63,5 @@
 			android:layout_height="wrap_content"
 			android:textColor="?Background_Text_Alternate" />
     </RelativeLayout>
-	</android.support.v7.widget.CardView>
+	</androidx.cardview.widget.CardView>
 </LinearLayout>

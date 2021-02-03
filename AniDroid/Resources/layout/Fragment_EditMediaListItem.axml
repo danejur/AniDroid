@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/EditMediaListItem_CoordLayout"
     android:theme="?Dialog_Theme"
     android:background="?Background_Alternate"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/EditMediaListItem_AppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="?AppBarLayout_Style">
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/EditMediaListItem_Toolbar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
@@ -19,8 +19,8 @@
             app:theme="?Toolbar_Theme"
             style="?Toolbar_Style"
             app:layout_scrollFlags="enterAlways" />
-    </android.support.design.widget.AppBarLayout>
-    <android.support.v4.widget.NestedScrollView
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.core.widget.NestedScrollView
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -72,7 +72,7 @@
                         android:textSize="14dp"
                         android:textColor="?Primary_Dark"
                         android:layout_gravity="top" />
-                    <android.support.v7.widget.AppCompatSpinner
+                    <androidx.appcompat.widget.AppCompatSpinner
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="5dp"
@@ -225,7 +225,7 @@
                 android:paddingRight="15dp"
                 android:gravity="center_vertical"
                 android:layout_marginTop="20dp">
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:theme="?TextInput_Theme">
@@ -236,7 +236,7 @@
                         android:inputType="textMultiLine"
                         android:id="@+id/EditMediaListItem_Notes"
                         android:hint="Notes" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
             <LinearLayout
                 android:id="@+id/EditMediaListItem_CustomListsContainer"
@@ -269,5 +269,5 @@
                 android:id="@+id/EditMediaListItem_DeleteButton"
                 android:layout_gravity="center_horizontal" />
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-</android.support.design.widget.CoordinatorLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

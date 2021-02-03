@@ -1,8 +1,6 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Support.Design.Widget;
-using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
 using AniDroid.Adapters;
@@ -24,6 +22,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Android.Text;
 using Android.Text.Method;
+using AndroidX.RecyclerView.Widget;
 using AniDroid.Adapters.ReviewAdapters;
 using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Models.ActivityModels;

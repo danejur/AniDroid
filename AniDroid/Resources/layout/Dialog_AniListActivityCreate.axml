@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:minWidth="25px"
     android:minHeight="25px">
-  <android.support.design.widget.TextInputLayout
+  <com.google.android.material.textfield.TextInputLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/AniListActivityCreate_TextLayout"
@@ -20,5 +20,5 @@
       android:id="@+id/AniListActivityCreate_Text"
       style="?TextInput_Theme"
       android:hint="Status Text" />
-  </android.support.design.widget.TextInputLayout>
+  </com.google.android.material.textfield.TextInputLayout>
 </LinearLayout>

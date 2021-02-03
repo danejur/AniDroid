@@ -1,24 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Support.V4.Widget;
-using Android.Support.V7.Widget;
 using Android.Views;
-using Android.Widget;
+using AndroidX.RecyclerView.Widget;
+using AndroidX.SwipeRefreshLayout.Widget;
 using AniDroid.Adapters.AniListActivityAdapters;
 using AniDroid.AniList.Interfaces;
-using AniDroid.AniList.Models;
 using AniDroid.AniList.Models.ActivityModels;
 using AniDroid.Base;
 using AniDroid.Dialogs;
-using AniDroid.Utils;
-using AniDroid.Utils.Interfaces;
 using OneOf;
 
 namespace AniDroid.Home

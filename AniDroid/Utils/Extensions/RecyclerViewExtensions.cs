@@ -1,15 +1,6 @@
-﻿using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
+﻿using Android.Runtime;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Android.Support.V7.Widget;
-using Android.Support.V7.Widget.Helper;
+using AndroidX.RecyclerView.Widget;
 
 namespace AniDroid.Utils.Extensions
 {
@@ -17,26 +8,10 @@ namespace AniDroid.Utils.Extensions
     {
         public static ItemTouchHelper AddDragAndDropSupport(this RecyclerView recyclerView, bool useLongPress = true)
         {
-            var helper = new DragItemTouchHelper(new DragItemTouchHelperCallback(useLongPress));
+            var helper = new ItemTouchHelper(new DragItemTouchHelperCallback(useLongPress));
             helper.AttachToRecyclerView(recyclerView);
 
             return helper;
-        }
-
-        private class DragItemTouchHelper : ItemTouchHelper
-        {
-            protected DragItemTouchHelper(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
-            {
-            }
-
-            public DragItemTouchHelper(Callback callback) : base(callback)
-            {
-            }
-
-            public override void StartDrag(RecyclerView.ViewHolder viewHolder)
-            {
-                base.StartDrag(null);
-            }
         }
 
         private class DragItemTouchHelperCallback : ItemTouchHelper.Callback

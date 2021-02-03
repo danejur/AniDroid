@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:id="@+id/Error_CoordLayout"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:background="?Background">
-  <android.support.design.widget.AppBarLayout
+  <com.google.android.material.appbar.AppBarLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/Error_AppBar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
       android:id="@+id/Error_Toolbar"
       android:layout_width="match_parent"
       android:layout_height="56dp"
@@ -20,7 +20,7 @@
       app:theme="?Toolbar_Theme"
       style="?Toolbar_Style"
       app:layout_scrollFlags="enterAlways" />
-  </android.support.design.widget.AppBarLayout>
+  </com.google.android.material.appbar.AppBarLayout>
   <LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -51,4 +51,4 @@
       android:gravity="center"
       android:padding="10dp" />
   </LinearLayout>
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

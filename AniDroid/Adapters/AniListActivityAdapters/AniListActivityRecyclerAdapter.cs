@@ -1,36 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
 using Android.Content.Res;
 using Android.Graphics;
-using Android.OS;
-using Android.Runtime;
-using Android.Support.Design.Widget;
-using Android.Support.V7.Widget;
 using Android.Text;
-using Android.Text.Method;
 using Android.Views;
-using Android.Views.Animations;
 using Android.Widget;
+using AndroidX.RecyclerView.Widget;
 using AniDroid.Adapters.Base;
-using AniDroid.AniList;
 using AniDroid.AniList.Enums.ActivityEnums;
 using AniDroid.AniList.Interfaces;
-using AniDroid.AniList.Models;
 using AniDroid.AniList.Models.ActivityModels;
 using AniDroid.AniListObject;
 using AniDroid.AniListObject.Media;
 using AniDroid.AniListObject.User;
 using AniDroid.Base;
 using AniDroid.Dialogs;
-using AniDroid.Home;
-using AniDroid.Utils.Formatting;
 using AniDroid.Utils.Formatting.Markdown;
-using Markdig;
 using OneOf;
 
 namespace AniDroid.Adapters.AniListActivityAdapters

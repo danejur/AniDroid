@@ -1,30 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
-using Android.Content.Res;
 using Android.Graphics;
 using Android.OS;
-using Android.Runtime;
-using Android.Support.Design.Widget;
-using Android.Support.V4.View;
-using Android.Support.V4.Widget;
-using Android.Support.V7.App;
-using Android.Support.V7.Content.Res;
-using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
-using AniDroid.Adapters.AniListActivityAdapters;
+using AndroidX.AppCompat.App;
+using AndroidX.CoordinatorLayout.Widget;
+using AndroidX.Core.View;
+using AndroidX.DrawerLayout.Widget;
 using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Interfaces;
-using AniDroid.AniList.Models;
 using AniDroid.AniListObject.User;
 using AniDroid.Base;
 using AniDroid.Browse;
-using AniDroid.CurrentSeason;
 using AniDroid.Dialogs;
 using AniDroid.Discover;
 using AniDroid.Home;
@@ -37,8 +28,10 @@ using AniDroid.Start;
 using AniDroid.TorrentSearch;
 using AniDroid.Utils;
 using AniDroid.Widgets;
-using OneOf;
-using Toolbar = Android.Support.V7.Widget.Toolbar;
+using Google.Android.Material.FloatingActionButton;
+using Google.Android.Material.Navigation;
+using Google.Android.Material.Snackbar;
+using Toolbar = AndroidX.AppCompat.Widget.Toolbar;
 
 namespace AniDroid.Main
 {
@@ -211,11 +204,11 @@ namespace AniDroid.Main
 
             if (Settings.EnableNotificationService && Settings.IsUserAuthenticated)
             {
-                AniListNotificationJob.EnableJob();
+                //AniListNotificationJob.EnableJob();
             }
             else
             {
-                AniListNotificationJob.DisableJob();
+                //AniListNotificationJob.DisableJob();
             }
         }
 

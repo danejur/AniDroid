@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using AniDroid.AniList.Enums.MediaEnums;
-using AniDroid.AniList.Models;
 
 namespace AniDroid.MediaList
 {

@@ -35,21 +35,22 @@
       android:gravity="left"
       android:layout_width="match_parent"
       android:layout_height="match_parent">
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:theme="?TextInput_Theme">
-      <EditText
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:id="@+id/Search_Text"
-          android:singleLine="true"
-          style="?TextInput_Theme"
-          android:hint="Search Term"
-          android:imeOptions="actionSearch" />
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/Search_Text"
+                android:singleLine="true"
+                style="?TextInput_Theme"
+                android:hint="Search Term"
+                android:imeOptions="actionSearch"
+                android:inputType="text" />
+    </com.google.android.material.textfield.TextInputLayout>
   </LinearLayout>
 </LinearLayout>

@@ -1,28 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Android.App;
 using Android.Content;
 using Android.Graphics;
-using Android.OS;
-using Android.Runtime;
-using Android.Support.Design.Widget;
-using Android.Support.V7.Widget;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
-using AniDroid.Adapters;
+using AndroidX.AppCompat.App;
+using AndroidX.RecyclerView.Widget;
 using AniDroid.Adapters.AniListActivityAdapters;
-using AniDroid.AniList.Models;
-using AniDroid.Adapters.Base;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Models.ActivityModels;
 using AniDroid.AniListObject;
 using AniDroid.AniListObject.User;
 using AniDroid.Base;
 using AniDroid.Utils.Listeners;
+using Google.Android.Material.TextField;
 
 namespace AniDroid.Dialogs
 {
@@ -37,7 +30,7 @@ namespace AniDroid.Dialogs
                 activity.Replies.Select(x => AniListActivityReplyViewModel.CreateViewModel(x,
                     new Color(context.GetThemedColor(Resource.Attribute.Secondary_Dark)), currentUserId)).ToList());
 
-            var alert = new Android.Support.V7.App.AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme));
+            var alert = new AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme));
             alert.SetView(view);
 
             var a = alert.Create();
@@ -121,7 +114,7 @@ namespace AniDroid.Dialogs
 
         private static void CreateEditReply(BaseAniDroidActivity context, string oldText, Func<string, Task> saveAction, Func<Task> deleteAction)
         {
-            var dialog = new Android.Support.V7.App.AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme)).Create();
+            var dialog = new AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme)).Create();
             var dialogView = context.LayoutInflater.Inflate(Resource.Layout.Dialog_AniListActivityCreate, null);
             var replyText = dialogView.FindViewById<EditText>(Resource.Id.AniListActivityCreate_Text);
             var replyTextLayout = dialogView.FindViewById<TextInputLayout>(Resource.Id.AniListActivityCreate_TextLayout);
@@ -136,7 +129,7 @@ namespace AniDroid.Dialogs
             dialog.SetButton((int)DialogButtonType.Positive, "Save", (send, args) => { });
             dialog.SetButton((int)DialogButtonType.Neutral, "Delete", (send, args) =>
             {
-                var confirmationDialog = new Android.Support.V7.App.AlertDialog.Builder(context,
+                var confirmationDialog = new AlertDialog.Builder(context,
                     context.GetThemedResourceId(Resource.Attribute.Dialog_Theme)).Create();
                 confirmationDialog.SetTitle("Delete Reply");
                 confirmationDialog.SetMessage("Are you sure you wish to delete this reply?");

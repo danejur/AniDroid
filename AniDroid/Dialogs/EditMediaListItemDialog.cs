@@ -1,37 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading.Tasks;
 using Android.App;
-using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Support.Design.Widget;
-using Android.Support.Transitions;
-using Android.Support.V7.App;
-using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using AndroidX.AppCompat.App;
+using AndroidX.AppCompat.Widget;
+using AndroidX.CoordinatorLayout.Widget;
+using AndroidX.Transitions;
 using AniDroid.AniList;
 using AniDroid.AniList.DataTypes;
 using AniDroid.AniList.Dto;
 using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Enums.UserEnums;
-using AniDroid.AniList.Models;
 using AniDroid.AniList.Models.MediaModels;
 using AniDroid.AniList.Models.UserModels;
 using AniDroid.AniListObject.Media;
 using AniDroid.Base;
 using AniDroid.Settings;
 using AniDroid.Widgets;
+using Google.Android.Material.Snackbar;
 using Newtonsoft.Json.Linq;
-using AlertDialog = Android.Support.V7.App.AlertDialog;
-using Toolbar = Android.Support.V7.Widget.Toolbar;
+using AlertDialog = AndroidX.AppCompat.App.AlertDialog;
+using Toolbar = Android.Widget.Toolbar;
 
 namespace AniDroid.Dialogs
 {

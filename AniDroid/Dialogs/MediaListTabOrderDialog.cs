@@ -1,16 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Support.V7.Widget;
-using Android.Support.V7.Widget.Helper;
-using Android.Views;
-using Android.Widget;
+using AndroidX.AppCompat.App;
+using AndroidX.RecyclerView.Widget;
 using AniDroid.Adapters.Base;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Base;
@@ -31,9 +23,9 @@ namespace AniDroid.Dialogs
             recyclerView.SetAdapter(adapter);
             recyclerView.SetLayoutManager(new LinearLayoutManager(context));
 
-            //var helper = recyclerView.AddDragAndDropSupport();
+            var helper = recyclerView.AddDragAndDropSupport();
 
-            var dialog = new Android.Support.V7.App.AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme)).Create();
+            var dialog = new AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme)).Create();
             dialog.SetView(view);
             dialog.SetCancelable(true);
             dialog.Show();

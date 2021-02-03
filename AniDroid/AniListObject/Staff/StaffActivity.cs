@@ -1,28 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Runtime;
-using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using AndroidX.RecyclerView.Widget;
 using AniDroid.Adapters;
 using AniDroid.Adapters.CharacterAdapters;
 using AniDroid.Adapters.MediaAdapters;
-using AniDroid.Adapters.StaffAdapters;
 using AniDroid.Adapters.ViewModels;
-using AniDroid.AniList;
 using AniDroid.AniList.Enums.MediaEnums;
-using AniDroid.AniList.Models;
-using AniDroid.AniList.Service;
 using AniDroid.Base;
-using AniDroid.SearchResults;
-using AniDroid.Utils;
 
 namespace AniDroid.AniListObject.Staff
 {

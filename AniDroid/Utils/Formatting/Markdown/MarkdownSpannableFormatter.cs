@@ -5,10 +5,10 @@ using Android.App;
 using Android.Content;
 using Android.Graphics;
 using Android.Graphics.Drawables;
-using Android.Support.V4.Content;
 using Android.Text;
 using Android.Text.Style;
 using Android.Views;
+using AndroidX.Core.Content;
 using Square.Picasso;
 
 namespace AniDroid.Utils.Formatting.Markdown

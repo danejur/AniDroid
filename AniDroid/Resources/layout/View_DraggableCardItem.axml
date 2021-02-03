@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:background="?Background_Alternate"
     android:id="@+id/CardItem_Container">
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         app:cardBackgroundColor="?Background_Alternate"
         android:clickable="true"
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
                 android:paddingBottom="15dp"
                 android:gravity="center_vertical"
                 android:layout_weight="1">
-                <android.support.v7.widget.AppCompatCheckBox
+                <androidx.appcompat.widget.AppCompatCheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:id="@+id/DraggableCardItem_Checkbox"
@@ -54,5 +54,5 @@
                 android:id="@+id/DraggableCardItem_Handle"
                 android:tint="?Background_Text_Alternate" />
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 </LinearLayout>

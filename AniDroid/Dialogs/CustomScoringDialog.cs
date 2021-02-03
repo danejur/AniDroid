@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using AndroidX.AppCompat.App;
 using AniDroid.AniList.Enums.UserEnums;
-using AniDroid.AniList.Models;
 using AniDroid.Base;
 using AniDroid.Widgets;
-using Newtonsoft.Json.Linq;
 
 namespace AniDroid.Dialogs
 {
@@ -71,7 +64,7 @@ namespace AniDroid.Dialogs
                 container.AddView(innerContainer);
             }
 
-            var alert = new Android.Support.V7.App.AlertDialog.Builder(context,
+            var alert = new AlertDialog.Builder(context,
                 context.GetThemedResourceId(Resource.Attribute.Dialog_Theme));
             alert.SetView(view);
             alert.SetPositiveButton("Save", (sender, e) =>

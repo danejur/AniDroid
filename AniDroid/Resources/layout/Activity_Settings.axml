@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?Background">
-  <android.support.design.widget.CoordinatorLayout
+  <androidx.coordinatorlayout.widget.CoordinatorLayout
     android:id="@+id/Settings_CoordLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content">
-      <android.support.v7.widget.Toolbar
+      <androidx.appcompat.widget.Toolbar
         app:popupTheme="?Toolbar_PopupTheme"
         app:theme="?Toolbar_Theme"
         style="?Toolbar_Style"
@@ -20,8 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         app:layout_scrollFlags="scroll|enterAlways" />
-    </android.support.design.widget.AppBarLayout>
-    <android.support.v4.widget.NestedScrollView
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.core.widget.NestedScrollView
       android:minWidth="25px"
       android:minHeight="25px"
       android:background="?Background"
@@ -33,6 +33,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/Settings_Container" />
-    </android.support.v4.widget.NestedScrollView>
-  </android.support.design.widget.CoordinatorLayout>
+    </androidx.core.widget.NestedScrollView>
+  </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </LinearLayout>

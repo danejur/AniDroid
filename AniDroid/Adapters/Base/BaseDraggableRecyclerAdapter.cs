@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Support.V7.Widget;
-using Android.Support.V7.Widget.Helper;
+﻿using System.Collections.Generic;
 using Android.Views;
 using Android.Widget;
+using AndroidX.AppCompat.Widget;
+using AndroidX.RecyclerView.Widget;
 using AniDroid.Base;
 using AniDroid.Utils.Extensions;
 
@@ -52,21 +44,21 @@ namespace AniDroid.Adapters.Base
             //dragHolder.DragHandle.Touch -= StartDrag;
             //dragHolder.DragHandle.Touch += StartDrag;
 
-            dragHolder.DragHandle.Touch += (sender, e) =>
-            {
-                if (e.Event?.Action == MotionEventActions.Down)
-                {
-                    var view = sender as View;
+            //dragHolder.DragHandle.Touch += (sender, e) =>
+            //{
+            //    if (e.Event?.Action == MotionEventActions.Down)
+            //    {
+            //        var view = sender as View;
 
-                    if (view == null)
-                    {
-                        return;
-                    }
+            //        if (view == null)
+            //        {
+            //            return;
+            //        }
 
 
-                    _touchHelper.StartDrag(dragHolder);
-                }
-            };
+            //        _touchHelper.StartDrag(dragHolder);
+            //    }
+            //};
         }
 
         //private void StartDrag(object sender, View.TouchEventArgs e)

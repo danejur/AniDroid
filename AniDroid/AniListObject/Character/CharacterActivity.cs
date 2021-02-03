@@ -5,18 +5,14 @@ using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
-using Android.Support.V7.Widget;
 using Android.Views;
 using Android.Widget;
+using AndroidX.RecyclerView.Widget;
 using AniDroid.Adapters;
-using AniDroid.Adapters.CharacterAdapters;
 using AniDroid.Adapters.MediaAdapters;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Enums.MediaEnums;
-using AniDroid.AniList.Service;
 using AniDroid.Base;
-using AniDroid.SearchResults;
-using AniDroid.Utils;
 
 namespace AniDroid.AniListObject.Character
 {

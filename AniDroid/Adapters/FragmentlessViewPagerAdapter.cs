@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Android.Support.V4.View;
 using Android.Views;
+using AndroidX.ViewPager.Widget;
 using Java.Lang;
 
 namespace AniDroid.Adapters

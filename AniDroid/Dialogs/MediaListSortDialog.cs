@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
 using Android.Widget;
+using AndroidX.AppCompat.App;
 using AniDroid.Base;
 using AniDroid.Utils.Comparers;
 
@@ -21,7 +13,7 @@ namespace AniDroid.Dialogs
             Action<MediaListSortComparer.MediaListSortType, MediaListSortComparer.SortDirection> onSelectSortAction)
         {
             var view = context.LayoutInflater.Inflate(Resource.Layout.Dialog_MediaListSort, null);
-            var dialog = new Android.Support.V7.App.AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme));
+            var dialog = new AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme));
             dialog.SetView(view);
             dialog.SetTitle("Sort Lists");
 

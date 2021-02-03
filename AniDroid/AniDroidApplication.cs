@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-
 using Android.App;
-using Android.Content;
 using Android.OS;
 using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Service;
 using AniDroid.AniListObject.Character;
@@ -36,7 +29,6 @@ using AniDroid.Utils.Integration;
 using AniDroid.Utils.Interfaces;
 using AniDroid.Utils.Logging;
 using AniDroid.Utils.Storage;
-using Evernote.AndroidJob;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
@@ -67,7 +59,7 @@ namespace AniDroid
             base.OnCreate();
 
             Platform.Init(this);
-            
+
             var serviceProvider = InitServiceProvider();
 
             var appCenterId = serviceProvider.GetService<IConfiguration>()["AppCenterId"];
@@ -75,7 +67,7 @@ namespace AniDroid
             AppCenter.Start(appCenterId,
                 typeof(Analytics), typeof(Crashes));
 
-            JobManager.Create(this).AddJobCreator(new AniDroidJobCreator(this));
+            //JobManager.Create(this).AddJobCreator(new AniDroidJobCreator(this));
 
             CreateNotificationsChannel();
         }
@@ -101,10 +93,12 @@ namespace AniDroid
             var secretConfigFile = ExtractResource("AniDroid.appsettings.secret.json", FileSystem.AppDataDirectory);
 
             var host = new HostBuilder()
+                .UseContentRoot(FileSystem.AppDataDirectory)
                 .ConfigureHostConfiguration(c =>
                 {
+
                     // Tell the host configuration where to file the file (this is required for Xamarin apps)
-                    c.AddCommandLine(new[] { $"ContentRoot={FileSystem.AppDataDirectory}" });
+                    //c.AddCommandLine(new[] { $"ContentRoot={FileSystem.AppDataDirectory}" });
 
                     c.AddJsonFile(configFile);
 
@@ -113,11 +107,11 @@ namespace AniDroid
                 .ConfigureServices(ConfigureServices)
                 .ConfigureLogging(l =>
                 {
-                    l.AddConsole(o =>
-                    {
-                        //setup a console logger and disable colors since they don't have any colors in VS
-                        o.DisableColors = true;
-                    });
+                    //l.AddConsole(o =>
+                    //{
+                    //    //setup a console logger and disable colors since they don't have any colors in VS
+                    //    o.DisableColors = true;
+                    //});
                 })
                 .Build();
 

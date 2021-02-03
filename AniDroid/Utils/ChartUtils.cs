@@ -4,7 +4,6 @@ using AniDroid.Utils.Extensions;
 using MikePhil.Charting.Components;
 using MikePhil.Charting.Data;
 using MikePhil.Charting.Formatter;
-using MikePhil.Charting.Util;
 
 namespace AniDroid.Utils
 {

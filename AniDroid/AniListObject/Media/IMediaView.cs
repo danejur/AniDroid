@@ -1,6 +1,4 @@
-﻿using System.Threading.Tasks;
-using AniDroid.AniList.Enums.MediaEnums;
-using AniDroid.AniList.Models;
+﻿using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.AniList.Models.UserModels;
 using AniDroid.Base;
 

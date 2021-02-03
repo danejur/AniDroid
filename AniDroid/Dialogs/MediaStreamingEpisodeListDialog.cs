@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Support.V7.Widget;
+﻿using System.Collections.Generic;
 using Android.Views;
-using Android.Widget;
+using AndroidX.AppCompat.App;
+using AndroidX.RecyclerView.Widget;
 using AniDroid.Adapters.MediaAdapters;
-using AniDroid.AniList.Models;
 using AniDroid.AniList.Models.MediaModels;
 using AniDroid.Base;
 
@@ -28,7 +19,7 @@ namespace AniDroid.Dialogs
             var recyclerAdapter = new MediaStreamingEpisodesRecyclerAdapter(context, streamingEpisodes);
             dialogRecycler.SetAdapter(recyclerAdapter);
 
-            var dialog = new Android.Support.V7.App.AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme));
+            var dialog = new AlertDialog.Builder(context, context.GetThemedResourceId(Resource.Attribute.Dialog_Theme));
             dialog.SetView(dialogView);
             dialog.Show();
         }
