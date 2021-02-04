@@ -192,5 +192,8 @@
     <item>01-31-2021|Small bug fixes</item>
     <item>02-02-2021|Improved media trend graphs a bit</item>
     <item>02-02-2021|Various bug and crash fixes</item>
+    <item>02-04-2021|Added ability to view user favorites</item>
+    <item>02-04-2021|Added ability to quickly filter other users\' lists</item>
+    <item>02-04-2021|Lots of behind-the-scenes changes</item>
   </array>
 </resources>
