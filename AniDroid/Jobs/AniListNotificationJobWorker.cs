@@ -1,13 +1,8 @@
 ﻿using System;
 using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Views;
-using Android.Widget;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Android.App.Job;
 using AndroidX.Core.App;
 using AndroidX.Work;
 using AniDroid.AniList.Interfaces;
@@ -26,6 +21,7 @@ namespace AniDroid.Jobs
         private const string NotificationTitle = "{0} new notification{1}";
         private const string BasicNotificationContent = "Tap here to open AniDroid.";
         private const string NotificationGroup = "ANILIST_NOTIFICATION_GROUP";
+        private const string ChannelId = "AniList Notifications";
         private const int NotificationId = 1000;
 
         private readonly Context _context;
@@ -43,10 +39,11 @@ namespace AniDroid.Jobs
                 return Result.InvokeFailure();
             }
 
-            //if (!ShouldShowNotifications())
-            //{
-            //    return Result.InvokeRetry();
-            //}
+            if (!ShouldShowNotifications())
+            {
+                // return success instead of retry to so we don't trigger a notification soon after the user leaves the app
+                return Result.InvokeSuccess();
+            }
 
             var aniListService = AniDroidApplication.ServiceProvider.GetService<IAniListService>();
 
@@ -79,20 +76,20 @@ namespace AniDroid.Jobs
 
         private void CreateBasicNotification(int notificationCount)
         {
-            var notificationBuilder = new NotificationCompat.Builder(_context)
+            var notificationBuilder = new NotificationCompat.Builder(_context, ChannelId)
                 .SetContentTitle(string.Format(NotificationTitle, notificationCount, notificationCount > 1 ? "s" : ""))
                 .SetContentText(BasicNotificationContent)
                 .SetSmallIcon(Resource.Drawable.IconTransparent)
                 .SetContentIntent(MainActivity.CreatePendingIntentToOpenNotifications(_context))
                 .SetGroup(NotificationGroup)
                 .SetAutoCancel(true)
-                //.SetDeleteIntent(AniListNotificationJobDismissReciever.CreatePendingIntent(Context))
-                .SetChannelId(_context.Resources.GetString(Resource.String.NotificationsChannelId));
+                .SetDeleteIntent(AniListNotificationJobDismissReceiver.CreatePendingIntent(_context))
+                .SetChannelId(_context.Resources?.GetString(Resource.String.NotificationsChannelId));
 
             NotificationManagerCompat.From(_context).Notify(NotificationId, notificationBuilder.Build());
         }
 
-        private void CreateDetailedNotification(int notificationCount, ICollection<AniListNotification> notifications)
+        private void CreateDetailedNotification(int notificationCount, IEnumerable<AniListNotification> notifications)
         {
             var inboxStyle = new NotificationCompat.InboxStyle();
 
@@ -101,16 +98,16 @@ namespace AniDroid.Jobs
 
             notificationTexts.ForEach(n => inboxStyle.AddLine(n));
 
-            var notificationBuilder = new NotificationCompat.Builder(_context)
+            var notificationBuilder = new NotificationCompat.Builder(_context, ChannelId)
                 .SetContentTitle(string.Format(NotificationTitle, notificationCount, notificationCount > 1 ? "s" : ""))
                 .SetContentText(notificationTexts.First())
                 .SetSmallIcon(Resource.Drawable.IconTransparent)
                 .SetContentIntent(MainActivity.CreatePendingIntentToOpenNotifications(_context))
                 .SetAutoCancel(true)
                 .SetGroup(NotificationGroup)
-                .SetChannelId(_context.Resources.GetString(Resource.String.NotificationsChannelId))
+                .SetChannelId(_context.Resources?.GetString(Resource.String.NotificationsChannelId))
                 .SetCategory(Notification.CategorySocial)
-                //.SetDeleteIntent(AniListNotificationJobDismissReciever.CreatePendingIntent(Context))
+                .SetDeleteIntent(AniListNotificationJobDismissReceiver.CreatePendingIntent(_context))
                 .SetStyle(inboxStyle);
 
             NotificationManagerCompat.From(_context).Notify(NotificationId, notificationBuilder.Build());
@@ -124,7 +121,7 @@ namespace AniDroid.Jobs
         }
 
         [BroadcastReceiver]
-        public class AniListNotificationJobDismissReciever : BroadcastReceiver
+        public class AniListNotificationJobDismissReceiver : BroadcastReceiver
         {
             private const int RequestCode = 1001;
 
@@ -133,20 +130,23 @@ namespace AniDroid.Jobs
                 try
                 {
                     var service = AniDroidApplication.ServiceProvider.GetService<IAniListService>();
-                    var notificationEnum = service.GetAniListNotifications(true, 1);
-                    var enumerator = notificationEnum.GetAsyncEnumerator();
+                    var notificationEnum = service?.GetAniListNotifications(true, 1);
+                    var enumerator = notificationEnum?.GetAsyncEnumerator();
 
-                    enumerator.MoveNextAsync().AsTask().Start();
+                    enumerator?.MoveNextAsync().AsTask().Start();
                 }
-                catch
+                catch (Exception e)
                 {
+                    var activityContext = context as BaseAniDroidActivity;
 
+                    activityContext?.Logger?.Error(nameof(AniListNotificationJobDismissReceiver),
+                        "Error occurred while removing AniList notifications", e);
                 }
             }
 
             public static PendingIntent CreatePendingIntent(Context context)
             {
-                return PendingIntent.GetBroadcast(context, RequestCode, new Intent(context, typeof(AniListNotificationJobDismissReciever)),
+                return PendingIntent.GetBroadcast(context, RequestCode, new Intent(context, typeof(AniListNotificationJobDismissReceiver)),
                     PendingIntentFlags.UpdateCurrent);
             }
         }
