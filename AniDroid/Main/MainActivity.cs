@@ -355,7 +355,7 @@ namespace AniDroid.Main
                 {
                     var profileImageView = navHeader.FindViewById<ImageView>(Resource.Id.Navigation_ProfileImage);
                     profileImageView.Visibility = ViewStates.Visible;
-                    LoadImage(profileImageView, user.Avatar.Large);
+                    ImageLoader.LoadImage(profileImageView, user.Avatar.Large);
                     profileImageView.Click += (sender, args) =>
                     {
                         _navClosedAction = () => UserActivity.StartActivity(this, user.Id);
@@ -367,7 +367,7 @@ namespace AniDroid.Main
                 {
                     var bannerView = navHeader.FindViewById<ImageView>(Resource.Id.Navigation_ProfileBannerImage);
                     bannerView.Visibility = ViewStates.Visible;
-                    LoadImage(bannerView, user.BannerImage);
+                    ImageLoader.LoadImage(bannerView, user.BannerImage);
                 }
             }
 

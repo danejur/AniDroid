@@ -6,6 +6,7 @@ using Android.Views;
 using AniDroid.Adapters.Base;
 using AniDroid.AniList.Models.MediaModels;
 using AniDroid.Base;
+using AniDroid.Utils;
 
 namespace AniDroid.Adapters.MediaAdapters
 {
@@ -19,7 +20,7 @@ namespace AniDroid.Adapters.MediaAdapters
         {
             var item = Items[position];
 
-            Context.LoadImage(holder.Image, item.Thumbnail);
+            ImageLoader.LoadImage(holder.Image, item.Thumbnail);
             holder.DetailPrimary.Text = item.Title;
             holder.DetailSecondary.Text = item.Site;
 

@@ -288,6 +288,9 @@ namespace AniDroid.AniListObject.Media
             retView.FindViewById<ImageView>(Resource.Id.Media_TitleIcon).Click +=
                 (sender, args) => MediaTitlesDialog.Create(this, media.Title, media.Synonyms);
 
+            var imageView = retView.FindViewById<ImageView>(Resource.Id.Media_Image);
+            ImageLoader.LoadImage(imageView, media.CoverImage.ExtraLarge ?? media.CoverImage.Large);
+
             var formatView = retView.FindViewById<TextView>(Resource.Id.Media_Format);
             formatView.Text = (media.Format?.DisplayValue ?? "Unknown Format") +
                 (media.Episodes > 1 ? $" ({media.Episodes} episodes)" : "");
@@ -311,7 +314,6 @@ namespace AniDroid.AniListObject.Media
                 listStatusView.Text = media.MediaListEntry?.Status?.DisplayValue;
             }
 
-            LoadImage(retView.FindViewById<ImageView>(Resource.Id.Media_Image), media.CoverImage.ExtraLarge ?? media.CoverImage.Large);
             var genreContainer = retView.FindViewById<FlexboxLayout>(Resource.Id.Media_Genres);
 
             foreach (var genre in media.Genres)

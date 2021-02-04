@@ -167,7 +167,7 @@ namespace AniDroid.Base
             else if (!string.IsNullOrWhiteSpace(bannerUri))
             {
                 var bannerView = FindViewById<ImageView>(Resource.Id.AniListObject_BannerImage);
-                LoadImage(bannerView, bannerUri, false);
+                ImageLoader.LoadImage(bannerView, bannerUri, false);
             }
         }
 

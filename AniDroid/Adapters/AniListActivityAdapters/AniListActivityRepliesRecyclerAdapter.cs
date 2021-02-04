@@ -10,6 +10,7 @@ using AniDroid.AniList.Models.ActivityModels;
 using AniDroid.AniListObject;
 using AniDroid.AniListObject.User;
 using AniDroid.Base;
+using AniDroid.Utils;
 
 namespace AniDroid.Adapters.AniListActivityAdapters
 {
@@ -40,7 +41,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
                 activityHolder.LikeIcon.Click -= IconClick;
                 activityHolder.LikeIcon.Click += IconClick;
 
-                Context.LoadImage(activityHolder.Image, viewModel.ImageUri);
+                ImageLoader.LoadImage(activityHolder.Image, viewModel.ImageUri);
 
                 activityHolder.Image.SetTag(Resource.Id.Object_Position, position);
                 activityHolder.Image.Click -= ImageClick;

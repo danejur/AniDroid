@@ -16,6 +16,7 @@ using AniDroid.AniListObject.Media;
 using AniDroid.AniListObject.User;
 using AniDroid.Base;
 using AniDroid.Dialogs;
+using AniDroid.Utils;
 using AniDroid.Utils.Formatting.Markdown;
 using OneOf;
 
@@ -134,7 +135,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             MarkdownSpannableFormatter.FormatMarkdownSpannable(Context, viewHolder.ContentText.TextFormatted as SpannableString);
             viewHolder.ContentText.Visibility = ViewStates.Visible;
 
-            Context.LoadImage(viewHolder.Image, item.User?.Avatar?.Large);
+            ImageLoader.LoadImage(viewHolder.Image, item.User?.Avatar?.Large);
         }
 
         private void BindMessageActivityViewHolder(AniListActivityViewHolder viewHolder, AniListActivity item)
@@ -148,7 +149,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             MarkdownSpannableFormatter.FormatMarkdownSpannable(Context, viewHolder.ContentText.TextFormatted as SpannableString);
             viewHolder.ContentText.Visibility = ViewStates.Visible;
 
-            Context.LoadImage(viewHolder.Image, item.Messenger?.Avatar?.Large);
+            ImageLoader.LoadImage(viewHolder.Image, item.Messenger?.Avatar?.Large);
         }
 
         private void BindListActivityViewHolder(AniListActivityViewHolder viewHolder, AniListActivity item)
@@ -158,7 +159,7 @@ namespace AniDroid.Adapters.AniListActivityAdapters
             viewHolder.ContentImageContainer.Visibility = ViewStates.Visible;
             viewHolder.ContentImageContainer.RemoveAllViews();
 
-            Context.LoadImage(viewHolder.Image, item.Media?.CoverImage?.Large);
+            ImageLoader.LoadImage(viewHolder.Image, item.Media?.CoverImage?.Large);
         }
 
         private void ImageClick(object sender, EventArgs e)

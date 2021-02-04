@@ -14,6 +14,7 @@ using AniDroid.AniList.Models.ActivityModels;
 using AniDroid.AniListObject;
 using AniDroid.AniListObject.User;
 using AniDroid.Base;
+using AniDroid.Utils;
 using AniDroid.Utils.Listeners;
 using Google.Android.Material.TextField;
 
@@ -96,7 +97,7 @@ namespace AniDroid.Dialogs
             {
                 var image = new ImageView(context) {LayoutParameters = layoutParams};
                 image.SetPadding(padding, padding, padding, padding);
-                context.LoadImage(image, x.Avatar.Large);
+                ImageLoader.LoadImage(image, x.Avatar.Large);
                 image.Click += (lSend, lArgs) =>
                 {
                     UserActivity.StartActivity(context, x.Id);

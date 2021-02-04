@@ -200,23 +200,6 @@ namespace AniDroid.Base
 
         #region Context Utils
 
-        public void LoadImage(ImageView imageView, string url, bool showLoading = true)
-        {
-            if (string.IsNullOrWhiteSpace(url))
-            {
-                return;
-            }
-
-            var req = Picasso.With(this).Load(url);
-
-            if (showLoading)
-            {
-                req = req.Placeholder(Resource.Drawable.svg_image);
-            }
-
-            req.Into(imageView);
-        }
-
         public static ISpanned FromHtml(string source)
         {
 #pragma warning disable CS0618 // Type or member is obsolete

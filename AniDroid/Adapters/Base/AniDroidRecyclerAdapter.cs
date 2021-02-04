@@ -10,6 +10,7 @@ using AndroidX.RecyclerView.Widget;
 using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
+using AniDroid.Utils;
 using Google.Android.Material.Snackbar;
 using OneOf;
 
@@ -224,7 +225,7 @@ namespace AniDroid.Adapters.Base
 
                 if (viewModel.LoadImage)
                 {
-                    Context.LoadImage(cardHolder.Image, viewModel.ImageUri ?? "");
+                    ImageLoader.LoadImage(cardHolder.Image, viewModel.ImageUri ?? "");
                 }
 
                 cardHolder.ContainerCard.SetTag(Resource.Id.Object_Position, position);

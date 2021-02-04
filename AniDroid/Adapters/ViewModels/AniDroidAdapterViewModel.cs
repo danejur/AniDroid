@@ -1,4 +1,5 @@
 ﻿using Android.Views;
+using AniDroid.Utils;
 
 namespace AniDroid.Adapters.ViewModels
 {

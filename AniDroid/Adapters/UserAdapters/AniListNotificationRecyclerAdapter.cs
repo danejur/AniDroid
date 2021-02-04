@@ -8,6 +8,7 @@ using AniDroid.Adapters.ViewModels;
 using AniDroid.AniList.Interfaces;
 using AniDroid.AniList.Models.ActivityModels;
 using AniDroid.Base;
+using AniDroid.Utils;
 using OneOf;
 
 namespace AniDroid.Adapters.UserAdapters
@@ -33,7 +34,7 @@ namespace AniDroid.Adapters.UserAdapters
 
             viewHolder.Text.TextFormatted = viewModel.FormattedTitle;
             viewHolder.Timestamp.Text = viewModel.Timestamp;
-            Context.LoadImage(viewHolder.Image, viewModel.ImageUri);
+            ImageLoader.LoadImage(viewHolder.Image, viewModel.ImageUri);
 
             viewHolder.ItemView.SetTag(Resource.Id.Object_Position, position);
             viewHolder.ItemView.Click -= RowClick;
