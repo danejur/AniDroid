@@ -1,47 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?android:attr/selectableItemBackground"
-    android:paddingTop="1dp"
-    android:paddingBottom="1dp"
-    android:gravity="top">
-  <ImageView
-      android:layout_width="40dp"
-      android:layout_height="40dp"
-      android:id="@+id/AniListNotification_Image"
-      android:visibility="visible"
-      android:layout_marginRight="5dp"
-      android:layout_marginLeft="5dp"
-      android:scaleType="centerCrop"
-      android:layout_marginTop="10dp"
-      android:layout_marginBottom="10dp" />
-  <LinearLayout
-      android:orientation="vertical"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:gravity="top"
-      android:layout_marginRight="5dp"
-      android:paddingTop="5dp"
-      android:paddingBottom="5dp">
-      <TextView
-          android:id="@+id/AniListNotification_Text"
-          android:textSize="14dp"
-          android:text="Main Row"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:gravity="top"
-          android:textColor="?Background_Text"
-          android:layout_weight="1" />
-      <TextView
-          android:id="@+id/AniListNotification_Timestamp"
-          android:text="Timestamp"
-          android:textSize="8dp"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:gravity="bottom|right"
-          android:textColor="?Background_Text_Alternate" />
-  </LinearLayout>
-</LinearLayout>
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/AniListNotification_Image"
+        android:visibility="visible"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_alignParentLeft="true"
+        android:scaleType="centerCrop"
+        
+         />
+    <TextView
+        android:id="@+id/AniListNotification_Text"
+        android:textSize="14dp"
+        android:text="Main Row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/AniListNotification_Image"
+        android:textColor="?Background_Text"
+        android:layout_weight="1" />
+    <TextView
+        android:id="@+id/AniListNotification_Timestamp"
+        android:text="Timestamp"
+        android:textSize="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="right"
+        android:layout_toRightOf="@+id/AniListNotification_Image"
+        android:layout_below="@+id/AniListNotification_Text"
+        android:textColor="?Background_Text_Alternate" />
+</RelativeLayout>
