@@ -200,6 +200,12 @@ namespace AniDroid.Utils
             set => _authSettingStorage.Put(MediaListKeys.ShowEpisodeAddButtonForRepeatingMediaKey, value);
         }
 
+        public bool AutoFillDateForMediaListItem
+        {
+            get => _authSettingStorage.Get(MediaListKeys.AutoFillDateForMediaListItemKey, false);
+            set => _authSettingStorage.Put(MediaListKeys.AutoFillDateForMediaListItemKey, value);
+        }
+
         #endregion
 
         #region Old Settings
@@ -295,6 +301,7 @@ namespace AniDroid.Utils
             public const string MediaListProgressDisplayKey = "MEDIA_LIST_PROGRESS_DISPLAY";
             public const string UseSwipeToRefreshMediaListsKey = "USE_SWIPE_TO_REFRESH_MEDIA_LISTS";
             public const string ShowEpisodeAddButtonForRepeatingMediaKey = "SHOW_EPISODE_ADD_BUTTON_FOR_REPEATING_Media";
+            public const string AutoFillDateForMediaListItemKey = "AUTO_FILL_DATE_FOR_MEDIA_LIST_ITEM";
         }
 
         private static class OldSettingsStorageKeys

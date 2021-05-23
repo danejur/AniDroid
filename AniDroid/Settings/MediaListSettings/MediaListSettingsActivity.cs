@@ -204,6 +204,20 @@ namespace AniDroid.Settings.MediaListSettings
             _settingsContainer.AddView(SettingsActivity.CreateSettingDivider(this));
         }
 
+        public void CreateAutoFillDateForMediaListItem(bool autoFillDateForMediaListItem)
+        {
+            _settingsContainer.AddView(
+                SettingsActivity.CreateSwitchSettingRow(this, "Auto Assign a Start or End Date",
+                    "When this is enabled, list items that are changed to 'Current' or 'Completed' statuses will have the Start or End date filled appropriately. This will not overwrite an existing date.",
+                    autoFillDateForMediaListItem, true,
+                    (sender, args) =>
+                    {
+                        Presenter.SetAutoFillDateForMediaListItem(args.IsChecked);
+                        _recreateActivity = false;
+                    }));
+            _settingsContainer.AddView(SettingsActivity.CreateSettingDivider(this));
+        }
+
         #region Toolbar
 
         public override void OnBackPressed()

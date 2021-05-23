@@ -59,6 +59,7 @@ namespace AniDroid.Dialogs
             private bool _pendingDismiss;
             private List<float?> _advancedScores;
             private int? _initialProgress;
+            private int _initialStatus;
 
             private CoordinatorLayout _coordLayout;
             private Picker _scorePicker;
@@ -255,9 +256,12 @@ namespace AniDroid.Dialogs
                     statusSpinner.SetSelection(MediaListStatus.Planning.Index);
                 }
 
+                _initialStatus = statusSpinner.SelectedItemPosition;
+
                 statusSpinner.ItemSelected += (sender, args) =>
                 {
                     var statusEnum = AniListEnum.GetEnum<MediaListStatus>(args.Position);
+                    var initialStatusEnum = AniListEnum.GetEnum<MediaListStatus>(_initialStatus);
 
                     if (statusEnum.Equals(MediaListStatus.Completed))
                     {
@@ -266,7 +270,7 @@ namespace AniDroid.Dialogs
                             _initialProgress = (int?) _progressPicker.GetValue();
                         }
 
-                        if (!_finishDateView.SelectedDate.HasValue)
+                        if (!_finishDateView.SelectedDate.HasValue && Activity.Settings.AutoFillDateForMediaListItem)
                         {
                             _finishDateView.SelectedDate = DateTime.Now;
                         }
@@ -275,7 +279,7 @@ namespace AniDroid.Dialogs
                     }
                     else if (statusEnum.Equals(MediaListStatus.Current))
                     {
-                        if (!_startDateView.SelectedDate.HasValue)
+                        if (!_startDateView.SelectedDate.HasValue && Activity.Settings.AutoFillDateForMediaListItem)
                         {
                             _startDateView.SelectedDate = DateTime.Now;
                             _finishDateView.SelectedDate = null;
@@ -292,6 +296,10 @@ namespace AniDroid.Dialogs
                         _startDateView.SelectedDate = null;
                         _finishDateView.SelectedDate = null;
                         _scorePicker.SetValue(null);
+                    }
+                    else if (statusEnum.Equals(MediaListStatus.Repeating) && initialStatusEnum.Equals(MediaListStatus.Completed))
+                    {
+                        _progressPicker.SetValue(null);
                     }
                     else if (statusEnum.EqualsAny(MediaListStatus.Paused, MediaListStatus.Dropped, MediaListStatus.Repeating, MediaListStatus.Planning))
                     {

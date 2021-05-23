@@ -195,5 +195,6 @@
     <item>02-04-2021|Added ability to view user favorites</item>
     <item>02-04-2021|Added ability to quickly filter other users\' lists</item>
     <item>02-04-2021|Lots of behind-the-scenes changes</item>
+    <item>05-23-2021|Adding ability to control whether Start and End dates are assigned when editing a list item. Check the Media List Settings!</item>
   </array>
 </resources>

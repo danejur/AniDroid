@@ -19,5 +19,6 @@ namespace AniDroid.Settings.MediaListSettings
         void CreateMediaListProgressDisplayItem(MediaListRecyclerAdapter.MediaListProgressDisplayType mediaListProgressDisplay);
         void CreateUseSwipeToRefreshOnMediaListsItem(bool useSwipeToRefreshOnMediaLists);
         void CreateShowEpisodeAddButtonForRepeatingMediaItem(bool showEpisodeAddButtonForRepeatingMedia);
+        void CreateAutoFillDateForMediaListItem(bool autoFillDateForMediaListItem);
     }
 }

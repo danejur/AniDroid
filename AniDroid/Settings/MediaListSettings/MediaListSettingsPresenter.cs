@@ -40,6 +40,7 @@ namespace AniDroid.Settings.MediaListSettings
             View.CreateUseSwipeToRefreshOnMediaListsItem(AniDroidSettings.UseSwipeToRefreshOnMediaLists);
             View.CreateShowEpisodeAddButtonForRepeatingMediaItem(AniDroidSettings
                 .ShowEpisodeAddButtonForRepeatingMedia);
+            View.CreateAutoFillDateForMediaListItem(AniDroidSettings.AutoFillDateForMediaListItem);
 
             return Task.CompletedTask;
         }
@@ -102,6 +103,11 @@ namespace AniDroid.Settings.MediaListSettings
         public void SetShowEpisodeAddButtonForRepeatingMedia(bool showEpisodeAddButtonForRewatchingAnime)
         {
             AniDroidSettings.ShowEpisodeAddButtonForRepeatingMedia = showEpisodeAddButtonForRewatchingAnime;
+        }
+        
+        public void SetAutoFillDateForMediaListItem(bool autoFillDateForNewMediaListItem)
+        {
+            AniDroidSettings.AutoFillDateForMediaListItem = autoFillDateForNewMediaListItem;
         }
     }
 }
