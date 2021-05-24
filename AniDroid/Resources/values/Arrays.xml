@@ -196,5 +196,6 @@
     <item>02-04-2021|Added ability to quickly filter other users\' lists</item>
     <item>02-04-2021|Lots of behind-the-scenes changes</item>
     <item>05-23-2021|Adding ability to control whether Start and End dates are assigned when editing a list item. Check the Media List Settings!</item>
+    <item>05-24-2021|Fixed bug that caused the keyboard to popup when opening the app</item>
   </array>
 </resources>
