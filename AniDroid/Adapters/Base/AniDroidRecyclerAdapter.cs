@@ -231,6 +231,14 @@ namespace AniDroid.Adapters.Base
                 cardHolder.ContainerCard.SetTag(Resource.Id.Object_Position, position);
                 cardHolder.Button.SetTag(Resource.Id.Object_Position, position);
 
+                if (cardHolder.SecondaryButton != null && cardHolder.SecondaryButtonIcon != null)
+                {
+                    cardHolder.SecondaryButton.Visibility = viewModel.SecondaryButtonVisibility;
+                    cardHolder.SecondaryButtonIcon.SetImageResource(viewModel.SecondaryButtonIcon ??
+                                                                    Resource.Drawable.ic_favorite_white_24px);
+                    cardHolder.SecondaryButton.SetTag(Resource.Id.Object_Position, position);
+                }
+
                 BindCardViewHolder(cardHolder, position);
             }
         }

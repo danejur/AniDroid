@@ -32,6 +32,8 @@ namespace AniDroid.Adapters.ViewModels
             ImageUri = model.Media?.CoverImage?.Large ?? model.Media?.CoverImage?.Medium;
             IsPriority = model.Priority > 0;
             ButtonIcon = GetEpisodeAddIcon();
+            SecondaryButtonIcon = Resource.Drawable.svg_book_plus_multiple_outline;
+            IsSecondaryButtonVisible = true;
             ImageColor = Color.ParseColor(model.Media?.CoverImage?.Color ?? "#00000000");
             WatchingStatus = GetWatchingStatus();
         }

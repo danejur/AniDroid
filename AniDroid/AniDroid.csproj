@@ -318,6 +318,7 @@
     <None Include="Properties\AndroidManifestRelease.xml">
       <SubType>Designer</SubType>
     </None>
+    <AndroidResource Include="Resources\drawable\svg_book_plus_multiple_outline.xml" />
     <AndroidResource Include="Resources\layout\Activity_Login.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
