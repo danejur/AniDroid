@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using AniDroid.AniList.DataTypes;
 using AniDroid.AniList.Interfaces;
@@ -27,16 +28,16 @@ namespace AniDroid.Torrent.NyaaSi
             try
             {
                 var searchTerms = (searchReq.SearchTerm ?? string.Empty).Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
-
                 var searchString =
                     $"{BaseAddress}/?f={searchReq.Filter}&c={searchReq.Category}&q={string.Join("+", searchTerms)}&p={searchReq.PageNumber}";
-                var webReq = WebRequest.Create(searchString);
-                var webResp = await webReq.GetResponseAsync();
-                var webRespStream = webResp.GetResponseStream();
+
+                using var httpClient = new HttpClient();
+                var resp = await httpClient.GetAsync(searchString);
+                await using var respStream = await resp.Content.ReadAsStreamAsync();
 
                 var retList = new List<NyaaSiSearchResult>();
                 var doc = new HtmlDocument();
-                doc.Load(webRespStream);
+                doc.Load(respStream);
                 var torrentTable = doc.DocumentNode.Descendants()
                     .FirstOrDefault(x =>
                         x.Attributes.Contains("class") && x.Attributes["class"].Value.Contains("torrent-list"))
