@@ -14,7 +14,7 @@ using AniDroid.Base;
 
 namespace AniDroid.AniListObject.Studio
 {
-    [Activity(Label = "Studio")]
+    [Activity(Label = "Studio", Exported = true)]
     [IntentFilter(new[] { Intent.ActionView }, Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable }, DataHost = "anilist.co", DataSchemes = new[] { "http", "https" }, DataPathPattern = "/studio/.*", Label = "AniDroid")]
     public class StudioActivity : BaseAniListObjectActivity<StudioPresenter>, IStudioView
     {

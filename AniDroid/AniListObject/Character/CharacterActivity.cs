@@ -17,7 +17,7 @@ using AniDroid.Utils;
 
 namespace AniDroid.AniListObject.Character
 {
-    [Activity(Label = "Character")]
+    [Activity(Label = "Character", Exported = true)]
     [IntentFilter(new[] { Intent.ActionView }, Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable }, DataHost = "anilist.co", DataSchemes = new[] { "http", "https" }, DataPathPattern = "/character/.*", Label = "AniDroid")]
     public class CharacterActivity : BaseAniListObjectActivity<CharacterPresenter>, ICharacterView
     {

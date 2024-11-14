@@ -44,7 +44,7 @@ using MikePhil.Charting.Data;
 namespace AniDroid.AniListObject.Media
 {
 
-    [Activity(Label = "Media")]
+    [Activity(Label = "Media", Exported = true)]
     [IntentFilter(new[] { Intent.ActionView }, Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable }, DataHost = "anilist.co", DataSchemes = new[] { "http", "https" }, DataPathPatterns = new[] { "/anime/.*", "/manga/.*" }, Label = "AniDroid")]
     public class MediaActivity : BaseAniListObjectActivity<MediaPresenter>, IMediaView
     {

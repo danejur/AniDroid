@@ -280,7 +280,7 @@ namespace AniDroid.Main
 
             intent.PutExtra(DisplayNotificationsIntentKey, true);
 
-            return PendingIntent.GetActivity(context, 0, intent, PendingIntentFlags.UpdateCurrent);
+            return PendingIntent.GetActivity(context, 0, intent, PendingIntentFlags.UpdateCurrent | PendingIntentFlags.Immutable);
         }
 
         #region Toolbar

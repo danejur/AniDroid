@@ -31,7 +31,7 @@ using AniDroid.Utils.Formatting.Markdown;
 
 namespace AniDroid.AniListObject.User
 {
-    [Activity(Label = "User")]
+    [Activity(Label = "User", Exported = true)]
     [IntentFilter(new[] { Intent.ActionView }, Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable }, DataHost = "anilist.co", DataSchemes = new[] { "http", "https" }, DataPathPattern = @"/user/.*", Label = "AniDroid")]
     public class UserActivity : BaseAniListObjectActivity<UserPresenter>, IUserView
     {

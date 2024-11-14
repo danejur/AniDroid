@@ -17,7 +17,7 @@ using AniDroid.Utils;
 
 namespace AniDroid.AniListObject.Staff
 {
-    [Activity(Label = "Staff")]
+    [Activity(Label = "Staff", Exported = true)]
     [IntentFilter(new[] { Intent.ActionView }, Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable }, DataHost = "anilist.co", DataSchemes = new[] { "http", "https" }, DataPathPattern = "/staff/.*", Label = "AniDroid")]
     public class StaffActivity : BaseAniListObjectActivity<StaffPresenter>, IStaffView
     {
