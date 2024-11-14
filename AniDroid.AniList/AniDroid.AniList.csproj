@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="DiscU" Version="1.0.0.9" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Enums\RecommendationEnums\" />
+    <Folder Include="Enums\ReviewEnums\" />
+    <Folder Include="Enums\UserEnums\" />
+    <Folder Include="Models\CharacterModels\" />
+    <Folder Include="Models\ForumModels\" />
+    <Folder Include="Models\RecommendationModels\" />
+    <Folder Include="Models\ReviewModels\" />
+    <Folder Include="Models\StudioModels\" />
+  </ItemGroup>
+
+</Project>

@@ -14,15 +14,15 @@ using Exception = Java.Lang.Exception;
 
 namespace AniDroid.Utils.Formatting.Markdown
 {
-    public static class MarkdownSpannableFormatter
+    public static partial class MarkdownSpannableFormatter
     {
         private const int PlaceholderImage = Resource.Drawable.svg_image;
         private const string YoutubeThumbnailUrl = "https://img.youtube.com/vi/{0}/hqdefault.jpg";
         private const string YoutubeLinkUrl = "https://www.youtube.com/watch?v={0}";
         private const int MaxImageWidth = 250;
 
-        private static readonly Regex ImageRegex = new Regex(@"img(\d*)\(([^\)]*)\)", RegexOptions.Compiled);
-        private static readonly Regex YoutubeRegex = new Regex(@"youtube\(([^\)]*)\)", RegexOptions.Compiled);
+        private readonly static Regex ImageRegex = ImageRegexClass();
+        private readonly static Regex YoutubeRegex = YoutubeRegexClass();
 
         public static void FormatMarkdownSpannable(Context context, ISpannable spannable)
         {
@@ -171,5 +171,10 @@ namespace AniDroid.Utils.Formatting.Markdown
                 Click?.Invoke(widget, new EventArgs());
             }
         }
+
+        [GeneratedRegex(@"img(\d*)\(([^\)]*)\)", RegexOptions.Compiled)]
+        private static partial Regex ImageRegexClass();
+        [GeneratedRegex(@"youtube\(([^\)]*)\)", RegexOptions.Compiled)]
+        private static partial Regex YoutubeRegexClass();
     }
 }
