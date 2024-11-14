@@ -1,0 +1,38 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore workloads
+      run: dotnet workload restore
+    - name: Set Up Android tools
+      run: |
+        ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager \
+        --sdk_root=$ANDROID_SDK_ROOT \
+        "platform-tools"
+    - name: Create appsettings.secret.json
+      uses: jsdaniell/create-json@v1.2.3
+      with:
+        name: "AniDroid/appsettings.secret.json"
+        json: ${{ secrets.APPSETTINGS_SECRET_JSON }}
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Publish
+      run: dotnet publish -f net8.0-android -c Release

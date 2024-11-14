@@ -62,10 +62,10 @@ namespace AniDroid
 
             var serviceProvider = InitServiceProvider();
 
-            var appCenterId = serviceProvider.GetService<IConfiguration>()["AppCenterId"];
-
-            AppCenter.Start(appCenterId,
-                typeof(Analytics), typeof(Crashes));
+            // var appCenterId = serviceProvider.GetService<IConfiguration>()["AppCenterId"];
+            //
+            // AppCenter.Start(appCenterId,
+            //     typeof(Analytics), typeof(Crashes));
 
             CreateNotificationsChannel();
         }
