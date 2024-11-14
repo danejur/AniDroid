@@ -8,7 +8,6 @@ using Android.Widget;
 using AniDroid.AniList.Interfaces;
 using AniDroid.Base;
 using Google.Android.Material.Snackbar;
-using Toolbar = AndroidX.AppCompat.Widget.Toolbar;
 
 namespace AniDroid.About
 {

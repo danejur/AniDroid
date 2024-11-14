@@ -33,7 +33,6 @@ using AniDroid.Widgets;
 using Google.Android.Material.FloatingActionButton;
 using Google.Android.Material.Navigation;
 using Google.Android.Material.Snackbar;
-using Toolbar = AndroidX.AppCompat.Widget.Toolbar;
 
 namespace AniDroid.Main
 {
@@ -280,7 +279,7 @@ namespace AniDroid.Main
 
             intent.PutExtra(DisplayNotificationsIntentKey, true);
 
-            return PendingIntent.GetActivity(context, 0, intent, PendingIntentFlags.UpdateCurrent | PendingIntentFlags.Immutable);
+            return PendingIntent.GetActivity(context, 0, intent, PendingIntentFlags.UpdateCurrent);
         }
 
         #region Toolbar

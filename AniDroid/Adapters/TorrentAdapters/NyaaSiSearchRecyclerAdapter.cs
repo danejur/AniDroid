@@ -93,13 +93,13 @@ namespace AniDroid.Adapters.TorrentAdapters
             var a = new AlertDialog.Builder(Context).Create();
             a.SetTitle("Open Torrent");
             a.SetMessage("Would you like to open this torrent (magnet)?");
-            a.SetButton2("Yes", (aS, ev) => {
+            a.SetButton(2, "Yes", (aS, ev) => {
                 var intent = new Intent(Intent.ActionView);
                 intent.SetData(Android.Net.Uri.Parse(item.Link));
                 intent.AddFlags(ActivityFlags.NewTask);
                 Context.StartActivity(intent);
             });
-            a.SetButton("Open in Browser", (aS, eV) => {
+            a.SetButton(1, "Open in Browser", (aS, eV) => {
                 var intent = new Intent(Intent.ActionView);
                 intent.AddFlags(ActivityFlags.NewTask);
                 intent.SetData(Android.Net.Uri.Parse(item.Guid));

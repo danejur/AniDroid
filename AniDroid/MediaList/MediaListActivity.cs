@@ -25,7 +25,6 @@ using AniDroid.Utils.Comparers;
 using Google.Android.Material.AppBar;
 using Google.Android.Material.Snackbar;
 using Google.Android.Material.Tabs;
-using Toolbar = AndroidX.AppCompat.Widget.Toolbar;
 
 namespace AniDroid.MediaList
 {

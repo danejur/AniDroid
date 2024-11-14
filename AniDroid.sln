@@ -1,17 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30907.101
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35506.116 d17.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AniDroid", "AniDroid\AniDroid.csproj", "{A25395EE-107E-4EEF-88F2-AA17E94CDB44}"
-	ProjectSection(ProjectDependencies) = postProject
-		{49FB1693-B542-4C68-82F9-19762A6AFB29} = {49FB1693-B542-4C68-82F9-19762A6AFB29}
-		{6E34B7AF-7E77-4F94-B56A-FDF1462EDC34} = {6E34B7AF-7E77-4F94-B56A-FDF1462EDC34}
-	EndProjectSection
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AniDroid", "AniDroid\AniDroid.csproj", "{D5000D70-B266-4CEF-8F12-957FA96F13FF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AniDroid.AniList", "AniDroid.AniList\AniDroid.AniList\AniDroid.AniList.csproj", "{49FB1693-B542-4C68-82F9-19762A6AFB29}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AniDroid.Torrent", "AniDroid.Torrent\AniDroid.Torrent.csproj", "{39E90300-579F-4387-BE45-F7F0CA6FF390}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AniDroid.Torrent", "AniDroid.Torrent\AniDroid.Torrent.csproj", "{6E34B7AF-7E77-4F94-B56A-FDF1462EDC34}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AniDroid.AniList", "AniDroid.AniList\AniDroid.AniList.csproj", "{791AF4ED-2694-40E7-BA03-250EA43FE83F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,25 +15,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A25395EE-107E-4EEF-88F2-AA17E94CDB44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A25395EE-107E-4EEF-88F2-AA17E94CDB44}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A25395EE-107E-4EEF-88F2-AA17E94CDB44}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{A25395EE-107E-4EEF-88F2-AA17E94CDB44}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A25395EE-107E-4EEF-88F2-AA17E94CDB44}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A25395EE-107E-4EEF-88F2-AA17E94CDB44}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{49FB1693-B542-4C68-82F9-19762A6AFB29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49FB1693-B542-4C68-82F9-19762A6AFB29}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49FB1693-B542-4C68-82F9-19762A6AFB29}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49FB1693-B542-4C68-82F9-19762A6AFB29}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6E34B7AF-7E77-4F94-B56A-FDF1462EDC34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6E34B7AF-7E77-4F94-B56A-FDF1462EDC34}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6E34B7AF-7E77-4F94-B56A-FDF1462EDC34}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6E34B7AF-7E77-4F94-B56A-FDF1462EDC34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5000D70-B266-4CEF-8F12-957FA96F13FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5000D70-B266-4CEF-8F12-957FA96F13FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5000D70-B266-4CEF-8F12-957FA96F13FF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{D5000D70-B266-4CEF-8F12-957FA96F13FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5000D70-B266-4CEF-8F12-957FA96F13FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5000D70-B266-4CEF-8F12-957FA96F13FF}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{39E90300-579F-4387-BE45-F7F0CA6FF390}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39E90300-579F-4387-BE45-F7F0CA6FF390}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39E90300-579F-4387-BE45-F7F0CA6FF390}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39E90300-579F-4387-BE45-F7F0CA6FF390}.Release|Any CPU.Build.0 = Release|Any CPU
+		{791AF4ED-2694-40E7-BA03-250EA43FE83F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{791AF4ED-2694-40E7-BA03-250EA43FE83F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{791AF4ED-2694-40E7-BA03-250EA43FE83F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{791AF4ED-2694-40E7-BA03-250EA43FE83F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {37778DA3-7215-4714-8C24-F3F4027E10FE}
 	EndGlobalSection
 EndGlobal

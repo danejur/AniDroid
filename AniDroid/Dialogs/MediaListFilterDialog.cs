@@ -18,8 +18,6 @@ using AniDroid.AniList.Models.MediaModels;
 using AniDroid.Base;
 using AniDroid.MediaList;
 using AniDroid.Widgets;
-using AlertDialog = AndroidX.AppCompat.App.AlertDialog;
-using Toolbar = AndroidX.AppCompat.Widget.Toolbar;
 
 namespace AniDroid.Dialogs
 {

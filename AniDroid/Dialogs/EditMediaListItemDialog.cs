@@ -23,8 +23,6 @@ using AniDroid.Settings;
 using AniDroid.Widgets;
 using Google.Android.Material.Snackbar;
 using Newtonsoft.Json.Linq;
-using AlertDialog = AndroidX.AppCompat.App.AlertDialog;
-using Toolbar = AndroidX.AppCompat.Widget.Toolbar;
 
 namespace AniDroid.Dialogs
 {

@@ -30,7 +30,7 @@ namespace AniDroid.Utils.Formatting.Markdown
 
         private static string AddSpaceToMarkup(Match match)
         {
-            return $"{match.Groups.ElementAtOrDefault(1)?.Value} {match.Groups.ElementAtOrDefault(2)?.Value}";
+            return $"{match.Groups.Values.ElementAtOrDefault(1)?.Value} {match.Groups.Values.ElementAtOrDefault(2)?.Value}";
         }
     }
 }

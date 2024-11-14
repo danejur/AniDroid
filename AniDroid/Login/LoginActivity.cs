@@ -14,7 +14,7 @@ using Google.Android.Material.Snackbar;
 namespace AniDroid.Login
 {
     [Activity(Label = "Login", LaunchMode = LaunchMode.SingleTask, Exported = true)]
-    [IntentFilter([Intent.ActionView], Categories = [Intent.CategoryDefault, Intent.CategoryBrowsable], DataHost = "login", DataSchemes = ["anidroid"], Label = "AniDroid")]
+    [IntentFilter(new[] { Intent.ActionView }, Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable }, DataHost = "login", DataSchemes = new[] { "anidroid" }, Label = "AniDroid")]
     public class LoginActivity : BaseAniDroidActivity<LoginPresenter>, ILoginView
     {
         private string _authCode;

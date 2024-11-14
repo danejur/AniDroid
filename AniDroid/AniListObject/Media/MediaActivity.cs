@@ -772,7 +772,7 @@ namespace AniDroid.AniListObject.Media
 
         #region Trends
 
-        private View CreateMediaTrendsView(List<ConnectionEdge<MediaTrend>> trendEdgeList, List<ConnectionEdge<MediaTrend>> airingTrendEdgeList)
+        private View CreateMediaTrendsView(List<ConnectionEdge<MediaTrend>>? trendEdgeList, List<ConnectionEdge<MediaTrend>> airingTrendEdgeList)
         {
             var retView = LayoutInflater.Inflate(Resource.Layout.View_NestedScrollLayout, null);
             var containerView = retView.FindViewById<LinearLayout>(Resource.Id.Scroll_Container);

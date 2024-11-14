@@ -16,8 +16,6 @@ using AniDroid.AniList.Enums.MediaEnums;
 using AniDroid.Base;
 using AniDroid.Browse;
 using AniDroid.Widgets;
-using AlertDialog = AndroidX.AppCompat.App.AlertDialog;
-using Toolbar = AndroidX.AppCompat.Widget.Toolbar;
 
 namespace AniDroid.Dialogs
 {

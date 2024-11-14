@@ -147,7 +147,7 @@ namespace AniDroid.Jobs
             public static PendingIntent CreatePendingIntent(Context context)
             {
                 return PendingIntent.GetBroadcast(context, RequestCode, new Intent(context, typeof(AniListNotificationJobDismissReceiver)),
-                    PendingIntentFlags.UpdateCurrent | PendingIntentFlags.Immutable);
+                    PendingIntentFlags.UpdateCurrent);
             }
         }
     }

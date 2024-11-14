@@ -2,6 +2,8 @@
 using Android.Views;
 using AndroidX.ViewPager.Widget;
 using Java.Lang;
+using Object = Java.Lang.Object;
+using String = Java.Lang.String;
 
 namespace AniDroid.Adapters
 {

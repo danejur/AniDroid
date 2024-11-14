@@ -34,16 +34,16 @@ namespace AniDroid.Utils.Extensions
             }
         }
 
-        public static IEnumerable<TSource> DistinctBy<TSource, TKey>(this IEnumerable<TSource> collection, Func<TSource, TKey> selector)
-        {
-            var seenKeys = new HashSet<TKey>();
-            foreach (var element in collection)
-            {
-                if (seenKeys.Add(selector(element)))
-                {
-                    yield return element;
-                }
-            }
-        }
+        // public static IEnumerable<TSource> DistinctBy<TSource, TKey>(this IEnumerable<TSource> collection, Func<TSource, TKey> selector)
+        // {
+        //     var seenKeys = new HashSet<TKey>();
+        //     foreach (var element in collection)
+        //     {
+        //         if (seenKeys.Add(selector(element)))
+        //         {
+        //             yield return element;
+        //         }
+        //     }
+        // }
     }
 }

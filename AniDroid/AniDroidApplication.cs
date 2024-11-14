@@ -99,7 +99,7 @@ namespace AniDroid
                     //c.AddCommandLine(new[] { $"ContentRoot={FileSystem.AppDataDirectory}" });
 
                     c.AddJsonFile(configFile);
-
+                    
                     c.AddJsonFile(secretConfigFile);
                 })
                 .ConfigureServices(ConfigureServices)
