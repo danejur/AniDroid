@@ -3,6 +3,10 @@
 
 name: .NET
 
+env:
+  ANDROID_ROOT: /usr/local/lib/android
+  ANDROID_SDK_ROOT: ${{ env.ANDROID_ROOT }}/sdk
+
 on:
   push:
     branches: [ "main" ]
