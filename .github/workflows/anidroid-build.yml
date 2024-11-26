@@ -29,14 +29,26 @@ jobs:
         ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager \
         --sdk_root=$ANDROID_SDK_ROOT \
         "platform-tools"
+    - name: Install Android SDK 34
+      run: |
+        ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager \
+        --sdk_root=$ANDROID_SDK_ROOT \
+        "platforms;android-34"
     - name: Create appsettings.secret.json
       uses: jsdaniell/create-json@v1.2.3
       with:
         name: "AniDroid/appsettings.secret.json"
         json: ${{ secrets.APPSETTINGS_SECRET_JSON }}
+    - name: Decode Keystore
+      run: echo "${{ secrets.KEYSTORE_TEXT }}" | base64 -di > "${{ runner.temp }}/anidroid.keystore"
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
     - name: Publish
-      run: dotnet publish -f net8.0-android -c Release
+      run: dotnet publish -f net8.0-android -c Release -p:AndroidKeyStore=true -p:AndroidSigningKeyStore="${{ runner.temp }}/anidroid.keystore" -p:AndroidSigningKeyAlias=${{ secrets.ANDROIDSIGNINGKEYALIAS }} -p:AndroidSigningKeyPass=${{ secrets.ANDROIDSIGNINGKEYPASS }} -p:AndroidSigningStorePass=${{ secrets.ANDROIDSIGNINGSTOREPASS }} AniDroid/AniDroid.csproj
+    - name: Publish artifact
+      uses: https://code.forgejo.org/forgejo/upload-artifact@v4
+      with:
+        name: com.jurasdev.anidroid-Signed.apk
+        path: AniDroid/bin/Release/net8.0-android/com.jurasdev.anidroid-Signed.apk
